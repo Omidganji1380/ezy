@@ -13,6 +13,7 @@ class ProfileCategory extends Model
         'title',
         'subtitle',
         'icon',
-        'category',
+        'title_en',
+        'subtitle_en',
     ];
 }

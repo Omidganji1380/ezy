@@ -14,5 +14,7 @@ class Slider extends Model
         'subtitle',
         'img',
         'status',
+        'title_en',
+        'subtitle_en',
     ];
 }

@@ -13,11 +13,15 @@ return new class extends Migration
     {
         Schema::create('pb_options', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('icon');
-            $table->string('color');
-            $table->string('for');
-            $table->integer('sort');
+            $table->string('title')->nullable();
+            $table->string('icon')->nullable();
+            $table->string('color')->nullable();
+            $table->string('for')->nullable();
+            $table->string('title_en')->nullable();
+            $table->string('icon_en')->nullable();
+            $table->string('color_en')->nullable();
+            $table->string('for_en')->nullable();
+            $table->integer('sort')->default(0);
             $table->timestamps();
         });
     }

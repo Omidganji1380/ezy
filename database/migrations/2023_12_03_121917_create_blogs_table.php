@@ -22,6 +22,10 @@ return new class extends Migration {
             $table->string('meta_description')->nullable();
             $table->bigInteger('visit')->default(0);
             $table->tinyInteger('status')->default(0);
+            $table->string('title_en')->nullable();
+            $table->string('slug_en')->nullable()->unique();
+            $table->string('img_en')->nullable();
+            $table->text('text_en')->nullable();
             $table->timestamps();
         });
     }

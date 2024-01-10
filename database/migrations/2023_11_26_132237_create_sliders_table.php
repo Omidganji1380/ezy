@@ -14,6 +14,8 @@ return new class extends Migration {
             $table->id();
             $table->string('title')->nullable();
             $table->string('subtitle')->nullable();
+            $table->string('title_en')->nullable();
+            $table->string('subtitle_en')->nullable();
             $table->string('img');
             $table->tinyInteger('status')->default(0);
             $table->timestamps();

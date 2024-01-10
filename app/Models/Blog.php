@@ -20,6 +20,10 @@ class Blog extends Model
         'visit',
         'status',
         'slug',
+        'title_en',
+        'slug_en',
+        'img_en',
+        'text_en',
     ];
 
     public function category()

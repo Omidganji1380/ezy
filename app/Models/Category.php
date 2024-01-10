@@ -9,7 +9,8 @@ class Category extends Model
 {
     use HasFactory;
     protected $fillable=[
-        'name'
+        'name',
+        'name_en',
     ];
     public function portfolio()
     {

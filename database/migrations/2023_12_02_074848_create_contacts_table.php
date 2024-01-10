@@ -24,6 +24,11 @@ return new class extends Migration {
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
             $table->text('text')->nullable();
+            $table->string('topTitle_en')->nullable();
+            $table->string('formTopTitle_en')->nullable();
+            $table->string('infoTopTitle_en')->nullable();
+            $table->string('title_en')->nullable();
+            $table->string('subtitle_en')->nullable();
             $table->timestamps();
         });
     }

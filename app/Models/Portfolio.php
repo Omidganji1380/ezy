@@ -15,6 +15,7 @@ class Portfolio extends Model
         'link',
         'status',
         'category_id',
+        'title_en',
     ];
 
     public function category()

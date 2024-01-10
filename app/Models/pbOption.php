@@ -16,10 +16,14 @@ class pbOption extends Model
         'color',
         'for',
         'sort',
+        'title_en',
+        'icon_en',
+        'color_en',
+        'for_en',
     ];
 
     public function block(): BelongsToMany
     {
-        return $this->belongsToMany(Block::class,'block_pb_options','pbOption_id', 'block_id');
+        return $this->belongsToMany(Block::class, 'block_pb_options', 'pbOption_id', 'block_id');
     }
 }

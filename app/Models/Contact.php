@@ -22,5 +22,10 @@ class Contact extends Model
         'email',
         'phone',
         'text',
+        'topTitle_en',
+        'formTopTitle_en',
+        'infoTopTitle_en',
+        'title_en',
+        'subtitle_en',
     ];
 }

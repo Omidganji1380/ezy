@@ -35,6 +35,25 @@ return new class extends Migration {
             $table->string('bottomTitle')->nullable();
             $table->string('bottomSubtitle')->nullable();
             $table->text('bottomText')->nullable();
+            $table->string('topTitle_en')->nullable();
+            $table->string('infoTopTitle_en')->nullable();
+            $table->string('resume_en')->nullable();
+            $table->string('resumeButton_en')->nullable();
+            $table->string('infoTitle_en')->nullable();
+            $table->string('infoLocation_en')->nullable();
+            $table->text('infoText_en')->nullable();
+            $table->string('videoTitle_en')->nullable();
+            $table->string('midTopTitle_en')->nullable();
+            $table->string('midTitle_en')->nullable();
+            $table->string('midSubtitle_en')->nullable();
+            $table->text('midDesc_en')->nullable();
+            $table->string('skillTopTitle_en')->nullable();
+            $table->string('skillTitle_en')->nullable();
+            $table->tinyInteger('skillPercentage_en')->nullable();
+            $table->string('bottomTopTitle_en')->nullable();
+            $table->string('bottomTitle_en')->nullable();
+            $table->string('bottomSubtitle_en')->nullable();
+            $table->text('bottomText_en')->nullable();
             $table->timestamps();
         });
     }

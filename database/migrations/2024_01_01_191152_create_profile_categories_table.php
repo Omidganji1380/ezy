@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('title');
             $table->string('subtitle');
             $table->string('icon');
-            $table->string('category');
+            $table->string('title_en');
+            $table->string('subtitle_en');
             $table->timestamps();
         });
     }

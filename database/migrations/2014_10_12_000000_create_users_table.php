@@ -20,6 +20,10 @@ return new class extends Migration {
             $table->string('postCode')->nullable();
             $table->text('address')->nullable();
             $table->tinyInteger('role')->default(1);
+            $table->string('name_en')->nullable();
+            $table->string('phone_en')->unique();
+            $table->string('postCode_en')->nullable();
+            $table->text('address_en')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
