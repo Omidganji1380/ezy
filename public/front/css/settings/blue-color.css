@@ -1,0 +1,100 @@
+svg g [fill] {
+	fill: #0082b3;
+}
+
+.button:hover,
+blockquote span,
+.about .info .loc,
+.music-bg .sound i,
+.about .experience .main p,
+.blog-list .side-left .news p,
+.blog .blog-item .head .book i,
+.testimonial-content .rating li,
+.animation-wrap ul li span.active,
+.contact .contact-info .info .desc span,
+.blog-page .blog-comments ul li .comment-text span,
+.blog-list .side-left .search .input-group .input-group-text {
+    color: #0082b3;
+}
+
+.scroller,
+.button::after,
+.button b::after,
+.button b::before,
+.slider-nav:after,
+.slider-nav:before,
+.button:hover::after,
+.page-zoom:hover span:after,
+.swiper-pagination-progressbar-fill,
+.button:hover b:nth-child(1)::before,
+.button:hover b:nth-child(1)::after,
+.button:hover b:nth-child(2)::before,
+.button:hover b:nth-child(2)::after,
+.testimonial-pagination .swiper-pagination-bullet-active {
+	background: #0082b3;
+}
+
+.blog-list .side-left .tags ul li a,
+.portfolio .portfolio-filter ul li.active {
+	background-color: #0082b3;
+}
+
+.bg-lines .bg-line::after {
+	background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, #0082b3 75%, #0082b3 100%);
+}
+
+.blog-page .blog-comments ul li ul {
+    border-left: 1px solid #0082b3;
+}
+
+.blog-list .side-left .categories ul li:before,
+.blog-list .side-left .archives ul li:before {
+    border: 2px solid #0082b3;
+}
+
+.blog-list .side-left .categories ul li:hover:before,
+.blog-list .side-left .archives ul li:hover:before {
+    border: 4px solid #0082b3;
+    -webkit-box-shadow: 0 0 5px 0px #0082b3;
+    		box-shadow: 0 0 5px 0px #0082b3;
+}
+
+/* Hover */
+.music-bg:hover .sound i,
+.blog .blog-item .head .book i:hover,
+.portfolio .portfolio-items .item figure figcaption p i {
+    color: #00b9ff;
+}
+
+.animation-wrap ul li span.active:after,
+.animation-wrap ul li span:hover:after {
+	border-color: #00b9ff;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus,
+.newsletter-block #subscribe input:focus {
+	border-bottom: 1px solid #00b9ff;
+}
+
+.page-nav:hover svg g [fill],
+.header-page:hover svg g [fill],
+.newsletter:hover svg g [fill],
+.animation-wrap:hover svg g [fill],
+.slider-control:hover svg g [fill],
+.about .info-icon:hover svg g [fill],
+.item figure:hover svg.icon g [fill],
+.about .experience .item:hover svg g [fill],
+.item figure:hover figcaption p svg g [fill],
+.newsletter-block .main .news-close:hover svg g [fill],
+.blog-head .desc span:hover svg g [fill],
+.blog-page .blog-head .bread-crumb li a.home:hover svg g [fill],
+.blog-list .blog-head .bread-crumb li a.home:hover svg g [fill],
+.blog-list .side-left .tags:hover svg g [fill],
+.blog-list .side-left .categories:hover svg g [fill],
+.blog-list .side-left .archives:hover svg g [fill],
+.blog-list .side-left .gallery:hover svg g [fill],
+.blog-list .side-left .news:hover svg g [fill],
+.blog-list .blog-post .main .thumbnail:hover svg g [fill] {
+	fill: #00b9ff;
+}
