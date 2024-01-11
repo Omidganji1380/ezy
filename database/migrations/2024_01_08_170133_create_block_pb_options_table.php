@@ -14,6 +14,10 @@ return new class extends Migration
         Schema::create('block_pb_options', function (Blueprint $table) {
             $table->foreignId('block_id')->constrained('blocks')->cascadeOnDelete();
             $table->foreignId('pbOption_id')->constrained('pb_options');
+            $table->string('title')->nullable();
+            $table->string('connectionWay')->nullable();
+            $table->string('extraText')->nullable();
+            $table->integer('sort')->default(0);
         });
     }
 

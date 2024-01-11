@@ -8,6 +8,10 @@
             .btn.b1:focus, .btn.b2:focus {
                 box-shadow: unset !important;
             }
+
+            .btnNoFocus {
+                box-shadow: unset !important;
+            }
         </style>
         <style>
             .userImageDiv {
@@ -194,7 +198,7 @@
                                                     class="btn border-info w-100 rounded-pill overflow-hidden text-truncate px-1">
                                                 <i class="{{$option->icon}} text-info mx-2 align-middle"
                                                    style="font-size: 25px !important;"></i>
-                                                {{$option->title}}
+                                                {{$this->getBlockTitle($option->pivot)}}
                                             </button>
                                         </div>
                                     @endforeach
@@ -444,12 +448,84 @@
                         <div class="col-12 my-3 accordion accordion-flush" id="accordionParent">
                             <div class="collapse text-black accordion-collapse show" id="properties"
                                  data-bs-parent="#accordionParent">
-                                111111
+                                <div class="row">
+                                    <div class="col-12">
+                                        <button data-bs-target="#insertMessengers" data-bs-toggle="modal" wire:click="getOptions('{{$title}}',false)"
+                                            class="text-success w-100 text-center btn bg-success bg-opacity-10 border-success btnNoFocus"
+                                            style="border: 2px dashed">
+                                            <i class="icofont-plus"></i>
+                                            آیتم دیگری به همین بلوک اضافه کنید
+                                        </button>
+                                    </div>
+                                    <div class="col-12 my-3">
+                                        <div class="row">
+                                            <div style="cursor: grab;" id="sortable1">
+                                                @foreach($blockItems as $key=>$item)
+                                                    <div class="my-1 col-12">
+                                                        <button
+                                                            class="btn w-100 bg-white py-3 border border-3 btnNoFocus"
+                                                            role="button" data-bs-toggle="collapse"
+                                                            data-bs-target="#item{{$item->id}}"
+                                                            aria-expanded="false" aria-controls="item{{$item->id}}">
+                                                            <div class="row">
+                                                                <div class="col-1">
+                                                                    <i class="fa fa-arrows-up-down-left-right"></i>
+                                                                </div>
+                                                                <div class="col-auto">
+{{--                                                                    <span disabled="true" hidden="true">{{$this->getBlockItemTitle($blockItemTitle)}}</span>--}}
+                                                                    {{$item->title}} {{$blockItemConnectionWay?'( '.$blockItemConnectionWay[$item->id].' )':''}}
+                                                                </div>
+                                                            </div>
+                                                        </button>
+                                                        <div wire:ignore
+                                                            class="accordion accordion-flush bg-white border border-3 border-top-0"
+                                                            id="accordionParent{{$item->id}}">
+                                                            <div class="collapse text-black accordion-collapse"
+                                                                 id="item{{$item->id}}"
+                                                                 data-bs-parent="#accordionParent{{$item->id}}">
+                                                                <div class="row">
+                                                                    <div class="col-12 my-3 px-4">
+                                                                        <label class="text-black-50">عنوان آیتم
+                                                                            {{$item->title}}</label>
+                                                                        <input type="text" class="my-2 form-control"
+                                                                               wire:model="blockItemTitle.{{$item->id}}"
+                                                                               placeholder="عنوان آیتم {{$item->title}} خود را وارد کنید">
+                                                                        <p class="text-black-50 small">در صورت تمایل
+                                                                            میتوانید
+                                                                            برای این آیتم یک عنوان انتخاب کنید</p>
+                                                                    </div>
+                                                                    <div class="col-12 my-3 px-4">
+                                                                        <label
+                                                                            class="text-black-50">آیدی {{$item->title}}</label>
+                                                                        <input type="text" class="my-2 form-control"
+                                                                               value="{{$item->connectionWay}}"
+                                                                               wire:model.live="blockItemConnectionWay.{{$item->id}}"
+                                                                               placeholder="آیدی {{$item->title}} خود را وارد کنید">
+                                                                        <p class="text-black-50 small">فقط
+                                                                            آیدی {{$item->title}} خود
+                                                                            را
+                                                                            وارد کنید. مثلا mimalef70. از وارد کردن لینک
+                                                                            تلگرام
+                                                                            به صورت t.me خودداری کنید.</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="collapse text-black accordion-collapse" id="moreOptions"
                                  data-bs-parent="#accordionParent">
                                 2222222
                             </div>
+                        </div>
+                        <div class="col-12 text-end">
+                            <button class="btn btn-outline-info" wire:click="cancelPbOption">انصراف</button>
+                            <button class="btn btn-info text-white" wire:click="submitPbOption">ذخیره</button>
                         </div>
                     </div>
                 </div>
@@ -489,6 +565,7 @@
             // }
 
             $(function () {
+                $("#sortable1").sortable();
                 $("#sortable").sortable(/*{
                                             update: function (e, u) {
                                                 var data = $(this).sortable('serialize');
