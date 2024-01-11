@@ -282,7 +282,7 @@
                             {{--                            onclick="setIcons()"--}}
                             data-bs-toggle="modal"
                             data-bs-target="#insertMessengers"
-                            wire:click="getOptions('messenger')"
+                            wire:click="getOptions('messenger',true)"
                             class="list-group-item my-1 border-dark px-4">
                             <div class="row">
                                 <div class="col-auto align-self-center">
@@ -299,7 +299,7 @@
                             class="list-group-item my-1 border-dark px-4"
                             data-bs-toggle="modal"
                             data-bs-target="#insertMessengers"
-                            wire:click="getOptions('social')">
+                            wire:click="getOptions('social',true)">
                             <div class="row">
                                 <div class="col-auto align-self-center">
                                     <i class="ez ez-social-instagram"></i>
@@ -313,7 +313,7 @@
                         <li class="list-group-item my-1 border-dark px-4"
                             data-bs-toggle="modal"
                             data-bs-target="#insertMessengers"
-                            wire:click="getOptions('call')">
+                            wire:click="getOptions('call',true)">
                             <div class="row">
                                 <div class="col-auto align-self-center">
                                     <i class="fa fa-phone fs-4"></i>
