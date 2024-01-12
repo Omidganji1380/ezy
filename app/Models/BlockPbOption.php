@@ -8,10 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class BlockPbOption extends Model
 {
     use HasFactory;
-protected $primaryKey='pbOption_id';
-    public    $incrementing = false;
-    public    $timestamps   = false;
-    protected $fillable     = [
+
+    protected $fillable = [
         'block_id',
         'pbOption_id',
         'title',

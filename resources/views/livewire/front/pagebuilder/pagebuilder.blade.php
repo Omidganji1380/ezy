@@ -182,7 +182,7 @@
                     </div>
                 </div>
             </div>
-            <div id="sortable" style="cursor: grab">
+            <div id="sortable" style="cursor: grab;margin-bottom: 6rem !important;">
                 @foreach($blocks as $block)
                     <div class="col-12 my-3" data-bs-target="#blockOptions" data-bs-toggle="modal"
                          wire:click="blockOptions({{$block->id}})">
@@ -252,7 +252,7 @@
                         <img src="{{asset('pageBuilder/assets/img/setting-2-svgrepo-com.png')}}" alt="" class="p-2">
                     </div>
                     <div class="col-auto">
-                        <img src="{{asset('pageBuilder/assets/img/insertPlus.png')}}" alt=""
+                        <img src="{{asset('pageBuilder/assets/img/insertPlus.png')}}" wire:click="clearVariables" alt=""
                              class="p-2 position-relative" style="top: -50%"
                              data-bs-toggle="modal"
                              data-bs-target="#insertPlus">
@@ -401,7 +401,10 @@
                         @foreach($options as $item)
                             <div class="col-4 my-1">
                                 <button class="btn w-100" wire:click="insertBlock({{$item->id}})"
-                                        style="background-color: {{$item->color}};border: 1px solid #c4c4c4">
+                                        style="background-color: {{$item->color}};border: 1px solid #c4c4c4"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#blockOptions"
+                                >
                                     <div class="row justify-content-center">
                                         <div class="col-8 align-self-center" style="text-align: right">
                                             {{$item->title}}
@@ -447,12 +450,13 @@
                         </div>
                         <div class="col-12 my-3 accordion accordion-flush" id="accordionParent">
                             <div class="collapse text-black accordion-collapse show" id="properties"
-                                 data-bs-parent="#accordionParent">
+                                 data-bs-parent="#accordionParent" wire:ignore.self>
                                 <div class="row">
                                     <div class="col-12">
-                                        <button data-bs-target="#insertMessengers" data-bs-toggle="modal" wire:click="getOptions('{{$title}}',false)"
-                                            class="text-success w-100 text-center btn bg-success bg-opacity-10 border-success btnNoFocus"
-                                            style="border: 2px dashed">
+                                        <button data-bs-target="#insertMessengers" data-bs-toggle="modal"
+                                                wire:click="getOptions('{{$title}}',false)"
+                                                class="text-success w-100 text-center btn bg-success bg-opacity-10 border-success btnNoFocus"
+                                                style="border: 2px dashed">
                                             <i class="icofont-plus"></i>
                                             آیتم دیگری به همین بلوک اضافه کنید
                                         </button>
@@ -462,52 +466,49 @@
                                             <div style="cursor: grab;" id="sortable1">
                                                 @foreach($blockItems as $key=>$item)
                                                     <div class="my-1 col-12">
-                                                        <button
-                                                            class="btn w-100 bg-white py-3 border border-3 btnNoFocus"
-                                                            role="button" data-bs-toggle="collapse"
-                                                            data-bs-target="#item{{$item->id}}"
-                                                            aria-expanded="false" aria-controls="item{{$item->id}}">
+                                                        <button {{--onclick="removeShow({{$item->id}})"--}}
+                                                                class="btn w-100 bg-white py-3 border border-3 btnNoFocus"
+                                                                role="button" data-bs-toggle="collapse"
+                                                                data-bs-target="#item{{$item->id}}"
+                                                                aria-expanded="false" aria-controls="item{{$item->id}}">
                                                             <div class="row">
                                                                 <div class="col-1">
                                                                     <i class="fa fa-arrows-up-down-left-right"></i>
                                                                 </div>
                                                                 <div class="col-auto">
-{{--                                                                    <span disabled="true" hidden="true">{{$this->getBlockItemTitle($blockItemTitle)}}</span>--}}
+                                                                    {{--                                                                    <span disabled="true" hidden="true">{{$this->getBlockItemTitle($blockItemTitle)}}</span>--}}
                                                                     {{$item->title}} {{$blockItemConnectionWay?'( '.$blockItemConnectionWay[$item->id].' )':''}}
                                                                 </div>
                                                             </div>
                                                         </button>
                                                         <div wire:ignore
-                                                            class="accordion accordion-flush bg-white border border-3 border-top-0"
-                                                            id="accordionParent{{$item->id}}">
-                                                            <div class="collapse text-black accordion-collapse"
-                                                                 id="item{{$item->id}}"
-                                                                 data-bs-parent="#accordionParent{{$item->id}}">
-                                                                <div class="row">
-                                                                    <div class="col-12 my-3 px-4">
-                                                                        <label class="text-black-50">عنوان آیتم
-                                                                            {{$item->title}}</label>
-                                                                        <input type="text" class="my-2 form-control"
-                                                                               wire:model="blockItemTitle.{{$item->id}}"
-                                                                               placeholder="عنوان آیتم {{$item->title}} خود را وارد کنید">
-                                                                        <p class="text-black-50 small">در صورت تمایل
-                                                                            میتوانید
-                                                                            برای این آیتم یک عنوان انتخاب کنید</p>
-                                                                    </div>
-                                                                    <div class="col-12 my-3 px-4">
-                                                                        <label
-                                                                            class="text-black-50">آیدی {{$item->title}}</label>
-                                                                        <input type="text" class="my-2 form-control"
-                                                                               value="{{$item->connectionWay}}"
-                                                                               wire:model.live="blockItemConnectionWay.{{$item->id}}"
-                                                                               placeholder="آیدی {{$item->title}} خود را وارد کنید">
-                                                                        <p class="text-black-50 small">فقط
-                                                                            آیدی {{$item->title}} خود
-                                                                            را
-                                                                            وارد کنید. مثلا mimalef70. از وارد کردن لینک
-                                                                            تلگرام
-                                                                            به صورت t.me خودداری کنید.</p>
-                                                                    </div>
+                                                             class="collapse text-black accordion-collapse blockItemAccordion bg-white border border-3 border-top-0"
+                                                             id="item{{$item->id}}"
+                                                             data-bs-parent="#accordionParent11">
+                                                            <div class="row">
+                                                                <div class="col-12 my-3 px-4">
+                                                                    <label class="text-black-50">عنوان آیتم
+                                                                        {{$item->title}}</label>
+                                                                    <input type="text" class="my-2 form-control"
+                                                                           wire:model="blockItemTitle.{{$item->id}}"
+                                                                           placeholder="عنوان آیتم {{$item->title}} خود را وارد کنید">
+                                                                    <p class="text-black-50 small">در صورت تمایل
+                                                                        میتوانید
+                                                                        برای این آیتم یک عنوان انتخاب کنید</p>
+                                                                </div>
+                                                                <div class="col-12 my-3 px-4">
+                                                                    <label
+                                                                        class="text-black-50">آیدی {{$item->title}}</label>
+                                                                    <input type="text" class="my-2 form-control"
+                                                                           value="{{$item->connectionWay}}"
+                                                                           wire:model.live="blockItemConnectionWay.{{$item->id}}"
+                                                                           placeholder="آیدی {{$item->title}} خود را وارد کنید">
+                                                                    <p class="text-black-50 small">فقط
+                                                                        آیدی {{$item->title}} خود
+                                                                        را
+                                                                        وارد کنید. مثلا mimalef70. از وارد کردن لینک
+                                                                        تلگرام
+                                                                        به صورت t.me خودداری کنید.</p>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -524,8 +525,12 @@
                             </div>
                         </div>
                         <div class="col-12 text-end">
-                            <button class="btn btn-outline-info" wire:click="cancelPbOption">انصراف</button>
-                            <button class="btn btn-info text-white" wire:click="submitPbOption">ذخیره</button>
+                            <button class="btn btn-outline-info" data-bs-dismiss="modal" wire:click="clearInputs">
+                                انصراف
+                            </button>
+                            <button class="btn btn-info text-white" data-bs-dismiss="modal" wire:click="submitPbOption">
+                                ذخیره
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -534,6 +539,11 @@
     </div>
     @push('js')
         <script>
+            /* var accordionId = $('.accordion-collapse')
+             if (accordionId.hasClass('show')){
+
+                 console.log(accordionId.id)
+             }*/
             $(window).ready(function () {
                 $('i').addClass('fs-5')
                 // $('button').addClass('fs-5')
@@ -547,8 +557,25 @@
                             a.innerHTML += "<span class='path" + ii + "'></span>"
                         }
                     }
-                }, 1000)
+                }, 2000)
             })
+
+            //             function removeShow(id) {
+            //                 var blockItemAccordion = $('.blockItemAccordion')
+            //
+            //                 if (blockItemAccordion.hasClass('show')) {
+            //
+            //                     blockItemAccordion.addClass('collapsing');
+            //                     setTimeout(function () {
+            //                     blockItemAccordion.removeClass('show');
+            //                     // $('#item' + id).removeClass('collapsing')
+            //                     }, 300)
+            //                     $('#item' + id).addClass('show')
+            //
+            //                     // blockItemAccordion.addClass('collapsing');
+            //                 }
+            // // console.log('#item'+id)
+            //             }
 
             // function setIcons() {
             //     setTimeout(function () {

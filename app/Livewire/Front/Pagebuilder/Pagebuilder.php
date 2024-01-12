@@ -27,6 +27,12 @@ class Pagebuilder extends Component
 
 //    public $blockItems=[];
 
+    public function clearVariables()
+    {
+        $this->block    = null;
+        $this->newBlock = true;
+    }
+
     public function mount($link)
     {
         $this->link    = $link;
@@ -54,7 +60,7 @@ class Pagebuilder extends Component
                 'pbOption_id' => $pbOption->id,
                 'title'       => $pbOption->title,
             ]);
-            $this->mount($this->link);
+            $this->blockOptions($block);
         }
         else {
             BlockOption::create([
@@ -66,45 +72,47 @@ class Pagebuilder extends Component
                 'pbOption_id' => $pbOption->id,
                 'title'       => $pbOption->title,
             ]);
+            $this->blockOptions($this->block);
         }
+        $this->mount($this->link);
     }
 
-    public function blockOptions(Block $block)
+    public function clearInputs()
     {
-//        dd($block->pbOption);
+        $this->block         = null;
         $this->blockItemTitle         = null;
         $this->blockItemConnectionWay = null;
         $this->blockItemExtraText     = null;
         $this->title                  = null;
         $this->blockItems             = [];
-        $this->title                  = $block->blockOption->blockTitle;
-        $this->blockItems             = $block->pbOption;
-//        dd($block->blockOption);
-        $this->block                  = $block;
-        $a                            = BlockPbOption::query()->where([/*'pbOption_id' => $pbOption->id,*/ 'block_id' => $this->block->id])->get();
-//        dd($a,$this->blockItems);
         $this->blockItemTitle         = [];
         $this->blockItemConnectionWay = [];
         $this->blockItemExtraText     = [];
-        foreach ($a as $item) {
-            $this->blockItemTitle[$item->pbOption_id] = $item->title;
-            $this->blockItemConnectionWay[$item->pbOption_id] = $item->connectionWay;
+}
+    public function blockOptions(Block $block)
+    {
+        $this->clearInputs();
+
+        $this->block = $block;
+        $this->title                  = $block->blockOption->blockTitle;
+        $this->blockItems           = BlockPbOption::query()->where([/*'pbOption_id' => $pbOption->id,*/ 'block_id' => $this->block->id])->get();
+//        dd($block->pbOption);
+        foreach ($this->blockItems as $item) {
+            $this->blockItemTitle[$item->id]         = $item->title;
+            $this->blockItemConnectionWay[$item->id] = $item->connectionWay;
         }
 //        dd($this->blockItemTitle,$this->blockItemConnectionWay);
     }
 
     public function getOptions($option, $newBlock)
     {
-//        dd($this->block);
         if ($newBlock) {
             $this->newBlock = true;
         }
         else {
             $this->newBlock = false;
-//            $this->block
         }
 
-//        dd($options);
         $this->options = [];
         $this->option  = null;
         $this->option  = $option;
@@ -134,34 +142,24 @@ class Pagebuilder extends Component
         return $a->title;
     }
 
-    /*
-        public function addNewItem()
-        {
-
-        }*/
-
-    public function cancelPbOption()
-    {
-
-    }
-
     public function submitPbOption()
     {
-        $a = BlockPbOption::query()->where([/*'pbOption_id' => $pbOption->id,*/ 'block_id' => $this->block->id])->get();
+//        $a = BlockPbOption::query()->where([/*'pbOption_id' => $pbOption->id,*/ 'block_id' => $this->block->id])->get();
 
 //        dd($this->blockItemTitle);
-        foreach ($a as $item) {
-            $key = key($this->blockItemTitle);
-            $aa  = $item->where('pbOption_id', $key)->first();
+//        dd($this->blockItems);
+        foreach ($this->blockItems as $item) {
+//            $key = key($this->blockItemTitle);
+//            $aa  = $item->where('pbOption_id', $key)->first();
 
-            if ($aa) {
-                $aa->update([
-                    'title'         => $this->blockItemTitle[$key],
-                    'connectionWay' => $this->blockItemConnectionWay[$key],
+//            if ($aa) {
+                $item->update([
+                    'title'         => $this->blockItemTitle[$item->id],
+                    'connectionWay' => $this->blockItemConnectionWay[$item->id],
                 ]);
-                unset($this->blockItemTitle[$key], $this->blockItemConnectionWay[$key]);
+//                unset($this->blockItemTitle[$key], $this->blockItemConnectionWay[$key]);
             }
-        }
+//        }
 
         $this->blockOptions($this->block);
     }
