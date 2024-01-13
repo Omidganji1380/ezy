@@ -41,7 +41,16 @@ class Pagebuilder extends Component
             abort(404);
         }
 //        dd($this->profile->block[0]->blockOption->blockTitle);
-        $this->blocks = $this->profile->block;
+        $this->blocks = $this->profile->block/*->with(['blockOption','pbOption'])*/
+        ;
+//        dd($this->blocks->first()->pbOption);
+    }
+
+    public function getIconPaths()
+    {
+        for ($ii = 1; $ii <= 50; $ii++) {
+            echo '<span class="path'.$ii.'"></span >';
+}
     }
 
     public function insertBlock(pbOption $pbOption)
@@ -79,7 +88,7 @@ class Pagebuilder extends Component
 
     public function clearInputs()
     {
-        $this->block         = null;
+        $this->block                  = null;
         $this->blockItemTitle         = null;
         $this->blockItemConnectionWay = null;
         $this->blockItemExtraText     = null;
@@ -88,14 +97,15 @@ class Pagebuilder extends Component
         $this->blockItemTitle         = [];
         $this->blockItemConnectionWay = [];
         $this->blockItemExtraText     = [];
-}
+    }
+
     public function blockOptions(Block $block)
     {
         $this->clearInputs();
 
-        $this->block = $block;
-        $this->title                  = $block->blockOption->blockTitle;
-        $this->blockItems           = BlockPbOption::query()->where([/*'pbOption_id' => $pbOption->id,*/ 'block_id' => $this->block->id])->get();
+        $this->block      = $block;
+        $this->title      = $block->blockOption->blockTitle;
+        $this->blockItems = BlockPbOption::query()->where([/*'pbOption_id' => $pbOption->id,*/ 'block_id' => $this->block->id])->get();
 //        dd($block->pbOption);
         foreach ($this->blockItems as $item) {
             $this->blockItemTitle[$item->id]         = $item->title;
@@ -138,29 +148,20 @@ class Pagebuilder extends Component
 
     public function getBlockTitle($blockPbOption)
     {
-        $a = BlockPbOption::query()->where(['pbOption_id' => $blockPbOption->pbOption_id, 'block_id' => $blockPbOption->block_id])->first();
+//        dd($blockPbOption);
+        $a = BlockPbOption::query()->where(['pbOption_id' => $blockPbOption->pbOption_id, 'id' => $blockPbOption->id, 'block_id' => $blockPbOption->block_id])->first();
+//        dd($a);
         return $a->title;
     }
 
     public function submitPbOption()
     {
-//        $a = BlockPbOption::query()->where([/*'pbOption_id' => $pbOption->id,*/ 'block_id' => $this->block->id])->get();
-
-//        dd($this->blockItemTitle);
-//        dd($this->blockItems);
         foreach ($this->blockItems as $item) {
-//            $key = key($this->blockItemTitle);
-//            $aa  = $item->where('pbOption_id', $key)->first();
-
-//            if ($aa) {
-                $item->update([
-                    'title'         => $this->blockItemTitle[$item->id],
-                    'connectionWay' => $this->blockItemConnectionWay[$item->id],
-                ]);
-//                unset($this->blockItemTitle[$key], $this->blockItemConnectionWay[$key]);
-            }
-//        }
-
+            $item->update([
+                'title'         => $this->blockItemTitle[$item->id],
+                'connectionWay' => $this->blockItemConnectionWay[$item->id],
+            ]);
+        }
         $this->blockOptions($this->block);
     }
 

@@ -462,16 +462,16 @@
 {{--<script src="{{asset('admin/js/bootstrap.min.js')}}"></script>--}}
 
 <script>
-    $(window).ready(function () {
-        var icon = $('.ez');
-
-        for (var i = 0; i < icon.length; i++) {
-            var a = icon[i];
-            for (var ii = 1; ii <= 50; ii++) {
-                a.innerHTML += "<span class='path" + ii + "'></span>"
-            }
-        }
-    })
+    // $(window).ready(function () {
+    //     var icon = $('.ez');
+    //
+    //     for (var i = 0; i < icon.length; i++) {
+    //         var a = icon[i];
+    //         for (var ii = 1; ii <= 50; ii++) {
+    //             a.innerHTML += "<span class='path" + ii + "'></span>"
+    //         }
+    //     }
+    // })
 </script>
 
 @stack('js')

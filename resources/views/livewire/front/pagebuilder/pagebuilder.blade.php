@@ -182,8 +182,9 @@
                     </div>
                 </div>
             </div>
-            <div id="sortable" style="cursor: grab;margin-bottom: 6rem !important;">
+            <div id="sortable" style="cursor: grab;margin-bottom: 6rem !important;" wire:ignore.self>
                 @foreach($blocks as $block)
+                    {{--                    @dd($block)--}}
                     <div class="col-12 my-3" data-bs-target="#blockOptions" data-bs-toggle="modal"
                          wire:click="blockOptions({{$block->id}})">
                         <div class="row p-2 flex-nowrap">
@@ -194,10 +195,29 @@
                                     </div>
                                     @foreach($block->pbOption()->get() as $option)
                                         <div class="col-6 text-center p-1">
-                                            <button dir="rtl"
+                                            <button dir="rtl" onload="setPaths();"
                                                     class="btn border-info w-100 rounded-pill overflow-hidden text-truncate px-1">
-                                                <i class="{{$option->icon}} text-info mx-2 align-middle"
-                                                   style="font-size: 25px !important;"></i>
+                                                <i class="{{$option->icon}} text-info mx-2 align-middle iii"
+                                                   style="font-size: 25px !important;">
+{{--                                                    @for($ii = 1; $ii <= 50; $ii++)--}}
+{{--                                                        <span class='path{{$ii}}'></span>--}}
+{{--                                                    @endfor--}}
+                                                    {!! $this->getIconPaths() !!}
+                                                </i>
+{{--                                                <script>--}}
+{{--                                                    window.addEventListener("load", function () {--}}
+{{--                                                        // var icon = $('.ez');--}}
+{{--                                                        var icon = $('.ez');--}}
+{{--                                                        //--}}
+{{--                                                        // for (var i = 0; i < icon.length; i++) {--}}
+{{--                                                        //     var a       = icon[i];--}}
+{{--                                                        //     a.innerHTML = null--}}
+{{--                                                        for (var ii = 1; ii <= 50; ii++) {--}}
+{{--                                                            icon.innerHTML += "<span class='path" + ii + "'></span>"--}}
+{{--                                                            // }--}}
+{{--                                                        }--}}
+{{--                                                    });--}}
+{{--                                                </script>--}}
                                                 {{$this->getBlockTitle($option->pivot)}}
                                             </button>
                                         </div>
@@ -411,7 +431,9 @@
                                         </div>
                                         <div class="col-4 align-self-center">
                                             <i style="font-size: 25px !important;"
-                                               class="align-middle {{$item->icon}}"></i>
+                                               class="align-middle {{$item->icon}}">
+                                                {!! $this->getIconPaths() !!}
+                                            </i>
                                         </div>
                                     </div>
                                 </button>
@@ -466,7 +488,7 @@
                                             <div style="cursor: grab;" id="sortable1">
                                                 @foreach($blockItems as $key=>$item)
                                                     <div class="my-1 col-12">
-                                                        <button {{--onclick="removeShow({{$item->id}})"--}}
+                                                        <button onclick="removeShow({{$item->id}})"
                                                                 class="btn w-100 bg-white py-3 border border-3 btnNoFocus"
                                                                 role="button" data-bs-toggle="collapse"
                                                                 data-bs-target="#item{{$item->id}}"
@@ -539,57 +561,40 @@
     </div>
     @push('js')
         <script>
-            /* var accordionId = $('.accordion-collapse')
-             if (accordionId.hasClass('show')){
 
-                 console.log(accordionId.id)
-             }*/
+
             $(window).ready(function () {
                 $('i').addClass('fs-5')
                 // $('button').addClass('fs-5')
-                setInterval(function () {
-                    var icon = $('.ez');
-
-                    for (var i = 0; i < icon.length; i++) {
-                        var a       = icon[i];
-                        a.innerHTML = null
-                        for (var ii = 1; ii <= 50; ii++) {
-                            a.innerHTML += "<span class='path" + ii + "'></span>"
-                        }
-                    }
-                }, 2000)
+                // setInterval(function () {
+                //     var icon = $('.ez');
+                //
+                //     for (var i = 0; i < icon.length; i++) {
+                //         var a       = icon[i];
+                //         a.innerHTML = null
+                //         for (var ii = 1; ii <= 50; ii++) {
+                //             a.innerHTML += "<span class='path" + ii + "'></span>"
+                //         }
+                //     }
+                // }, 2000)
             })
 
-            //             function removeShow(id) {
-            //                 var blockItemAccordion = $('.blockItemAccordion')
-            //
-            //                 if (blockItemAccordion.hasClass('show')) {
-            //
-            //                     blockItemAccordion.addClass('collapsing');
-            //                     setTimeout(function () {
-            //                     blockItemAccordion.removeClass('show');
-            //                     // $('#item' + id).removeClass('collapsing')
-            //                     }, 300)
-            //                     $('#item' + id).addClass('show')
-            //
-            //                     // blockItemAccordion.addClass('collapsing');
-            //                 }
-            // // console.log('#item'+id)
-            //             }
+            function removeShow(id) {
+                var blockItemAccordion = $('.blockItemAccordion')
 
-            // function setIcons() {
-            //     setTimeout(function () {
-            //         var icon = $('.ez');
-            //
-            //         for (var i = 0; i < icon.length; i++) {
-            //             var a = icon[i];
-            //             for (var ii = 1; ii <= 50; ii++) {
-            //                 a.innerHTML += "<span class='path" + ii + "'></span>"
-            //             }
-            //         }
-            //     }, 1000)
+                if (blockItemAccordion.hasClass('show')) {
 
-            // }
+                    blockItemAccordion.addClass('collapsing');
+                    setTimeout(function () {
+                        blockItemAccordion.removeClass('show');
+                        // $('#item' + id).removeClass('collapsing')
+                    }, 300)
+                    $('#item' + id).addClass('show')
+
+                    // blockItemAccordion.addClass('collapsing');
+                }
+                // console.log('#item'+id)
+            }
 
             $(function () {
                 $("#sortable1").sortable();

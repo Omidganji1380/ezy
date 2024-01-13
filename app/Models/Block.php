@@ -17,7 +17,7 @@ class Block extends Model
 
     public function pbOption(): BelongsToMany
     {
-        return $this->belongsToMany(pbOption::class,'block_pb_options','block_id','pbOption_id');
+        return $this->belongsToMany(pbOption::class,'block_pb_options','block_id','pbOption_id')->withPivot('id');
     }
 
     public function blockOption()
