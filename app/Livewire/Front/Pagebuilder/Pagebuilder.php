@@ -8,9 +8,13 @@ use App\Models\BlockPbOption;
 use App\Models\pbOption;
 use App\Models\Profile;
 use Livewire\Component;
+use Livewire\WithFileUploads;
+use Storage;
 
 class Pagebuilder extends Component
 {
+    use WithFileUploads;
+
     public $options = [];
     public $option;
 
@@ -25,7 +29,47 @@ class Pagebuilder extends Component
     public $blockItemExtraText;
     public $newBlock   = true;
 
+    public $profileTitle;
+    public $profileSubtitle;
+    public $profileImg;
+    public $profileBgImg;
+    public $profileBgBorder;
+    public $profileImgBorder;
+
 //    public $blockItems=[];
+    public function submitProfileOptions()
+    {
+        if ($this->profileImg) {
+            Storage::disk('public')->delete('pb/profiles/profile-' . $this->profile->id . '/' . $this->profile->img);
+            $filename     = time() . '_' . $this->profileImg->getFilename();
+            $originalName = time() . '_' . $this->profileImg->getClientOriginalName();
+            $this->profileImg->storeAs('pb/profiles/profile-' . $this->profile->id, $originalName, 'public');
+            Storage::disk('local')->delete('livewire-tmp/' . $filename);
+            $this->profileImg = null;
+            $this->profile->update([
+                'img' => $originalName,
+            ]);
+        }
+        if ($this->profileBgImg) {
+            Storage::disk('public')->delete('pb/profiles/profile-' . $this->profile->id . '/' . $this->profile->bg_img);
+            $filename     = time() . '_' . $this->profileBgImg->getFilename();
+            $originalName = time() . '_' . $this->profileBgImg->getClientOriginalName();
+            $this->profileBgImg->storeAs('pb/profiles/profile-' . $this->profile->id, $originalName, 'public');
+            Storage::disk('local')->delete('livewire-tmp/' . $filename);
+            $this->profileBgImg = null;
+            $this->profile->update([
+                'bg_img' => $originalName,
+            ]);
+        }
+        $this->profile->update([
+            'title'      => $this->profileTitle,
+            'subtitle'   => $this->profileSubtitle,
+            'img_border' => $this->profileImgBorder,
+            'bg_border'  => $this->profileBgBorder,
+        ]);
+        $this->clearInputs();
+        $this->mount($this->link);
+    }
 
     public function clearVariables()
     {
@@ -37,6 +81,7 @@ class Pagebuilder extends Component
     {
         $this->link    = $link;
         $this->profile = Profile::query()->with('block')->where('link', $link)->first();
+//        dd($this->profile);
         if (!$this->profile) {
             abort(404);
         }
@@ -49,8 +94,8 @@ class Pagebuilder extends Component
     public function getIconPaths()
     {
         for ($ii = 1; $ii <= 50; $ii++) {
-            echo '<span class="path'.$ii.'"></span >';
-}
+            echo '<span class="path' . $ii . '"></span >';
+        }
     }
 
     public function insertBlock(pbOption $pbOption)
@@ -86,8 +131,24 @@ class Pagebuilder extends Component
         $this->mount($this->link);
     }
 
+    public function getProfileOptions()
+    {
+        $this->clearInputs();
+        $this->profileTitle     = $this->profile->title;
+        $this->profileSubtitle  = $this->profile->subtitle;
+        $this->profileImg       = $this->profile->profileImg;
+        $this->profileBgImg     = $this->profile->profileBgImg;
+        $this->profileBgBorder  = $this->profile->bg_border;
+        $this->profileImgBorder = $this->profile->img_border;
+//        dd($this->profileBgBorder);
+    }
+
     public function clearInputs()
     {
+        $this->profileTitle           = null;
+        $this->profileSubtitle        = null;
+        $this->profileImg             = null;
+        $this->profileBgImg           = null;
         $this->block                  = null;
         $this->blockItemTitle         = null;
         $this->blockItemConnectionWay = null;

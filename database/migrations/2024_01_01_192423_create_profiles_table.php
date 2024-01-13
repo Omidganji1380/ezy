@@ -15,6 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('link')->unique();
             $table->string('img')->nullable();
+            $table->string('bg_img')->nullable();
+            $table->string('img_border')->default('100')->comment('100% - 30% - 10% - 0%');
+            $table->string('bg_border')->default('0')->comment('100');
             $table->string('title');
             $table->string('subtitle')->nullable();
             $table->foreignId('category_id')->nullable()->constrained('profile_categories')->nullOnDelete();

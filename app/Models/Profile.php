@@ -16,12 +16,16 @@ class Profile extends Model
         'subtitle',
         'category_id',
         'user_id',
+        'bg_img',
+        'img_border',
+        'bg_border',
     ];
 
     public function category()
     {
         return $this->hasOne(ProfileCategory::class, 'id', 'category_id');
     }
+
     public function block()
     {
         return $this->hasMany(Block::class, 'profile_id', 'id');

@@ -166,11 +166,15 @@
             </div>
             <div class="col-12 my-3">
                 <div class="row p-2 flex-nowrap">
-                    <div class="col-11">
+                    <div class="col-11" data-bs-target="#profileOptions" data-bs-toggle="modal"
+                         wire:click="getProfileOptions">
                         <div class="userDiv">
-                            <img src="{{asset('admin/assets/images/gallery/10.jpg')}}" alt="" class="backgroundImage">
-                            <img src="{{asset('storage/pb/profiles/profile-'.$profile->id.'/'.$profile->img)}}" alt=""
-                                 class="userImage">
+                            <img src="{{asset('storage/pb/profiles/profile-'.$profile->id.'/'.$profile->bg_img)}}"
+                                 alt="" class="backgroundImage" style="border-radius: {{$profile->bg_border==100?'50% / 0 0 100% 100%':''}}">
+                            <img
+                                src="{{asset($profile->img?'storage/pb/profiles/profile-'.$profile->id.'/'.$profile->img:'userGray.png')}}"
+                                alt="" style="border-radius: {{$profile->img_border}}%"
+                                class="userImage">
                             <div class="user-info-data">
                                 <p class="MuiTypography-root title">{{$profile->title}}</p>
                                 <p class="MuiTypography-root">{!! $profile->subtitle !!}</p>
@@ -185,10 +189,10 @@
             <div id="sortable" style="cursor: grab;margin-bottom: 6rem !important;" wire:ignore.self>
                 @foreach($blocks as $block)
                     {{--                    @dd($block)--}}
-                    <div class="col-12 my-3" data-bs-target="#blockOptions" data-bs-toggle="modal"
-                         wire:click="blockOptions({{$block->id}})">
+                    <div class="col-12 my-3">
                         <div class="row p-2 flex-nowrap">
-                            <div class="col-11">
+                            <div class="col-11" data-bs-target="#blockOptions" data-bs-toggle="modal"
+                                 wire:click="blockOptions({{$block->id}})">
                                 <div class="row justify-content-center">
                                     <div class="col-12 text-center">
                                         <p class="text-center">{{$block->blockOption->blockTitle}}</p>
@@ -199,25 +203,25 @@
                                                     class="btn border-info w-100 rounded-pill overflow-hidden text-truncate px-1">
                                                 <i class="{{$option->icon}} text-info mx-2 align-middle iii"
                                                    style="font-size: 25px !important;">
-{{--                                                    @for($ii = 1; $ii <= 50; $ii++)--}}
-{{--                                                        <span class='path{{$ii}}'></span>--}}
-{{--                                                    @endfor--}}
+                                                    {{--                                                    @for($ii = 1; $ii <= 50; $ii++)--}}
+                                                    {{--                                                        <span class='path{{$ii}}'></span>--}}
+                                                    {{--                                                    @endfor--}}
                                                     {!! $this->getIconPaths() !!}
                                                 </i>
-{{--                                                <script>--}}
-{{--                                                    window.addEventListener("load", function () {--}}
-{{--                                                        // var icon = $('.ez');--}}
-{{--                                                        var icon = $('.ez');--}}
-{{--                                                        //--}}
-{{--                                                        // for (var i = 0; i < icon.length; i++) {--}}
-{{--                                                        //     var a       = icon[i];--}}
-{{--                                                        //     a.innerHTML = null--}}
-{{--                                                        for (var ii = 1; ii <= 50; ii++) {--}}
-{{--                                                            icon.innerHTML += "<span class='path" + ii + "'></span>"--}}
-{{--                                                            // }--}}
-{{--                                                        }--}}
-{{--                                                    });--}}
-{{--                                                </script>--}}
+                                                {{--                                                <script>--}}
+                                                {{--                                                    window.addEventListener("load", function () {--}}
+                                                {{--                                                        // var icon = $('.ez');--}}
+                                                {{--                                                        var icon = $('.ez');--}}
+                                                {{--                                                        //--}}
+                                                {{--                                                        // for (var i = 0; i < icon.length; i++) {--}}
+                                                {{--                                                        //     var a       = icon[i];--}}
+                                                {{--                                                        //     a.innerHTML = null--}}
+                                                {{--                                                        for (var ii = 1; ii <= 50; ii++) {--}}
+                                                {{--                                                            icon.innerHTML += "<span class='path" + ii + "'></span>"--}}
+                                                {{--                                                            // }--}}
+                                                {{--                                                        }--}}
+                                                {{--                                                    });--}}
+                                                {{--                                                </script>--}}
                                                 {{$this->getBlockTitle($option->pivot)}}
                                             </button>
                                         </div>
@@ -503,34 +507,37 @@
                                                                 </div>
                                                             </div>
                                                         </button>
-                                                        <div wire:ignore
-                                                             class="collapse text-black accordion-collapse blockItemAccordion bg-white border border-3 border-top-0"
-                                                             id="item{{$item->id}}"
-                                                             data-bs-parent="#accordionParent11">
-                                                            <div class="row">
-                                                                <div class="col-12 my-3 px-4">
-                                                                    <label class="text-black-50">عنوان آیتم
-                                                                        {{$item->title}}</label>
-                                                                    <input type="text" class="my-2 form-control"
-                                                                           wire:model="blockItemTitle.{{$item->id}}"
-                                                                           placeholder="عنوان آیتم {{$item->title}} خود را وارد کنید">
-                                                                    <p class="text-black-50 small">در صورت تمایل
-                                                                        میتوانید
-                                                                        برای این آیتم یک عنوان انتخاب کنید</p>
-                                                                </div>
-                                                                <div class="col-12 my-3 px-4">
-                                                                    <label
-                                                                        class="text-black-50">آیدی {{$item->title}}</label>
-                                                                    <input type="text" class="my-2 form-control"
-                                                                           value="{{$item->connectionWay}}"
-                                                                           wire:model.live="blockItemConnectionWay.{{$item->id}}"
-                                                                           placeholder="آیدی {{$item->title}} خود را وارد کنید">
-                                                                    <p class="text-black-50 small">فقط
-                                                                        آیدی {{$item->title}} خود
-                                                                        را
-                                                                        وارد کنید. مثلا mimalef70. از وارد کردن لینک
-                                                                        تلگرام
-                                                                        به صورت t.me خودداری کنید.</p>
+                                                        <div class="accordion accordion-flush"
+                                                             id="accordionParent{{$item->id}}">
+                                                            <div wire:ignore
+                                                                 class="collapse text-black accordion-collapse blockItemAccordion bg-white border border-3 border-top-0"
+                                                                 id="item{{$item->id}}"
+                                                                 data-bs-parent="#accordionParent{{$item->id}}">
+                                                                <div class="row">
+                                                                    <div class="col-12 my-3 px-4">
+                                                                        <label class="text-black-50">عنوان آیتم
+                                                                            {{$item->title}}</label>
+                                                                        <input type="text" class="my-2 form-control"
+                                                                               wire:model="blockItemTitle.{{$item->id}}"
+                                                                               placeholder="عنوان آیتم {{$item->title}} خود را وارد کنید">
+                                                                        <p class="text-black-50 small">در صورت تمایل
+                                                                            میتوانید
+                                                                            برای این آیتم یک عنوان انتخاب کنید</p>
+                                                                    </div>
+                                                                    <div class="col-12 my-3 px-4">
+                                                                        <label
+                                                                            class="text-black-50">آیدی {{$item->title}}</label>
+                                                                        <input type="text" class="my-2 form-control"
+                                                                               value="{{$item->connectionWay}}"
+                                                                               wire:model.live="blockItemConnectionWay.{{$item->id}}"
+                                                                               placeholder="آیدی {{$item->title}} خود را وارد کنید">
+                                                                        <p class="text-black-50 small">فقط
+                                                                            آیدی {{$item->title}} خود
+                                                                            را
+                                                                            وارد کنید. مثلا mimalef70. از وارد کردن لینک
+                                                                            تلگرام
+                                                                            به صورت t.me خودداری کنید.</p>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -551,6 +558,151 @@
                                 انصراف
                             </button>
                             <button class="btn btn-info text-white" data-bs-dismiss="modal" wire:click="submitPbOption">
+                                ذخیره
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{--profile Options--}}
+    <div class="modal fade rounded" wire:ignore.self id="profileOptions" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered {{--modal-lg--}}">
+            <div class="modal-content">
+                <div class="modal-header p-0">
+                    <h5 class="modal-title mx-auto">لوگو و کاور</h5>
+                    <button type="button" style="width: 20px;height: 20px;"
+                            class="me-1 close btn border-dark border-2 rounded-circle p-0"
+                            data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" class="fa fa-close">{{--&times;--}}</span>
+                    </button>
+                </div>
+
+                <div class="modal-body" style="background-color: rgb(241, 243, 246);">
+                    <div class="row">
+                        <div class="col-6 my-2 my-sm-0 text-center">
+                            <button class="btn b1 selected" role="button" data-bs-toggle="collapse"
+                                    data-bs-target="#profileProperties"
+                                    aria-expanded="false" aria-controls="profileProperties">مشخصات
+                            </button>
+                        </div>
+                        <div class="col-6 my-2 my-sm-0 text-center">
+                            <button class="btn b2" role="button" data-bs-toggle="collapse"
+                                    data-bs-target="#profileMoreOptions"
+                                    aria-expanded="false" aria-controls="profileMoreOptions">تنظیمات بیشتر
+                            </button>
+                        </div>
+                        <div class="col-12 my-3 accordion accordion-flush" id="accordionParentProfile">
+                            <div class="collapse text-black accordion-collapse show" id="profileProperties"
+                                 data-bs-parent="#accordionParentProfile" wire:ignore.self>
+                                <div class="row">
+                                    <div class="col-12 my-3">
+                                        <label class="text-black-50 my-1">عنوان *</label>
+                                        <input class="form-control rounded" wire:model="profileTitle" type="text">
+                                    </div>
+                                    <div class="col-12 my-3">
+                                        <label class="text-black-50 my-1">زیرعنوان</label>
+                                        <input class="form-control rounded" wire:model="profileSubtitle"
+                                               type="text">
+                                    </div>
+                                    <div class="col-12 my-3">
+                                        <label class="text-black-50 my-1">بارگذاری تصویر پروفایل</label>
+                                        <div class="position-relative w-100 rounded text-center py-2 align-middle"
+                                             style="background-color: #cfffcf;border: 2px dashed green;height: 150px">
+                                            <div class="position-absolute h-100 w-100 top-50 translate-middle-y">
+                                                <img
+                                                    src="{{$profileImg?$profileImg->temporaryUrl():asset('storage/pb/profiles/profile-'.$profile->id.'/'.$profile->img)}}"
+                                                    class="position-absolute h-100 py-2 mx-auto start-0"
+                                                    style="right: 0">
+                                                <input type="file" class="opacity-0 h-100 w-100"
+                                                       wire:model="profileImg">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 my-3">
+                                        <label class="text-black-50 my-1">بارگذاری تصویر کاور</label>
+                                        <div class="position-relative w-100 rounded text-center py-2 align-middle"
+                                             style="background-color: #cfffcf;border: 2px dashed green;height: 150px">
+                                            <div class="position-absolute h-100 w-100 top-50 translate-middle-y">
+                                                <img
+                                                    src="{{$profileBgImg?$profileBgImg->temporaryUrl():asset('storage/pb/profiles/profile-'.$profile->id.'/'.$profile->bg_img)}}"
+                                                    class="position-absolute h-100 py-2 mx-auto start-0"
+                                                    style="right: 0">
+                                                <input type="file" class="opacity-0 h-100 w-100"
+                                                       wire:model="profileBgImg">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="collapse text-black accordion-collapse" id="profileMoreOptions"
+                                 data-bs-parent="#accordionParentProfile">
+                                <div class="row">
+                                    <div class="col-12 my-3">
+                                        <label class="text-black-50 my-1">انتخاب طرح کاور</label>
+                                        <div class="row bg-white my-2">
+                                            <div class="col-6 my-4 text-center">
+                                                <label class="w-100" style="height: 100px;border: 1px solid black"
+                                                       for="radioTriangle"></label>
+                                                <input type="radio" class="mt-3" id="radioTriangle"
+                                                       wire:model="profileBgBorder" value="0"
+                                                       {{$profileBgBorder==0?'checked':''}} name="bgStyle">
+                                            </div>
+                                            <div class="col-6 my-4 text-center">
+                                                <label class="w-100"
+                                                       style="height: 100px;border: 1px solid black;border-radius: 50% / 0 0 100% 100%"
+                                                       for="radioRounded"></label>
+                                                <input type="radio" class="mt-3" id="radioRounded"
+                                                       wire:model="profileBgBorder"
+                                                       {{$profileBgBorder==100?'checked':''}} name="bgStyle"
+                                                       value="100">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 my-3">
+                                        <label class="text-black-50 my-1">انتخاب طرح لوگو</label>
+                                        <div class="row bg-white my-2">
+                                            <div class="col-3 my-4 text-center">
+                                                <label class="w-100" style="height: 100px;border: 1px solid black"
+                                                       for="logoTriangle"></label>
+                                                <input type="radio" class="mt-3" id="logoTriangle"
+                                                       wire:model="profileImgBorder" value="0"
+                                                       {{$profileImgBorder==0?'checked':''}} name="imgStyle">
+                                            </div>
+                                            <div class="col-3 my-4 text-center">
+                                                <label class="w-100" style="height: 100px;border: 1px solid black;border-radius: 10%"
+                                                       for="logo10"></label>
+                                                <input type="radio" class="mt-3" id="logo10"
+                                                       wire:model="profileImgBorder" value="10"
+                                                       {{$profileImgBorder==10?'checked':''}} name="imgStyle">
+                                            </div>
+                                            <div class="col-3 my-4 text-center">
+                                                <label class="w-100" style="height: 100px;border: 1px solid black;border-radius: 30%"
+                                                       for="logo30"></label>
+                                                <input type="radio" class="mt-3" id="logo30"
+                                                       wire:model="profileImgBorder" value="30"
+                                                       {{$profileImgBorder==30?'checked':''}} name="imgStyle">
+                                            </div>
+                                            <div class="col-3 my-4 text-center">
+                                                <label class="w-100" style="height: 100px;border: 1px solid black;border-radius: 100%"
+                                                       for="logo100"></label>
+                                                <input type="radio" class="mt-3" id="logo100"
+                                                       wire:model="profileImgBorder" value="100"
+                                                       {{$profileImgBorder==100?'checked':''}} name="imgStyle">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 text-end">
+                            <button class="btn btn-outline-info" data-bs-dismiss="modal" wire:click="clearInputs">
+                                انصراف
+                            </button>
+                            <button class="btn btn-info text-white" data-bs-dismiss="modal"
+                                    wire:click="submitProfileOptions">
                                 ذخیره
                             </button>
                         </div>
