@@ -89,6 +89,7 @@ class Pagebuilder extends Component
         $this->blocks = $this->profile->block/*->with(['blockOption','pbOption'])*/
         ;
 //        dd($this->blocks->first()->pbOption);
+        $this->getOptions('social',false);
     }
 
     public function getIconPaths()

@@ -411,7 +411,7 @@
                     </button>
                 </div>
 
-                <div class="modal-body" style="background-color: rgb(241, 243, 246);">
+                <div class="modal-body" style="background-color: rgb(241, 243, 246);" wire:ignore.self>
                     <div class="row">
                         <div class="col-6 my-2 my-sm-0 text-center">
                             <button class="btn b1 selected" role="button" data-bs-toggle="collapse"
@@ -421,13 +421,12 @@
                         </div>
                         <div class="col-6 my-2 my-sm-0 text-center">
                             <button class="btn b2" role="button" data-bs-toggle="collapse" data-bs-target="#moreOptions"
-                                    aria-expanded="false" aria-controls="moreOptions"
-                                    wire:click="getOptions('social',true)">تنظیمات بیشتر
+                                    aria-expanded="false" aria-controls="moreOptions">تنظیمات بیشتر
                             </button>
                         </div>
-                        <div class="col-12 my-3 accordion accordion-flush" id="accordionParent">
+                        <div class="col-12 my-3 accordion accordion-flush" id="accordionParent123">
                             <div class="collapse text-black accordion-collapse show" id="properties"
-                                 data-bs-parent="#accordionParent" wire:ignore.self>
+                                 data-bs-parent="#accordionParent123" wire:ignore.self>
                                 <div class="row">
                                     <div class="col-12">
                                         <button data-bs-target="#insertMessengers" data-bs-toggle="modal"
@@ -512,7 +511,7 @@
                                 </div>
                             </div>
                             <div class="collapse text-black accordion-collapse" id="moreOptions" wire:ignore.self
-                                 data-bs-parent="#accordionParent">
+                                 data-bs-parent="#accordionParent123">
                                 <div class="row">
                                     <div class="col-12 my-3">
                                         <div class="row justify-content-around">
@@ -556,7 +555,7 @@
                                                         </label>
                                                     @endif
                                                 @endforeach
-                                                <div class="row justify-content-center mt-2">
+                                                <div class="row justify-content-center mt-3">
                                                     <div class="col-auto">
                                                         <input type="radio" name="blockItemWidth"
                                                                id="blockItemWidthFull" class="">
@@ -590,7 +589,7 @@
                                                             </div>
                                                         @endif
                                                     @endforeach
-                                                    <div class="row justify-content-center mt-2">
+                                                    <div class="row justify-content-center mt-3">
                                                         <div class="col-auto">
                                                             <input type="radio" name="blockItemWidth"
                                                                    id="blockItemWidthHalf" class="">
@@ -616,7 +615,7 @@
                                                             </div>
                                                         @endif
                                                     @endforeach
-                                                    <div class="row justify-content-center mt-2">
+                                                    <div class="row justify-content-center mt-3">
                                                         <div class="col-auto">
                                                             <input type="radio" name="blockItemWidth"
                                                                    id="blockItemWidthCompress" class="">
