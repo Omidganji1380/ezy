@@ -367,19 +367,19 @@
                     </button>
                 </div>
                 <div class="modal-body" style="background-color: rgb(241, 243, 246);">
-                    <div class="row">
+                    <div class="row justify-content-center">
                         @foreach($options as $item)
-                            <div class="col-4 my-1">
+                            <div class="col-4 my-1 px-1">
                                 <button class="btn w-100" wire:click="insertBlock({{$item->id}})"
                                         style="background-color: {{$item->color}};border: 1px solid #c4c4c4"
                                         data-bs-toggle="modal"
                                         data-bs-target="#blockOptions"
                                 >
                                     <div class="row justify-content-center">
-                                        <div class="col-8 align-self-center" style="text-align: right">
+                                        <div class="col-8 align-self-center ps-0" style="text-align: right">
                                             {{$item->title}}
                                         </div>
-                                        <div class="col-4 align-self-center">
+                                        <div class="col-4 align-self-center pe-0">
                                             <i style="font-size: 25px !important;"
                                                class="align-middle {{$item->icon}}">
                                                 {!! $this->getIconPaths() !!}
@@ -395,9 +395,8 @@
         </div>
     </div>
     {{--options--}}
-{{--        @if($blockItems || $block)--}}
     <div class="modal fade rounded" wire:ignore.self id="blockOptions" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header p-0">
                     <button type="button" style="width: 20px;height: 20px"
@@ -422,7 +421,8 @@
                         </div>
                         <div class="col-6 my-2 my-sm-0 text-center">
                             <button class="btn b2" role="button" data-bs-toggle="collapse" data-bs-target="#moreOptions"
-                                    aria-expanded="false" aria-controls="moreOptions">تنظیمات بیشتر
+                                    aria-expanded="false" aria-controls="moreOptions"
+                                    wire:click="getOptions('social',true)">تنظیمات بیشتر
                             </button>
                         </div>
                         <div class="col-12 my-3 accordion accordion-flush" id="accordionParent">
@@ -456,14 +456,16 @@
                                                                             <i class="fa fa-arrows-up-down-left-right"></i>
                                                                         </div>
                                                                         <div class="col-auto">
-                                                                            {{--                                                                    <span disabled="true" hidden="true">{{$this->getBlockItemTitle($blockItemTitle)}}</span>--}}
                                                                             {{$item->title}} {{strlen($blockItemConnectionWay[$item->id])>=1?'( '.$blockItemConnectionWay[$item->id].' )':''}}
                                                                         </div>
                                                                     </div>
                                                                 </button>
                                                             </div>
                                                             <div class="col-1 p-1 text-center position-relative">
-                                                                <button wire:click="deleteBlockItem({{$item->id}})" type="button" class="btn btnNoFocus p-0 position-absolute start-0 top-0 bottom-0" style="right: 0">
+                                                                <button wire:click="deleteBlockItem({{$item->id}})"
+                                                                        type="button"
+                                                                        class="btn btnNoFocus p-0 position-absolute start-0 top-0 bottom-0"
+                                                                        style="right: 0">
                                                                     <i class="icofont-trash text-danger fs-6"></i>
                                                                 </button>
                                                             </div>
@@ -509,9 +511,125 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="collapse text-black accordion-collapse" id="moreOptions"
+                            <div class="collapse text-black accordion-collapse" id="moreOptions" wire:ignore.self
                                  data-bs-parent="#accordionParent">
-                                2222222
+                                <div class="row">
+                                    <div class="col-12 my-3">
+                                        <div class="row justify-content-around">
+                                            <div class="col-6">
+                                                نمایش بلوک
+                                            </div>
+                                            <div class="col-6 text-start">
+                                                <input type="checkbox" name="" id="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 my-3">
+                                        <label class="text-black-50">عنوان بلوک</label>
+                                        <input type="text" class="my-2 form-control"
+                                               wire:model.live="blockItemTitle"
+                                               placeholder="عنوان بلوک خود را وارد کنید">
+                                        <p class="text-black-50 small">در صورت تمایل می‌توانید برای این بلوک یک عنوان
+                                            انتخاب کنید</p>
+                                    </div>
+                                    <div class="col-12 my-3">
+                                        <label class="text-black-50">عرض آیتم</label>
+                                        <div class="row">
+                                            <div class="col-4 text-center">
+                                                @foreach($options as $item)
+                                                    @if($loop->index == 0)
+                                                        <label class="btn w-100" for="blockItemWidthFull"
+                                                               style="background-color: {{$item->color}};border: 1px solid #c4c4c4"
+                                                        >
+                                                            <div class="row justify-content-center">
+                                                                <div class="col-8 align-self-center ps-0"
+                                                                     style="text-align: right">
+                                                                    {{$item->title}}
+                                                                </div>
+                                                                <div class="col-4 align-self-center pe-0">
+                                                                    <i style="font-size: 25px !important;"
+                                                                       class="align-middle {{$item->icon}}">
+                                                                        {!! $this->getIconPaths() !!}
+                                                                    </i>
+                                                                </div>
+                                                            </div>
+                                                        </label>
+                                                    @endif
+                                                @endforeach
+                                                <div class="row justify-content-center mt-2">
+                                                    <div class="col-auto">
+                                                        <input type="radio" name="blockItemWidth"
+                                                               id="blockItemWidthFull" class="">
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <label for="blockItemWidthFull">تمام عرض</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-4"
+                                                 style="border-left: 1px solid gray;border-right: 1px solid gray;">
+                                                <div class="row">
+                                                    @foreach($options as $item)
+                                                        @if($loop->index < 2)
+                                                            <div class="col-6 px-1">
+                                                                <label class="btn w-100" for="blockItemWidthHalf"
+                                                                       style="background-color: {{$item->color}};border: 1px solid #c4c4c4">
+                                                                    <div class="row justify-content-center">
+                                                                        <div class="col-8 align-self-center ps-0"
+                                                                             style="text-align: right">
+                                                                            {{$item->title}}
+                                                                        </div>
+                                                                        <div class="col-4 align-self-center pe-0">
+                                                                            <i style="font-size: 25px !important;"
+                                                                               class="align-middle {{$item->icon}}">
+                                                                                {!! $this->getIconPaths() !!}
+                                                                            </i>
+                                                                        </div>
+                                                                    </div>
+                                                                </label>
+                                                            </div>
+                                                        @endif
+                                                    @endforeach
+                                                    <div class="row justify-content-center mt-2">
+                                                        <div class="col-auto">
+                                                            <input type="radio" name="blockItemWidth"
+                                                                   id="blockItemWidthHalf" class="">
+                                                        </div>
+                                                        <div class="col-auto">
+                                                            <label for="blockItemWidthHalf">نصف / نصف</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="row">
+                                                    @foreach($options as $item)
+                                                        @if($loop->index < 4)
+                                                            <div class="col-3 px-1">
+                                                                <label class="btn w-100" for="blockItemWidthCompress"
+                                                                       style="background-color: {{$item->color}};border: 1px solid #c4c4c4">
+                                                                    <i style="font-size: 25px !important;"
+                                                                       class="align-middle {{$item->icon}}">
+                                                                        {!! $this->getIconPaths() !!}
+                                                                    </i>
+                                                                </label>
+                                                            </div>
+                                                        @endif
+                                                    @endforeach
+                                                    <div class="row justify-content-center mt-2">
+                                                        <div class="col-auto">
+                                                            <input type="radio" name="blockItemWidth"
+                                                                   id="blockItemWidthCompress" class="">
+                                                        </div>
+                                                        <div class="col-auto">
+                                                            <label for="blockItemWidthCompress">فشرده</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="col-12 text-end">
@@ -527,7 +645,6 @@
             </div>
         </div>
     </div>
-{{--        @endif--}}
     {{--profile Options--}}
     <div class="modal fade rounded" wire:ignore.self id="profileOptions" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered {{--modal-lg--}}">
@@ -676,6 +793,7 @@
             </div>
         </div>
     </div>
+
     @push('js')
         <script>
 

@@ -52,7 +52,12 @@ class Options extends Component
         if ($this->title == 'call')
             $this->title = 'تماس و راه های ارتباطی';
     }
-
+    public function getIconPaths()
+    {
+        for ($ii = 1; $ii <= 50; $ii++) {
+            echo '<span class="path' . $ii . '"></span >';
+        }
+    }
     public function clearInputs()
     {
         $this->title = null;

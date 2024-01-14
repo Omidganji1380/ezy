@@ -61,9 +61,7 @@
                                                             {{$i->icon}}
                                                             <i class="{{$i->icon}} float-sm-end"
                                                                style="font-size: 30px !important;">
-                                                                {{--@for($a=1;$a<=50;$a++)
-                                                                    <span class="path{!! $a !!}"></span>
-                                                                @endfor--}}
+                                                                {!! $this->getIconPaths() !!}
                                                             </i>
                                                         </li>
                                                     @endforeach
@@ -73,7 +71,9 @@
                                     </div>
                                 </div>
                                 <div class="col-4 text-center">
-                                    <i id="selectedIcon" class="selectedIcon {{$icon}}"></i>
+                                    <i id="selectedIcon" class="selectedIcon {{$icon}}">
+                                        {!! $this->getIconPaths() !!}
+                                    </i>
                                 </div>
                             </div>
                             {{--<div class="position-relative mx-auto rounded-circle"
@@ -124,7 +124,7 @@
                 <div class="modal-body" wire:ignore.self>
                     <div class="row">
                         @foreach($options as $item)
-                            <div class="col-3">
+                            <div class="col-3 my-1">
                                 <button class="btn w-100" wire:click="delete({{$item->id}})" wire:confirm="حذف شود؟"
                                         style="background-color: {{$item->color}};border: 1px solid #c4c4c4">
                                     <div class="row justify-content-between">
@@ -132,7 +132,9 @@
                                             {{$item->title}}
                                         </div>
                                         <div class="col-auto align-self-center">
-                                            <i style="font-size: 25px !important;" class="align-middle {{$item->icon}}"></i>
+                                            <i style="font-size: 25px !important;" class="align-middle {{$item->icon}}">
+                                                {!! $this->getIconPaths() !!}
+                                            </i>
                                         </div>
                                     </div>
                                 </button>
@@ -145,17 +147,17 @@
     </div>
     @push('js')
         <script>
-            setInterval(function () {
-                var icon = $('.ez');
-
-                for (var i = 0; i < icon.length; i++) {
-                    var a       = icon[i];
-                    a.innerHTML = null;
-                    for (var ii = 1; ii <= 50; ii++) {
-                        a.innerHTML += "<span class='path" + ii + "'></span>"
-                    }
-                }
-            }, 2000)
+            // setInterval(function () {
+            //     var icon = $('.ez');
+            //
+            //     for (var i = 0; i < icon.length; i++) {
+            //         var a       = icon[i];
+            //         a.innerHTML = null;
+            //         for (var ii = 1; ii <= 50; ii++) {
+            //             a.innerHTML += "<span class='path" + ii + "'></span>"
+            //         }
+            //     }
+            // }, 2000)
         </script>
     @endpush
 </div>

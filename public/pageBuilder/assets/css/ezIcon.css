@@ -26,123 +26,295 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
-.ez-Cassets .path1:before {
+.ez-vertical-3-dots:before {
+    content: "\e900";
+}
+.ez-googlemap-pin .path1:before {
+    content: "\e901";
+    color: rgb(245, 162, 154);
+}
+.ez-googlemap-pin .path2:before {
+    content: "\e902";
+    margin-left: -0.7265625em;
+    color: rgb(255, 220, 128);
+}
+.ez-googlemap-pin .path3:before {
+    content: "\e903";
+    margin-left: -0.7265625em;
+    color: rgb(128, 214, 163);
+}
+.ez-googlemap-pin .path4:before {
+    content: "\e904";
+    margin-left: -0.7265625em;
+    color: rgb(161, 194, 251);
+}
+.ez-googlemap-pin .path5:before {
+    content: "\e905";
+    margin-left: -0.7265625em;
+    color: rgb(128, 178, 236);
+}
+.ez-googlemap-pin .path6:before {
+    content: "\e906";
+    margin-left: -0.7265625em;
+    color: rgb(34, 117, 231);
+}
+.ez-googlemap-pin .path7:before {
+    content: "\e907";
+    margin-left: -0.7265625em;
+    color: rgb(128, 178, 236);
+}
+.ez-googlemap-pin .path8:before {
+    content: "\e908";
+    margin-left: -0.7265625em;
+    color: rgb(118, 85, 134);
+}
+.ez-googlemap-pin .path9:before {
+    content: "\e909";
+    margin-left: -0.7265625em;
+    color: rgb(245, 162, 154);
+}
+.ez-googlemap-pin .path10:before {
+    content: "\e90a";
+    margin-left: -0.7265625em;
+    color: rgb(245, 127, 26);
+}
+.ez-googlemap-pin .path11:before {
+    content: "\e90b";
+    margin-left: -0.7265625em;
+    color: rgb(34, 153, 159);
+}
+.ez-googlemap-pin .path12:before {
+    content: "\e90c";
+    margin-left: -0.7265625em;
+    color: rgb(161, 194, 251);
+}
+.ez-googlemap-pin .path13:before {
+    content: "\e90d";
+    margin-left: -0.7265625em;
+    color: rgb(128, 214, 163);
+}
+.ez-googlemap-pin .path14:before {
+    content: "\e90e";
+    margin-left: -0.7265625em;
+    color: rgb(255, 220, 128);
+}
+.ez-googlemap-pin .path15:before {
     content: "\e90f";
+    margin-left: -0.7265625em;
+    color: rgb(128, 179, 36);
+}
+.ez-googlemap-pin .path16:before {
+    content: "\e910";
+    margin-left: -0.7265625em;
+    color: rgb(1, 101, 216);
+}
+.ez-googlemap-pin .path17:before {
+    content: "\e911";
+    margin-left: -0.7265625em;
+    color: rgb(67, 133, 246);
+}
+.ez-googlemap-pin .path18:before {
+    content: "\e912";
+    margin-left: -0.7265625em;
+    color: rgb(235, 68, 52);
+}
+.ez-googlemap-pin .path19:before {
+    content: "\e913";
+    margin-left: -0.7265625em;
+    color: rgb(0, 172, 71);
+}
+.ez-googlemap-pin .path20:before {
+    content: "\e914";
+    margin-left: -0.7265625em;
+    color: rgb(255, 185, 0);
+}
+.ez-neshan .path1:before {
+    content: "\e915";
+    color: rgb(242, 100, 95);
+}
+.ez-neshan .path2:before {
+    content: "\e916";
+    margin-left: -0.98828125em;
+    color: rgb(221, 89, 87);
+}
+.ez-neshan .path3:before {
+    content: "\e917";
+    margin-left: -0.98828125em;
+    color: rgb(33, 78, 105);
+}
+.ez-neshan .path4:before {
+    content: "\e918";
+    margin-left: -0.98828125em;
+    color: rgb(47, 184, 155);
+}
+.ez-neshan .path5:before {
+    content: "\e919";
+    margin-left: -0.98828125em;
+    color: rgb(21, 63, 88);
+}
+.ez-chat1:before {
+    content: "\e91a";
+}
+.ez-phone:before {
+    content: "\e91b";
+}
+.ez-balad .path1:before {
+    content: "\e91c";
+    color: rgb(36, 25, 87);
+}
+.ez-balad .path2:before {
+    content: "\e91d";
+    margin-left: -1em;
+    color: rgb(120, 104, 246);
+}
+.ez-balad .path3:before {
+    content: "\e91e";
+    margin-left: -1em;
+    color: rgb(36, 25, 87);
+}
+.ez-balad .path4:before {
+    content: "\e91f";
+    margin-left: -1em;
+    color: rgb(120, 104, 246);
+}
+.ez-balad .path5:before {
+    content: "\e920";
+    margin-left: -1em;
+    color: rgb(248, 215, 72);
+}
+.ez-balad .path6:before {
+    content: "\e921";
+    margin-left: -1em;
+    color: rgb(255, 120, 0);
+}
+.ez-balad .path7:before {
+    content: "\e922";
+    margin-left: -1em;
+    color: rgb(255, 255, 255);
+}
+.ez-message1:before {
+    content: "\e923";
+}
+.ez-call1:before {
+    content: "\e924";
+}
+.ez-Cassets .path1:before {
+    content: "\e928";
     color: rgb(250, 159, 155);
 }
 .ez-Cassets .path2:before {
-    content: "\e910";
+    content: "\ea24";
     margin-left: -1em;
     color: rgb(250, 159, 155);
 }
 .ez-Cassets .path3:before {
-    content: "\e919";
+    content: "\ea25";
     margin-left: -1em;
     color: rgb(244, 62, 55);
 }
 .ez-Cassets .path4:before {
-    content: "\e91a";
+    content: "\ea26";
     margin-left: -1em;
     color: rgb(255, 255, 255);
 }
 .ez-Cassets .path5:before {
-    content: "\e91b";
+    content: "\ea27";
     margin-left: -1em;
     color: rgb(255, 255, 255);
 }
 .ez-Castbox .path1:before {
-    content: "\e91c";
+    content: "\e929";
     color: none;
 }
 .ez-Castbox .path2:before {
-    content: "\e91d";
+    content: "\ea28";
     margin-left: -1em;
     color: none;
 }
 .ez-Castbox .path3:before {
-    content: "\e91e";
+    content: "\ea29";
     margin-left: -1em;
     color: none;
 }
 .ez-Castbox .path4:before {
-    content: "\e91f";
+    content: "\ea2a";
     margin-left: -1em;
     color: none;
 }
 .ez-Castbox .path5:before {
-    content: "\e920";
+    content: "\ea2b";
     margin-left: -1em;
     color: none;
 }
 .ez-Castbox .path6:before {
-    content: "\e921";
+    content: "\ea2c";
     margin-left: -1em;
     color: rgb(255, 137, 72);
 }
 .ez-Castbox .path7:before {
-    content: "\e922";
+    content: "\ea2d";
     margin-left: -1em;
     color: rgb(255, 114, 55);
 }
 .ez-Castbox .path8:before {
-    content: "\e923";
+    content: "\ea2e";
     margin-left: -1em;
     color: rgb(255, 88, 37);
 }
 .ez-Castbox .path9:before {
-    content: "\e924";
+    content: "\ea2f";
     margin-left: -1em;
     color: rgb(255, 114, 55);
 }
 .ez-Clubhouse .path1:before {
-    content: "\e925";
+    content: "\e92a";
     color: rgb(31, 31, 26);
 }
 .ez-Clubhouse .path2:before {
-    content: "\e926";
+    content: "\ea30";
     margin-left: -1.2197265625em;
     color: rgb(255, 228, 80);
 }
 .ez-Clubhouse .path3:before {
-    content: "\e927";
+    content: "\ea31";
     margin-left: -1.2197265625em;
     color: rgb(255, 228, 80);
 }
 .ez-Clubhouse .path4:before {
-    content: "\e928";
+    content: "\ea32";
     margin-left: -1.2197265625em;
     color: rgb(31, 31, 26);
 }
 .ez-Clubhouse .path5:before {
-    content: "\e929";
+    content: "\ea33";
     margin-left: -1.2197265625em;
     color: rgb(31, 31, 26);
 }
 .ez-Clubhouse .path6:before {
-    content: "\e92a";
+    content: "\ea34";
     margin-left: -1.2197265625em;
     color: rgb(31, 31, 26);
 }
 .ez-Discord .path1:before {
-    content: "\e92b";
+    content: "\e92e";
     color: rgb(255, 255, 255);
 }
 .ez-Discord .path2:before {
-    content: "\e92c";
+    content: "\ea35";
     margin-left: -1.0400390625em;
     color: rgb(255, 255, 255);
 }
 .ez-Discord .path3:before {
-    content: "\e92d";
+    content: "\ea36";
     margin-left: -1.0400390625em;
     color: rgb(0, 161, 255);
 }
 .ez-dribble .path1:before {
-    content: "\e92e";
+    content: "\e92f";
     color: rgb(0, 0, 0);
 }
 .ez-dribble .path2:before {
-    content: "\e92f";
+    content: "\ea37";
     margin-left: -1em;
     color: rgb(255, 255, 255);
 }
@@ -1296,106 +1468,95 @@
     color: #8bc502;
 }
 .ez-link-break:before {
-    content: "\e914";
-    /*color: #494949;*/
+    content: "\ea1d";
 }
 .ez-link:before {
-    content: "\e915";
-    /*color: #494949;*/
+    content: "\e92b";
 }
 .ez-photo .path1:before {
-    content: "\e900";
+    content: "\e92c";
     color: rgb(73, 73, 73);
     opacity: 0.1;
 }
 .ez-photo .path2:before {
-    content: "\e901";
+    content: "\ea38";
     margin-left: -1em;
     color: rgb(73, 73, 73);
 }
 .ez-photo .path3:before {
-    content: "\e902";
+    content: "\ea39";
     margin-left: -1em;
     color: rgb(73, 73, 73);
 }
 .ez-photo .path4:before {
-    content: "\e903";
+    content: "\ea3a";
     margin-left: -1em;
     color: rgb(73, 73, 73);
 }
 .ez-photo .path5:before {
-    content: "\e904";
+    content: "\ea3b";
     margin-left: -1em;
     color: rgb(73, 73, 73);
 }
 .ez-slider-vertical .path1:before {
-    content: "\e905";
+    content: "\e92d";
     color: rgb(73, 73, 73);
 }
 .ez-slider-vertical .path2:before {
-    content: "\e906";
+    content: "\ea3c";
     margin-left: -1em;
     color: rgb(73, 73, 73);
 }
 .ez-slider-vertical .path3:before {
-    content: "\e907";
+    content: "\ea3d";
     margin-left: -1em;
     color: rgb(73, 73, 73);
     opacity: 0.1;
 }
 .ez-slider-vertical .path4:before {
-    content: "\e908";
+    content: "\ea3e";
     margin-left: -1em;
     color: rgb(73, 73, 73);
 }
 .ez-slider-vertical .path5:before {
-    content: "\e909";
+    content: "\ea3f";
     margin-left: -1em;
     color: rgb(73, 73, 73);
 }
 .ez-slider-vertical .path6:before {
-    content: "\e90a";
+    content: "\ea40";
     margin-left: -1em;
     color: rgb(73, 73, 73);
 }
 .ez-slider-vertical .path7:before {
-    content: "\e90b";
+    content: "\ea41";
     margin-left: -1em;
     color: rgb(73, 73, 73);
 }
 .ez-social-instagram:before {
-    content: "\e90c";
-    /*color: #494949;*/
+    content: "\ea1e";
 }
 .ez-text-align-center:before {
-    content: "\e90d";
-    /*color: #494949;*/
+    content: "\ea1f";
 }
 .ez-time-hourglass:before {
-    content: "\e90e";
-    /*color: #494949;*/
+    content: "\ea20";
 }
 .ez-video-library:before {
-    content: "\e911";
-    /*color: #494949;*/
+    content: "\ea21";
 }
 .ez-chat-writing:before {
-    content: "\e912";
-    /*color: #494949;*/
+    content: "\ea22";
 }
 .ez-help-faq:before {
-    content: "\e913";
-    /*color: #494949;*/
+    content: "\ea23";
 }
 .ez-location:before {
-    content: "\e916";
-    /*color: #494949;*/
+    content: "\e925";
 }
 .ez-page-separator:before {
-    content: "\e917";
-    /*color: #494949;*/
+    content: "\e926";
 }
 .ez-vcf:before {
-    content: "\e918";
-    /*color: #494949;*/
+    content: "\e927";
 }
