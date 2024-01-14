@@ -170,7 +170,8 @@
                          wire:click="getProfileOptions">
                         <div class="userDiv">
                             <img src="{{asset('storage/pb/profiles/profile-'.$profile->id.'/'.$profile->bg_img)}}"
-                                 alt="" class="backgroundImage" style="border-radius: {{$profile->bg_border==100?'50% / 0 0 100% 100%':''}}">
+                                 alt="" class="backgroundImage"
+                                 style="border-radius: {{$profile->bg_border==100?'50% / 0 0 100% 100%':''}}">
                             <img
                                 src="{{asset($profile->img?'storage/pb/profiles/profile-'.$profile->id.'/'.$profile->img:'userGray.png')}}"
                                 alt="" style="border-radius: {{$profile->img_border}}%"
@@ -188,7 +189,6 @@
             </div>
             <div id="sortable" style="cursor: grab;margin-bottom: 6rem !important;" wire:ignore.self>
                 @foreach($blocks as $block)
-                    {{--                    @dd($block)--}}
                     <div class="col-12 my-3">
                         <div class="row p-2 flex-nowrap">
                             <div class="col-11" data-bs-target="#blockOptions" data-bs-toggle="modal"
@@ -203,36 +203,12 @@
                                                     class="btn border-info w-100 rounded-pill overflow-hidden text-truncate px-1">
                                                 <i class="{{$option->icon}} text-info mx-2 align-middle iii"
                                                    style="font-size: 25px !important;">
-                                                    {{--                                                    @for($ii = 1; $ii <= 50; $ii++)--}}
-                                                    {{--                                                        <span class='path{{$ii}}'></span>--}}
-                                                    {{--                                                    @endfor--}}
                                                     {!! $this->getIconPaths() !!}
                                                 </i>
-                                                {{--                                                <script>--}}
-                                                {{--                                                    window.addEventListener("load", function () {--}}
-                                                {{--                                                        // var icon = $('.ez');--}}
-                                                {{--                                                        var icon = $('.ez');--}}
-                                                {{--                                                        //--}}
-                                                {{--                                                        // for (var i = 0; i < icon.length; i++) {--}}
-                                                {{--                                                        //     var a       = icon[i];--}}
-                                                {{--                                                        //     a.innerHTML = null--}}
-                                                {{--                                                        for (var ii = 1; ii <= 50; ii++) {--}}
-                                                {{--                                                            icon.innerHTML += "<span class='path" + ii + "'></span>"--}}
-                                                {{--                                                            // }--}}
-                                                {{--                                                        }--}}
-                                                {{--                                                    });--}}
-                                                {{--                                                </script>--}}
                                                 {{$this->getBlockTitle($option->pivot)}}
                                             </button>
                                         </div>
                                     @endforeach
-                                    {{--<div class="col-6 text-center p-1">
-                                        <button
-                                            class="btn border-info w-100 rounded-pill overflow-hidden text-truncate px-1">
-                                            <i class="icofont-telegram text-info mx-2 align-middle"></i>
-                                            تلگرام
-                                        </button>
-                                    </div>--}}
                                 </div>
                             </div>
                             <div class="col-1 text-center w-auto rounded" style="background-color: rgb(239, 239, 239);">
@@ -241,34 +217,6 @@
                         </div>
                     </div>
                 @endforeach
-                {{-- <div class="col-12 my-3">
-                     <div class="row p-2 flex-nowrap">
-                         <div class="col-11">
-                             <div class="row justify-content-center">
-                                 <div class="col-12 text-center">
-                                     <p class="text-center">راه‌های ارتباطی</p>
-                                 </div>
-                                 <div class="col-6 text-center p-1">
-                                     <button
-                                         class="btn border-info w-100 rounded-pill overflow-hidden text-truncate px-1">
-                                         <i class="icofont-instagram text-danger mx-2 align-middle"></i>
-                                         تلگرام
-                                     </button>
-                                 </div>
-                                 <div class="col-6 text-center p-1">
-                                     <button
-                                         class="btn border-info w-100 rounded-pill overflow-hidden text-truncate px-1">
-                                         <i class="icofont-instagram text-danger mx-2 align-middle"></i>
-                                         تلگرام
-                                     </button>
-                                 </div>
-                             </div>
-                         </div>
-                         <div class="col-1 text-center w-auto rounded" style="background-color: rgb(239, 239, 239);">
-                             <i class="fa fa-arrows-up-down-left-right top-50 position-relative translate-middle-y"></i>
-                         </div>
-                     </div>
-                 </div>--}}
             </div>
             <div class="col-12 fixed-bottom mx-auto" style="">
                 <div class="row justify-content-around flex-nowrap">
@@ -303,7 +251,6 @@
                 <div class="modal-body" style="background-color: rgb(241, 243, 246);">
                     <ul class="list-group pointer">
                         <li
-                            {{--                            onclick="setIcons()"--}}
                             data-bs-toggle="modal"
                             data-bs-target="#insertMessengers"
                             wire:click="getOptions('messenger',true)"
@@ -319,7 +266,6 @@
                             </div>
                         </li>
                         <li
-                            {{--                            onclick="setIcons()"--}}
                             class="list-group-item my-1 border-dark px-4"
                             data-bs-toggle="modal"
                             data-bs-target="#insertMessengers"
@@ -449,10 +395,15 @@
         </div>
     </div>
     {{--options--}}
+{{--        @if($blockItems || $block)--}}
     <div class="modal fade rounded" wire:ignore.self id="blockOptions" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header p-0">
+                    <button type="button" style="width: 20px;height: 20px"
+                            class="ms-2 close btn p-0" wire:click="deleteBlock">
+                        <span class="fa fa-trash text-danger">{{--&times;--}}</span>
+                    </button>
                     <h5 class="modal-title mx-auto">{{$title}}</h5>
                     <button type="button" style="width: 20px;height: 20px;"
                             class="me-1 close btn border-dark border-2 rounded-circle p-0"
@@ -492,21 +443,31 @@
                                             <div style="cursor: grab;" id="sortable1">
                                                 @foreach($blockItems as $key=>$item)
                                                     <div class="my-1 col-12">
-                                                        <button onclick="removeShow({{$item->id}})"
-                                                                class="btn w-100 bg-white py-3 border border-3 btnNoFocus"
-                                                                role="button" data-bs-toggle="collapse"
-                                                                data-bs-target="#item{{$item->id}}"
-                                                                aria-expanded="false" aria-controls="item{{$item->id}}">
-                                                            <div class="row">
-                                                                <div class="col-1">
-                                                                    <i class="fa fa-arrows-up-down-left-right"></i>
-                                                                </div>
-                                                                <div class="col-auto">
-                                                                    {{--                                                                    <span disabled="true" hidden="true">{{$this->getBlockItemTitle($blockItemTitle)}}</span>--}}
-                                                                    {{$item->title}} {{$blockItemConnectionWay?'( '.$blockItemConnectionWay[$item->id].' )':''}}
-                                                                </div>
+                                                        <div class="row bg-white border border-3 mx-0">
+                                                            <div class="col-11">
+                                                                <button onclick="removeShow({{$item->id}})"
+                                                                        class="btn w-100 bg-white py-3 btnNoFocus"
+                                                                        role="button" data-bs-toggle="collapse"
+                                                                        data-bs-target="#item{{$item->id}}"
+                                                                        aria-expanded="false"
+                                                                        aria-controls="item{{$item->id}}">
+                                                                    <div class="row">
+                                                                        <div class="col-1">
+                                                                            <i class="fa fa-arrows-up-down-left-right"></i>
+                                                                        </div>
+                                                                        <div class="col-auto">
+                                                                            {{--                                                                    <span disabled="true" hidden="true">{{$this->getBlockItemTitle($blockItemTitle)}}</span>--}}
+                                                                            {{$item->title}} {{strlen($blockItemConnectionWay[$item->id])>=1?'( '.$blockItemConnectionWay[$item->id].' )':''}}
+                                                                        </div>
+                                                                    </div>
+                                                                </button>
                                                             </div>
-                                                        </button>
+                                                            <div class="col-1 p-1 text-center position-relative">
+                                                                <button wire:click="deleteBlockItem({{$item->id}})" type="button" class="btn btnNoFocus p-0 position-absolute start-0 top-0 bottom-0" style="right: 0">
+                                                                    <i class="icofont-trash text-danger fs-6"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
                                                         <div class="accordion accordion-flush"
                                                              id="accordionParent{{$item->id}}">
                                                             <div wire:ignore
@@ -566,6 +527,7 @@
             </div>
         </div>
     </div>
+{{--        @endif--}}
     {{--profile Options--}}
     <div class="modal fade rounded" wire:ignore.self id="profileOptions" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered {{--modal-lg--}}">
@@ -672,21 +634,24 @@
                                                        {{$profileImgBorder==0?'checked':''}} name="imgStyle">
                                             </div>
                                             <div class="col-3 my-4 text-center">
-                                                <label class="w-100" style="height: 100px;border: 1px solid black;border-radius: 10%"
+                                                <label class="w-100"
+                                                       style="height: 100px;border: 1px solid black;border-radius: 10%"
                                                        for="logo10"></label>
                                                 <input type="radio" class="mt-3" id="logo10"
                                                        wire:model="profileImgBorder" value="10"
                                                        {{$profileImgBorder==10?'checked':''}} name="imgStyle">
                                             </div>
                                             <div class="col-3 my-4 text-center">
-                                                <label class="w-100" style="height: 100px;border: 1px solid black;border-radius: 30%"
+                                                <label class="w-100"
+                                                       style="height: 100px;border: 1px solid black;border-radius: 30%"
                                                        for="logo30"></label>
                                                 <input type="radio" class="mt-3" id="logo30"
                                                        wire:model="profileImgBorder" value="30"
                                                        {{$profileImgBorder==30?'checked':''}} name="imgStyle">
                                             </div>
                                             <div class="col-3 my-4 text-center">
-                                                <label class="w-100" style="height: 100px;border: 1px solid black;border-radius: 100%"
+                                                <label class="w-100"
+                                                       style="height: 100px;border: 1px solid black;border-radius: 100%"
                                                        for="logo100"></label>
                                                 <input type="radio" class="mt-3" id="logo100"
                                                        wire:model="profileImgBorder" value="100"

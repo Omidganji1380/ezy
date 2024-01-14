@@ -162,17 +162,33 @@ class Pagebuilder extends Component
 
     public function blockOptions(Block $block)
     {
-        $this->clearInputs();
+        if ($this->newBlock)
+            $this->clearInputs();
 
         $this->block      = $block;
         $this->title      = $block->blockOption->blockTitle;
         $this->blockItems = BlockPbOption::query()->where([/*'pbOption_id' => $pbOption->id,*/ 'block_id' => $this->block->id])->get();
+//        dd($this->blockItemTitle);
 //        dd($block->pbOption);
         foreach ($this->blockItems as $item) {
             $this->blockItemTitle[$item->id]         = $item->title;
             $this->blockItemConnectionWay[$item->id] = $item->connectionWay;
         }
 //        dd($this->blockItemTitle,$this->blockItemConnectionWay);
+    }
+
+    public function deleteBlock()
+    {
+        $this->block->delete();
+        $this->redirect(route('pagebuilder.pagebuilder',$this->link),true);
+//        $this->mount($this->link);
+    }
+
+    public function deleteBlockItem(BlockPbOption $blockPbOption)
+    {
+        $blockPbOption->delete();
+        $this->mount($this->link);
+        $this->blockOptions($this->block);
     }
 
     public function getOptions($option, $newBlock)
