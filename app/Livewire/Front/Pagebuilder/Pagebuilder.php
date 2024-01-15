@@ -22,12 +22,14 @@ class Pagebuilder extends Component
     public $profile;
     public $link;
     public $blocks;
-    public $blockItems = [];
+    public $blockItems      = [];
     public $block;
+    public $blockTitle;
+    public $blockVisibility = true;
     public $blockItemTitle;
     public $blockItemConnectionWay;
     public $blockItemExtraText;
-    public $newBlock   = true;
+    public $newBlock        = true;
 
     public $profileTitle;
     public $profileSubtitle;
@@ -89,7 +91,7 @@ class Pagebuilder extends Component
         $this->blocks = $this->profile->block/*->with(['blockOption','pbOption'])*/
         ;
 //        dd($this->blocks->first()->pbOption);
-        $this->getOptions('social',false);
+        $this->getOptions('social', false);
     }
 
     public function getIconPaths()
@@ -181,7 +183,7 @@ class Pagebuilder extends Component
     public function deleteBlock()
     {
         $this->block->delete();
-        $this->redirect(route('pagebuilder.pagebuilder',$this->link),true);
+        $this->redirect(route('pagebuilder.pagebuilder', $this->link), true);
 //        $this->mount($this->link);
     }
 

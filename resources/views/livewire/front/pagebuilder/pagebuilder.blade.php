@@ -510,7 +510,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="collapse text-black accordion-collapse" id="moreOptions" wire:ignore.self
+                            <div class="collapse text-black accordion-collapse px-3" id="moreOptions" wire:ignore.self
                                  data-bs-parent="#accordionParent123">
                                 <div class="row">
                                     <div class="col-12 my-3">
@@ -519,22 +519,23 @@
                                                 نمایش بلوک
                                             </div>
                                             <div class="col-6 text-start">
-                                                <input type="checkbox" name="" id="">
+                                                <input type="checkbox" wire:model="blockVisibility"
+                                                       value="{{$blockVisibility}}">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-12 my-3">
                                         <label class="text-black-50">عنوان بلوک</label>
                                         <input type="text" class="my-2 form-control"
-                                               wire:model.live="blockItemTitle"
+                                               wire:model="blockTitle"
                                                placeholder="عنوان بلوک خود را وارد کنید">
                                         <p class="text-black-50 small">در صورت تمایل می‌توانید برای این بلوک یک عنوان
                                             انتخاب کنید</p>
                                     </div>
                                     <div class="col-12 my-3">
                                         <label class="text-black-50">عرض آیتم</label>
-                                        <div class="row">
-                                            <div class="col-4 text-center">
+                                        <div class="row justify-content-center">
+                                            <div class="col-3 text-center">
                                                 @foreach($options as $item)
                                                     @if($loop->index == 0)
                                                         <label class="btn w-100" for="blockItemWidthFull"
@@ -626,6 +627,47 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 my-3">
+                                        <label class="text-black-50">نوع حاشیه بلوک</label>
+                                        <div class="row bg-white p-3">
+
+                                            @foreach($options as $item)
+                                                @if($loop->index < 4)
+                                                    <div class="col-6 my-3">
+                                                        <label class="btn w-100"
+                                                               for="blockItemBorderRadius{{$item->id}}"
+                                                               style="background-color: {{$item->color}};border: 1px solid black;
+                                                               border-radius: {{$loop->index==0?'0':''}}{{--{{$loop->index==1?'10px':''}}--}}{{$loop->index==2?'10px':''}}{{$loop->index==3?'100px':''}};
+                                                               "
+                                                        >
+                                                            <div class="row justify-content-around">
+                                                                <div class="col-auto align-self-center ps-0"
+                                                                     style="text-align: right">
+                                                                    {{$item->title}}
+                                                                </div>
+                                                                <div class="col-auto align-self-center pe-0">
+                                                                    <i style="font-size: 25px !important;"
+                                                                       class="align-middle {{$item->icon}}">
+                                                                        {!! $this->getIconPaths() !!}
+                                                                    </i>
+                                                                </div>
+                                                            </div>
+                                                        </label>
+                                                        <div class="row justify-content-center mt-3">
+                                                            <div class="col-auto">
+                                                                <input type="radio" name="blockItemBorderRadius"
+                                                                       id="blockItemBorderRadius{{$item->id}}" class="">
+                                                            </div>
+                                                            {{--<div class="col-auto">
+                                                                <label for="blockItemWidthFull">تمام عرض</label>
+                                                            </div>--}}
+                                                        </div>
+                                                    </div>
+                                                @endif
+                                            @endforeach
+
                                         </div>
                                     </div>
                                 </div>
