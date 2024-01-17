@@ -22,14 +22,16 @@ class Pagebuilder extends Component
     public $profile;
     public $link;
     public $blocks;
-    public $blockItems      = [];
+    public $blockItems = [];
     public $block;
     public $blockTitle;
-    public $blockVisibility = true;
+    public $blockItemsWidth;
+    public $blockItemsBorder;
+    public $blockVisibility;
     public $blockItemTitle;
     public $blockItemConnectionWay;
     public $blockItemExtraText;
-    public $newBlock        = true;
+    public $newBlock   = true;
 
     public $profileTitle;
     public $profileSubtitle;
@@ -111,6 +113,7 @@ class Pagebuilder extends Component
             BlockOption::create([
                 'block_id'   => $block->id,
                 'blockTitle' => $this->title,
+                'option5'    => $this->title,
             ]);
             BlockPbOption::create([
                 'block_id'    => $block->id,
@@ -123,6 +126,7 @@ class Pagebuilder extends Component
             BlockOption::create([
                 'block_id'   => $this->block->id,
                 'blockTitle' => $this->title,
+                'option5'    => $this->title,
             ]);
             BlockPbOption::create([
                 'block_id'    => $this->block->id,
@@ -163,13 +167,22 @@ class Pagebuilder extends Component
         $this->blockItemExtraText     = [];
     }
 
+    public function getBlockMoreOptions(Block $block)
+    {
+        $blockMoreOptions       = $block->blockOption;
+        $this->blockVisibility  = $blockMoreOptions->blockVisibility == 1 ? true : false;
+        $this->blockTitle       = $blockMoreOptions->blockTitle;
+        $this->blockItemsWidth  = $blockMoreOptions->blockWidth;
+        $this->blockItemsBorder = $blockMoreOptions->blockBorder;
+    }
+
     public function blockOptions(Block $block)
     {
         if ($this->newBlock)
             $this->clearInputs();
 
         $this->block      = $block;
-        $this->title      = $block->blockOption->blockTitle;
+        $this->title      = $block->blockOption->option5;
         $this->blockItems = BlockPbOption::query()->where([/*'pbOption_id' => $pbOption->id,*/ 'block_id' => $this->block->id])->get();
 //        dd($this->blockItemTitle);
 //        dd($block->pbOption);
@@ -177,6 +190,7 @@ class Pagebuilder extends Component
             $this->blockItemTitle[$item->id]         = $item->title;
             $this->blockItemConnectionWay[$item->id] = $item->connectionWay;
         }
+        $this->getBlockMoreOptions($block);
 //        dd($this->blockItemTitle,$this->blockItemConnectionWay);
     }
 
@@ -206,6 +220,7 @@ class Pagebuilder extends Component
         $this->options = [];
         $this->option  = null;
         $this->option  = $option;
+//dd($option);
 
         if ($option == 'پیام رسان ها')
             $option = 'messenger';
@@ -217,13 +232,14 @@ class Pagebuilder extends Component
         $this->options = pbOption::query()->where('for', $option)->get();
 
         $this->title = $option;
-
-        if ($this->title == 'messenger')
+        if ($option == 'messenger')
             $this->title = 'پیام رسان ها';
-        if ($this->title == 'social')
+        if ($option == 'social')
             $this->title = 'شبکه های اجتماعی';
-        if ($this->title == 'call')
+        if ($option == 'call')
             $this->title = 'تماس و راه های ارتباطی';
+
+
     }
 
     public function getBlockTitle($blockPbOption)
@@ -234,6 +250,24 @@ class Pagebuilder extends Component
         return $a->title;
     }
 
+    public function getBlockItemsBorder(Block $block)
+    {
+        $border = $block->blockOption->blockBorder;
+        if ($border == 0) {
+            $border = '0 !important';
+        }
+        elseif ($border == 1) {
+            $border = '0.25rem !important';
+        }
+        elseif ($border == 2) {
+            $border = '10px !important';
+        }
+        elseif ($border == 3) {
+            $border = '100px !important';
+        }
+        return $border;
+    }
+
     public function submitPbOption()
     {
         foreach ($this->blockItems as $item) {
@@ -242,7 +276,22 @@ class Pagebuilder extends Component
                 'connectionWay' => $this->blockItemConnectionWay[$item->id],
             ]);
         }
-        $this->blockOptions($this->block);
+
+//        dd($this->blockVisibility);
+        $this->block->blockOption->update([
+            'blockTitle'      => $this->blockTitle,
+            'blockWidth'      => $this->blockItemsWidth,
+            'blockBorder'     => $this->blockItemsBorder,
+            'blockVisibility' => $this->blockVisibility,
+            'option1'         => '',
+            'option2'         => '',
+            'option3'         => '',
+            'option4'         => '',
+            'option5'         => '',
+        ]);
+        $this->clearVariables();
+        $this->clearInputs();
+//        $this->blockOptions($this->block);
     }
 
 

@@ -198,14 +198,23 @@
                                         <p class="text-center">{{$block->blockOption->blockTitle}}</p>
                                     </div>
                                     @foreach($block->pbOption()->get() as $option)
-                                        <div class="col-6 text-center p-1">
-                                            <button dir="rtl" onload="setPaths();"
-                                                    class="btn border-info w-100 rounded-pill overflow-hidden text-truncate px-1">
-                                                <i class="{{$option->icon}} text-info mx-2 align-middle iii"
-                                                   style="font-size: 25px !important;">
-                                                    {!! $this->getIconPaths() !!}
-                                                </i>
-                                                {{$this->getBlockTitle($option->pivot)}}
+                                        {{--                                        @dd($option)--}}
+                                        <div class="{{$block->blockOption->blockWidth=='full'?'col-12':($block->blockOption->blockWidth=='half'?'col-6':($block->blockOption->blockWidth=='compress'?'col-auto':''))}} text-center p-1">
+                                            <button dir="rtl"
+                                                    class="btn border-info w-100 overflow-hidden text-truncate px-1"
+                                                    style="border-radius: {{$this->getBlockItemsBorder($block)}};">
+                                                <div class="row justify-content-center">
+                                                    <div class="col-auto {{$block->blockOption->blockWidth!='compress'?'ps-0':''}}">
+                                                        <i class="{{$option->icon}} text-info mx-2 align-middle iii"
+                                                           style="font-size: 25px !important;">
+                                                            {!! $this->getIconPaths() !!}
+                                                        </i>
+                                                    </div>
+                                                    @if($block->blockOption->blockWidth!='compress')
+                                                    <div
+                                                        class="col-auto pe-0">{{$this->getBlockTitle($option->pivot)}}</div>
+                                                    @endif
+                                                </div>
                                             </button>
                                         </div>
                                     @endforeach
@@ -400,7 +409,8 @@
             <div class="modal-content">
                 <div class="modal-header p-0">
                     <button type="button" style="width: 20px;height: 20px"
-                            class="ms-2 close btn p-0" wire:click="deleteBlock">
+                            class="ms-2 close btn p-0" wire:click="deleteBlock"
+                            wire:confirm="آیا از حذف این بلوک مطمئن هستید؟">
                         <span class="fa fa-trash text-danger">{{--&times;--}}</span>
                     </button>
                     <h5 class="modal-title mx-auto">{{$title}}</h5>
@@ -442,26 +452,33 @@
                                             <div style="cursor: grab;" id="sortable1">
                                                 @foreach($blockItems as $key=>$item)
                                                     <div class="my-1 col-12">
-                                                        <div class="row bg-white border border-3 mx-0">
-                                                            <div class="col-11">
+                                                        <div
+                                                            class="row bg-white border border-3 mx-0 justify-content-between">
+                                                            <div class="col-11 position-relative">
                                                                 <button onclick="removeShow({{$item->id}})"
-                                                                        class="btn w-100 bg-white py-3 btnNoFocus"
+                                                                        class="btn w-100 bg-white py-3 btnNoFocus ms-4"
                                                                         role="button" data-bs-toggle="collapse"
                                                                         data-bs-target="#item{{$item->id}}"
                                                                         aria-expanded="false"
                                                                         aria-controls="item{{$item->id}}">
-                                                                    <div class="row">
-                                                                        <div class="col-1">
-                                                                            <i class="fa fa-arrows-up-down-left-right"></i>
-                                                                        </div>
-                                                                        <div class="col-auto">
-                                                                            {{$item->title}} {{strlen($blockItemConnectionWay[$item->id])>=1?'( '.$blockItemConnectionWay[$item->id].' )':''}}
+                                                                    <div class="row" style="width: fit-content">
+
+                                                                        <div class="col-auto" dir="rtl">
+                                                                            {{$item->title}}
+                                                                            <span class="float-start ms-2">
+                                                                            {{strlen($blockItemConnectionWay[$item->id])>=1?'( '.$blockItemConnectionWay[$item->id].' )':''}}
+                                                                            </span>
                                                                         </div>
                                                                     </div>
                                                                 </button>
+                                                                <div
+                                                                    class="position-absolute top-50 translate-middle-y">
+                                                                    <i class="fa fa-arrows-up-down-left-right"></i>
+                                                                </div>
                                                             </div>
                                                             <div class="col-1 p-1 text-center position-relative">
                                                                 <button wire:click="deleteBlockItem({{$item->id}})"
+                                                                        wire:confirm="آیتم ( {{$item->title}} ) حذف شود؟"
                                                                         type="button"
                                                                         class="btn btnNoFocus p-0 position-absolute start-0 top-0 bottom-0"
                                                                         style="right: 0">
@@ -525,7 +542,7 @@
                                         </div>
                                     </div>
                                     <div class="col-12 my-3">
-                                        <label class="text-black-50">عنوان بلوک</label>
+                                        <label class="text-black-50 mb-2">عنوان بلوک</label>
                                         <input type="text" class="my-2 form-control"
                                                wire:model="blockTitle"
                                                placeholder="عنوان بلوک خود را وارد کنید">
@@ -533,7 +550,7 @@
                                             انتخاب کنید</p>
                                     </div>
                                     <div class="col-12 my-3">
-                                        <label class="text-black-50">عرض آیتم</label>
+                                        <label class="text-black-50 mb-2">عرض آیتم</label>
                                         <div class="row justify-content-center">
                                             <div class="col-3 text-center">
                                                 @foreach($options as $item)
@@ -559,6 +576,7 @@
                                                 <div class="row justify-content-center mt-3">
                                                     <div class="col-auto">
                                                         <input type="radio" name="blockItemWidth"
+                                                               wire:model="blockItemsWidth" value="full"
                                                                id="blockItemWidthFull" class="">
                                                     </div>
                                                     <div class="col-auto">
@@ -593,6 +611,7 @@
                                                     <div class="row justify-content-center mt-3">
                                                         <div class="col-auto">
                                                             <input type="radio" name="blockItemWidth"
+                                                                   wire:model="blockItemsWidth" value="half"
                                                                    id="blockItemWidthHalf" class="">
                                                         </div>
                                                         <div class="col-auto">
@@ -619,6 +638,7 @@
                                                     <div class="row justify-content-center mt-3">
                                                         <div class="col-auto">
                                                             <input type="radio" name="blockItemWidth"
+                                                                   wire:model="blockItemsWidth" value="compress"
                                                                    id="blockItemWidthCompress" class="">
                                                         </div>
                                                         <div class="col-auto">
@@ -630,10 +650,10 @@
                                         </div>
                                     </div>
                                     <div class="col-12 my-3">
-                                        <label class="text-black-50">نوع حاشیه بلوک</label>
+                                        <label class="text-black-50 mb-2">نوع حاشیه بلوک</label>
                                         <div class="row bg-white p-3">
 
-                                            @foreach($options as $item)
+                                            @foreach($options as $key=>$item)
                                                 @if($loop->index < 4)
                                                     <div class="col-6 my-3">
                                                         <label class="btn w-100"
@@ -658,6 +678,7 @@
                                                         <div class="row justify-content-center mt-3">
                                                             <div class="col-auto">
                                                                 <input type="radio" name="blockItemBorderRadius"
+                                                                       wire:model="blockItemsBorder" value="{{$key}}"
                                                                        id="blockItemBorderRadius{{$item->id}}" class="">
                                                             </div>
                                                             {{--<div class="col-auto">

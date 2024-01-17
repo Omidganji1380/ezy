@@ -7430,7 +7430,7 @@ fieldset:disabled .btn {
 }
 
 .float-end {
-    float: left !important
+    float: right !important
 }
 
 .float-none {
