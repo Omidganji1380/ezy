@@ -93,7 +93,7 @@ class Pagebuilder extends Component
         $this->blocks = $this->profile->block/*->with(['blockOption','pbOption'])*/
         ;
 //        dd($this->blocks->first()->pbOption);
-        $this->getOptions('social', false);
+        $this->getOptions($this->title, false);
     }
 
     public function getIconPaths()
@@ -176,13 +176,15 @@ class Pagebuilder extends Component
         $this->blockItemsBorder = $blockMoreOptions->blockBorder;
     }
 
-    public function blockOptions(Block $block)
+    public function blockOptions(Block $block/*,$newBlock*/)
     {
-        if ($this->newBlock)
-            $this->clearInputs();
+//        $this->newBlock = $newBlock;
+//        if ($this->newBlock)
+//            $this->clearInputs();
 
-        $this->block      = $block;
-        $this->title      = $block->blockOption->option5;
+        $this->block = $block;
+        $this->title = $block->blockOption->option5;
+//        dd($block->blockOption);
         $this->blockItems = BlockPbOption::query()->where([/*'pbOption_id' => $pbOption->id,*/ 'block_id' => $this->block->id])->get();
 //        dd($this->blockItemTitle);
 //        dd($block->pbOption);
@@ -283,17 +285,33 @@ class Pagebuilder extends Component
             'blockWidth'      => $this->blockItemsWidth,
             'blockBorder'     => $this->blockItemsBorder,
             'blockVisibility' => $this->blockVisibility,
-            'option1'         => '',
-            'option2'         => '',
-            'option3'         => '',
-            'option4'         => '',
-            'option5'         => '',
         ]);
         $this->clearVariables();
         $this->clearInputs();
 //        $this->blockOptions($this->block);
     }
 
+    public function removeImg()
+    {
+        if ($this->profile->img) {
+            Storage::disk('public')->delete('pb/profiles/profile-' . $this->profile->id . '/' . $this->profile->img);
+            $this->profile->update([
+                'img' => null,
+            ]);
+//            $this->mount($this->link);
+        }
+    }
+
+    public function removeBgImg()
+    {
+        if ($this->profile->bg_img) {
+            Storage::disk('public')->delete('pb/profiles/profile-' . $this->profile->id . '/' . $this->profile->bg_img);
+            $this->profile->update([
+                'bg_img' => null,
+            ]);
+//            $this->mount($this->link);
+        }
+    }
 
     public function render()
     {

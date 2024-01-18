@@ -199,20 +199,22 @@
                                     </div>
                                     @foreach($block->pbOption()->get() as $option)
                                         {{--                                        @dd($option)--}}
-                                        <div class="{{$block->blockOption->blockWidth=='full'?'col-12':($block->blockOption->blockWidth=='half'?'col-6':($block->blockOption->blockWidth=='compress'?'col-auto':''))}} text-center p-1">
+                                        <div
+                                            class="{{$block->blockOption->blockWidth=='full'?'col-12':($block->blockOption->blockWidth=='half'?'col-6':($block->blockOption->blockWidth=='compress'?'col-auto':''))}} text-center p-1">
                                             <button dir="rtl"
                                                     class="btn border-info w-100 overflow-hidden text-truncate px-1"
                                                     style="border-radius: {{$this->getBlockItemsBorder($block)}};">
                                                 <div class="row justify-content-center">
-                                                    <div class="col-auto {{$block->blockOption->blockWidth!='compress'?'ps-0':''}}">
+                                                    <div
+                                                        class="col-auto {{$block->blockOption->blockWidth!='compress'?'ps-0':''}}">
                                                         <i class="{{$option->icon}} text-info mx-2 align-middle iii"
                                                            style="font-size: 25px !important;">
                                                             {!! $this->getIconPaths() !!}
                                                         </i>
                                                     </div>
                                                     @if($block->blockOption->blockWidth!='compress')
-                                                    <div
-                                                        class="col-auto pe-0">{{$this->getBlockTitle($option->pivot)}}</div>
+                                                        <div
+                                                            class="col-auto pe-0">{{$this->getBlockTitle($option->pivot)}}</div>
                                                     @endif
                                                 </div>
                                             </button>
@@ -754,10 +756,16 @@
                                             <div class="position-absolute h-100 w-100 top-50 translate-middle-y">
                                                 <img
                                                     src="{{$profileImg?$profileImg->temporaryUrl():asset('storage/pb/profiles/profile-'.$profile->id.'/'.$profile->img)}}"
-                                                    class="position-absolute h-100 py-2 mx-auto start-0"
-                                                    style="right: 0">
+                                                    class="position-absolute h-100 py-2 mx-auto start-0" alt=""
+                                                    style="right: 0" wire:click="removeImg" wire:confirm="حذف شود؟">
+                                                <img wire:loading wire:target="profileImg"
+                                                     src="{{asset('pageBuilder/loading.gif')}}"
+                                                     class="position-absolute h-100 py-2 mx-auto start-0"
+                                                     style="right: 0">
+                                                @if(!$profile->img)
                                                 <input type="file" class="opacity-0 h-100 w-100"
                                                        wire:model="profileImg">
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -768,10 +776,16 @@
                                             <div class="position-absolute h-100 w-100 top-50 translate-middle-y">
                                                 <img
                                                     src="{{$profileBgImg?$profileBgImg->temporaryUrl():asset('storage/pb/profiles/profile-'.$profile->id.'/'.$profile->bg_img)}}"
-                                                    class="position-absolute h-100 py-2 mx-auto start-0"
-                                                    style="right: 0">
-                                                <input type="file" class="opacity-0 h-100 w-100"
-                                                       wire:model="profileBgImg">
+                                                    class="position-absolute h-100 py-2 mx-auto start-0" alt=""
+                                                    style="right: 0" wire:click="removeBgImg" wire:confirm="حذف شود؟">
+                                                <img wire:loading wire:target="profileBgImg"
+                                                     src="{{asset('pageBuilder/loading.gif')}}"
+                                                     class="position-absolute h-100 py-2 mx-auto start-0"
+                                                     style="right: 0">
+                                                @if(!$profile->bg_img)
+                                                    <input type="file" class="opacity-0 h-100 w-100"
+                                                           wire:model="profileBgImg">
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
