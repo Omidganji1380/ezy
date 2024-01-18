@@ -96,6 +96,36 @@
                                        placeholder="رنگ | Hex">
                             </div>
                         </div>
+                        <hr>
+                        <div class="col-6 my-2">
+                            <div class="row">
+                                <div class="col-6">
+                                    <input type="text" class="form-control" wire:model.live.debounce="linkTitle"
+                                           placeholder="عنوان">
+                                </div>
+                                <div class="col-6 align-self-center">
+                                    <span class="">{{$title}}</span>
+                                </div>
+                            </div>
+                            <input type="text" dir="ltr" class="form-control my-1" wire:model.live.debounce="link"
+                                   placeholder="لینک">
+                            <input type="text" class="form-control my-1 py-0" wire:model.live.debounce="linkDescription"
+                                   placeholder="توضیحات">
+                        </div>
+                        <div class="col-6 my-2">
+                            <div class="row">
+                                <div class="col-6">
+                                    <input type="text" class="form-control" wire:model.live.debounce="moreOptionTitle"
+                                           placeholder="عنوان بخش اضافه">
+                                </div>
+                            </div>
+                            <input type="text" class="form-control my-1 py-0" wire:model.live.debounce="moreOptionDescription"
+                                   placeholder="توضیحات بخش اضافه">
+                        </div>
+                        <div class="col-12 my-2">
+                            <textarea type="text" class="form-control my-1" wire:model.live.debounce="moreDescription"
+                                   placeholder="توضیحات اضافه"></textarea>
+                        </div>
                         <div class="col-12 mt-4 text-center">
                             <button class="btn btn-success w-25"
                                     {!! $dismissModal?'data-bs-dismiss="modal"':'' !!}
@@ -104,6 +134,11 @@
                             <button class="btn btn-outline-warning w-25" data-bs-dismiss="modal"
                                     wire:click="clearInputs">انصراف
                             </button>
+                            @if($selectedOption)
+                            <button class="btn btn-outline-danger w-25" data-bs-dismiss="modal"
+                                    wire:click="delete({{$selectedOption->id}})" wire:confirm="حذف شود؟">حذف
+                            </button>
+                            @endif
                         </div>
                         <div class="col-12 mt-4 text-center">
                             @if($errors->has(['title','icon','color','for']))
@@ -125,7 +160,7 @@
                     <div class="row">
                         @foreach($options as $item)
                             <div class="col-3 my-1">
-                                <button class="btn w-100" wire:click="delete({{$item->id}})" wire:confirm="حذف شود؟"
+                                <button class="btn w-100" wire:click="edit({{$item->id}})" data-bs-target="#insertOption" data-bs-toggle="modal"
                                         style="background-color: {{$item->color}};border: 1px solid #c4c4c4">
                                     <div class="row justify-content-between">
                                         <div class="col-auto align-self-center" style="text-align: right">

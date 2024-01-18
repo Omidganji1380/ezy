@@ -20,6 +20,17 @@ class pbOption extends Model
         'icon_en',
         'color_en',
         'for_en',
+        'linkTitle',
+        'linkTitle_en',
+        'link',
+        'linkDescription',
+        'linkDescription_en',
+        'moreDescription',
+        'moreDescription_en',
+        'moreOptionTitle',
+        'moreOptionTitle_en',
+        'moreOptionDescription',
+        'moreOptionDescription_en',
     ];
 
     public function block(): BelongsToMany

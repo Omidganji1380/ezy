@@ -16,13 +16,22 @@ class Options extends Component
 
     public $options = [];
     public $option;
+    public $selectedOption;
 
-    public    $title;
-    public    $icon;
-    public    $color;
-    public    $for;
-    public    $table;
-    public    $icons;
+    public $title;
+    public $icon;
+    public $color;
+    public $for;
+    public $table;
+    public $icons;
+
+    public $linkTitle;
+    public $link;
+    public $linkDescription;
+    public $moreDescription;
+    public $moreOptionTitle;
+    public $moreOptionDescription;
+
     public    $iconsFlag    = false;
     protected $rules        = [
         'title' => 'required',
@@ -52,30 +61,63 @@ class Options extends Component
         if ($this->title == 'call')
             $this->title = 'تماس و راه های ارتباطی';
     }
+
     public function getIconPaths()
     {
         for ($ii = 1; $ii <= 50; $ii++) {
             echo '<span class="path' . $ii . '"></span >';
         }
     }
+
     public function clearInputs()
     {
-        $this->title = null;
-        $this->icon  = null;
-        $this->color = null;
-        $this->for   = null;
+        $this->title                 = null;
+        $this->icon                  = null;
+        $this->color                 = null;
+        $this->for                   = null;
+        $this->linkTitle             = null;
+        $this->link                  = null;
+        $this->linkDescription       = null;
+        $this->moreDescription       = null;
+        $this->moreOptionTitle       = null;
+        $this->moreOptionDescription = null;
+        $this->selectedOption        = null;
     }
 
     public function insert()
     {
         if ($this->validate()) {
-            $option = pbOption::query()->create([
-                'title' => $this->title,
-                'color' => $this->color,
-                'for'   => $this->for,
-                'icon'  => $this->icon,
-                'sort'  => 0,
-            ]);
+            if (!$this->selectedOption) {
+                $option = pbOption::query()->create([
+                    'title'                 => $this->title,
+                    'color'                 => $this->color,
+                    'for'                   => $this->for,
+                    'icon'                  => $this->icon,
+                    'sort'                  => 0,
+                    'linkTitle'             => $this->linkTitle,
+                    'link'                  => $this->link,
+                    'linkDescription'       => $this->linkDescription,
+                    'moreDescription'       => $this->moreDescription,
+                    'moreOptionTitle'       => $this->moreOptionTitle,
+                    'moreOptionDescription' => $this->moreOptionDescription,
+                ]);
+                $this->makeLog($option->id, 'آپشن ( ' . $this->title . ' ) را برای ( ' . $this->for . ' ) ایجاد کرد');
+            }else{
+                $this->selectedOption->update([
+                    'title'                 => $this->title,
+                    'color'                 => $this->color,
+                    'for'                   => $this->for,
+                    'icon'                  => $this->icon,
+                    'sort'                  => 0,
+                    'linkTitle'             => $this->linkTitle,
+                    'link'                  => $this->link,
+                    'linkDescription'       => $this->linkDescription,
+                    'moreDescription'       => $this->moreDescription,
+                    'moreOptionTitle'       => $this->moreOptionTitle,
+                    'moreOptionDescription' => $this->moreOptionDescription,
+                ]);
+                $this->makeLog($this->selectedOption->id, 'آپشن ( ' . $this->title . ' ) را برای ( ' . $this->for . ' ) ویرایش کرد');
+            }
             /*if ($this->icon) {
                 $filename     = $this->icon->getFilename();
                 $originalName = time() . '_' . $this->icon->getClientOriginalName();
@@ -93,7 +135,6 @@ class Options extends Component
             if ($this->for == 'call')
                 $this->for = 'تماس و راه های ارتباطی';
 
-            $this->makeLog($option->id, 'آپشن ( ' . $this->title . ' ) را برای ( ' . $this->for . ' ) ایجاد کرد');
             $this->clearInputs();
         }
     }
@@ -101,7 +142,24 @@ class Options extends Component
     public function delete(pbOption $option)
     {
         $option->delete();
+        $this->clearInputs();
         $this->getOptions($this->option);
+    }
+
+    public function edit(pbOption $option)
+    {
+        $this->clearInputs();
+        $this->selectedOption        = $option;
+        $this->title                 = $option->title;
+        $this->icon                  = $option->icon;
+        $this->color                 = $option->color;
+        $this->for                   = $option->for;
+        $this->linkTitle             = $option->linkTitle;
+        $this->link                  = $option->link;
+        $this->linkDescription       = $option->linkDescription;
+        $this->moreDescription       = $option->moreDescription;
+        $this->moreOptionTitle       = $option->moreOptionTitle;
+        $this->moreOptionDescription = $option->moreOptionDescription;
     }
 
     public function makeLog($model_id, $text)
@@ -130,7 +188,7 @@ class Options extends Component
             $this->iconsFlag = true;
             $this->icons     = Icon::query()
                 ->where('icon', 'like', '%' . $this->icon . '%')
-                ->limit(5)
+                ->limit(10)
                 ->orderByDesc('icon')
                 ->get();
         }
