@@ -80,19 +80,15 @@ class Pagebuilder extends Component
         $this->block    = null;
         $this->newBlock = true;
     }
-
     public function mount($link)
     {
         $this->link    = $link;
         $this->profile = Profile::query()->with('block')->where('link', $link)->first();
-//        dd($this->profile);
         if (!$this->profile) {
             abort(404);
         }
-//        dd($this->profile->block[0]->blockOption->blockTitle);
-        $this->blocks = $this->profile->block/*->with(['blockOption','pbOption'])*/
-        ;
-//        dd($this->blocks->first()->pbOption);
+        $this->blocks = $this->profile->block;
+
         $this->getOptions($this->title, false);
     }
 

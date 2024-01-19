@@ -131,7 +131,7 @@
                         </div>
                     </div>
                 </div>--}}
-                <div class="col-12 my-3">
+                <div class="col-12 mb-3">
 {{--                    <div class="row p-2 flex-nowrap">--}}
 {{--                        <div class="col-11">--}}
                             <div class="userDiv">
@@ -161,7 +161,7 @@
                                         </div>
                                         @foreach($block->pbOption()->get() as $option)
                                             <div class="{{$block->blockOption->blockWidth=='full'?'col-12':($block->blockOption->blockWidth=='half'?'col-6':($block->blockOption->blockWidth=='compress'?'col-auto':''))}} text-center p-1">
-                                                <button dir="rtl"
+                                                <a dir="rtl" href="{{$option->link}}{{$this->getBlockLink($option->pivot)}}" target="_blank" {{--wire:click="getBlockLink({{$option->pivot}})"--}}
                                                         class="btn border-info w-100 overflow-hidden text-truncate px-1"
                                                         style="border-radius: {{$this->getBlockItemsBorder($block)}};">
                                                     <div class="row justify-content-center flex-nowrap">
@@ -176,7 +176,7 @@
                                                                 class="col-auto pe-0">{{$this->getBlockTitle($option->pivot)}}</div>
                                                         @endif
                                                     </div>
-                                                </button>
+                                                </a>
                                             </div>
                                         @endforeach
                                     </div>
@@ -193,6 +193,7 @@
 
         <script>
             $(window).ready(function () {
+                $('div.body').removeClass('py-3')
                 $('i').addClass('fs-5')
                 // $('button').addClass('fs-5')
                 // setInterval(function () {

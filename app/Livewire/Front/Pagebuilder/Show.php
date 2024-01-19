@@ -6,19 +6,25 @@ use App\Models\Block;
 use App\Models\BlockPbOption;
 use App\Models\Profile;
 use Livewire\Component;
+use Livewire\Attributes\On;
 
 class Show extends Component
 {
-    public $profile;
-    public $blocks;
+    public    $profile;
+    public    $blocks;
+
+//    public function show_page($link)
+//    {
+//        var_dump($link);
+//    }
+//    #[On('show_page')]
     public function mount($link)
     {
-        $this->profile=Profile::query()->where('link',$link)->first();
-        if (!$this->profile){
+        $this->profile = Profile::query()->where('link', $link)->first();
+        if (!$this->profile) {
             abort(404);
         }
         $this->blocks = $this->profile->block;
-//        dd($this->profile);
     }
     public function getBlockItemsBorder(Block $block)
     {
@@ -37,12 +43,14 @@ class Show extends Component
         }
         return $border;
     }
+
     public function getIconPaths()
     {
         for ($ii = 1; $ii <= 50; $ii++) {
             echo '<span class="path' . $ii . '"></span >';
         }
     }
+
     public function getBlockTitle($blockPbOption)
     {
 //        dd($blockPbOption);
@@ -50,6 +58,15 @@ class Show extends Component
 //        dd($a);
         return $a->title;
     }
+
+    public function getBlockLink($link)
+    {
+//        dd($link);
+        $link = BlockPbOption::query()->where(['pbOption_id' => $link['pbOption_id'], 'block_id' => $link['block_id'], 'id' => $link['id']])->first();
+//        dd($link);
+        return $link->connectionWay;
+    }
+
     public function render()
     {
         return view('livewire.front.pagebuilder.show')->layout('components.layouts.pageBuilder.app');

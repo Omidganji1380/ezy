@@ -1,4 +1,6 @@
 <div>
+{{--    <button wire:click="$dispatchTo('front.pagebuilder.show','show_page', { link: {{ $link }} })">asd</button>--}}
+{{--    <button wire:click="dispatchh">asd</button>--}}
     @push('css')
         <style>
             .selected {
@@ -507,17 +509,12 @@
                                                                     </div>
                                                                     <div class="col-12 my-3 px-4">
                                                                         <label
-                                                                            class="text-black-50">آیدی {{$item->title}}</label>
+                                                                            class="text-black-50">{{$item->pbOption->linkTitle}} {{$item->title}}</label>
                                                                         <input type="text" class="my-2 form-control"
                                                                                value="{{$item->connectionWay}}"
                                                                                wire:model.live="blockItemConnectionWay.{{$item->id}}"
                                                                                placeholder="آیدی {{$item->title}} خود را وارد کنید">
-                                                                        <p class="text-black-50 small">فقط
-                                                                            آیدی {{$item->title}} خود
-                                                                            را
-                                                                            وارد کنید. مثلا mimalef70. از وارد کردن لینک
-                                                                            تلگرام
-                                                                            به صورت t.me خودداری کنید.</p>
+                                                                        <p class="text-black-50 small">{{$item->pbOption->linkDescription}}</p>
                                                                     </div>
                                                                 </div>
                                                             </div>

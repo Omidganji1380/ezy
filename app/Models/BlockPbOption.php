@@ -17,4 +17,9 @@ class BlockPbOption extends Model
         'extraText',
         'sort',
     ];
+
+    public function pbOption()
+    {
+        return $this->hasOne(pbOption::class,'id','pbOption_id');
+    }
 }
