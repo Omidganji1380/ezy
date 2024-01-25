@@ -39,7 +39,7 @@
                 height: 100px;
                 color: white;
                 z-index: 5;
-                border: 1px solid grey;
+                /*border: 1px solid grey;*/
                 object-fit: contain;
                 border-radius: 100%;
                 margin-top: 95px;
@@ -163,7 +163,7 @@
                                             <div class="{{$block->blockOption->blockWidth=='full'?'col-12':($block->blockOption->blockWidth=='half'?'col-6':($block->blockOption->blockWidth=='compress'?'col-auto':''))}} text-center p-1">
                                                 <a dir="rtl" href="{{$option->link}}{{$this->getBlockLink($option->pivot)}}" target="_blank" {{--wire:click="getBlockLink({{$option->pivot}})"--}}
                                                         class="btn border-info w-100 overflow-hidden text-truncate px-1"
-                                                        style="border-radius: {{$this->getBlockItemsBorder($block)}};">
+                                                        style="border-radius: {{$this->getBlockItemsBorder($block)}};background-color: {{$option->color}}">
                                                     <div class="row justify-content-center flex-nowrap">
                                                         <div class="col-auto {{$block->blockOption->blockWidth!='compress'?'ps-0':''}}">
                                                             <i class="{{$option->icon}} text-info mx-2 align-middle iii"

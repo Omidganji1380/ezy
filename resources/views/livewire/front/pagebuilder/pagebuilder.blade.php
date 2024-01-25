@@ -41,7 +41,7 @@
                 height: 100px;
                 color: white;
                 z-index: 5;
-                border: 1px solid grey;
+                /*border: 1px solid grey;*/
                 object-fit: contain;
                 border-radius: 100%;
                 margin-top: 95px;
@@ -150,8 +150,11 @@
         <div class="row">
             <div class="col-12" style="border-radius: 20px;box-shadow: rgba(0,0,0,0.2) 0 0 20px;">
                 <div class="row p-2 justify-content-end flex-nowrap">
-                    <div class="col-auto px-1 align-self-center">
-                        ezy.company/{{$profile->link}}
+                    <div class="col-auto px-1 align-self-center" dir="ltr">
+{{--                        {{substr(route('pb.show',$profile->link),strpos(route('pb.show',$profile->link),'http://'))}}--}}
+                        {{preg_replace("(^https?://)",'',route('pb.show',$profile->link))}}
+{{--                        {{route('pb.show',$profile->link)}}--}}
+                        <input type="hidden" id="profileLink" value="{{route('pb.show',$profile->link)}}">
                     </div>
                     <div class="col-auto px-1 align-self-center">|</div>
                     <div class="col-auto px-1">
@@ -160,7 +163,7 @@
                         </button>
                     </div>
                     <div class="col-auto px-1">
-                        <button class="btn p-1 text-info">
+                        <button class="btn p-1 text-info" onclick="copyLink()">
                             <i class="icofont-ui-copy"></i>
                         </button>
                     </div>
@@ -203,9 +206,9 @@
                                         {{--                                        @dd($option)--}}
                                         <div
                                             class="{{$block->blockOption->blockWidth=='full'?'col-12':($block->blockOption->blockWidth=='half'?'col-6':($block->blockOption->blockWidth=='compress'?'col-auto':''))}} text-center p-1">
-                                            <button dir="rtl"
+                                            <button dir="rtl" {{--style=""--}}
                                                     class="btn border-info w-100 overflow-hidden text-truncate px-1"
-                                                    style="border-radius: {{$this->getBlockItemsBorder($block)}};">
+                                                    style="border-radius: {{$this->getBlockItemsBorder($block)}};background-color: {{$option->color}}">
                                                 <div class="row justify-content-center">
                                                     <div
                                                         class="col-auto {{$block->blockOption->blockWidth!='compress'?'ps-0':''}}">
@@ -329,7 +332,10 @@
                                 </div>
                             </div>
                         </li>
-                        <li class="list-group-item my-1 border-dark px-4">
+                        <li class="list-group-item my-1 border-dark px-4"
+                            data-bs-toggle="modal"
+                            data-bs-target="#insertMessengers"
+                            wire:click="getOptions('link',true)">
                             <div class="row">
                                 <div class="col-auto align-self-center">
                                     <i class="ez ez-link"></i>
@@ -513,7 +519,7 @@
                                                                         <input type="text" class="my-2 form-control"
                                                                                value="{{$item->connectionWay}}"
                                                                                wire:model.live="blockItemConnectionWay.{{$item->id}}"
-                                                                               placeholder="آیدی {{$item->title}} خود را وارد کنید">
+                                                                               placeholder="{{$item->pbOption->linkTitle}} {{$item->title}} خود را وارد کنید">
                                                                         <p class="text-black-50 small">{{$item->pbOption->linkDescription}}</p>
                                                                     </div>
                                                                 </div>
@@ -869,7 +875,11 @@
 
     @push('js')
         <script>
+            function copyLink(e){
+                var a=$('#profileLink').val()
+                navigator.clipboard.writeText(a);
 
+            }
 
             $(window).ready(function () {
                 $('i').addClass('fs-5')

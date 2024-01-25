@@ -60,6 +60,8 @@ class Options extends Component
             $this->title = 'شبکه های اجتماعی';
         if ($this->title == 'call')
             $this->title = 'تماس و راه های ارتباطی';
+        if ($this->title == 'link')
+            $this->title = 'لینک و سوپر لینک';
     }
 
     public function getIconPaths()
@@ -134,6 +136,8 @@ class Options extends Component
                 $this->for = 'شبکه اجتماعی';
             if ($this->for == 'call')
                 $this->for = 'تماس و راه های ارتباطی';
+            if ($this->for == 'link')
+                $this->for = 'لینک و سوپر لینک';
 
             $this->clearInputs();
         }

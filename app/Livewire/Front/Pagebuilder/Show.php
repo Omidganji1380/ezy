@@ -6,18 +6,12 @@ use App\Models\Block;
 use App\Models\BlockPbOption;
 use App\Models\Profile;
 use Livewire\Component;
-use Livewire\Attributes\On;
 
 class Show extends Component
 {
     public    $profile;
     public    $blocks;
 
-//    public function show_page($link)
-//    {
-//        var_dump($link);
-//    }
-//    #[On('show_page')]
     public function mount($link)
     {
         $this->profile = Profile::query()->where('link', $link)->first();

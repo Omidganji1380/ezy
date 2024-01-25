@@ -21,6 +21,11 @@
                         data-bs-target="#messengers" wire:click="getOptions('call')">تماس و راه های ارتباطی
                 </button>
             </div>
+            <div class="col-sm-4 my-2">
+                <button class="btn btn-primary w-100" data-bs-toggle="modal"
+                        data-bs-target="#messengers" wire:click="getOptions('link')">                    لینک و سوپر لینک
+                </button>
+            </div>
         </div>
     </div>
     <div class="modal fade rounded" wire:ignore.self id="insertOption" tabindex="-1" aria-hidden="true">
@@ -42,6 +47,7 @@
                                 <option value="messenger">پیام رسان</option>
                                 <option value="social">شبکه اجتماعی</option>
                                 <option value="call">تماس و راه های ارتباطی</option>
+                                <option value="link">لینک و سوپر لینک</option>
                             </select>
                         </div>
                         <div class="col-6 my-2">

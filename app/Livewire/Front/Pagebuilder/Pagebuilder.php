@@ -226,6 +226,8 @@ class Pagebuilder extends Component
             $option = 'social';
         if ($option == 'تماس و راه های ارتباطی')
             $option = 'call';
+        if ($option == 'لینک و سوپر لینک')
+            $option = 'link';
 
         $this->options = pbOption::query()->where('for', $option)->get();
 
@@ -234,8 +236,8 @@ class Pagebuilder extends Component
             $this->title = 'پیام رسان ها';
         if ($option == 'social')
             $this->title = 'شبکه های اجتماعی';
-        if ($option == 'call')
-            $this->title = 'تماس و راه های ارتباطی';
+        if ($option == 'link')
+            $this->title = 'لینک و سوپر لینک';
 
 
     }
