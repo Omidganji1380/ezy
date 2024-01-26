@@ -228,10 +228,10 @@
                     button2.removeClass('selected')
                 }
             })
-            window.Echo.channel('refresh.{{$profile->link}}')
-                  .listen('UpdateShowPbPage', (e) => {
-                      @this.pageRefresh();
-                  })
+            {{--window.Echo.channel('refresh.{{$profile->link}}')--}}
+            {{--      .listen('UpdateShowPbPage', (e) => {--}}
+            {{--          @this.pageRefresh();--}}
+            {{--      })--}}
         </script>
     @endpush
 </div>

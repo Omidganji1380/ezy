@@ -12,21 +12,16 @@ class Show extends Component
 {
     public $profile;
     public $blocks;
-    public $link;
 
     public function mount($link)
     {
-        $this->link    = $link;
         $this->profile = Profile::query()->where('link', $link)->first();
         if (!$this->profile) {
             abort(404);
         }
         $this->blocks = $this->profile->block;
     }
-    public function pageRefresh()
-    {
-        $this->mount($this->link);
-    }
+
     public function getBlockItemsBorder(Block $block)
     {
         $border = $block->blockOption->blockBorder;
