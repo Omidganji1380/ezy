@@ -2,11 +2,13 @@
 
 namespace App\Livewire\Front\Pagebuilder;
 
+use App\Events\UpdateShowPbPage;
 use App\Models\Block;
 use App\Models\BlockOption;
 use App\Models\BlockPbOption;
 use App\Models\pbOption;
 use App\Models\Profile;
+use GuzzleHttp\Client;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Storage;
@@ -80,6 +82,7 @@ class Pagebuilder extends Component
         $this->block    = null;
         $this->newBlock = true;
     }
+
     public function mount($link)
     {
         $this->link    = $link;
@@ -90,6 +93,15 @@ class Pagebuilder extends Component
         $this->blocks = $this->profile->block;
 
         $this->getOptions($this->title, false);
+
+//        $this->sendEvent();
+    }
+
+    public function sendEvent(): void
+    {
+//        new Client(['timeout'=>50000]);
+        $a=new UpdateShowPbPage($this->link);
+        event($a);
     }
 
     public function getIconPaths()
@@ -132,6 +144,7 @@ class Pagebuilder extends Component
             $this->blockOptions($this->block);
         }
         $this->mount($this->link);
+        $this->sendEvent();
     }
 
     public function getProfileOptions()
@@ -197,6 +210,7 @@ class Pagebuilder extends Component
         $this->block->delete();
         $this->redirect(route('pagebuilder.pagebuilder', $this->link), true);
 //        $this->mount($this->link);
+        $this->sendEvent();
     }
 
     public function deleteBlockItem(BlockPbOption $blockPbOption)
@@ -204,6 +218,7 @@ class Pagebuilder extends Component
         $blockPbOption->delete();
         $this->mount($this->link);
         $this->blockOptions($this->block);
+        $this->sendEvent();
     }
 
     public function getOptions($option, $newBlock)
@@ -286,7 +301,7 @@ class Pagebuilder extends Component
         ]);
         $this->clearVariables();
         $this->clearInputs();
-//        $this->blockOptions($this->block);
+        $this->sendEvent();
     }
 
     public function removeImg()
@@ -298,6 +313,7 @@ class Pagebuilder extends Component
             ]);
 //            $this->mount($this->link);
         }
+        $this->sendEvent();
     }
 
     public function removeBgImg()
@@ -309,6 +325,7 @@ class Pagebuilder extends Component
             ]);
 //            $this->mount($this->link);
         }
+        $this->sendEvent();
     }
 
     public function render()

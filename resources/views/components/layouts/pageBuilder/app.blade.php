@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="{{asset('pageBuilder/fontawesome-free-6.5.1-web/css/all.css')}}">
     <link rel="stylesheet" href="{{asset('pageBuilder/jqueryDragable/jquery-ui.css')}}">
     <link rel="stylesheet" href="{{asset('pageBuilder/assets/css/ezIcon.css')}}">
+
 @stack('css')
     @livewireStyles
 </head>
@@ -434,8 +435,10 @@
     </div>
 
 </div>
+@vite('resources/js/app.js')
 
 <!-- Jquery Core Js -->
+<script src="{{asset('build/assets/app-35275ebb.js')}}"></script>
 <script src="{{asset('admin/assets/bundles/libscripts.bundle.js')}}"></script>
 {{--<script src="{{asset('admin/ckeditorDocument/ckeditor.js')}}"></script>--}}
 {{--<script src="{{asset('admin/assets/plugin/cropper/cropper.min.js')}}"></script>--}}
@@ -473,7 +476,6 @@
     //     }
     // })
 </script>
-
 @stack('js')
 @livewireScripts
 </body>

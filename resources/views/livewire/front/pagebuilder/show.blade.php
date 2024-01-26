@@ -193,6 +193,7 @@
 
         <script>
             $(window).ready(function () {
+                {{--alert('refresh.{{$profile->link}}')--}}
                 $('div.body').removeClass('py-3')
                 $('i').addClass('fs-5')
                 // $('button').addClass('fs-5')
@@ -227,6 +228,10 @@
                     button2.removeClass('selected')
                 }
             })
+            window.Echo.channel('refresh.{{$profile->link}}')
+                  .listen('UpdateShowPbPage', (e) => {
+                      @this.pageRefresh();
+                  })
         </script>
     @endpush
 </div>
