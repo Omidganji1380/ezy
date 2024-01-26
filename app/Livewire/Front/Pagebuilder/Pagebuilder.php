@@ -100,12 +100,12 @@ class Pagebuilder extends Component
     public function sendEvent(): void
     {
 //        new Client(['timeout'=>50000]);
-        try {
+//        try {
             $a=new UpdateShowPbPage($this->link);
             event($a);
-        }catch (\Exception $exception){
-            $this->sendEvent();
-        }
+//        }catch (\Exception $exception){
+//            $this->sendEvent();
+//        }
     }
 
     public function getIconPaths()
