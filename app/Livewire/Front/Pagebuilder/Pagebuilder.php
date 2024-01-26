@@ -18,6 +18,7 @@ class Pagebuilder extends Component
     use WithFileUploads;
 
     public $options = [];
+    public $constOptions = [];
     public $option;
 
     public $title;
@@ -93,7 +94,7 @@ class Pagebuilder extends Component
         $this->blocks = $this->profile->block;
 
         $this->getOptions($this->title, false);
-
+        $this->constOptions = pbOption::query()->where('for', 'social')->get();
 //
     }
 

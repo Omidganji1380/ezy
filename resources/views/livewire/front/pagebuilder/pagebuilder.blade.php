@@ -558,7 +558,7 @@
                                         <label class="text-black-50 mb-2">عرض آیتم</label>
                                         <div class="row justify-content-center">
                                             <div class="col-3 text-center">
-                                                @foreach($options as $item)
+                                                @foreach($constOptions as $item)
                                                     @if($loop->index == 0)
                                                         <label class="btn w-100" for="blockItemWidthFull"
                                                                style="background-color: {{$item->color}};border: 1px solid #c4c4c4"
@@ -592,7 +592,7 @@
                                             <div class="col-4"
                                                  style="border-left: 1px solid gray;border-right: 1px solid gray;">
                                                 <div class="row">
-                                                    @foreach($options as $item)
+                                                    @foreach($constOptions as $item)
                                                         @if($loop->index < 2)
                                                             <div class="col-6 px-1">
                                                                 <label class="btn w-100" for="blockItemWidthHalf"
@@ -627,7 +627,7 @@
                                             </div>
                                             <div class="col-4">
                                                 <div class="row">
-                                                    @foreach($options as $item)
+                                                    @foreach($constOptions as $item)
                                                         @if($loop->index < 4)
                                                             <div class="col-3 px-1">
                                                                 <label class="btn w-100" for="blockItemWidthCompress"
@@ -658,7 +658,7 @@
                                         <label class="text-black-50 mb-2">نوع حاشیه بلوک</label>
                                         <div class="row bg-white p-3">
 
-                                            @foreach($options as $key=>$item)
+                                            @foreach($constOptions as $key=>$item)
                                                 @if($loop->index < 4)
                                                     <div class="col-6 my-3">
                                                         <label class="btn w-100"
