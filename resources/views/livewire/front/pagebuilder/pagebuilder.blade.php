@@ -1,6 +1,6 @@
 <div>
-{{--    <button wire:click="$dispatchTo('front.pagebuilder.show','show_page', { link: {{ $link }} })">asd</button>--}}
-{{--    <button wire:click="dispatchh">asd</button>--}}
+    {{--    <button wire:click="$dispatchTo('front.pagebuilder.show','show_page', { link: {{ $link }} })">asd</button>--}}
+    {{--    <button wire:click="dispatchh">asd</button>--}}
     @push('css')
         <style>
             .selected {
@@ -151,9 +151,9 @@
             <div class="col-12" style="border-radius: 20px;box-shadow: rgba(0,0,0,0.2) 0 0 20px;">
                 <div class="row p-2 justify-content-end flex-nowrap">
                     <div class="col-auto px-1 align-self-center" dir="ltr">
-{{--                        {{substr(route('pb.show',$profile->link),strpos(route('pb.show',$profile->link),'http://'))}}--}}
+                        {{--                        {{substr(route('pb.show',$profile->link),strpos(route('pb.show',$profile->link),'http://'))}}--}}
                         {{preg_replace("(^https?://)",'',route('pb.show',$profile->link))}}
-{{--                        {{route('pb.show',$profile->link)}}--}}
+                        {{--                        {{route('pb.show',$profile->link)}}--}}
                         <input type="hidden" id="profileLink" value="{{route('pb.show',$profile->link)}}">
                     </div>
                     <div class="col-auto px-1 align-self-center">|</div>
@@ -207,7 +207,7 @@
                                         <div
                                             class="{{$block->blockOption->blockWidth=='full'?'col-12':($block->blockOption->blockWidth=='half'?'col-6':($block->blockOption->blockWidth=='compress'?'col-auto':''))}} text-center p-1">
                                             <button dir="rtl" {{--style=""--}}
-                                                    class="btn border-info w-100 overflow-hidden text-truncate px-1"
+                                            class="btn border-info w-100 overflow-hidden text-truncate px-1"
                                                     style="border-radius: {{$this->getBlockItemsBorder($block)}};background-color: {{$option->color}}">
                                                 <div class="row justify-content-center">
                                                     <div
@@ -237,7 +237,9 @@
             <div class="col-12 fixed-bottom mx-auto" style="">
                 <div class="row justify-content-around flex-nowrap">
                     <div class="col-auto">
-                        <img src="{{asset('pageBuilder/assets/img/setting-2-svgrepo-com.png')}}" alt="" class="p-2">
+                        <img src="{{asset('pageBuilder/assets/img/setting-2-svgrepo-com.png')}}" alt="" class="p-2"
+                             data-bs-toggle="modal"
+                             data-bs-target="#globalOptions">
                     </div>
                     <div class="col-auto">
                         <img src="{{asset('pageBuilder/assets/img/insertPlus.png')}}" wire:click="clearVariables" alt=""
@@ -246,7 +248,10 @@
                              data-bs-target="#insertPlus">
                     </div>
                     <div class="col-auto">
-                        <img src="{{asset('pageBuilder/assets/img/preview.png')}}" alt="" class="p-2">
+                        <img src="{{asset('pageBuilder/assets/img/preview.png')}}" alt="" class="p-2"
+                             data-bs-toggle="modal"
+                             data-bs-target="#preview"
+                             wire:click="previewPB">
                     </div>
                 </div>
             </div>
@@ -264,7 +269,13 @@
                         <span aria-hidden="true" class="fa fa-close">{{--&times;--}}</span>
                     </button>
                 </div>
-                <div class="modal-body" style="background-color: rgb(241, 243, 246);">
+                <div class="modal-body position-relative" style="background-color: rgb(241, 243, 246);">
+                    <div wire:loading class="position-absolute w-100 h-100 bg-white start-0 top-0" style="z-index: 99">
+                        <img
+                            src="{{asset('pageBuilder/loading.gif')}}"
+                            class="position-absolute h-100 py-2 mx-auto start-0 w-100"
+                            style="right: 0;max-height: 100%;object-fit: none">
+                    </div>
                     <ul class="list-group pointer">
                         <li
                             data-bs-toggle="modal"
@@ -385,7 +396,13 @@
                         <span aria-hidden="true" class="fa fa-close">{{--&times;--}}</span>
                     </button>
                 </div>
-                <div class="modal-body" style="background-color: rgb(241, 243, 246);">
+                <div class="modal-body position-relative" style="background-color: rgb(241, 243, 246);">
+                    <div wire:loading class="position-absolute w-100 h-100 bg-white start-0 top-0" style="z-index: 99">
+                        <img
+                            src="{{asset('pageBuilder/loading.gif')}}"
+                            class="position-absolute h-100 py-2 mx-auto start-0 w-100"
+                            style="right: 0;max-height: 100%;object-fit: none">
+                    </div>
                     <div class="row justify-content-center">
                         @foreach($options as $item)
                             <div class="col-4 my-1 px-1">
@@ -431,22 +448,35 @@
                     </button>
                 </div>
 
-                <div class="modal-body" style="background-color: rgb(241, 243, 246);" wire:ignore.self>
+                <div class="modal-body position-relative" style="background-color: rgb(241, 243, 246);"
+                     wire:ignore.self>
+                    <div wire:loading class="position-absolute w-100 h-100 bg-white start-0 top-0" style="z-index: 99">
+                        <img
+                            src="{{asset('pageBuilder/loading.gif')}}"
+                            class="position-absolute h-100 py-2 mx-auto start-0 w-100"
+                            style="right: 0;max-height: 100%;object-fit: none">
+                    </div>
                     <div class="row">
-                        <div class="col-6 my-2 my-sm-0 text-center">
-                            <button class="btn b1 selected" role="button" data-bs-toggle="collapse"
-                                    data-bs-target="#properties"
-                                    aria-expanded="false" aria-controls="properties">مشخصات
-                            </button>
+                        <div class="col-12">
+                            <ul class="nav nav-pills mb-3 row pills-tab" id="" role="tablist">
+                                <li class="nav-item btn b1 selected col-6" role="presentation">
+                                    <button class="btn btnNoFocus active w-100" id="properties-tab"
+                                            data-bs-toggle="pill"
+                                            data-bs-target="#properties" type="button" role="tab"
+                                            aria-controls="properties" aria-selected="true">مشخصات
+                                    </button>
+                                </li>
+                                <li class="nav-item btn b2 col-6" role="presentation">
+                                    <button class="btn btnNoFocus w-100 " id="moreOptions-tab" data-bs-toggle="pill"
+                                            data-bs-target="#moreOptions" type="button" role="tab"
+                                            aria-controls="moreOptions" aria-selected="false">تنظیمات بیشتر
+                                    </button>
+                                </li>
+                            </ul>
                         </div>
-                        <div class="col-6 my-2 my-sm-0 text-center">
-                            <button class="btn b2" role="button" data-bs-toggle="collapse" data-bs-target="#moreOptions"
-                                    aria-expanded="false" aria-controls="moreOptions">تنظیمات بیشتر
-                            </button>
-                        </div>
-                        <div class="col-12 my-3 accordion accordion-flush" id="accordionParent123">
-                            <div class="collapse text-black accordion-collapse show" id="properties"
-                                 data-bs-parent="#accordionParent123" wire:ignore.self>
+                        <div class="col-12 my-3 tab-content" id="accordionParent123">
+                            <div class="tab-pane fade show active" id="properties" role="tabpanel"
+                                 aria-labelledby="properties-tab" wire:ignore.self>
                                 <div class="row">
                                     <div class="col-12">
                                         <button data-bs-target="#insertMessengers" data-bs-toggle="modal"
@@ -532,8 +562,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="collapse text-black accordion-collapse px-3" id="moreOptions" wire:ignore.self
-                                 data-bs-parent="#accordionParent123">
+                            <div class="tab-pane fade" id="moreOptions" role="tabpanel"
+                                 wire:ignore.self aria-labelledby="moreOptions-tab">
                                 <div class="row">
                                     <div class="col-12 my-3">
                                         <div class="row justify-content-around">
@@ -725,23 +755,35 @@
                     </button>
                 </div>
 
-                <div class="modal-body" style="background-color: rgb(241, 243, 246);">
+                <div class="modal-body position-relative" style="background-color: rgb(241, 243, 246);">
+                    <div wire:loading class="position-absolute w-100 h-100 bg-white start-0 top-0" style="z-index: 99">
+                        <img
+                            src="{{asset('pageBuilder/loading.gif')}}"
+                            class="position-absolute h-100 py-2 mx-auto start-0 w-100"
+                            style="right: 0;max-height: 100%;object-fit: none">
+                    </div>
                     <div class="row">
-                        <div class="col-6 my-2 my-sm-0 text-center">
-                            <button class="btn b1 selected" role="button" data-bs-toggle="collapse"
-                                    data-bs-target="#profileProperties"
-                                    aria-expanded="false" aria-controls="profileProperties">مشخصات
-                            </button>
+                        <div class="col-12">
+                            <ul class="nav nav-pills mb-3 row pills-tab" id="" role="tablist">
+                                <li class="nav-item btn b1 selected col-6" role="presentation">
+                                    <button class="btn btnNoFocus active w-100" id="profileProperties-tab"
+                                            data-bs-toggle="pill"
+                                            data-bs-target="#profileProperties" type="button" role="tab"
+                                            aria-controls="profileProperties" aria-selected="true">مشخصات
+                                    </button>
+                                </li>
+                                <li class="nav-item btn b2 col-6" role="presentation">
+                                    <button class="btn btnNoFocus w-100 " id="profileMoreOptions-tab"
+                                            data-bs-toggle="pill"
+                                            data-bs-target="#profileMoreOptions" type="button" role="tab"
+                                            aria-controls="profileMoreOptions" aria-selected="false">تنظیمات بیشتر
+                                    </button>
+                                </li>
+                            </ul>
                         </div>
-                        <div class="col-6 my-2 my-sm-0 text-center">
-                            <button class="btn b2" role="button" data-bs-toggle="collapse"
-                                    data-bs-target="#profileMoreOptions"
-                                    aria-expanded="false" aria-controls="profileMoreOptions">تنظیمات بیشتر
-                            </button>
-                        </div>
-                        <div class="col-12 my-3 accordion accordion-flush" id="accordionParentProfile">
-                            <div class="collapse text-black accordion-collapse show" id="profileProperties"
-                                 data-bs-parent="#accordionParentProfile" wire:ignore.self>
+                        <div class="col-12 my-3 tab-content" id="accordionParentProfile">
+                            <div class="tab-pane fade show active" id="profileProperties" role="tabpanel"
+                                 aria-labelledby="profileProperties-tab" wire:ignore.self>
                                 <div class="row">
                                     <div class="col-12 my-3">
                                         <label class="text-black-50 my-1">عنوان *</label>
@@ -766,8 +808,8 @@
                                                      class="position-absolute h-100 py-2 mx-auto start-0"
                                                      style="right: 0">
                                                 @if(!$profile->img)
-                                                <input type="file" class="opacity-0 h-100 w-100"
-                                                       wire:model="profileImg">
+                                                    <input type="file" class="opacity-0 h-100 w-100"
+                                                           wire:model="profileImg">
                                                 @endif
                                             </div>
                                         </div>
@@ -795,8 +837,8 @@
 
                                 </div>
                             </div>
-                            <div class="collapse text-black accordion-collapse" id="profileMoreOptions"
-                                 data-bs-parent="#accordionParentProfile">
+                            <div class="tab-pane fade" id="profileMoreOptions" role="tabpanel"
+                                 wire:ignore.self aria-labelledby="profileMoreOptions-tab">
                                 <div class="row">
                                     <div class="col-12 my-3">
                                         <label class="text-black-50 my-1">انتخاب طرح کاور</label>
@@ -872,11 +914,153 @@
             </div>
         </div>
     </div>
+    {{--preview--}}
+    <div class="modal fade rounded" wire:ignore.self id="preview" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered {{--modal-lg--}}">
+            <div class="modal-content">
+                <div class="modal-header p-0">
+                    <h5 class="modal-title mx-auto">پیش نمایش زنده</h5>
+                    <button type="button" style="width: 20px;height: 20px;"
+                            class="me-1 close btn border-dark border-2 rounded-circle p-0"
+                            data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" class="fa fa-close">{{--&times;--}}</span>
+                    </button>
+                </div>
+
+                <div class="modal-body position-relative" style="background-color: rgb(241, 243, 246);">
+                    <div wire:loading class="position-absolute w-100 h-100 bg-white start-0 top-0" style="z-index: 99">
+                        <img
+                            src="{{asset('pageBuilder/loading.gif')}}"
+                            class="position-absolute h-100 py-2 mx-auto start-0 w-100"
+                            style="right: 0;max-height: 100%;object-fit: none">
+                    </div>
+                    @livewire('front.pagebuilder.show',[$link])
+                </div>
+            </div>
+        </div>
+    </div>
+    {{--global setting--}}
+    <div class="modal fade rounded" wire:ignore.self id="globalOptions" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered {{--modal-lg--}}">
+            <div class="modal-content">
+                <div class="modal-header p-0">
+                    <h5 class="modal-title mx-auto">شخصی سازی قالب</h5>
+                    <button type="button" style="width: 20px;height: 20px;"
+                            class="me-1 close btn border-dark border-2 rounded-circle p-0"
+                            data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" class="fa fa-close">{{--&times;--}}</span>
+                    </button>
+                </div>
+
+                <div class="modal-body position-relative" style="background-color: rgb(241, 243, 246);">
+                    <div wire:loading class="position-absolute w-100 h-100 bg-white start-0 top-0" style="z-index: 99">
+                        <img
+                            src="{{asset('pageBuilder/loading.gif')}}"
+                            class="position-absolute h-100 py-2 mx-auto start-0 w-100"
+                            style="right: 0;max-height: 100%;object-fit: none">
+                    </div>
+                    <div class="row">
+
+                        <div class="col-12">
+                            <ul class="nav nav-pills mb-3 row pills-tab" id="" role="tablist">
+                                <li class="nav-item btn b1 selected col-6" role="presentation">
+                                    <button class="btn btnNoFocus active w-100" id="originalOptions-tab"
+                                            data-bs-toggle="pill"
+                                            data-bs-target="#originalOptions" type="button" role="tab"
+                                            aria-controls="originalOptions" aria-selected="true">Home
+                                    </button>
+                                </li>
+                                <li class="nav-item btn b2 col-6" role="presentation">
+                                    <button class="btn btnNoFocus w-100 " id="theme-tab" data-bs-toggle="pill"
+                                            data-bs-target="#theme" type="button" role="tab"
+                                            aria-controls="theme" aria-selected="false">Profile
+                                    </button>
+                                </li>
+                            </ul>
+                            <div class="tab-content" id="pills-tabContent">
+                                <div class="tab-pane fade show active" id="originalOptions" role="tabpanel"
+                                     aria-labelledby="originalOptions-tab">AA
+                                </div>
+                                <div class="tab-pane fade" id="theme" role="tabpanel"
+                                     aria-labelledby="theme-tab">BB
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 text-end">
+                            <button class="btn btn-outline-info" data-bs-dismiss="modal" wire:click="clearInputs">
+                                انصراف
+                            </button>
+                            <button class="btn btn-info text-white" data-bs-dismiss="modal"
+                                    wire:click="submitProfileOptions">
+                                ذخیره
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     @push('js')
         <script>
-            function copyLink(e){
-                var a=$('#profileLink').val()
+            $(document).bind('DOMSubtreeModified', function () {
+
+
+                var modal = $('div.modal')
+                if (modal.hasClass('show')) {
+                    var buttons = modal.find('ul.nav')
+                    var tabs    = modal.find('div.tab-content')
+
+                    buttons.find('li').removeClass('selected')
+                    buttons.find('li button').removeClass('active')
+                    tabs.find('div.tab-pane').removeClass('show active')
+                    // tabs.find('div.tab-pane').removeClass('active')
+
+                    buttons.find('li:first').addClass('selected')
+                    buttons.find('li:first button').addClass('active')
+                    tabs.find('div.tab-pane:first').addClass('show active')
+                    // tabs.find('div.tab-pane:first').addClass('active')
+                    // console.log(a)
+                }
+            })
+        </script>
+        <script>
+
+            const pillsTab = document.querySelector('.pills-tab');
+            const pills    = pillsTab.querySelectorAll('button[data-bs-toggle="pill"]');
+
+            pills.forEach(pill => {
+                pill.addEventListener('shown.bs.tab', (event) => {
+                    const {target}       = event;
+                    const {id: targetId} = target;
+
+                    savePillId(targetId);
+                });
+            });
+
+            const savePillId = (selector) => {
+                localStorage.setItem('activePillId', selector);
+            };
+
+            const getPillId = () => {
+                const activePillId = localStorage.getItem('activePillId');
+
+                // if local storage item is null, show default tab
+                if (!activePillId) return;
+
+                // call 'show' function
+                const someTabTriggerEl = document.querySelector(`#${activePillId}`)
+                const tab              = new bootstrap.Tab(someTabTriggerEl);
+
+                tab.show();
+            };
+
+            // get pill id on load
+            getPillId();
+        </script>
+        <script>
+            function copyLink(e) {
+                var a = $('#profileLink').val()
                 navigator.clipboard.writeText(a);
 
             }

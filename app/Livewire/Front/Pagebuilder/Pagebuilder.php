@@ -17,7 +17,7 @@ class Pagebuilder extends Component
 {
     use WithFileUploads;
 
-    public $options = [];
+    public $options      = [];
     public $constOptions = [];
     public $option;
 
@@ -96,6 +96,11 @@ class Pagebuilder extends Component
         $this->getOptions($this->title, false);
         $this->constOptions = pbOption::query()->where('for', 'social')->get();
 //
+    }
+
+    public function previewPB()
+    {
+        $this->dispatch('previewPB', link: $this->link)->to(Show::class);
     }
 
 //    public function sendEvent(): void

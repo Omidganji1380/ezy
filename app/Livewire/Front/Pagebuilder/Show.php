@@ -13,6 +13,7 @@ class Show extends Component
     public $profile;
     public $blocks;
 
+    #[On('previewPB')]
     public function mount($link)
     {
         $this->profile = Profile::query()->where('link', $link)->first();
