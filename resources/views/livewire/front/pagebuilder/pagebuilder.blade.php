@@ -620,7 +620,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-4"
-                                                 style="border-left: 1px solid gray;border-right: 1px solid gray;">
+                                                 style="border-left: 1px solid grey;border-right: 1px solid grey;">
                                                 <div class="row">
                                                     @foreach($constOptions as $item)
                                                         @if($loop->index < 2)
@@ -960,26 +960,120 @@
                             style="right: 0;max-height: 100%;object-fit: none">
                     </div>
                     <div class="row">
-
                         <div class="col-12">
                             <ul class="nav nav-pills mb-3 row pills-tab" id="" role="tablist">
                                 <li class="nav-item btn b1 selected col-6" role="presentation">
                                     <button class="btn btnNoFocus active w-100" id="originalOptions-tab"
                                             data-bs-toggle="pill"
                                             data-bs-target="#originalOptions" type="button" role="tab"
-                                            aria-controls="originalOptions" aria-selected="true">Home
+                                            aria-controls="originalOptions" aria-selected="true">تنظیمات اصلی
                                     </button>
                                 </li>
                                 <li class="nav-item btn b2 col-6" role="presentation">
                                     <button class="btn btnNoFocus w-100 " id="theme-tab" data-bs-toggle="pill"
                                             data-bs-target="#theme" type="button" role="tab"
-                                            aria-controls="theme" aria-selected="false">Profile
+                                            aria-controls="theme" aria-selected="false">تم
                                     </button>
                                 </li>
                             </ul>
                             <div class="tab-content" id="pills-tabContent">
                                 <div class="tab-pane fade show active" id="originalOptions" role="tabpanel"
-                                     aria-labelledby="originalOptions-tab">AA
+                                     aria-labelledby="originalOptions-tab">
+                                    <div class="row">
+                                        <div class="col-12 my-3">
+                                            <label class="text-black-50 my-1">فونت نوشته‌ها</label>
+                                            <button class="btn btnNoFocus w-100 py-2" style="text-align: right;border: 1px solid lightgrey">
+                                                ایران سنس
+                                            <i class="icofont-rounded-down float-start"></i>
+                                            </button>
+                                        </div>
+                                        <div class="col-12 my-3">
+                                            <label class="text-black-50 my-1">قالب</label>
+                                            <button class="btn btnNoFocus w-100 py-2" style="text-align: right;border: 1px solid lightgrey">
+                                                نوشته‌ها و متون
+                                            <span class="float-start rounded-circle ms-2" style="width: 20px;height: 20px;background-color: #492525"></span>
+                                            <span class="float-start">#492525</span>
+                                            </button>
+                                        </div>
+                                        <div class="col-12 my-3">
+                                            <label class="text-black-50 my-1">تنظیمات عمومی رنگ آیتم‌ها / دکمه‌ها</label>
+                                            <button class="btn btnNoFocus w-100 py-2" style="text-align: right;border: 1px solid lightgrey">
+                                                پس‌زمینه بلوک‌ها
+                                                <span class="float-start rounded-circle ms-2" style="width: 20px;height: 20px;background-color: #492525"></span>
+                                                <span class="float-start">#492525</span>
+                                            </button>
+                                            <button class="btn btnNoFocus w-100 py-2 my-2" style="text-align: right;border: 1px solid lightgrey">
+                                                عناوین آیتم‌ها
+                                                <span class="float-start rounded-circle ms-2" style="width: 20px;height: 20px;background-color: #363636"></span>
+                                                <span class="float-start">#363636</span>
+                                            </button>
+                                            <button class="btn btnNoFocus w-100 py-2" style="text-align: right;border: 1px solid lightgrey">
+                                                حاشیه بلوک‌ها
+                                                <span class="float-start rounded-circle ms-2" style="width: 20px;height: 20px;background-color: #B1B3B6"></span>
+                                                <span class="float-start">#B1B3B6</span>
+                                            </button>
+                                        </div>
+                                        <div class="col-12 my-3">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <ul class="nav nav-pills mb-3 row pills-tab" id="" role="tablist">
+                                                        <li class="nav-item btn b3 selected col-6" role="presentation">
+                                                            <button class="btn btnNoFocus active w-100" id="colors-tab"
+                                                                    data-bs-toggle="pill"
+                                                                    data-bs-target="#colors" type="button" role="tab"
+                                                                    aria-controls="colors" aria-selected="true">رنگ
+                                                            </button>
+                                                        </li>
+                                                        <li class="nav-item btn b4 col-6" role="presentation">
+                                                            <button class="btn btnNoFocus w-100 " id="bgImage-tab" data-bs-toggle="pill"
+                                                                    data-bs-target="#bgImage" type="button" role="tab"
+                                                                    aria-controls="bgImage" aria-selected="false">تصویر
+                                                            </button>
+                                                        </li>
+                                                    </ul>
+                                                    <div class="tab-content" id="pills-tabContent">
+                                                        <div class="tab-pane fade show active" id="colors" role="tabpanel"
+                                                             aria-labelledby="colors-tab">
+                                                            <div class="row">
+                                                                <div class="col-12 my-3">
+                                                                    <button class="btn btnNoFocus w-100 py-2" style="text-align: right;border: 1px solid lightgrey">
+                                                                        رنگ پس‌زمینه
+                                                                        <span class="float-start rounded-circle ms-2" style="width: 20px;height: 20px;background-color: #492525"></span>
+                                                                        <span class="float-start">#492525</span>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="tab-pane fade" id="bgImage" role="tabpanel"
+                                                             aria-labelledby="bgImage-tab">
+                                                            <div class="row">
+                                                                <div class="col-12 my-3">
+                                                                    <label class="text-black-50 my-1">تصویر پس زمینه</label>
+                                                                    <div class="row">
+                                                                        <div class="col-md-6 my-1">
+                                                                            <img src="{{asset('pageBuilder/assets/img/pbBackground/ddaf01857fffc185baa4.jpg')}}" alt="">
+                                                                        </div>
+                                                                        <div class="col-md-6 my-1">
+                                                                            <img src="{{asset('pageBuilder/assets/img/pbBackground/ddaf01857fffc185baa4.jpg')}}" alt="">
+                                                                        </div>
+                                                                        <div class="col-md-6 my-1">
+                                                                            <img src="{{asset('pageBuilder/assets/img/pbBackground/ddaf01857fffc185baa4.jpg')}}" alt="">
+                                                                        </div>
+                                                                        <div class="col-md-6 my-1">
+                                                                            <img src="{{asset('pageBuilder/assets/img/pbBackground/ddaf01857fffc185baa4.jpg')}}" alt="">
+                                                                        </div>
+                                                                        <div class="col-md-6 my-1">
+                                                                            <img src="{{asset('pageBuilder/assets/img/pbBackground/ddaf01857fffc185baa4.jpg')}}" alt="">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="tab-pane fade" id="theme" role="tabpanel"
                                      aria-labelledby="theme-tab">BB
@@ -1126,6 +1220,9 @@
                 let button1 = $('.b1');
                 let button2 = $('.b2');
 
+                let button3 = $('.b3');
+                let button4 = $('.b4');
+
                 button1.on('click', function () {
                     rc()
                     button1.addClass('selected')
@@ -1134,10 +1231,22 @@
                     rc()
                     button2.addClass('selected')
                 })
+                button3.on('click', function () {
+                    rc2()
+                    button3.addClass('selected')
+                })
+                button4.on('click', function () {
+                    rc2()
+                    button4.addClass('selected')
+                })
 
                 function rc() {
                     button1.removeClass('selected')
                     button2.removeClass('selected')
+                }
+                function rc2() {
+                    button3.removeClass('selected')
+                    button4.removeClass('selected')
                 }
             })
         </script>
