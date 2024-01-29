@@ -548,7 +548,7 @@
                                                                             class="text-black-50">{{$item->pbOption->linkTitle}} {{$item->title}}</label>
                                                                         <input type="text" class="my-2 form-control"
                                                                                value="{{$item->connectionWay}}"
-                                                                               wire:model.live="blockItemConnectionWay.{{$item->id}}"
+                                                                               wire:model.blur="blockItemConnectionWay.{{$item->id}}"
                                                                                placeholder="{{$item->pbOption->linkTitle}} {{$item->title}} خود را وارد کنید">
                                                                         <p class="text-black-50 small">{{$item->pbOption->linkDescription}}</p>
                                                                     </div>
@@ -961,7 +961,7 @@
                     </div>
                     <div class="row">
                         <div class="col-12">
-                            <ul class="nav nav-pills mb-3 row pills-tab" id="" role="tablist">
+                            <ul class="nav nav-pills mb-3 row pills-tab" wire:ignore.self id="" role="tablist">
                                 <li class="nav-item btn b1 selected col-6" role="presentation">
                                     <button class="btn btnNoFocus active w-100" id="originalOptions-tab"
                                             data-bs-toggle="pill"
@@ -977,7 +977,7 @@
                                 </li>
                             </ul>
                             <div class="tab-content" id="pills-tabContent">
-                                <div class="tab-pane fade show active" id="originalOptions" role="tabpanel"
+                                <div class="tab-pane fade show active" wire:ignore.self id="originalOptions" role="tabpanel"
                                      aria-labelledby="originalOptions-tab">
                                     <div class="row">
                                         <div class="col-12 my-3">
@@ -1015,7 +1015,7 @@
                                         </div>
                                         <div class="col-12 my-3">
                                             <div class="row">
-                                                <div class="col-12">
+                                                <div class="col-12" wire:ignore>
                                                     <ul class="nav nav-pills mb-3 row pills-tab" id="" role="tablist">
                                                         <li class="nav-item btn b3 selected col-6" role="presentation">
                                                             <button class="btn btnNoFocus active w-100" id="colors-tab"
@@ -1049,21 +1049,21 @@
                                                             <div class="row">
                                                                 <div class="col-12 my-3">
                                                                     <label class="text-black-50 my-1">تصویر پس زمینه</label>
-                                                                    <div class="row">
-                                                                        <div class="col-md-6 my-1">
-                                                                            <img src="{{asset('pageBuilder/assets/img/pbBackground/ddaf01857fffc185baa4.jpg')}}" alt="">
+                                                                    <div class="row row-cols-md-3">
+                                                                        <div class="col-auto text-center my-1">
+                                                                            <img class="w-100" src="{{asset('pageBuilder/assets/img/pbBackground/ddaf01857fffc185baa4.jpg')}}" alt="">
                                                                         </div>
-                                                                        <div class="col-md-6 my-1">
-                                                                            <img src="{{asset('pageBuilder/assets/img/pbBackground/ddaf01857fffc185baa4.jpg')}}" alt="">
+                                                                        <div class="col-auto text-center my-1">
+                                                                            <img class="w-100" src="{{asset('pageBuilder/assets/img/pbBackground/ddaf01857fffc185baa4.jpg')}}" alt="">
                                                                         </div>
-                                                                        <div class="col-md-6 my-1">
-                                                                            <img src="{{asset('pageBuilder/assets/img/pbBackground/ddaf01857fffc185baa4.jpg')}}" alt="">
+                                                                        <div class="col-auto text-center my-1">
+                                                                            <img class="w-100" src="{{asset('pageBuilder/assets/img/pbBackground/ddaf01857fffc185baa4.jpg')}}" alt="">
                                                                         </div>
-                                                                        <div class="col-md-6 my-1">
-                                                                            <img src="{{asset('pageBuilder/assets/img/pbBackground/ddaf01857fffc185baa4.jpg')}}" alt="">
+                                                                        <div class="col-auto text-center my-1">
+                                                                            <img class="w-100" src="{{asset('pageBuilder/assets/img/pbBackground/ddaf01857fffc185baa4.jpg')}}" alt="">
                                                                         </div>
-                                                                        <div class="col-md-6 my-1">
-                                                                            <img src="{{asset('pageBuilder/assets/img/pbBackground/ddaf01857fffc185baa4.jpg')}}" alt="">
+                                                                        <div class="col-auto text-center my-1">
+                                                                            <img class="w-100" src="{{asset('pageBuilder/assets/img/pbBackground/ddaf01857fffc185baa4.jpg')}}" alt="">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1075,7 +1075,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane fade" id="theme" role="tabpanel"
+                                <div class="tab-pane fade" id="theme" wire:ignore.self role="tabpanel"
                                      aria-labelledby="theme-tab">BB
                                 </div>
                             </div>
@@ -1102,6 +1102,8 @@
 
                 var modal = $('div.modal')
                 if (modal.hasClass('show')) {
+                    setTimeout(function (){
+
                     var buttons = modal.find('ul.nav')
                     var tabs    = modal.find('div.tab-content')
 
@@ -1115,6 +1117,7 @@
                     tabs.find('div.tab-pane:first').addClass('show active')
                     // tabs.find('div.tab-pane:first').addClass('active')
                     // console.log(a)
+                    },500)
                 }
             })
         </script>
