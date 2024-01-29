@@ -505,8 +505,10 @@
 
                                                                         <div class="col-auto" dir="rtl">
                                                                             {{$item->title}}
-                                                                            <span class="float-start ms-2">
+                                                                            <span
+                                                                                class="float-start ms-2 blockItemConnectionWay{{$key}}" onchange="">
                                                                             {{strlen($blockItemConnectionWay[$item->id])>=1?'( '.$blockItemConnectionWay[$item->id].' )':''}}
+
                                                                             </span>
                                                                         </div>
                                                                     </div>
@@ -546,7 +548,10 @@
                                                                     <div class="col-12 my-3 px-4">
                                                                         <label
                                                                             class="text-black-50">{{$item->pbOption->linkTitle}} {{$item->title}}</label>
-                                                                        <input type="text" class="my-2 form-control"
+                                                                        <input type="text"
+                                                                               class="my-2 form-control blockItemConnectionWay{{$key}}"
+{{--                                                                               onkeyup="document.querySelector('span.blockItemConnectionWay{{$key}}').innerText=('( '+ this.value +' )');--}}
+{{--                                                                               document.querySelector('span.blockItemConnectionWay{{$key}}').innerText==='( )'?document.querySelector('span.blockItemConnectionWay{{$key}}').innerText='':''"--}}
                                                                                value="{{$item->connectionWay}}"
                                                                                wire:model.blur="blockItemConnectionWay.{{$item->id}}"
                                                                                placeholder="{{$item->pbOption->linkTitle}} {{$item->title}} خود را وارد کنید">
@@ -977,39 +982,50 @@
                                 </li>
                             </ul>
                             <div class="tab-content" id="pills-tabContent">
-                                <div class="tab-pane fade show active" wire:ignore.self id="originalOptions" role="tabpanel"
+                                <div class="tab-pane fade show active" wire:ignore.self id="originalOptions"
+                                     role="tabpanel"
                                      aria-labelledby="originalOptions-tab">
                                     <div class="row">
                                         <div class="col-12 my-3">
                                             <label class="text-black-50 my-1">فونت نوشته‌ها</label>
-                                            <button class="btn btnNoFocus w-100 py-2" style="text-align: right;border: 1px solid lightgrey">
+                                            <button class="btn btnNoFocus w-100 py-2"
+                                                    style="text-align: right;border: 1px solid lightgrey">
                                                 ایران سنس
-                                            <i class="icofont-rounded-down float-start"></i>
+                                                <i class="icofont-rounded-down float-start"></i>
                                             </button>
                                         </div>
                                         <div class="col-12 my-3">
                                             <label class="text-black-50 my-1">قالب</label>
-                                            <button class="btn btnNoFocus w-100 py-2" style="text-align: right;border: 1px solid lightgrey">
+                                            <button class="btn btnNoFocus w-100 py-2"
+                                                    style="text-align: right;border: 1px solid lightgrey">
                                                 نوشته‌ها و متون
-                                            <span class="float-start rounded-circle ms-2" style="width: 20px;height: 20px;background-color: #492525"></span>
-                                            <span class="float-start">#492525</span>
+                                                <span class="float-start rounded-circle ms-2"
+                                                      style="width: 20px;height: 20px;background-color: #492525"></span>
+                                                <span class="float-start">#492525</span>
                                             </button>
                                         </div>
                                         <div class="col-12 my-3">
-                                            <label class="text-black-50 my-1">تنظیمات عمومی رنگ آیتم‌ها / دکمه‌ها</label>
-                                            <button class="btn btnNoFocus w-100 py-2" style="text-align: right;border: 1px solid lightgrey">
+                                            <label class="text-black-50 my-1">تنظیمات عمومی رنگ آیتم‌ها /
+                                                دکمه‌ها</label>
+                                            <button class="btn btnNoFocus w-100 py-2"
+                                                    style="text-align: right;border: 1px solid lightgrey">
                                                 پس‌زمینه بلوک‌ها
-                                                <span class="float-start rounded-circle ms-2" style="width: 20px;height: 20px;background-color: #492525"></span>
+                                                <span class="float-start rounded-circle ms-2"
+                                                      style="width: 20px;height: 20px;background-color: #492525"></span>
                                                 <span class="float-start">#492525</span>
                                             </button>
-                                            <button class="btn btnNoFocus w-100 py-2 my-2" style="text-align: right;border: 1px solid lightgrey">
+                                            <button class="btn btnNoFocus w-100 py-2 my-2"
+                                                    style="text-align: right;border: 1px solid lightgrey">
                                                 عناوین آیتم‌ها
-                                                <span class="float-start rounded-circle ms-2" style="width: 20px;height: 20px;background-color: #363636"></span>
+                                                <span class="float-start rounded-circle ms-2"
+                                                      style="width: 20px;height: 20px;background-color: #363636"></span>
                                                 <span class="float-start">#363636</span>
                                             </button>
-                                            <button class="btn btnNoFocus w-100 py-2" style="text-align: right;border: 1px solid lightgrey">
+                                            <button class="btn btnNoFocus w-100 py-2"
+                                                    style="text-align: right;border: 1px solid lightgrey">
                                                 حاشیه بلوک‌ها
-                                                <span class="float-start rounded-circle ms-2" style="width: 20px;height: 20px;background-color: #B1B3B6"></span>
+                                                <span class="float-start rounded-circle ms-2"
+                                                      style="width: 20px;height: 20px;background-color: #B1B3B6"></span>
                                                 <span class="float-start">#B1B3B6</span>
                                             </button>
                                         </div>
@@ -1025,20 +1041,24 @@
                                                             </button>
                                                         </li>
                                                         <li class="nav-item btn b4 col-6" role="presentation">
-                                                            <button class="btn btnNoFocus w-100 " id="bgImage-tab" data-bs-toggle="pill"
+                                                            <button class="btn btnNoFocus w-100 " id="bgImage-tab"
+                                                                    data-bs-toggle="pill"
                                                                     data-bs-target="#bgImage" type="button" role="tab"
                                                                     aria-controls="bgImage" aria-selected="false">تصویر
                                                             </button>
                                                         </li>
                                                     </ul>
                                                     <div class="tab-content" id="pills-tabContent">
-                                                        <div class="tab-pane fade show active" id="colors" role="tabpanel"
+                                                        <div class="tab-pane fade show active" id="colors"
+                                                             role="tabpanel"
                                                              aria-labelledby="colors-tab">
                                                             <div class="row">
                                                                 <div class="col-12 my-3">
-                                                                    <button class="btn btnNoFocus w-100 py-2" style="text-align: right;border: 1px solid lightgrey">
+                                                                    <button class="btn btnNoFocus w-100 py-2"
+                                                                            style="text-align: right;border: 1px solid lightgrey">
                                                                         رنگ پس‌زمینه
-                                                                        <span class="float-start rounded-circle ms-2" style="width: 20px;height: 20px;background-color: #492525"></span>
+                                                                        <span class="float-start rounded-circle ms-2"
+                                                                              style="width: 20px;height: 20px;background-color: #492525"></span>
                                                                         <span class="float-start">#492525</span>
                                                                     </button>
                                                                 </div>
@@ -1048,22 +1068,33 @@
                                                              aria-labelledby="bgImage-tab">
                                                             <div class="row">
                                                                 <div class="col-12 my-3">
-                                                                    <label class="text-black-50 my-1">تصویر پس زمینه</label>
+                                                                    <label class="text-black-50 my-1">تصویر پس
+                                                                        زمینه</label>
                                                                     <div class="row row-cols-md-3">
                                                                         <div class="col-auto text-center my-1">
-                                                                            <img class="w-100" src="{{asset('pageBuilder/assets/img/pbBackground/ddaf01857fffc185baa4.jpg')}}" alt="">
+                                                                            <img class="w-100"
+                                                                                 src="{{asset('pageBuilder/assets/img/pbBackground/ddaf01857fffc185baa4.jpg')}}"
+                                                                                 alt="">
                                                                         </div>
                                                                         <div class="col-auto text-center my-1">
-                                                                            <img class="w-100" src="{{asset('pageBuilder/assets/img/pbBackground/ddaf01857fffc185baa4.jpg')}}" alt="">
+                                                                            <img class="w-100"
+                                                                                 src="{{asset('pageBuilder/assets/img/pbBackground/ddaf01857fffc185baa4.jpg')}}"
+                                                                                 alt="">
                                                                         </div>
                                                                         <div class="col-auto text-center my-1">
-                                                                            <img class="w-100" src="{{asset('pageBuilder/assets/img/pbBackground/ddaf01857fffc185baa4.jpg')}}" alt="">
+                                                                            <img class="w-100"
+                                                                                 src="{{asset('pageBuilder/assets/img/pbBackground/ddaf01857fffc185baa4.jpg')}}"
+                                                                                 alt="">
                                                                         </div>
                                                                         <div class="col-auto text-center my-1">
-                                                                            <img class="w-100" src="{{asset('pageBuilder/assets/img/pbBackground/ddaf01857fffc185baa4.jpg')}}" alt="">
+                                                                            <img class="w-100"
+                                                                                 src="{{asset('pageBuilder/assets/img/pbBackground/ddaf01857fffc185baa4.jpg')}}"
+                                                                                 alt="">
                                                                         </div>
                                                                         <div class="col-auto text-center my-1">
-                                                                            <img class="w-100" src="{{asset('pageBuilder/assets/img/pbBackground/ddaf01857fffc185baa4.jpg')}}" alt="">
+                                                                            <img class="w-100"
+                                                                                 src="{{asset('pageBuilder/assets/img/pbBackground/ddaf01857fffc185baa4.jpg')}}"
+                                                                                 alt="">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1102,22 +1133,22 @@
 
                 var modal = $('div.modal')
                 if (modal.hasClass('show')) {
-                    setTimeout(function (){
+                    setTimeout(function () {
 
-                    var buttons = modal.find('ul.nav')
-                    var tabs    = modal.find('div.tab-content')
+                        var buttons = modal.find('ul.nav')
+                        var tabs    = modal.find('div.tab-content')
 
-                    buttons.find('li').removeClass('selected')
-                    buttons.find('li button').removeClass('active')
-                    tabs.find('div.tab-pane').removeClass('show active')
-                    // tabs.find('div.tab-pane').removeClass('active')
+                        buttons.find('li').removeClass('selected')
+                        buttons.find('li button').removeClass('active')
+                        tabs.find('div.tab-pane').removeClass('show active')
+                        // tabs.find('div.tab-pane').removeClass('active')
 
-                    buttons.find('li:first').addClass('selected')
-                    buttons.find('li:first button').addClass('active')
-                    tabs.find('div.tab-pane:first').addClass('show active')
-                    // tabs.find('div.tab-pane:first').addClass('active')
-                    // console.log(a)
-                    },500)
+                        buttons.find('li:first').addClass('selected')
+                        buttons.find('li:first button').addClass('active')
+                        tabs.find('div.tab-pane:first').addClass('show active')
+                        // tabs.find('div.tab-pane:first').addClass('active')
+                        // console.log(a)
+                    }, 500)
                 }
             })
         </script>
@@ -1247,6 +1278,7 @@
                     button1.removeClass('selected')
                     button2.removeClass('selected')
                 }
+
                 function rc2() {
                     button3.removeClass('selected')
                     button4.removeClass('selected')
