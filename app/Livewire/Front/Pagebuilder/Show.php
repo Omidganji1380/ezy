@@ -41,6 +41,39 @@ class Show extends Component
         return $border;
     }
 
+    public function getBgBlockItemColor(Block $block, $originalColor)
+    {
+        $blockItemColor       = $block->blockOption->blockItemColor;
+        $bgBlockItemColor     = $block->blockOption->bgBlockItemColor;
+
+        if ($blockItemColor == 3||$blockItemColor == 1) {
+            return $bgBlockItemColor;
+        }else{
+            return $originalColor;
+        }
+    }
+    public function getTextBlockItemColor(Block $block, $originalColor=null)
+    {
+        $blockItemColor       = $block->blockOption->blockItemColor;
+        $textBlockItemColor   = $block->blockOption->textBlockItemColor;
+
+        if ($blockItemColor == 3||$blockItemColor == 1) {
+            return $textBlockItemColor;
+        }else{
+            return $originalColor;
+        }
+    }
+    public function getBorderBlockItemColor(Block $block, $originalColor=null)
+    {
+        $blockItemColor       = $block->blockOption->blockItemColor;
+        $borderBlockItemColor = $block->blockOption->borderBlockItemColor;
+
+        if ($blockItemColor == 3||$blockItemColor == 1) {
+            return $borderBlockItemColor;
+        }else{
+            return $originalColor;
+        }
+    }
     public function getIconPaths()
     {
         for ($ii = 1; $ii <= 50; $ii++) {
