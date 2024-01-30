@@ -155,6 +155,7 @@
                         <div class="col-12 my-3 px-4">
 {{--                            <div class="row p-2 flex-nowrap">--}}
 {{--                                <div class="col-11">--}}
+
                                     <div class="row justify-content-center">
                                         <div class="col-12 text-center">
                                             <p class="text-center">{{$block->blockOption->blockTitle}}</p>
