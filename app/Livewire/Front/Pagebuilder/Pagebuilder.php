@@ -28,6 +28,10 @@ class Pagebuilder extends Component
     public $blockItems = [];
     public $block;
     public $blockTitle;
+    public $blockItemColor;
+    public $bgBlockItemColor;
+    public $textBlockItemColor;
+    public $borderBlockItemColor;
     public $blockItemsWidth;
     public $blockItemsBorder;
     public $blockVisibility;
@@ -183,11 +187,15 @@ class Pagebuilder extends Component
 
     public function getBlockMoreOptions(Block $block)
     {
-        $blockMoreOptions       = $block->blockOption;
-        $this->blockVisibility  = $blockMoreOptions->blockVisibility == 1 ? true : false;
-        $this->blockTitle       = $blockMoreOptions->blockTitle;
-        $this->blockItemsWidth  = $blockMoreOptions->blockWidth;
-        $this->blockItemsBorder = $blockMoreOptions->blockBorder;
+        $blockMoreOptions           = $block->blockOption;
+        $this->blockVisibility      = $blockMoreOptions->blockVisibility == 1 ? true : false;
+        $this->blockTitle           = $blockMoreOptions->blockTitle;
+        $this->blockItemsWidth      = $blockMoreOptions->blockWidth;
+        $this->blockItemsBorder     = $blockMoreOptions->blockBorder;
+        $this->blockItemColor       = $blockMoreOptions->blockItemColor;
+        $this->bgBlockItemColor     = $blockMoreOptions->bgBlockItemColor;
+        $this->textBlockItemColor   = $blockMoreOptions->textBlockItemColor;
+        $this->borderBlockItemColor = $blockMoreOptions->borderBlockItemColor;
     }
 
     public function blockOptions(Block $block/*,$newBlock*/)
@@ -288,6 +296,40 @@ class Pagebuilder extends Component
         return $border;
     }
 
+    public function getBgBlockItemColor(Block $block, $originalColor)
+    {
+        $blockItemColor       = $block->blockOption->blockItemColor;
+        $bgBlockItemColor     = $block->blockOption->bgBlockItemColor;
+
+        if ($blockItemColor == 3||$blockItemColor == 1) {
+           return $bgBlockItemColor;
+        }else{
+            return $originalColor;
+        }
+    }
+    public function getTextBlockItemColor(Block $block, $originalColor=null)
+    {
+        $blockItemColor       = $block->blockOption->blockItemColor;
+        $textBlockItemColor   = $block->blockOption->textBlockItemColor;
+
+        if ($blockItemColor == 3||$blockItemColor == 1) {
+           return $textBlockItemColor;
+        }else{
+            return $originalColor;
+        }
+    }
+    public function getBorderBlockItemColor(Block $block, $originalColor=null)
+    {
+        $blockItemColor       = $block->blockOption->blockItemColor;
+        $borderBlockItemColor = $block->blockOption->borderBlockItemColor;
+
+        if ($blockItemColor == 3||$blockItemColor == 1) {
+           return $borderBlockItemColor;
+        }else{
+            return $originalColor;
+        }
+    }
+
     public function submitPbOption()
     {
         foreach ($this->blockItems as $item) {
@@ -299,10 +341,14 @@ class Pagebuilder extends Component
 
 //        dd($this->blockVisibility);
         $this->block->blockOption->update([
-            'blockTitle'      => $this->blockTitle,
-            'blockWidth'      => $this->blockItemsWidth,
-            'blockBorder'     => $this->blockItemsBorder,
-            'blockVisibility' => $this->blockVisibility,
+            'blockTitle'           => $this->blockTitle,
+            'blockWidth'           => $this->blockItemsWidth,
+            'blockBorder'          => $this->blockItemsBorder,
+            'blockVisibility'      => $this->blockVisibility,
+            'blockItemColor'       => $this->blockItemColor,
+            'bgBlockItemColor'     => $this->bgBlockItemColor,
+            'textBlockItemColor'   => $this->textBlockItemColor,
+            'borderBlockItemColor' => $this->borderBlockItemColor,
         ]);
         $this->clearVariables();
         $this->clearInputs();

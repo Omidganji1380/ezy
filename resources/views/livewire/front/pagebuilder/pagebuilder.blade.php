@@ -172,7 +172,7 @@
             <div class="col-12 my-3">
                 <div class="row p-2 flex-nowrap">
                     <div class="col-11" data-bs-target="#profileOptions" data-bs-toggle="modal"
-                         wire:click="getProfileOptions">
+                         wire:click="getProfileOptions" onclick="showFirstTab()">
                         <div class="userDiv">
                             <img src="{{asset('storage/pb/profiles/profile-'.$profile->id.'/'.$profile->bg_img)}}"
                                  alt="" class="backgroundImage"
@@ -196,7 +196,8 @@
                 @foreach($blocks as $block)
                     <div class="col-12 my-3">
                         <div class="row p-2 flex-nowrap">
-                            <div class="col-11" data-bs-target="#blockOptions" data-bs-toggle="modal"
+                            <div class="col-11" onclick="showFirstTab()" data-bs-target="#blockOptions"
+                                 data-bs-toggle="modal"
                                  wire:click="blockOptions({{$block->id}})">
                                 <div class="row justify-content-center">
                                     <div class="col-12 text-center">
@@ -208,7 +209,7 @@
                                             class="{{$block->blockOption->blockWidth=='full'?'col-12':($block->blockOption->blockWidth=='half'?'col-6':($block->blockOption->blockWidth=='compress'?'col-auto':''))}} text-center p-1">
                                             <button dir="rtl" {{--style=""--}}
                                             class="btn border-info w-100 overflow-hidden text-truncate px-1"
-                                                    style="border-radius: {{$this->getBlockItemsBorder($block)}};background-color: {{$option->color}}">
+                                                    style="border-radius: {{$this->getBlockItemsBorder($block)}};background-color: {{$this->getBgBlockItemColor($block,$option->color)}};border-color: {{$this->getBorderBlockItemColor($block)}} !important;color: {{$this->getTextBlockItemColor($block)}}">
                                                 <div class="row justify-content-center">
                                                     <div
                                                         class="col-auto {{$block->blockOption->blockWidth!='compress'?'ps-0':''}}">
@@ -239,7 +240,7 @@
                     <div class="col-auto">
                         <img src="{{asset('pageBuilder/assets/img/setting-2-svgrepo-com.png')}}" alt="" class="p-2"
                              data-bs-toggle="modal"
-                             data-bs-target="#globalOptions">
+                             data-bs-target="#globalOptions" onclick="showFirstTab()">
                     </div>
                     <div class="col-auto">
                         <img src="{{asset('pageBuilder/assets/img/insertPlus.png')}}" wire:click="clearVariables" alt=""
@@ -450,12 +451,15 @@
 
                 <div class="modal-body position-relative" style="background-color: rgb(241, 243, 246);"
                      wire:ignore.self>
-                    <div wire:loading class="position-absolute w-100 h-100 bg-white start-0 top-0" style="z-index: 99">
-                        <img
-                            src="{{asset('pageBuilder/loading.gif')}}"
-                            class="position-absolute h-100 py-2 mx-auto start-0 w-100"
-                            style="right: 0;max-height: 100%;object-fit: none">
-                    </div>
+                    @if(!$blockItems)
+                        <div wire:loading class="position-absolute w-100 h-100 bg-white start-0 top-0"
+                             style="z-index: 99">
+                            <img
+                                src="{{asset('pageBuilder/loading.gif')}}"
+                                class="position-absolute h-100 py-2 mx-auto start-0 w-100"
+                                style="right: 0;max-height: 100%;object-fit: none">
+                        </div>
+                    @endif
                     <div class="row">
                         <div class="col-12">
                             <ul class="nav nav-pills mb-3 row pills-tab" id="" role="tablist">
@@ -506,7 +510,8 @@
                                                                         <div class="col-auto" dir="rtl">
                                                                             {{$item->title}}
                                                                             <span
-                                                                                class="float-start ms-2 blockItemConnectionWay{{$key}}" onchange="">
+                                                                                class="float-start ms-2 blockItemConnectionWay{{$key}}"
+                                                                                onchange="">
                                                                             {{strlen($blockItemConnectionWay[$item->id])>=1?'( '.$blockItemConnectionWay[$item->id].' )':''}}
 
                                                                             </span>
@@ -550,8 +555,8 @@
                                                                             class="text-black-50">{{$item->pbOption->linkTitle}} {{$item->title}}</label>
                                                                         <input type="text"
                                                                                class="my-2 form-control blockItemConnectionWay{{$key}}"
-{{--                                                                               onkeyup="document.querySelector('span.blockItemConnectionWay{{$key}}').innerText=('( '+ this.value +' )');--}}
-{{--                                                                               document.querySelector('span.blockItemConnectionWay{{$key}}').innerText==='( )'?document.querySelector('span.blockItemConnectionWay{{$key}}').innerText='':''"--}}
+                                                                               {{--                                                                               onkeyup="document.querySelector('span.blockItemConnectionWay{{$key}}').innerText=('( '+ this.value +' )');--}}
+                                                                               {{--                                                                               document.querySelector('span.blockItemConnectionWay{{$key}}').innerText==='( )'?document.querySelector('span.blockItemConnectionWay{{$key}}').innerText='':''"--}}
                                                                                value="{{$item->connectionWay}}"
                                                                                wire:model.blur="blockItemConnectionWay.{{$item->id}}"
                                                                                placeholder="{{$item->pbOption->linkTitle}} {{$item->title}} خود را وارد کنید">
@@ -625,7 +630,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-4"
-                                                 style="border-left: 1px solid grey;border-right: 1px solid grey;">
+                                                {{--style="border-left: 1px solid grey;border-right: 1px solid grey;"--}}>
                                                 <div class="row">
                                                     @foreach($constOptions as $item)
                                                         @if($loop->index < 2)
@@ -689,6 +694,47 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <div class="col-12 my-3">
+                                        <label class="text-black-50 mb-2">رنگ بندی آیتم‌ها</label>
+                                        <select class="form-select" wire:model="blockItemColor"
+                                                onchange="blockItemColor(this.value)"
+                                        >
+                                            <option value="1">استفاده از رنگ‌های شخصی‌سازی شده</option>
+                                            <option value="2">استفاده از رنگ برندها</option>
+                                            <option value="3">انتخاب رنگ دلخواه برای آیتم‌های این بلوک</option>
+                                        </select>
+                                        <div class="@if($blockItemColor!=3) d-none @endif my-2" id="blockItemColor3">
+                                            <button class="btn btnNoFocus w-100 py-2 bg-white"
+                                                    style="text-align: right;border: 1px solid lightgrey">
+                                                پس‌زمینه بلوک‌ها
+                                                <input type="color" wire:model.live="bgBlockItemColor"
+                                                       class="float-start ms-2"
+                                                       style="width: 40px;height: 20px;">
+                                                <span class="float-start" dir="ltr">{{$bgBlockItemColor}}</span>
+                                            </button>
+                                            <button class="btn btnNoFocus w-100 py-2 bg-white my-2"
+                                                    style="text-align: right;border: 1px solid lightgrey">
+                                                عناوین آیتم‌ها
+                                                <input type="color" wire:model.live="textBlockItemColor"
+                                                       class="float-start ms-2"
+                                                       style="width: 40px;height: 20px;">
+                                                <span class="float-start" dir="ltr">{{$textBlockItemColor}}</span>
+                                            </button>
+                                            <button class="btn btnNoFocus w-100 py-2 bg-white"
+                                                    style="text-align: right;border: 1px solid lightgrey">
+                                                حاشیه بلوک‌ها
+                                                <input type="color" wire:model.live="borderBlockItemColor"
+                                                       class="float-start ms-2"
+                                                       style="width: 40px;height: 20px;">
+                                                <span class="float-start" dir="ltr">{{$borderBlockItemColor}}</span>
+                                            </button>
+                                        </div>
+                                        {{--                                        @push('js')--}}
+                                        {{--                                        --}}
+                                        {{--                                        @endpush--}}
+                                    </div>
+
                                     <div class="col-12 my-3">
                                         <label class="text-black-50 mb-2">نوع حاشیه بلوک</label>
                                         <div class="row bg-white p-3">
@@ -988,7 +1034,7 @@
                                     <div class="row">
                                         <div class="col-12 my-3">
                                             <label class="text-black-50 my-1">فونت نوشته‌ها</label>
-                                            <button class="btn btnNoFocus w-100 py-2"
+                                            <button class="btn btnNoFocus w-100 py-2 bg-white"
                                                     style="text-align: right;border: 1px solid lightgrey">
                                                 ایران سنس
                                                 <i class="icofont-rounded-down float-start"></i>
@@ -996,7 +1042,7 @@
                                         </div>
                                         <div class="col-12 my-3">
                                             <label class="text-black-50 my-1">قالب</label>
-                                            <button class="btn btnNoFocus w-100 py-2"
+                                            <button class="btn btnNoFocus w-100 py-2 bg-white"
                                                     style="text-align: right;border: 1px solid lightgrey">
                                                 نوشته‌ها و متون
                                                 <span class="float-start rounded-circle ms-2"
@@ -1007,21 +1053,21 @@
                                         <div class="col-12 my-3">
                                             <label class="text-black-50 my-1">تنظیمات عمومی رنگ آیتم‌ها /
                                                 دکمه‌ها</label>
-                                            <button class="btn btnNoFocus w-100 py-2"
+                                            <button class="btn btnNoFocus w-100 py-2 bg-white"
                                                     style="text-align: right;border: 1px solid lightgrey">
                                                 پس‌زمینه بلوک‌ها
                                                 <span class="float-start rounded-circle ms-2"
                                                       style="width: 20px;height: 20px;background-color: #492525"></span>
                                                 <span class="float-start">#492525</span>
                                             </button>
-                                            <button class="btn btnNoFocus w-100 py-2 my-2"
+                                            <button class="btn btnNoFocus w-100 py-2 bg-white my-2"
                                                     style="text-align: right;border: 1px solid lightgrey">
                                                 عناوین آیتم‌ها
                                                 <span class="float-start rounded-circle ms-2"
                                                       style="width: 20px;height: 20px;background-color: #363636"></span>
                                                 <span class="float-start">#363636</span>
                                             </button>
-                                            <button class="btn btnNoFocus w-100 py-2"
+                                            <button class="btn btnNoFocus w-100 py-2 bg-white"
                                                     style="text-align: right;border: 1px solid lightgrey">
                                                 حاشیه بلوک‌ها
                                                 <span class="float-start rounded-circle ms-2"
@@ -1054,7 +1100,7 @@
                                                              aria-labelledby="colors-tab">
                                                             <div class="row">
                                                                 <div class="col-12 my-3">
-                                                                    <button class="btn btnNoFocus w-100 py-2"
+                                                                    <button class="btn btnNoFocus w-100 py-2 bg-white"
                                                                             style="text-align: right;border: 1px solid lightgrey">
                                                                         رنگ پس‌زمینه
                                                                         <span class="float-start rounded-circle ms-2"
@@ -1071,27 +1117,27 @@
                                                                     <label class="text-black-50 my-1">تصویر پس
                                                                         زمینه</label>
                                                                     <div class="row row-cols-md-3">
-                                                                        <div class="col-auto text-center my-1">
+                                                                        <div class="col-auto mx-auto text-center my-1">
                                                                             <img class="w-100"
                                                                                  src="{{asset('pageBuilder/assets/img/pbBackground/ddaf01857fffc185baa4.jpg')}}"
                                                                                  alt="">
                                                                         </div>
-                                                                        <div class="col-auto text-center my-1">
+                                                                        <div class="col-auto mx-auto text-center my-1">
                                                                             <img class="w-100"
                                                                                  src="{{asset('pageBuilder/assets/img/pbBackground/ddaf01857fffc185baa4.jpg')}}"
                                                                                  alt="">
                                                                         </div>
-                                                                        <div class="col-auto text-center my-1">
+                                                                        <div class="col-auto mx-auto text-center my-1">
                                                                             <img class="w-100"
                                                                                  src="{{asset('pageBuilder/assets/img/pbBackground/ddaf01857fffc185baa4.jpg')}}"
                                                                                  alt="">
                                                                         </div>
-                                                                        <div class="col-auto text-center my-1">
+                                                                        <div class="col-auto mx-auto text-center my-1">
                                                                             <img class="w-100"
                                                                                  src="{{asset('pageBuilder/assets/img/pbBackground/ddaf01857fffc185baa4.jpg')}}"
                                                                                  alt="">
                                                                         </div>
-                                                                        <div class="col-auto text-center my-1">
+                                                                        <div class="col-auto mx-auto text-center my-1">
                                                                             <img class="w-100"
                                                                                  src="{{asset('pageBuilder/assets/img/pbBackground/ddaf01857fffc185baa4.jpg')}}"
                                                                                  alt="">
@@ -1102,6 +1148,50 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 my-3">
+                                            <label class="text-black-50 mb-2">نوع حاشیه بلوک</label>
+                                            <div class="row bg-white p-3">
+
+                                                @foreach($constOptions as $key=>$item)
+                                                    @if($loop->index < 4)
+                                                        <div class="col-6 my-3">
+                                                            <label class="btn w-100"
+                                                                   for="blockItemBorderRadius{{$item->id}}"
+                                                                   style="background-color: {{$item->color}};border: 1px solid black;
+                                                               border-radius: {{$loop->index==0?'0':''}}{{--{{$loop->index==1?'10px':''}}--}}{{$loop->index==2?'10px':''}}{{$loop->index==3?'100px':''}};
+                                                               "
+                                                            >
+                                                                <div class="row justify-content-around">
+                                                                    <div class="col-auto align-self-center ps-0"
+                                                                         style="text-align: right">
+                                                                        {{$item->title}}
+                                                                    </div>
+                                                                    <div class="col-auto align-self-center pe-0">
+                                                                        <i style="font-size: 25px !important;"
+                                                                           class="align-middle {{$item->icon}}">
+                                                                            {!! $this->getIconPaths() !!}
+                                                                        </i>
+                                                                    </div>
+                                                                </div>
+                                                            </label>
+                                                            <div class="row justify-content-center mt-3">
+                                                                <div class="col-auto">
+                                                                    <input type="radio" name="blockItemBorderRadius"
+                                                                           wire:model="blockItemsBorder"
+                                                                           value="{{$key}}"
+                                                                           id="blockItemBorderRadius{{$item->id}}"
+                                                                           class="">
+                                                                </div>
+                                                                {{--<div class="col-auto">
+                                                                    <label for="blockItemWidthFull">تمام عرض</label>
+                                                                </div>--}}
+                                                            </div>
+                                                        </div>
+                                                    @endif
+                                                @endforeach
+
                                             </div>
                                         </div>
                                     </div>
@@ -1128,29 +1218,45 @@
 
     @push('js')
         <script>
-            $(document).bind('DOMSubtreeModified', function () {
+            var blockItemColor3 = $('#blockItemColor3')
 
-
-                var modal = $('div.modal')
-                if (modal.hasClass('show')) {
-                    setTimeout(function () {
-
-                        var buttons = modal.find('ul.nav')
-                        var tabs    = modal.find('div.tab-content')
-
-                        buttons.find('li').removeClass('selected')
-                        buttons.find('li button').removeClass('active')
-                        tabs.find('div.tab-pane').removeClass('show active')
-                        // tabs.find('div.tab-pane').removeClass('active')
-
-                        buttons.find('li:first').addClass('selected')
-                        buttons.find('li:first button').addClass('active')
-                        tabs.find('div.tab-pane:first').addClass('show active')
-                        // tabs.find('div.tab-pane:first').addClass('active')
-                        // console.log(a)
-                    }, 500)
+            function blockItemColor(value) {
+                // alert(value)
+                if (value == 3) {
+                    blockItemColor3.removeClass('d-none')
+                } else {
+                    blockItemColor3.addClass('d-none')
                 }
-            })
+            }
+        </script>
+        <script>
+            // $(document).bind('DOMSubtreeModified', function () {
+
+
+            var modal = $('div.modal')
+
+            function showFirstTab() {
+                // if (modal.hasClass('show')) {
+                    // setTimeout(function () {
+
+                    var buttons = modal.find('ul.nav')
+                    var tabs    = modal.find('div.tab-content')
+
+                    buttons.find('li').removeClass('selected')
+                    buttons.find('li button').removeClass('active')
+                    tabs.find('div.tab-pane').removeClass('show active')
+                    // tabs.find('div.tab-pane').removeClass('active')
+
+                    buttons.find('li:first').addClass('selected')
+                    buttons.find('li:first button').addClass('active')
+                    tabs.find('div.tab-pane:first').addClass('show active')
+                    // tabs.find('div.tab-pane:first').addClass('active')
+                    // console.log(a)
+                    // }, 500)
+                // }
+            }
+
+            // })
         </script>
         <script>
 

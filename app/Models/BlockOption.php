@@ -20,5 +20,9 @@ class BlockOption extends Model
         'option4',
         'option5',
         'block_id',
+        'blockItemColor',
+        'bgBlockItemColor',
+        'textBlockItemColor',
+        'borderBlockItemColor',
     ];
 }

@@ -111,7 +111,7 @@
         </style>
     @endpush
 
-        <div style="max-width: 600px" class="container">
+        <div style="max-width: 600px" class="container px-0">
             <div class="row">
                 {{--<div class="col-12" style="border-radius: 20px;box-shadow: rgba(0,0,0,0.2) 0 0 20px;">
                     <div class="row p-2 justify-content-end flex-nowrap">
@@ -131,7 +131,7 @@
                         </div>
                     </div>
                 </div>--}}
-                <div class="col-12 mb-3">
+                <div class="col-12 mb-3 px-0">
 {{--                    <div class="row p-2 flex-nowrap">--}}
 {{--                        <div class="col-11">--}}
                             <div class="userDiv">
@@ -152,7 +152,7 @@
                 </div>
 {{--                <div id="sortable" style="cursor: grab;margin-bottom: 6rem !important;" wire:ignore.self>--}}
                     @foreach($blocks as $block)
-                        <div class="col-12 my-3">
+                        <div class="col-12 my-3 px-4">
 {{--                            <div class="row p-2 flex-nowrap">--}}
 {{--                                <div class="col-11">--}}
                                     <div class="row justify-content-center">
