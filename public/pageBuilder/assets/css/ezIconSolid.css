@@ -1,0 +1,251 @@
+@font-face {
+    font-family: 'ezy-icon';
+    src:  url('../fonts/ezy-icon-solid/ezy-icon.eot');
+    src:  url('../fonts/ezy-icon-solid/ezy-icon.eot?tvio6');
+    src:  url('../fonts/ezy-icon-solid/ezy-icon.eot?tvio6#iefix') format('embedded-opentype'),
+    url('../fonts/ezy-icon-solid/ezy-icon.ttf?tvio6') format('truetype'),
+    url('../fonts/ezy-icon-solid/ezy-icon.woff?tvio6') format('woff'),
+    url('../fonts/ezy-icon-solid/ezy-icon.svg?tvio6#ezy-icon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+}
+
+.ez {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'ezy-icon' !important;
+    speak: never;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    font-size: 50px !important;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.ez-googlemap-pin-solid:before {
+    content: "\e901";
+}
+.ez-neshan-solid:before {
+    content: "\e902";
+}
+.ez-balad-solid:before {
+    content: "\e903";
+}
+.ez-whatsapp-solid:before {
+    content: "\e904";
+}
+.ez-eeita-solid:before {
+    content: "\e905";
+}
+.ez-twitch-solid:before {
+    content: "\e906";
+}
+.ez-twitter-solid:before {
+    content: "\e907";
+}
+.ez-apple-store-solid:before {
+    content: "\e908";
+}
+.ez-Telegram-solid:before {
+    content: "\e909";
+}
+.ez-massenger-solid:before {
+    content: "\e90a";
+}
+.ez-tiktok-solid:before {
+    content: "\e90b";
+}
+.ez-Viber-solid:before {
+    content: "\e90c";
+}
+.ez-skype-solid:before {
+    content: "\e90d";
+}
+.ez-instagram-solid:before {
+    content: "\e90e";
+}
+.ez-youtube-solid:before {
+    content: "\e90f";
+}
+.ez-spotify-solid:before {
+    content: "\e910";
+}
+.ez-rubika-solid:before {
+    content: "\e911";
+}
+.ez-sib-app-solid:before {
+    content: "\e912";
+}
+.ez-sourosh-solid:before {
+    content: "\e913";
+}
+.ez-podbean-solid:before {
+    content: "\e914";
+}
+.ez-Public-radio-solid:before {
+    content: "\e915";
+}
+.ez-mayket-solid:before {
+    content: "\e916";
+}
+.ez-overcast-solid:before {
+    content: "\e917";
+}
+.ez-Patreon-solid:before {
+    content: "\e918";
+}
+.ez-pintrest-solid:before {
+    content: "\e919";
+}
+.ez-line-solid:before {
+    content: "\e91d";
+}
+.ez-iTunes-solid:before {
+    content: "\e91e";
+}
+.ez-kik-solid:before {
+    content: "\e91f";
+}
+.ez-sound-cloud-solid:before {
+    content: "\e920";
+}
+.ez-facebook-solid:before {
+    content: "\e921";
+}
+.ez-linkedin-solid:before {
+    content: "\e922";
+}
+.ez-i-apps-solid:before {
+    content: "\e928";
+}
+.ez-Google-Podcasts-solid:before {
+    content: "\e929";
+}
+.ez-google-play-solid:before {
+    content: "\e92a";
+}
+.ez-Discord-solid:before {
+    content: "\e92c";
+}
+.ez-dribble-solid:before {
+    content: "\e92e";
+}
+.ez-gap-solid:before {
+    content: "\e92f";
+}
+.ez-Castbox-solid:before {
+    content: "\e930";
+}
+.ez-Clubhouse-solid:before {
+    content: "\e931";
+}
+.ez-cafe-bazaar-solid:before {
+    content: "\e932";
+}
+.ez-Cassets-solid:before {
+    content: "\e933";
+}
+.ez-aparat-solid:before {
+    content: "\e934";
+}
+.ez-Apple-Music-solid:before {
+    content: "\e935";
+}
+.ez-Apple-Podcasts-solid:before {
+    content: "\e936";
+}
+.ez-behance-solid:before {
+    content: "\e937";
+}
+.ez-photo-solid:before {
+    content: "\e91a";
+    color: #494949;
+}
+.ez-vertical-3-dots-solid:before {
+    content: "\e900";
+}
+.ez-chat1-solid:before {
+    content: "\e91b";
+}
+.ez-phone-solid:before {
+    content: "\e91c";
+}
+.ez-message1-solid:before {
+    content: "\e923";
+}
+.ez-call1-solid:before {
+    content: "\e924";
+}
+.ez-link-break-solid:before {
+    content: "\ea1d";
+}
+.ez-link-solid:before {
+    content: "\e92b";
+}
+.ez-slider-vertical-solid .path1:before {
+    content: "\e92d";
+    color: rgb(73, 73, 73);
+}
+.ez-slider-vertical-solid .path2:before {
+    content: "\ea3c";
+    margin-left: -1em;
+    color: rgb(73, 73, 73);
+}
+.ez-slider-vertical-solid .path3:before {
+    content: "\ea3d";
+    margin-left: -1em;
+    color: rgb(73, 73, 73);
+    opacity: 0.1;
+}
+.ez-slider-vertical-solid .path4:before {
+    content: "\ea3e";
+    margin-left: -1em;
+    color: rgb(73, 73, 73);
+}
+.ez-slider-vertical-solid .path5:before {
+    content: "\ea3f";
+    margin-left: -1em;
+    color: rgb(73, 73, 73);
+}
+.ez-slider-vertical-solid .path6:before {
+    content: "\ea40";
+    margin-left: -1em;
+    color: rgb(73, 73, 73);
+}
+.ez-slider-vertical-solid .path7:before {
+    content: "\ea41";
+    margin-left: -1em;
+    color: rgb(73, 73, 73);
+}
+.ez-social-instagram-solid:before {
+    content: "\ea1e";
+}
+.ez-text-align-center-solid:before {
+    content: "\ea1f";
+}
+.ez-time-hourglass-solid:before {
+    content: "\ea20";
+}
+.ez-video-library-solid:before {
+    content: "\ea21";
+}
+.ez-chat-writing-solid:before {
+    content: "\ea22";
+}
+.ez-help-faq-solid:before {
+    content: "\ea23";
+}
+.ez-location-solid:before {
+    content: "\e925";
+}
+.ez-page-separator-solid:before {
+    content: "\e926";
+}
+.ez-vcf-solid:before {
+    content: "\e927";
+}

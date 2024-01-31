@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="{{asset('pageBuilder/fontawesome-free-6.5.1-web/css/all.css')}}">
     <link rel="stylesheet" href="{{asset('pageBuilder/jqueryDragable/jquery-ui.css')}}">
     <link rel="stylesheet" href="{{asset('pageBuilder/assets/css/ezIcon.css')}}">
+    <link rel="stylesheet" href="{{asset('pageBuilder/assets/css/ezIconSolid.css')}}">
 
 @stack('css')
     @livewireStyles

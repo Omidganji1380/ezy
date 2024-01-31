@@ -1475,28 +1475,28 @@
 }
 .ez-photo .path1:before {
     content: "\e92c";
-    color: rgb(73, 73, 73);
+    /*color: rgb(73, 73, 73);*/
     opacity: 0.1;
 }
 .ez-photo .path2:before {
     content: "\ea38";
     margin-left: -1em;
-    color: rgb(73, 73, 73);
+    /*color: rgb(73, 73, 73);*/
 }
 .ez-photo .path3:before {
     content: "\ea39";
     margin-left: -1em;
-    color: rgb(73, 73, 73);
+    /*color: rgb(73, 73, 73);*/
 }
 .ez-photo .path4:before {
     content: "\ea3a";
     margin-left: -1em;
-    color: rgb(73, 73, 73);
+    /*color: rgb(73, 73, 73);*/
 }
 .ez-photo .path5:before {
     content: "\ea3b";
     margin-left: -1em;
-    color: rgb(73, 73, 73);
+    /*color: rgb(73, 73, 73);*/
 }
 .ez-slider-vertical .path1:before {
     content: "\e92d";

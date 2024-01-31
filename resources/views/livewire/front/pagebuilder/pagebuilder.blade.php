@@ -1,149 +1,6 @@
 <div>
-    {{--    <button wire:click="$dispatchTo('front.pagebuilder.show','show_page', { link: {{ $link }} })">asd</button>--}}
-    {{--    <button wire:click="dispatchh">asd</button>--}}
     @push('css')
-        <style>
-            .selected {
-                border-bottom: 2px solid blue;
-            }
-
-            .btn.b1:focus, .btn.b2:focus {
-                box-shadow: unset !important;
-            }
-
-            .btnNoFocus {
-                box-shadow: unset !important;
-            }
-        </style>
-        <style>
-            .userImageDiv {
-                width: 22%;
-                height: 37%;
-                left: 0;
-                right: 0;
-                bottom: 15%;
-            }
-
-            .backgroundImage {
-                max-height: 150px;
-                color: white;
-                position: absolute;
-                object-fit: cover;
-                object-position: center center;
-                z-index: 1;
-                width: 100%;
-                border-radius: 0px;
-
-            }
-
-            .userImage {
-                width: 100px;
-                height: 100px;
-                color: white;
-                z-index: 5;
-                /*border: 1px solid grey;*/
-                object-fit: contain;
-                border-radius: 100%;
-                margin-top: 95px;
-            }
-
-            .userDiv {
-                width: 100%;
-                display: flex;
-                flex-direction: column;
-                -webkit-box-align: center;
-                align-items: center;
-                position: relative;
-                z-index: 5;
-                margin-bottom: 22px;
-                font-family: iransans;
-            }
-
-            .user-info-data {
-                display: flex;
-                flex-direction: column;
-                -webkit-box-pack: start;
-                justify-content: flex-start;
-                -webkit-box-align: center;
-                align-items: center;
-                margin-left: 0px;
-                z-index: 5;
-                margin-bottom: 8px;
-                width: 100%;
-
-            }
-
-            .MuiTypography-root.title {
-                font-weight: bold;
-                font-size: 18px;
-                margin-top: 5px;
-            }
-
-            .MuiTypography-root {
-                margin: 0px;
-                font-weight: 400;
-                line-height: 1.5;
-                font-size: 15px;
-                color: inherit;
-                font-family: inherit;
-                padding: 0px 8px;
-                z-index: 5;
-                white-space: break-spaces;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                text-align: center;
-                width: 100%;
-                unicode-bidi: plaintext;
-                overflow-wrap: break-word;
-
-            }
-
-            .col-12.fixed-bottom.mx-auto {
-                border-radius: 20px 20px 0 0;
-                background-color: rgba(32, 32, 32, .6);
-                max-width: 600px;
-                backdrop-filter: blur(5px)
-            }
-
-            .row.p-2.justify-content-end {
-                background: rgba(0, 0, 0, 0.15);
-                border-radius: 8px;
-                backdrop-filter: blur(5px)
-            }
-
-            .modal-body {
-                box-shadow: inset rgb(0 0 0 / 70%) 0px 4px 10px -10px;
-            }
-
-            .modal-body > ul > li {
-                background-color: #EDEDED !important;
-                border-top-width: 1px !important;
-                transition: ease-in-out 500ms;
-                border-radius: 16px !important;
-            }
-
-            .modal-body > ul > li p {
-                opacity: 0.6;
-                transition: ease-in-out 500ms;
-            }
-
-            .modal-body > ul > li:hover {
-                background-color: #fff8d4 !important;
-                color: #0bad00 !important;
-                border-color: #0bad00 !important;
-                transition: ease-in-out 500ms;
-            }
-
-            .modal-body > ul > li:hover p {
-                opacity: 1;
-                transition: ease-in-out 500ms;
-            }
-
-            .modal-content {
-                border-radius: 15px !important;
-
-            }
-        </style>
+        <link rel="stylesheet" href="{{asset('pageBuilder/assets/css/style.css')}}">
     @endpush
 
     <div style="max-width: 600px" class="container">
@@ -206,11 +63,11 @@
                                     @foreach($block->pbOption()->get() as $option)
                                         {{--                                        @dd($option)--}}
                                         <div
-                                            class="{{$block->blockOption->blockWidth=='full'?'col-12':($block->blockOption->blockWidth=='half'?'col-6':($block->blockOption->blockWidth=='compress'?'col-auto':''))}} text-center p-1">
+                                            class="{{$this->setBlockWidthHalf($block->blockOption->blockWidth,$loop->last,$loop->index)}} {{$this->setBlockWidth($block->blockOption->blockWidth)}} text-center p-1">
                                             <button dir="rtl" {{--style=""--}}
                                             class="btn border-info w-100 overflow-hidden text-truncate px-1"
                                                     style="border-radius: {{$this->getBlockItemsBorder($block)}};background-color: {{$this->getBgBlockItemColor($block,$option->color)}};border-color: {{$this->getBorderBlockItemColor($block)}} !important;color: {{$this->getTextBlockItemColor($block)}}">
-                                                <div class="row justify-content-center">
+                                                <div class="row justify-content-center ez-solid-aparat">
                                                     <div
                                                         class="col-auto {{$block->blockOption->blockWidth!='compress'?'ps-0':''}}">
                                                         <i class="{{$option->icon}} text-info mx-2 align-middle iii"
@@ -284,7 +141,7 @@
                             wire:click="getOptions('messenger',true)"
                             class="list-group-item my-1 border-dark px-4">
                             <div class="row">
-                                <div class="col-auto align-self-center">
+                                <div class="col-2 text-center">
                                     <i class="ez ez-chat-writing"></i>
                                 </div>
                                 <div class="col-auto">
@@ -299,7 +156,7 @@
                             data-bs-target="#insertMessengers"
                             wire:click="getOptions('social',true)">
                             <div class="row">
-                                <div class="col-auto align-self-center">
+                                <div class="col-2 text-center">
                                     <i class="ez ez-social-instagram"></i>
                                 </div>
                                 <div class="col-auto">
@@ -313,8 +170,8 @@
                             data-bs-target="#insertMessengers"
                             wire:click="getOptions('call',true)">
                             <div class="row">
-                                <div class="col-auto align-self-center">
-                                    <i class="fa fa-phone fs-4"></i>
+                                <div class="col-2 text-center">
+                                    <i class="ez ez-phone"></i>
                                 </div>
                                 <div class="col-auto">
                                     <h4>تماس و راه های ارتباطی</h4>
@@ -324,8 +181,10 @@
                         </li>
                         <li class="list-group-item my-1 border-dark px-4">
                             <div class="row">
-                                <div class="col-auto align-self-center">
-                                    <i class="ez ez-vcf"></i>
+                                <div class="col-2 text-center">
+                                    <i class="ez ez-vcf">
+                                        {!! $this->getIconPaths() !!}
+                                    </i>
                                 </div>
                                 <div class="col-auto">
                                     <h4>ساخت ذخیره خودکار مخاطب</h4>
@@ -335,7 +194,20 @@
                         </li>
                         <li class="list-group-item my-1 border-dark px-4">
                             <div class="row">
-                                <div class="col-auto align-self-center">
+                                <div class="col-2 text-center">
+                                    <i class="ez ez-photo">
+                                        {!! $this->getIconPaths() !!}
+                                    </i>
+                                </div>
+                                <div class="col-auto">
+                                    <h4>بنر</h4>
+                                    <p class="m-0">امکان اضافه کردن بنر و عکس</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item my-1 border-dark px-4">
+                            <div class="row">
+                                <div class="col-2 text-center">
                                     <i class="ez ez-video-library"></i>
                                 </div>
                                 <div class="col-auto">
@@ -349,7 +221,7 @@
                             data-bs-target="#insertMessengers"
                             wire:click="getOptions('link',true)">
                             <div class="row">
-                                <div class="col-auto align-self-center">
+                                <div class="col-2 text-center">
                                     <i class="ez ez-link"></i>
                                 </div>
                                 <div class="col-auto">
@@ -360,7 +232,7 @@
                         </li>
                         <li class="list-group-item my-1 border-dark px-4">
                             <div class="row">
-                                <div class="col-auto align-self-center">
+                                <div class="col-2 text-center">
                                     <i class="ez ez-location"></i>
                                 </div>
                                 <div class="col-auto">
@@ -371,7 +243,7 @@
                         </li>
                         <li class="list-group-item my-1 border-dark px-4">
                             <div class="row">
-                                <div class="col-auto align-self-center">
+                                <div class="col-2 text-center">
                                     <i class="ez ez-text-align-center"></i>
                                 </div>
                                 <div class="col-auto">
@@ -1237,22 +1109,22 @@
 
             function showFirstTab() {
                 // if (modal.hasClass('show')) {
-                    // setTimeout(function () {
+                // setTimeout(function () {
 
-                    var buttons = modal.find('ul.nav')
-                    var tabs    = modal.find('div.tab-content')
+                var buttons = modal.find('ul.nav')
+                var tabs    = modal.find('div.tab-content')
 
-                    buttons.find('li').removeClass('selected')
-                    buttons.find('li button').removeClass('active')
-                    tabs.find('div.tab-pane').removeClass('show active')
-                    // tabs.find('div.tab-pane').removeClass('active')
+                buttons.find('li').removeClass('selected')
+                buttons.find('li button').removeClass('active')
+                tabs.find('div.tab-pane').removeClass('show active')
+                // tabs.find('div.tab-pane').removeClass('active')
 
-                    buttons.find('li:first').addClass('selected')
-                    buttons.find('li:first button').addClass('active')
-                    tabs.find('div.tab-pane:first').addClass('show active')
-                    // tabs.find('div.tab-pane:first').addClass('active')
-                    // console.log(a)
-                    // }, 500)
+                buttons.find('li:first').addClass('selected')
+                buttons.find('li:first button').addClass('active')
+                tabs.find('div.tab-pane:first').addClass('show active')
+                // tabs.find('div.tab-pane:first').addClass('active')
+                // console.log(a)
+                // }, 500)
                 // }
             }
 

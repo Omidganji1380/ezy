@@ -3,6 +3,7 @@
 namespace App\Livewire\Front\Pagebuilder;
 
 use App\Events\UpdateShowPbPage;
+use App\Http\Controllers\pageBuilder\PageBuilderTrait;
 use App\Models\Block;
 use App\Models\BlockOption;
 use App\Models\BlockPbOption;
@@ -15,368 +16,123 @@ use Storage;
 
 class Pagebuilder extends Component
 {
-    use WithFileUploads;
+    use WithFileUploads, PageBuilderTrait;
 
-    public $options      = [];
-    public $constOptions = [];
-    public $option;
-
-    public $title;
-    public $profile;
-    public $link;
-    public $blocks;
-    public $blockItems = [];
-    public $block;
-    public $blockTitle;
-    public $blockItemColor;
-    public $bgBlockItemColor;
-    public $textBlockItemColor;
-    public $borderBlockItemColor;
-    public $blockItemsWidth;
-    public $blockItemsBorder;
-    public $blockVisibility;
-    public $blockItemTitle;
-    public $blockItemConnectionWay;
-    public $blockItemExtraText;
-    public $newBlock   = true;
-
-    public $profileTitle;
-    public $profileSubtitle;
-    public $profileImg;
-    public $profileBgImg;
-    public $profileBgBorder;
-    public $profileImgBorder;
 
 //    public $blockItems=[];
     public function submitProfileOptions()
     {
-        if ($this->profileImg) {
-            Storage::disk('public')->delete('pb/profiles/profile-' . $this->profile->id . '/' . $this->profile->img);
-            $filename     = time() . '_' . $this->profileImg->getFilename();
-            $originalName = time() . '_' . $this->profileImg->getClientOriginalName();
-            $this->profileImg->storeAs('pb/profiles/profile-' . $this->profile->id, $originalName, 'public');
-            Storage::disk('local')->delete('livewire-tmp/' . $filename);
-            $this->profileImg = null;
-            $this->profile->update([
-                'img' => $originalName,
-            ]);
-        }
-        if ($this->profileBgImg) {
-            Storage::disk('public')->delete('pb/profiles/profile-' . $this->profile->id . '/' . $this->profile->bg_img);
-            $filename     = time() . '_' . $this->profileBgImg->getFilename();
-            $originalName = time() . '_' . $this->profileBgImg->getClientOriginalName();
-            $this->profileBgImg->storeAs('pb/profiles/profile-' . $this->profile->id, $originalName, 'public');
-            Storage::disk('local')->delete('livewire-tmp/' . $filename);
-            $this->profileBgImg = null;
-            $this->profile->update([
-                'bg_img' => $originalName,
-            ]);
-        }
-        $this->profile->update([
-            'title'      => $this->profileTitle,
-            'subtitle'   => $this->profileSubtitle,
-            'img_border' => $this->profileImgBorder,
-            'bg_border'  => $this->profileBgBorder,
-        ]);
-        $this->clearInputs();
-        $this->mount($this->link);
+        $this->submitProfileOptionsTrait();
     }
 
     public function clearVariables()
     {
-        $this->block    = null;
-        $this->newBlock = true;
+        $this->clearVariablesTrait();
     }
 
     public function mount($link)
     {
-        $this->link    = $link;
-        $this->profile = Profile::query()->with('block')->where('link', $link)->first();
-        if (!$this->profile) {
-            abort(404);
-        }
-        $this->blocks = $this->profile->block;
+        $this->mountTrait($link);
+    }
 
-        $this->getOptions($this->title, false);
-        $this->constOptions = pbOption::query()->where('for', 'social')->get();
-//
+    public function setBlockWidth($width)
+    {
+        return $this->setBlockWidthTrait($width);
+    }
+
+    public function setBlockWidthHalf($width, $loopLast, $loopIndex)
+    {
+       return $this->setBlockWidthHalfTrait($width, $loopLast, $loopIndex);
     }
 
     public function previewPB()
     {
-        $this->dispatch('previewPB', link: $this->link)->to(Show::class);
+        $this->previewPBTrait();
     }
-
-//    public function sendEvent(): void
-//    {
-//        $a = new UpdateShowPbPage($this->link);
-//        event($a);
-//    }
 
     public function getIconPaths()
     {
-        for ($ii = 1; $ii <= 50; $ii++) {
-            echo '<span class="path' . $ii . '"></span >';
-        }
+        $this->getIconPathsTrait();
     }
 
     public function insertBlock(pbOption $pbOption)
     {
-//        dd($pbOption->block);
-        if ($this->newBlock) {
-            $block = Block::create([
-                'profile_id' => $this->profile->id,
-            ]);
-            BlockOption::create([
-                'block_id'   => $block->id,
-                'blockTitle' => $this->title,
-                'option5'    => $this->title,
-            ]);
-            BlockPbOption::create([
-                'block_id'    => $block->id,
-                'pbOption_id' => $pbOption->id,
-                'title'       => $pbOption->title,
-            ]);
-            $this->blockOptions($block);
-        }
-        else {
-            BlockOption::create([
-                'block_id'   => $this->block->id,
-                'blockTitle' => $this->title,
-                'option5'    => $this->title,
-            ]);
-            BlockPbOption::create([
-                'block_id'    => $this->block->id,
-                'pbOption_id' => $pbOption->id,
-                'title'       => $pbOption->title,
-            ]);
-            $this->blockOptions($this->block);
-        }
-        $this->mount($this->link);
-
+        $this->insertBlockTrait($pbOption);
     }
 
     public function getProfileOptions()
     {
-        $this->clearInputs();
-        $this->profileTitle     = $this->profile->title;
-        $this->profileSubtitle  = $this->profile->subtitle;
-        $this->profileImg       = $this->profile->profileImg;
-        $this->profileBgImg     = $this->profile->profileBgImg;
-        $this->profileBgBorder  = $this->profile->bg_border;
-        $this->profileImgBorder = $this->profile->img_border;
-//        dd($this->profileBgBorder);
+        $this->getProfileOptionsTrait();
     }
 
     public function clearInputs()
     {
-        $this->profileTitle           = null;
-        $this->profileSubtitle        = null;
-        $this->profileImg             = null;
-        $this->profileBgImg           = null;
-        $this->block                  = null;
-        $this->blockItemTitle         = null;
-        $this->blockItemConnectionWay = null;
-        $this->blockItemExtraText     = null;
-        $this->title                  = null;
-        $this->blockItems             = [];
-        $this->blockItemTitle         = [];
-        $this->blockItemConnectionWay = [];
-        $this->blockItemExtraText     = [];
+        $this->clearInputsTrait();
     }
 
     public function getBlockMoreOptions(Block $block)
     {
-        $blockMoreOptions           = $block->blockOption;
-        $this->blockVisibility      = $blockMoreOptions->blockVisibility == 1 ? true : false;
-        $this->blockTitle           = $blockMoreOptions->blockTitle;
-        $this->blockItemsWidth      = $blockMoreOptions->blockWidth;
-        $this->blockItemsBorder     = $blockMoreOptions->blockBorder;
-        $this->blockItemColor       = $blockMoreOptions->blockItemColor;
-        $this->bgBlockItemColor     = $blockMoreOptions->bgBlockItemColor;
-        $this->textBlockItemColor   = $blockMoreOptions->textBlockItemColor;
-        $this->borderBlockItemColor = $blockMoreOptions->borderBlockItemColor;
+        $this->getBlockMoreOptionsTrait($block);
     }
 
     public function blockOptions(Block $block/*,$newBlock*/)
     {
-//        $this->newBlock = $newBlock;
-//        if ($this->newBlock)
-//            $this->clearInputs();
-
-        $this->block = $block;
-        $this->title = $block->blockOption->option5;
-//        dd($block->blockOption);
-        $this->blockItems = BlockPbOption::query()->where([/*'pbOption_id' => $pbOption->id,*/ 'block_id' => $this->block->id])->get();
-//        dd($this->blockItemTitle);
-//        dd($block->pbOption);
-        foreach ($this->blockItems as $item) {
-            $this->blockItemTitle[$item->id]         = $item->title;
-            $this->blockItemConnectionWay[$item->id] = $item->connectionWay;
-        }
-        $this->getBlockMoreOptions($block);
-//        dd($this->blockItemTitle,$this->blockItemConnectionWay);
+        $this->blockOptionsTrait($block);
     }
 
     public function deleteBlock()
     {
-        $this->block->delete();
-        $this->redirect(route('pagebuilder.pagebuilder', $this->link), true);
-//        $this->mount($this->link);
-
+        $this->deleteBlockTrait();
     }
 
     public function deleteBlockItem(BlockPbOption $blockPbOption)
     {
-        $blockPbOption->delete();
-        $this->mount($this->link);
-        $this->blockOptions($this->block);
-
+        $this->deleteBlockItemTrait($blockPbOption);
     }
 
     public function getOptions($option, $newBlock)
     {
-        if ($newBlock) {
-            $this->newBlock = true;
-        }
-        else {
-            $this->newBlock = false;
-        }
-
-        $this->options = [];
-        $this->option  = null;
-        $this->option  = $option;
-//dd($option);
-
-        if ($option == 'پیام رسان ها')
-            $option = 'messenger';
-        if ($option == 'شبکه های اجتماعی')
-            $option = 'social';
-        if ($option == 'تماس و راه های ارتباطی')
-            $option = 'call';
-        if ($option == 'لینک و سوپر لینک')
-            $option = 'link';
-
-        $this->options = pbOption::query()->where('for', $option)->get();
-
-        $this->title = $option;
-        if ($option == 'messenger')
-            $this->title = 'پیام رسان ها';
-        if ($option == 'social')
-            $this->title = 'شبکه های اجتماعی';
-        if ($option == 'link')
-            $this->title = 'لینک و سوپر لینک';
-
-
+        $this->getOptionsTrait($option, $newBlock);
     }
 
     public function getBlockTitle($blockPbOption)
     {
-//        dd($blockPbOption);
-        $a = BlockPbOption::query()->where(['pbOption_id' => $blockPbOption->pbOption_id, 'id' => $blockPbOption->id, 'block_id' => $blockPbOption->block_id])->first();
-//        dd($a);
-        return $a->title;
+        return $this->getBlockTitleTrait($blockPbOption);
     }
 
     public function getBlockItemsBorder(Block $block)
     {
-        $border = $block->blockOption->blockBorder;
-        if ($border == 0) {
-            $border = '0 !important';
-        }
-        elseif ($border == 1) {
-            $border = '0.25rem !important';
-        }
-        elseif ($border == 2) {
-            $border = '10px !important';
-        }
-        elseif ($border == 3) {
-            $border = '100px !important';
-        }
-        return $border;
+        return $this->getBlockItemsBorderTrait($block);
     }
 
     public function getBgBlockItemColor(Block $block, $originalColor)
     {
-        $blockItemColor       = $block->blockOption->blockItemColor;
-        $bgBlockItemColor     = $block->blockOption->bgBlockItemColor;
-
-        if ($blockItemColor == 3||$blockItemColor == 1) {
-           return $bgBlockItemColor;
-        }else{
-            return $originalColor;
-        }
+        return $this->getBgBlockItemColorTrait($block, $originalColor);
     }
-    public function getTextBlockItemColor(Block $block, $originalColor=null)
-    {
-        $blockItemColor       = $block->blockOption->blockItemColor;
-        $textBlockItemColor   = $block->blockOption->textBlockItemColor;
 
-        if ($blockItemColor == 3||$blockItemColor == 1) {
-           return $textBlockItemColor;
-        }else{
-            return $originalColor;
-        }
+    public function getTextBlockItemColor(Block $block, $originalColor = null)
+    {
+        return $this->getTextBlockItemColorTrait($block, $originalColor);
     }
-    public function getBorderBlockItemColor(Block $block, $originalColor=null)
-    {
-        $blockItemColor       = $block->blockOption->blockItemColor;
-        $borderBlockItemColor = $block->blockOption->borderBlockItemColor;
 
-        if ($blockItemColor == 3||$blockItemColor == 1) {
-           return $borderBlockItemColor;
-        }else{
-            return $originalColor;
-        }
+    public function getBorderBlockItemColor(Block $block, $originalColor = null)
+    {
+        return $this->getBorderBlockItemColorTrait($block, $originalColor);
     }
 
     public function submitPbOption()
     {
-        foreach ($this->blockItems as $item) {
-            $item->update([
-                'title'         => $this->blockItemTitle[$item->id],
-                'connectionWay' => $this->blockItemConnectionWay[$item->id],
-            ]);
-        }
-
-//        dd($this->blockVisibility);
-        $this->block->blockOption->update([
-            'blockTitle'           => $this->blockTitle,
-            'blockWidth'           => $this->blockItemsWidth,
-            'blockBorder'          => $this->blockItemsBorder,
-            'blockVisibility'      => $this->blockVisibility,
-            'blockItemColor'       => $this->blockItemColor,
-            'bgBlockItemColor'     => $this->bgBlockItemColor,
-            'textBlockItemColor'   => $this->textBlockItemColor,
-            'borderBlockItemColor' => $this->borderBlockItemColor,
-        ]);
-        $this->clearVariables();
-        $this->clearInputs();
-
+        $this->submitPbOptionTrait();
     }
 
     public function removeImg()
     {
-        if ($this->profile->img) {
-            Storage::disk('public')->delete('pb/profiles/profile-' . $this->profile->id . '/' . $this->profile->img);
-            $this->profile->update([
-                'img' => null,
-            ]);
-//            $this->mount($this->link);
-        }
-
+        $this->removeImgTrait();
     }
 
     public function removeBgImg()
     {
-        if ($this->profile->bg_img) {
-            Storage::disk('public')->delete('pb/profiles/profile-' . $this->profile->id . '/' . $this->profile->bg_img);
-            $this->profile->update([
-                'bg_img' => null,
-            ]);
-//            $this->mount($this->link);
-        }
-
+        $this->removeBgImgTrait();
     }
 
     public function render()
