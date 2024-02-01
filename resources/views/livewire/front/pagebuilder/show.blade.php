@@ -161,13 +161,15 @@
                                             <p class="text-center">{{$block->blockOption->blockTitle}}</p>
                                         </div>
                                         @foreach($block->pbOption()->get() as $option)
-                                            <div class="{{$block->blockOption->blockWidth=='full'?'col-12':($block->blockOption->blockWidth=='half'?'col-6':($block->blockOption->blockWidth=='compress'?'col-auto':''))}} text-center p-1">
-                                                <a dir="rtl" href="{{$option->link}}{{$this->getBlockLink($option->pivot)}}" target="_blank" {{--wire:click="getBlockLink({{$option->pivot}})"--}}
-                                                        class="btn border-info w-100 overflow-hidden text-truncate px-1"
-                                                        style="border-radius: {{$this->getBlockItemsBorder($block)}};background-color: {{$this->getBgBlockItemColor($block,$option->color)}};border-color: {{$this->getBorderBlockItemColor($block)}} !important;color: {{$this->getTextBlockItemColor($block)}}">
-                                                    <div class="row justify-content-center flex-nowrap">
-                                                        <div class="col-auto {{$block->blockOption->blockWidth!='compress'?'ps-0':''}}">
-                                                            <i class="{{$option->icon}} text-info mx-2 align-middle iii"
+                                            <div
+                                                class="{{$this->setBlockWidthHalf($block->blockOption->blockWidth,$loop->last,$loop->index)}} {{$this->setBlockWidth($block->blockOption->blockWidth)}} text-center p-1">
+                                                <a dir="rtl" href="{{$option->link}}{{$this->getBlockLink($option->pivot)}}" target="_blank"
+                                                class="btn border-info w-100 overflow-hidden text-truncate px-1"
+                                                        style="border-radius: {{$this->getBlockItemsBorder($block)}};background-{{$block->blockOption->blockItemColor==2?'color':'image'}}: {{$this->getBgBlockItemColor($block,$option->color)}};border-color: {{$this->getBorderBlockItemColor($block)}} !important;color: {{$this->getTextBlockItemColor($block)}}">
+                                                    <div class="row justify-content-center ez-solid-aparat">
+                                                        <div
+                                                            class="col-auto {{$block->blockOption->blockWidth!='compress'?'ps-0':''}}">
+                                                            <i class="{{--{{$option->icon}}--}}{{$this->getBlockItemIcon($option->icon,$block->blockOption->blockItemColor)}} {{--text-info--}} mx-2 align-middle iii"
                                                                style="font-size: 25px !important;">
                                                                 {!! $this->getIconPaths() !!}
                                                             </i>

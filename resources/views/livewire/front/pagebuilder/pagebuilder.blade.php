@@ -67,7 +67,7 @@
                                             class="{{$this->setBlockWidthHalf($block->blockOption->blockWidth,$loop->last,$loop->index)}} {{$this->setBlockWidth($block->blockOption->blockWidth)}} text-center p-1">
                                             <button dir="rtl" {{--style=""--}}
                                             class="btn border-info w-100 overflow-hidden text-truncate px-1"
-                                                    style="border-radius: {{$this->getBlockItemsBorder($block)}};background-image: {{$this->getBgBlockItemColor($block,$option->color)}};border-color: {{$this->getBorderBlockItemColor($block)}} !important;color: {{$this->getTextBlockItemColor($block)}}">
+                                                    style="border-radius: {{$this->getBlockItemsBorder($block)}};background-{{$block->blockOption->blockItemColor==2?'color':'image'}}: {{$this->getBgBlockItemColor($block,$option->color)}};border-color: {{$this->getBorderBlockItemColor($block)}} !important;color: {{$this->getTextBlockItemColor($block)}}">
                                                 <div class="row justify-content-center ez-solid-aparat">
                                                     <div
                                                         class="col-auto {{$block->blockOption->blockWidth!='compress'?'ps-0':''}}">

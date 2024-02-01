@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Front\Pagebuilder;
 
+use App\Http\Controllers\pageBuilder\PageBuilderTrait;
 use App\Models\Block;
 use App\Models\BlockPbOption;
 use App\Models\Profile;
@@ -10,6 +11,8 @@ use Livewire\Component;
 
 class Show extends Component
 {
+    use PageBuilderTrait;
+
     public $profile;
     public $blocks;
 
@@ -25,68 +28,45 @@ class Show extends Component
 
     public function getBlockItemsBorder(Block $block)
     {
-        $border = $block->blockOption->blockBorder;
-        if ($border == 0) {
-            $border = '0 !important';
-        }
-        elseif ($border == 1) {
-            $border = '0.25rem !important';
-        }
-        elseif ($border == 2) {
-            $border = '10px !important';
-        }
-        elseif ($border == 3) {
-            $border = '100px !important';
-        }
-        return $border;
+       return $this->getBlockItemsBorderTrait($block);
+    }
+    public function setBlockWidthHalf($width, $loopLast, $loopIndex)
+    {
+        return $this->setBlockWidthHalfTrait($width, $loopLast, $loopIndex);
     }
 
+    public function setBlockWidth($width)
+    {
+        return $this->setBlockWidthTrait($width);
+    }
+
+    public function getBlockItemIcon($icon, $blockItemColor)
+    {
+        return $this->getBlockItemIconTrait($icon, $blockItemColor);
+    }
     public function getBgBlockItemColor(Block $block, $originalColor)
     {
-        $blockItemColor       = $block->blockOption->blockItemColor;
-        $bgBlockItemColor     = $block->blockOption->bgBlockItemColor;
-
-        if ($blockItemColor == 3||$blockItemColor == 1) {
-            return $bgBlockItemColor;
-        }else{
-            return $originalColor;
-        }
+       return $this->getBgBlockItemColorTrait($block, $originalColor);
     }
-    public function getTextBlockItemColor(Block $block, $originalColor=null)
+
+    public function getTextBlockItemColor(Block $block, $originalColor = null)
     {
-        $blockItemColor       = $block->blockOption->blockItemColor;
-        $textBlockItemColor   = $block->blockOption->textBlockItemColor;
-
-        if ($blockItemColor == 3||$blockItemColor == 1) {
-            return $textBlockItemColor;
-        }else{
-            return $originalColor;
-        }
+        return $this->getTextBlockItemColorTrait($block, $originalColor);
     }
-    public function getBorderBlockItemColor(Block $block, $originalColor=null)
+
+    public function getBorderBlockItemColor(Block $block, $originalColor = null)
     {
-        $blockItemColor       = $block->blockOption->blockItemColor;
-        $borderBlockItemColor = $block->blockOption->borderBlockItemColor;
-
-        if ($blockItemColor == 3||$blockItemColor == 1) {
-            return $borderBlockItemColor;
-        }else{
-            return $originalColor;
-        }
+        return $this->getBorderBlockItemColorTrait($block, $originalColor);
     }
+
     public function getIconPaths()
     {
-        for ($ii = 1; $ii <= 50; $ii++) {
-            echo '<span class="path' . $ii . '"></span >';
-        }
+        $this->getIconPathsTrait();
     }
 
     public function getBlockTitle($blockPbOption)
     {
-//        dd($blockPbOption);
-        $a = BlockPbOption::query()->where(['pbOption_id' => $blockPbOption->pbOption_id, 'id' => $blockPbOption->id, 'block_id' => $blockPbOption->block_id])->first();
-//        dd($a);
-        return $a->title;
+       return $this->getBlockTitleTrait($blockPbOption);
     }
 
     public function getBlockLink($link)
