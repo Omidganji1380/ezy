@@ -42,7 +42,12 @@ class Pagebuilder extends Component
 
     public function setBlockWidthHalf($width, $loopLast, $loopIndex)
     {
-       return $this->setBlockWidthHalfTrait($width, $loopLast, $loopIndex);
+        return $this->setBlockWidthHalfTrait($width, $loopLast, $loopIndex);
+    }
+
+    public function getBlockItemIcon($icon, $blockItemColor)
+    {
+       return $this->getBlockItemIconTrait($icon, $blockItemColor);
     }
 
     public function previewPB()

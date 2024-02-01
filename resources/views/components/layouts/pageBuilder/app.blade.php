@@ -25,6 +25,10 @@
     <link rel="stylesheet" href="{{asset('pageBuilder/jqueryDragable/jquery-ui.css')}}">
     <link rel="stylesheet" href="{{asset('pageBuilder/assets/css/ezIcon.css')}}">
     <link rel="stylesheet" href="{{asset('pageBuilder/assets/css/ezIconSolid.css')}}">
+    <link rel="stylesheet" href="{{asset('pageBuilder/assets/css/grapick.min.css')}}">
+{{--    <link rel="stylesheet" href="{{asset('pageBuilder/assets/css/spectrum.min.css')}}">--}}
+    <script src="{{asset('pageBuilder/assets/js/grapick.min.js')}}"></script>
+
 
 @stack('css')
     @livewireStyles
@@ -463,6 +467,8 @@
 <script src="{{asset('pageBuilder/fontawesome-free-6.5.1-web/js/all.js')}}"></script>
 <script src="{{asset('pageBuilder/jqueryDragable/jquery-ui.js')}}"></script>
 <script src="{{asset('pageBuilder/jqueryDragable/jquery.ui.touch-punch.js')}}"></script>
+{{--<script src="{{asset('pageBuilder/assets/js/grapick.min.js')}}"></script>--}}
+{{--<script src="{{asset('pageBuilder/assets/js/spectrum.min.js')}}"></script>--}}
 {{--<script src="{{asset('admin/js/bootstrap.min.js')}}"></script>--}}
 
 <script>

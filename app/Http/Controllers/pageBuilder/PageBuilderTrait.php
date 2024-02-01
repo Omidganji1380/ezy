@@ -56,6 +56,15 @@ trait PageBuilderTrait
         }
     }
 
+    public function getBlockItemIconTrait($icon, $blockItemColor)
+    {
+        if ($blockItemColor == 2) {
+            return $icon;
+        }
+        else {
+            return $icon . '-solid';
+        }
+    }
     public function setBlockWidthHalfTrait($width, $loopLast, $loopIndex)
     {
         if ($width == 'half' && $loopLast % 2 != 0 && $loopIndex % 2 == 0) {
