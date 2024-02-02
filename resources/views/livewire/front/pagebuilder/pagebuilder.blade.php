@@ -50,7 +50,7 @@
                     </div>
                 </div>
             </div>
-            <div id="sortable" style="cursor: grab;margin-bottom: 6rem !important;" wire:ignore.self>
+            <div id="sortable" style="cursor: grab;margin-bottom: 9rem !important;" wire:ignore.self>
                 @foreach($blocks as $block)
                     <div class="col-12 my-3">
                         <div class="row p-2 flex-nowrap">
@@ -68,7 +68,7 @@
                                             <button dir="rtl" {{--style=""--}}
                                             class="btn border-info w-100 overflow-hidden text-truncate px-1"
                                                     style="border-radius: {{$this->getBlockItemsBorder($block)}};background-{{$block->blockOption->blockItemColor==2?'color':'image'}}: {{$this->getBgBlockItemColor($block,$option->color)}};border-color: {{$this->getBorderBlockItemColor($block)}} !important;color: {{$this->getTextBlockItemColor($block)}}">
-                                                <div class="row justify-content-center ez-solid-aparat"
+                                                <div class="row justify-content-center ez-solid-aparat flex-nowrap"
                                                      style="{{$block->blockOption->blockItemColor==2?'':'background: '.$this->getTextBlockItemColor($block).';-webkit-background-clip: text;-webkit-text-fill-color: transparent;'}}"
                                                 >
                                                     <div
@@ -143,11 +143,11 @@
                             data-bs-target="#insertMessengers"
                             wire:click="getOptions('messenger',true)"
                             class="list-group-item my-1 border-dark px-4">
-                            <div class="row">
-                                <div class="col-2 text-center">
+                            <div class="row flex-nowrap  justify-content-sm-start">
+                                <div class="col-2 text-center pe-0">
                                     <i class="ez ez-chat-writing"></i>
                                 </div>
-                                <div class="col-auto">
+                                <div class="col-10 col-sm-auto px-0 text-truncate" style="max-width: 80%">
                                     <h4>پیام رسان ها</h4>
                                     <p class="m-0">اتصال فوری به تمام پیام رسان ها</p>
                                 </div>
@@ -158,11 +158,11 @@
                             data-bs-toggle="modal"
                             data-bs-target="#insertMessengers"
                             wire:click="getOptions('social',true)">
-                            <div class="row">
-                                <div class="col-2 text-center">
+                            <div class="row flex-nowrap  justify-content-sm-start">
+                                <div class="col-2 text-center pe-0">
                                     <i class="ez ez-social-instagram"></i>
                                 </div>
-                                <div class="col-auto">
+                                <div class="col-10 col-sm-auto px-0 text-truncate" style="max-width: 80%">
                                     <h4>شبکه های اجتماعی</h4>
                                     <p class="m-0">افزودن شبکه های اجتماعی</p>
                                 </div>
@@ -172,48 +172,48 @@
                             data-bs-toggle="modal"
                             data-bs-target="#insertMessengers"
                             wire:click="getOptions('call',true)">
-                            <div class="row">
-                                <div class="col-2 text-center">
+                            <div class="row flex-nowrap  justify-content-sm-start">
+                                <div class="col-2 text-center pe-0">
                                     <i class="ez ez-phone"></i>
                                 </div>
-                                <div class="col-auto">
+                                <div class="col-10 col-sm-auto px-0 text-truncate" style="max-width: 80%">
                                     <h4>تماس و راه های ارتباطی</h4>
                                     <p class="m-0">برقراری ارتباط از طریق شماره موبایل، پیامک، تلفن ثابت و ...</p>
                                 </div>
                             </div>
                         </li>
                         <li class="list-group-item my-1 border-dark px-4">
-                            <div class="row">
-                                <div class="col-2 text-center">
+                            <div class="row flex-nowrap  justify-content-sm-start">
+                                <div class="col-2 text-center pe-0">
                                     <i class="ez ez-vcf">
                                         {!! $this->getIconPaths() !!}
                                     </i>
                                 </div>
-                                <div class="col-auto">
+                                <div class="col-10 col-sm-auto px-0 text-truncate" style="max-width: 80%">
                                     <h4>ساخت ذخیره خودکار مخاطب</h4>
                                     <p class="m-0">فایل vcf خود را بسازید</p>
                                 </div>
                             </div>
                         </li>
                         <li class="list-group-item my-1 border-dark px-4">
-                            <div class="row">
-                                <div class="col-2 text-center">
+                            <div class="row flex-nowrap  justify-content-sm-start">
+                                <div class="col-2 text-center pe-0">
                                     <i class="ez ez-photo">
                                         {!! $this->getIconPaths() !!}
                                     </i>
                                 </div>
-                                <div class="col-auto">
+                                <div class="col-10 col-sm-auto px-0 text-truncate" style="max-width: 80%">
                                     <h4>بنر</h4>
                                     <p class="m-0">امکان اضافه کردن بنر و عکس</p>
                                 </div>
                             </div>
                         </li>
                         <li class="list-group-item my-1 border-dark px-4">
-                            <div class="row">
-                                <div class="col-2 text-center">
+                            <div class="row flex-nowrap  justify-content-sm-start">
+                                <div class="col-2 text-center pe-0">
                                     <i class="ez ez-video-library"></i>
                                 </div>
-                                <div class="col-auto">
+                                <div class="col-10 col-sm-auto px-0 text-truncate" style="max-width: 80%">
                                     <h4>ویدئو</h4>
                                     <p class="m-0">امکان افزودن ویدئو</p>
                                 </div>
@@ -223,33 +223,33 @@
                             data-bs-toggle="modal"
                             data-bs-target="#insertMessengers"
                             wire:click="getOptions('link',true)">
-                            <div class="row">
-                                <div class="col-2 text-center">
+                            <div class="row flex-nowrap  justify-content-sm-start">
+                                <div class="col-2 text-center pe-0">
                                     <i class="ez ez-link"></i>
                                 </div>
-                                <div class="col-auto">
+                                <div class="col-10 col-sm-auto px-0 text-truncate" style="max-width: 80%">
                                     <h4>لینک</h4>
                                     <p class="m-0">ساخت لینک دلخواه</p>
                                 </div>
                             </div>
                         </li>
                         <li class="list-group-item my-1 border-dark px-4">
-                            <div class="row">
-                                <div class="col-2 text-center">
+                            <div class="row flex-nowrap  justify-content-sm-start">
+                                <div class="col-2 text-center pe-0">
                                     <i class="ez ez-location"></i>
                                 </div>
-                                <div class="col-auto">
+                                <div class="col-10 col-sm-auto px-0 text-truncate" style="max-width: 80%">
                                     <h4>مسیریابی</h4>
                                     <p class="m-0">نمایش آدرس بر روی نقشه</p>
                                 </div>
                             </div>
                         </li>
                         <li class="list-group-item my-1 border-dark px-4">
-                            <div class="row">
-                                <div class="col-2 text-center">
+                            <div class="row flex-nowrap  justify-content-sm-start">
+                                <div class="col-2 text-center pe-0">
                                     <i class="ez ez-text-align-center"></i>
                                 </div>
-                                <div class="col-auto">
+                                <div class="col-10 col-sm-auto px-0 text-truncate" style="max-width: 80%">
                                     <h4>متن یا توضیح</h4>
                                     <p class="m-0">متن شامل عنوان، زیر عنوان و توضیحات</p>
                                 </div>
@@ -281,13 +281,13 @@
                     </div>
                     <div class="row justify-content-center">
                         @foreach($options as $item)
-                            <div class="col-4 my-1 px-1">
+                            <div class="col-12 col-sm-4 my-1 px-1">
                                 <button class="btn w-100" wire:click="insertBlock({{$item->id}})"
                                         style="background-color: {{$item->color}};border: 1px solid #c4c4c4"
                                         data-bs-toggle="modal"
                                         data-bs-target="#blockOptions"
                                 >
-                                    <div class="row justify-content-center">
+                                    <div class="row justify-content-center text-truncate">
                                         <div class="col-8 align-self-center ps-0" style="text-align: right">
                                             {{$item->title}}
                                         </div>
@@ -1192,107 +1192,40 @@
             // createGrapick(); destroyGrapick();
         </script>
         <script type="text/javascript">
-            var upType, unAngle, gp;
-            // var copyTxt = document.querySelector('.txt-value');
-            var swType  = document.getElementById('switch-type1');
-            var swAngle = document.getElementById('switch-angle1');
-            // var copyToClipboard = function(str) {
-            //     var el = document.createElement('textarea');
-            //     el.value = str;
-            //     el.setAttribute('readonly', '');
-            //     el.style.position = 'absolute';
-            //     el.style.left = '-9999px';
-            //     document.body.appendChild(el);
-            //     el.select();
-            //     document.execCommand('copy');
-            //     document.body.removeChild(el);
-            // };
-            swType.addEventListener('change', function (e) {
-                gp && gp.setType(this.value || 'linear');
+            var upType1, unAngle1, gp1;
+            var swType1  = document.getElementById('switch-type1');
+            var swAngle1 = document.getElementById('switch-angle1');
+            swType1.addEventListener('change', function (e) {
+                gp1 && gp1.setType(this.value || 'linear');
             });
 
-            swAngle.addEventListener('change', function (e) {
-                gp && gp.setDirection(this.value || 'right');
+            swAngle1.addEventListener('change', function (e) {
+                gp1 && gp1.setDirection(this.value || 'right');
             });
-
-            // var copyBtn = document.querySelector('.copy-btn');
-            // copyBtn.addEventListener('click', function(e) {
-            //     var iconOrig = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 21H8V7h11m0-2H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2m-3-4H4c-1.1 0-2 .9-2 2v14h2V3h12V1z"></path></svg>';
-            //     var iconDone = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 7L9 19l-5.5-5.5 1.41-1.41L9 16.17 19.59 5.59 21 7z"></path></svg>';
-            //     copyToClipboard(copyTxt.value);
-            //     copyBtn.innerHTML = iconDone;
-            //     setTimeout(() => copyBtn.innerHTML = iconOrig, 2000)
-            // });
 
             var createGrapick = function () {
-                gp = new Grapick({
+                gp1 = new Grapick({
                                      el       : '.grapick1',
                                      direction: 'right',
                                      min      : 1,
                                      max      : 99,
                                  });
-                gp.addHandler(1, '#085078', 1);
-                gp.addHandler(99, '#85D8CE', 1, {keepSelect: 1});
-                gp.on('change', function (complete) {
-                    // const value = gp.getValue();
-                    // document.body.style.background = gp.getSafeValue();
+                gp1.addHandler(1, '#085078', 1);
+                gp1.addHandler(99, '#85D8CE', 1, {keepSelect: 1});
+                gp1.on('change', function (complete) {
                     @this.
-                    set('textBlockItemColor', gp.getSafeValue());
-                    // alert(gp.getSafeValue())
-                    // copyTxt.value = value;
+                    set('textBlockItemColor', gp1.getSafeValue());
                 })
-                gp.emit('change');
+                gp1.emit('change');
             };
 
             var destroyGrapick = function () {
-                gp.destroy();
-                gp = 0;
+                gp1.destroy();
+                gp1 = 0;
             }
 
             createGrapick();
-            // createGrapick(); destroyGrapick();
         </script>
-        {{--<script>
-            var swType = $('.switch-type');
-            var swAngle = $('.switch-angle');
-
-            let gp = new Grapick({
-                                       el: '.grapick',
-                                       direction: 'right',
-                                       min: 1,
-                                       max: 99,
-            });
-
-            // Handlers are color stops
-            gp.addHandler(0, 'red');
-            gp.addHandler(100, 'blue');
-
-            // Do stuff on change of the gradient
-            gp.on('change', complete => {
-                document.body.style.background = gp.getSafeValue();
-            })
-            // gp.on('change', function(complete) {
-            //     // const value = gp.getValue();
-            //     document.body.style.backgroundImage = value;
-            //     // copyTxt.value = value;
-            // })
-            gp.emit('change');
-            var destroyGrapick = function() {
-                gp.destroy();
-                gp = 0;
-            }
-            swType.addEventListener('change', function(e) {
-                gp && gp.setType(this.value || 'linear');
-            });
-
-            swAngle.addEventListener('change', function(e) {
-                gp && gp.setDirection(this.value || 'right');
-            });
-            createGrapick();
-            // createGrapick(); destroyGrapick();
-
-        </script>--}}
-
         <script>
             var blockItemColor3 = $('#blockItemColor3')
 
