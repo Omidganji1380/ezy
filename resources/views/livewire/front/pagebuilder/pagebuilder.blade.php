@@ -195,7 +195,10 @@
                                 </div>
                             </div>
                         </li>
-                        <li class="list-group-item my-1 border-dark px-4">
+                        <li class="list-group-item my-1 border-dark px-4"
+                            data-bs-toggle="modal"
+                            data-bs-target="#blockOptions"
+                            wire:click="getOptionsBanner('banner',true)">
                             <div class="row flex-nowrap  justify-content-sm-start">
                                 <div class="col-2 text-center pe-0">
                                     <i class="ez ez-photo">
@@ -204,7 +207,7 @@
                                 </div>
                                 <div class="col-10 col-sm-auto px-0 text-truncate" style="max-width: 80%">
                                     <h4>بنر</h4>
-                                    <p class="m-0">امکان اضافه کردن بنر و عکس</p>
+                                    <p class="m-0">امکان اضافه کردن بنر و عکس و اسلایدر</p>
                                 </div>
                             </div>
                         </li>
@@ -1312,18 +1315,6 @@
 
             $(window).ready(function () {
                 $('i').addClass('fs-5')
-                // $('button').addClass('fs-5')
-                // setInterval(function () {
-                //     var icon = $('.ez');
-                //
-                //     for (var i = 0; i < icon.length; i++) {
-                //         var a       = icon[i];
-                //         a.innerHTML = null
-                //         for (var ii = 1; ii <= 50; ii++) {
-                //             a.innerHTML += "<span class='path" + ii + "'></span>"
-                //         }
-                //     }
-                // }, 2000)
             })
 
             function removeShow(id) {
@@ -1344,24 +1335,8 @@
             }
 
             $(function () {
-                $("#sortable1").sortable();
-                $("#sortable").sortable(/*{
-                                            update: function (e, u) {
-                                                var data = $(this).sortable('serialize');
-                                                $.ajax({
-                                                           url     : "{{ url('controller/sorting_method') }}",
-                                                           type    : 'post',
-                                                           data    : data,
-                                                           success : function (result) {
-
-                                                           },
-                                                           complete: function () {
-
-                                                           }
-                                                       });
-                                            }
-
-                                        }*/);
+                $("#sortable1").sortable({ axis: 'y' });
+                $("#sortable").sortable({ axis: 'y' });
 
             });
         </script>

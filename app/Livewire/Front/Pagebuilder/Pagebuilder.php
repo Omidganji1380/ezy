@@ -5,6 +5,7 @@ namespace App\Livewire\Front\Pagebuilder;
 use App\Events\UpdateShowPbPage;
 use App\Http\Controllers\pageBuilder\PageBuilderTrait;
 use App\Models\Block;
+use App\Models\blockBanner;
 use App\Models\BlockOption;
 use App\Models\BlockPbOption;
 use App\Models\pbOption;
@@ -47,7 +48,7 @@ class Pagebuilder extends Component
 
     public function getBlockItemIcon($icon, $blockItemColor)
     {
-       return $this->getBlockItemIconTrait($icon, $blockItemColor);
+        return $this->getBlockItemIconTrait($icon, $blockItemColor);
     }
 
     public function previewPB()
@@ -98,6 +99,62 @@ class Pagebuilder extends Component
     public function getOptions($option, $newBlock)
     {
         $this->getOptionsTrait($option, $newBlock);
+    }
+
+    public function getOptionsBanner($option, $newBlock)
+    {
+        if ($newBlock) {
+            $this->newBlock = true;
+        }
+        else {
+            $this->newBlock = false;
+        }
+        $this->insertBanner();
+
+        $this->options = [];
+        $this->option  = null;
+        $this->option  = $option;
+//dd($option);
+
+        if ($option == 'بنر')
+            $option = 'banner';
+
+        $this->options = blockBanner::query()->get();
+
+        $this->title = $option;
+        if ($option == 'banner')
+            $this->title = 'بنر';
+    }
+
+    public function insertBanner()
+    {
+        if ($this->newBlock) {
+            $block = Block::create([
+                'profile_id' => $this->profile->id,
+            ]);
+            BlockOption::create([
+                'block_id'   => $block->id,
+                'blockTitle' => $this->title,
+                'option5'    => $this->title,
+            ]);
+            blockBanner::create([
+                'block_id' => $block->id,
+            ]);
+            $this->blockOptions($block);
+        }
+        else {
+            BlockOption::create([
+                'block_id'   => $this->block->id,
+                'blockTitle' => $this->title,
+                'option5'    => $this->title,
+            ]);
+            blockBanner::create([
+                'block_id' => $this->block->id,
+            ]);
+            $this->blockOptions($this->block);
+        }
+        $this->mount($this->link);
+
     }
 
     public function getBlockTitle($blockPbOption)
