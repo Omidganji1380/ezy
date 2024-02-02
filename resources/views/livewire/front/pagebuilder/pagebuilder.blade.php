@@ -68,7 +68,9 @@
                                             <button dir="rtl" {{--style=""--}}
                                             class="btn border-info w-100 overflow-hidden text-truncate px-1"
                                                     style="border-radius: {{$this->getBlockItemsBorder($block)}};background-{{$block->blockOption->blockItemColor==2?'color':'image'}}: {{$this->getBgBlockItemColor($block,$option->color)}};border-color: {{$this->getBorderBlockItemColor($block)}} !important;color: {{$this->getTextBlockItemColor($block)}}">
-                                                <div class="row justify-content-center ez-solid-aparat">
+                                                <div class="row justify-content-center ez-solid-aparat"
+                                                     style="{{$block->blockOption->blockItemColor==2?'':'background: '.$this->getTextBlockItemColor($block).';-webkit-background-clip: text;-webkit-text-fill-color: transparent;'}}"
+                                                >
                                                     <div
                                                         class="col-auto {{$block->blockOption->blockWidth!='compress'?'ps-0':''}}">
                                                         <i class="{{--{{$option->icon}}--}}{{$this->getBlockItemIcon($option->icon,$block->blockOption->blockItemColor)}} {{--text-info--}} mx-2 align-middle iii"
@@ -581,13 +583,7 @@
                                             <button class="btn btnNoFocus w-100 py-2 bg-white"
                                                     style="text-align: right;border: 1px solid lightgrey">
                                                 پس‌زمینه بلوک‌ها
-                                                {{--                                                <input type="color" wire:model.live="bgBlockItemColor"--}}
-                                                {{--                                                       class="float-start ms-2"--}}
-                                                {{--                                                       style="width: 40px;height: 20px;">--}}
-                                                <div wire:ignore {{--wire:model.live="bgBlockItemColor"--}}
-                                                     class="my-4 grapick{{-- float-start ms-2--}}"
-                                                    {{--style="width: 40px;height: 20px;"--}}>
-                                                </div>
+                                                <div wire:ignore class="my-4 grapick"></div>
                                                 <div class="row">
                                                     <div class="col-6">
                                                         <select class="form-select " id="switch-type">
@@ -614,10 +610,32 @@
                                             <button class="btn btnNoFocus w-100 py-2 bg-white my-2"
                                                     style="text-align: right;border: 1px solid lightgrey">
                                                 عناوین آیتم‌ها
-                                                <input type="color" wire:model.live="textBlockItemColor"
-                                                       class="float-start ms-2"
-                                                       style="width: 40px;height: 20px;">
-                                                <span class="float-start" dir="ltr">{{$textBlockItemColor}}</span>
+                                                <div wire:ignore class="my-4 grapick1"></div>
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <select class="form-select " id="switch-type1">
+                                                            <option value>- انتخاب کنید -</option>
+                                                            <option value="radial">radial</option>
+                                                            <option value="linear">linear</option>
+                                                            <option value="repeating-radial">repeating-radial</option>
+                                                            <option value="repeating-linear">repeating-linear</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <select class="form-select " id="switch-angle1">
+                                                            <option value>- انتخاب کنید -</option>
+                                                            <option value="top">Top</option>
+                                                            <option value="right">Right</option>
+                                                            <option value="center">Center</option>
+                                                            <option value="bottom">Bottom</option>
+                                                            <option value="left">Left</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                {{--                                                <input type="color" wire:model.live="textBlockItemColor"--}}
+                                                {{--                                                       class="float-start ms-2"--}}
+                                                {{--                                                       style="width: 40px;height: 20px;">--}}
+                                                {{--                                                <span class="float-start" dir="ltr">{{$textBlockItemColor}}</span>--}}
                                             </button>
                                             <button class="btn btnNoFocus w-100 py-2 bg-white"
                                                     style="text-align: right;border: 1px solid lightgrey">
@@ -628,9 +646,6 @@
                                                 <span class="float-start" dir="ltr">{{$borderBlockItemColor}}</span>
                                             </button>
                                         </div>
-                                        {{--                                        @push('js')--}}
-                                        {{--                                        --}}
-                                        {{--                                        @endpush--}}
                                     </div>
 
                                     <div class="col-12 my-3">
@@ -1115,66 +1130,128 @@
     </div>
 
     @push('js')
-            <script type="text/javascript">
-                var upType, unAngle, gp;
-                // var copyTxt = document.querySelector('.txt-value');
-                var swType = document.getElementById('switch-type');
-                var swAngle = document.getElementById('switch-angle');
-                // var copyToClipboard = function(str) {
-                //     var el = document.createElement('textarea');
-                //     el.value = str;
-                //     el.setAttribute('readonly', '');
-                //     el.style.position = 'absolute';
-                //     el.style.left = '-9999px';
-                //     document.body.appendChild(el);
-                //     el.select();
-                //     document.execCommand('copy');
-                //     document.body.removeChild(el);
-                // };
-                swType.addEventListener('change', function(e) {
-                    gp && gp.setType(this.value || 'linear');
-                });
+        <script type="text/javascript">
+            var upType, unAngle, gp;
+            // var copyTxt = document.querySelector('.txt-value');
+            var swType  = document.getElementById('switch-type');
+            var swAngle = document.getElementById('switch-angle');
+            // var copyToClipboard = function(str) {
+            //     var el = document.createElement('textarea');
+            //     el.value = str;
+            //     el.setAttribute('readonly', '');
+            //     el.style.position = 'absolute';
+            //     el.style.left = '-9999px';
+            //     document.body.appendChild(el);
+            //     el.select();
+            //     document.execCommand('copy');
+            //     document.body.removeChild(el);
+            // };
+            swType.addEventListener('change', function (e) {
+                gp && gp.setType(this.value || 'linear');
+            });
 
-                swAngle.addEventListener('change', function(e) {
-                    gp && gp.setDirection(this.value || 'right');
-                });
+            swAngle.addEventListener('change', function (e) {
+                gp && gp.setDirection(this.value || 'right');
+            });
 
-                // var copyBtn = document.querySelector('.copy-btn');
-                // copyBtn.addEventListener('click', function(e) {
-                //     var iconOrig = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 21H8V7h11m0-2H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2m-3-4H4c-1.1 0-2 .9-2 2v14h2V3h12V1z"></path></svg>';
-                //     var iconDone = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 7L9 19l-5.5-5.5 1.41-1.41L9 16.17 19.59 5.59 21 7z"></path></svg>';
-                //     copyToClipboard(copyTxt.value);
-                //     copyBtn.innerHTML = iconDone;
-                //     setTimeout(() => copyBtn.innerHTML = iconOrig, 2000)
-                // });
+            // var copyBtn = document.querySelector('.copy-btn');
+            // copyBtn.addEventListener('click', function(e) {
+            //     var iconOrig = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 21H8V7h11m0-2H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2m-3-4H4c-1.1 0-2 .9-2 2v14h2V3h12V1z"></path></svg>';
+            //     var iconDone = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 7L9 19l-5.5-5.5 1.41-1.41L9 16.17 19.59 5.59 21 7z"></path></svg>';
+            //     copyToClipboard(copyTxt.value);
+            //     copyBtn.innerHTML = iconDone;
+            //     setTimeout(() => copyBtn.innerHTML = iconOrig, 2000)
+            // });
 
-                var createGrapick = function() {
-                    gp = new Grapick({
-                                         el: '.grapick',
-                                         direction: 'right',
-                                         min: 1,
-                                         max: 99,
-                                     });
-                    gp.addHandler(1, '#085078', 1);
-                    gp.addHandler(99, '#85D8CE', 1, { keepSelect: 1 });
-                    gp.on('change', function(complete) {
-                        // const value = gp.getValue();
-                        // document.body.style.background = gp.getSafeValue();
-                        @this.set('bgBlockItemColor',gp.getSafeValue());
-                        // alert(gp.getSafeValue())
-                        // copyTxt.value = value;
-                    })
-                    gp.emit('change');
-                };
+            var createGrapick = function () {
+                gp = new Grapick({
+                                     el       : '.grapick',
+                                     direction: 'right',
+                                     min      : 1,
+                                     max      : 99,
+                                 });
+                gp.addHandler(1, '#085078', 1);
+                gp.addHandler(99, '#85D8CE', 1, {keepSelect: 1});
+                gp.on('change', function (complete) {
+                    // const value = gp.getValue();
+                    // document.body.style.background = gp.getSafeValue();
+                    @this.
+                    set('bgBlockItemColor', gp.getSafeValue());
+                    // alert(gp.getSafeValue())
+                    // copyTxt.value = value;
+                })
+                gp.emit('change');
+            };
 
-                var destroyGrapick = function() {
-                    gp.destroy();
-                    gp = 0;
-                }
+            var destroyGrapick = function () {
+                gp.destroy();
+                gp = 0;
+            }
 
-                createGrapick();
-                // createGrapick(); destroyGrapick();
-            </script>
+            createGrapick();
+            // createGrapick(); destroyGrapick();
+        </script>
+        <script type="text/javascript">
+            var upType, unAngle, gp;
+            // var copyTxt = document.querySelector('.txt-value');
+            var swType  = document.getElementById('switch-type1');
+            var swAngle = document.getElementById('switch-angle1');
+            // var copyToClipboard = function(str) {
+            //     var el = document.createElement('textarea');
+            //     el.value = str;
+            //     el.setAttribute('readonly', '');
+            //     el.style.position = 'absolute';
+            //     el.style.left = '-9999px';
+            //     document.body.appendChild(el);
+            //     el.select();
+            //     document.execCommand('copy');
+            //     document.body.removeChild(el);
+            // };
+            swType.addEventListener('change', function (e) {
+                gp && gp.setType(this.value || 'linear');
+            });
+
+            swAngle.addEventListener('change', function (e) {
+                gp && gp.setDirection(this.value || 'right');
+            });
+
+            // var copyBtn = document.querySelector('.copy-btn');
+            // copyBtn.addEventListener('click', function(e) {
+            //     var iconOrig = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 21H8V7h11m0-2H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2m-3-4H4c-1.1 0-2 .9-2 2v14h2V3h12V1z"></path></svg>';
+            //     var iconDone = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 7L9 19l-5.5-5.5 1.41-1.41L9 16.17 19.59 5.59 21 7z"></path></svg>';
+            //     copyToClipboard(copyTxt.value);
+            //     copyBtn.innerHTML = iconDone;
+            //     setTimeout(() => copyBtn.innerHTML = iconOrig, 2000)
+            // });
+
+            var createGrapick = function () {
+                gp = new Grapick({
+                                     el       : '.grapick1',
+                                     direction: 'right',
+                                     min      : 1,
+                                     max      : 99,
+                                 });
+                gp.addHandler(1, '#085078', 1);
+                gp.addHandler(99, '#85D8CE', 1, {keepSelect: 1});
+                gp.on('change', function (complete) {
+                    // const value = gp.getValue();
+                    // document.body.style.background = gp.getSafeValue();
+                    @this.
+                    set('textBlockItemColor', gp.getSafeValue());
+                    // alert(gp.getSafeValue())
+                    // copyTxt.value = value;
+                })
+                gp.emit('change');
+            };
+
+            var destroyGrapick = function () {
+                gp.destroy();
+                gp = 0;
+            }
+
+            createGrapick();
+            // createGrapick(); destroyGrapick();
+        </script>
         {{--<script>
             var swType = $('.switch-type');
             var swAngle = $('.switch-angle');

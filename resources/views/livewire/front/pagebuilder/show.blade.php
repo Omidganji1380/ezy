@@ -166,7 +166,9 @@
                                                 <a dir="rtl" href="{{$option->link}}{{$this->getBlockLink($option->pivot)}}" target="_blank"
                                                 class="btn border-info w-100 overflow-hidden text-truncate px-1"
                                                         style="border-radius: {{$this->getBlockItemsBorder($block)}};background-{{$block->blockOption->blockItemColor==2?'color':'image'}}: {{$this->getBgBlockItemColor($block,$option->color)}};border-color: {{$this->getBorderBlockItemColor($block)}} !important;color: {{$this->getTextBlockItemColor($block)}}">
-                                                    <div class="row justify-content-center ez-solid-aparat">
+                                                    <div class="row justify-content-center ez-solid-aparat"
+                                                         style="{{$block->blockOption->blockItemColor==2?'':'background: '.$this->getTextBlockItemColor($block).';-webkit-background-clip: text;-webkit-text-fill-color: transparent;'}}"
+                                                    >
                                                         <div
                                                             class="col-auto {{$block->blockOption->blockWidth!='compress'?'ps-0':''}}">
                                                             <i class="{{--{{$option->icon}}--}}{{$this->getBlockItemIcon($option->icon,$block->blockOption->blockItemColor)}} {{--text-info--}} mx-2 align-middle iii"
