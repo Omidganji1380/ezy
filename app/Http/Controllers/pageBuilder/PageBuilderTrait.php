@@ -4,10 +4,12 @@ namespace App\Http\Controllers\pageBuilder;
 
 use App\Livewire\Front\Pagebuilder\Show;
 use App\Models\Block;
+use App\Models\blockBanner;
 use App\Models\BlockOption;
 use App\Models\BlockPbOption;
 use App\Models\pbOption;
 use App\Models\Profile;
+use Storage;
 
 trait PageBuilderTrait
 {
@@ -20,7 +22,14 @@ trait PageBuilderTrait
     public $profile;
     public $link;
     public $blocks;
-    public $blockItems = [];
+    public $blockItems       = [];
+    public $blockBannerItems = [];
+    public $bannerImage;
+    public $bannerLink;
+    public $bannerTitle;
+    public $bannerDescription;
+    public $bannerButton;
+
     public $block;
     public $blockTitle;
     public $blockItemColor;
@@ -33,7 +42,7 @@ trait PageBuilderTrait
     public $blockItemTitle;
     public $blockItemConnectionWay;
     public $blockItemExtraText;
-    public $newBlock   = true;
+    public $newBlock = true;
 
     public $profileTitle;
     public $profileSubtitle;
@@ -65,12 +74,14 @@ trait PageBuilderTrait
             return $icon . '-solid';
         }
     }
+
     public function setBlockWidthHalfTrait($width, $loopLast, $loopIndex)
     {
         if ($width == 'half' && $loopLast % 2 != 0 && $loopIndex % 2 == 0) {
             return 'col-12';
         }
     }
+
     public function submitProfileOptionsTrait()
     {
         if ($this->profileImg) {
@@ -129,11 +140,12 @@ trait PageBuilderTrait
             abort(404);
         }
         $this->blocks = $this->profile->block;
-
+//dd($this->blocks[2]->banner);
         $this->getOptions($this->title, false);
         $this->constOptions = pbOption::query()->where('for', 'social')->get();
 //
     }
+
     public function getIconPathsTrait()
     {
         for ($ii = 1; $ii <= 50; $ii++) {
@@ -204,6 +216,12 @@ trait PageBuilderTrait
         $this->blockItemTitle         = [];
         $this->blockItemConnectionWay = [];
         $this->blockItemExtraText     = [];
+        $this->blockBannerItems       = [];
+        $this->bannerTitle            = [];
+        $this->bannerDescription      = [];
+        $this->bannerButton           = [];
+        $this->bannerImage            = [];
+        $this->bannerLink             = [];
     }
 
     public function getBlockMoreOptionsTrait(Block $block)
@@ -217,6 +235,27 @@ trait PageBuilderTrait
         $this->bgBlockItemColor     = $blockMoreOptions->bgBlockItemColor;
         $this->textBlockItemColor   = $blockMoreOptions->textBlockItemColor;
         $this->borderBlockItemColor = $blockMoreOptions->borderBlockItemColor;
+    }
+
+    public function blockBannerOptionsTrait(Block $block/*,$newBlock*/)
+    {
+        $this->clearInputsTrait();
+        $this->block = $block;
+        $this->title = $block->blockOption->option5;
+//        dd($this->option);
+        $this->blockBannerItems = blockBanner::query()->where([/*'pbOption_id' => $pbOption->id,*/ 'block_id' => $this->block->id])->get();
+//            dd($this->blockItems);
+        foreach ($this->blockBannerItems as $item) {
+            $this->bannerTitle[$item->id]       = $item->title;
+            $this->bannerDescription[$item->id] = $item->description;
+            $this->bannerButton[$item->id]      = $item->button;
+            $this->bannerImage[$item->id]       = $item->image;
+            $this->bannerLink[$item->id]        = $item->link;
+        }
+//        dd($this->blockItems);
+//        dd($block->pbOption);
+
+        $this->getBlockMoreOptions($block);
     }
 
     public function blockOptionsTrait(Block $block/*,$newBlock*/)
@@ -269,24 +308,30 @@ trait PageBuilderTrait
         $this->option  = $option;
 //dd($option);
 
-        if ($option == 'پیام رسان ها')
-            $option = 'messenger';
-        if ($option == 'شبکه های اجتماعی')
-            $option = 'social';
-        if ($option == 'تماس و راه های ارتباطی')
-            $option = 'call';
-        if ($option == 'لینک و سوپر لینک')
-            $option = 'link';
-
-        $this->options = pbOption::query()->where('for', $option)->get();
-
-        $this->title = $option;
-        if ($option == 'messenger')
+        if ($option == 'پیام رسان ها' || $option == 'messenger') {
             $this->title = 'پیام رسان ها';
-        if ($option == 'social')
+            $option      = 'messenger';
+        }
+        elseif ($option == 'شبکه های اجتماعی' || $option == 'social') {
             $this->title = 'شبکه های اجتماعی';
-        if ($option == 'link')
+            $option      = 'social';
+        }
+        elseif ($option == 'تماس و راه های ارتباطی' || $option == 'call') {
+            $this->title = 'تماس و راه های ارتباطی';
+            $option      = 'call';
+        }
+        elseif ($option == 'لینک و سوپر لینک' || $option == 'link') {
             $this->title = 'لینک و سوپر لینک';
+            $option      = 'link';
+        }
+//        $this->title = $option;
+//        if ($option == 'messenger')
+//            $this->title = 'پیام رسان ها';
+//        if ($option == 'social')
+//            $this->title = 'شبکه های اجتماعی';
+//        if ($option == 'link')
+//            $this->title = 'لینک و سوپر لینک';
+        $this->options = pbOption::query()->where('for', $option)->get();
 
 
     }
@@ -362,6 +407,34 @@ trait PageBuilderTrait
             $item->update([
                 'title'         => $this->blockItemTitle[$item->id],
                 'connectionWay' => $this->blockItemConnectionWay[$item->id],
+            ]);
+        }
+
+//        dd($this->blockVisibility);
+        $this->block->blockOption->update([
+            'blockTitle'           => $this->blockTitle,
+            'blockWidth'           => $this->blockItemsWidth,
+            'blockBorder'          => $this->blockItemsBorder,
+            'blockVisibility'      => $this->blockVisibility,
+            'blockItemColor'       => $this->blockItemColor,
+            'bgBlockItemColor'     => $this->bgBlockItemColor,
+            'textBlockItemColor'   => $this->textBlockItemColor,
+            'borderBlockItemColor' => $this->borderBlockItemColor,
+        ]);
+        $this->clearVariables();
+        $this->clearInputs();
+
+    }
+
+    public function submitBannerTrait()
+    {
+        foreach ($this->blockBannerItems as $item) {
+            $item->update([
+                'title'       => $this->bannerTitle[$item->id],
+                'description' => $this->bannerDescription[$item->id],
+                'button'      => $this->bannerButton[$item->id],
+                'image'       => $this->bannerImage[$item->id],
+                'link'        => $this->bannerLink[$item->id],
             ]);
         }
 
