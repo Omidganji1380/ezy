@@ -152,14 +152,16 @@
                 </div>
 {{--                <div id="sortable" style="cursor: grab;margin-bottom: 6rem !important;" wire:ignore.self>--}}
                     @foreach($blocks as $block)
-                        <div class="col-12 my-3 px-4">
+                        <div class="col-12 my-0 px-4">
 {{--                            <div class="row p-2 flex-nowrap">--}}
 {{--                                <div class="col-11">--}}
 
                                     <div class="row justify-content-center">
-                                        <div class="col-12 text-center">
+                                        @if($block->blockOption->blockTitle)
+                                        <div class="col-12 text-center mt-3">
                                             <p class="text-center">{{$block->blockOption->blockTitle}}</p>
                                         </div>
+                                        @endif
                                         @foreach($block->pbOption()->get() as $option)
                                             <div
                                                 class="{{$this->setBlockWidthHalf($block->blockOption->blockWidth,$loop->last,$loop->index)}} {{$this->setBlockWidth($block->blockOption->blockWidth)}} text-center p-1">
