@@ -9,10 +9,12 @@ use App\Models\BlockOption;
 use App\Models\BlockPbOption;
 use App\Models\pbOption;
 use App\Models\Profile;
+use Livewire\WithFileUploads;
 use Storage;
 
 trait PageBuilderTrait
 {
+    use WithFileUploads;
 
     public $options      = [];
     public $constOptions = [];
@@ -22,13 +24,14 @@ trait PageBuilderTrait
     public $profile;
     public $link;
     public $blocks;
-    public $blockItems       = [];
-    public $blockBannerItems = [];
+    public $blockItems        = [];
+    public $blockBannerItems  = [];
     public $bannerImage;
     public $bannerLink;
     public $bannerTitle;
     public $bannerDescription;
     public $bannerButton;
+    public $bannerImageUpload = [];
 
     public $block;
     public $blockTitle;
@@ -237,6 +240,59 @@ trait PageBuilderTrait
         $this->borderBlockItemColor = $blockMoreOptions->borderBlockItemColor;
     }
 
+    public function getOptionsBannerTrait($option, $newBlock)
+    {
+        if ($newBlock) {
+            $this->newBlock = true;
+        }
+        else {
+            $this->newBlock = false;
+        }
+
+        $this->options = [];
+        $this->option  = null;
+        $this->option  = $option;
+
+        if ($option == 'بنر' || $option == 'banner') {
+            $this->title  = 'بنر';
+            $this->option = 'banner';
+        }
+        $this->insertBanner();
+
+        $this->options = blockBanner::query()->where('block_id', $this->block->id)->get();
+    }
+
+    public function insertBannerTrait()
+    {
+        if ($this->newBlock) {
+            $block = Block::create([
+                'profile_id' => $this->profile->id,
+            ]);
+            BlockOption::create([
+                'block_id'   => $block->id,
+                'blockTitle' => $this->title,
+                'option5'    => $this->title,
+            ]);
+            blockBanner::create([
+                'block_id' => $block->id,
+            ]);
+            $this->blockBannerOptions($block);
+        }
+        else {
+            BlockOption::create([
+                'block_id'   => $this->block->id,
+                'blockTitle' => $this->title,
+                'option5'    => $this->title,
+            ]);
+            blockBanner::create([
+                'block_id' => $this->block->id,
+            ]);
+            $this->blockBannerOptions($this->block);
+        }
+        $this->mount($this->link);
+
+    }
+
     public function blockBannerOptionsTrait(Block $block/*,$newBlock*/)
     {
         $this->clearInputsTrait();
@@ -244,18 +300,19 @@ trait PageBuilderTrait
         $this->title = $block->blockOption->option5;
 //        dd($this->option);
         $this->blockBannerItems = blockBanner::query()->where([/*'pbOption_id' => $pbOption->id,*/ 'block_id' => $this->block->id])->get();
-//            dd($this->blockItems);
+//            dd($this->blockBannerItems);
         foreach ($this->blockBannerItems as $item) {
+//            dd($item);
             $this->bannerTitle[$item->id]       = $item->title;
             $this->bannerDescription[$item->id] = $item->description;
             $this->bannerButton[$item->id]      = $item->button;
             $this->bannerImage[$item->id]       = $item->image;
             $this->bannerLink[$item->id]        = $item->link;
         }
-//        dd($this->blockItems);
-//        dd($block->pbOption);
+//        dd($this->bannerImageUpload);
 
         $this->getBlockMoreOptions($block);
+//        dd($this->bannerImage);
     }
 
     public function blockOptionsTrait(Block $block/*,$newBlock*/)
@@ -280,18 +337,40 @@ trait PageBuilderTrait
 
     public function deleteBlockTrait()
     {
+        foreach ($this->block->banner as $item) {
+            Storage::disk('public')->deleteDirectory('pb/profiles/profile-' . $this->profile->id . '/banners');
+        }
         $this->block->delete();
         $this->redirect(route('pagebuilder.pagebuilder', $this->link), true);
-//        $this->mount($this->link);
-
     }
 
     public function deleteBlockItemTrait(BlockPbOption $blockPbOption)
     {
+//        dd($blockPbOption->block->pbOption);
+        if (count($blockPbOption->block->pbOption) == 1) {
+            $blockPbOption->block->delete();
+            $this->redirect(route('pagebuilder.pagebuilder', $this->link), true);
+        }
         $blockPbOption->delete();
         $this->mount($this->link);
-        $this->blockOptions($this->block);
+        if (count($blockPbOption->block->pbOption) != 1) {
+            $this->blockOptions($this->block);
+        }
+    }
 
+    public function deleteBlockBannerItemTrait(blockBanner $blockBanner)
+    {
+//        dd(count($blockBanner->block->banner));
+        Storage::disk('public')->deleteDirectory('pb/profiles/profile-' . $this->profile->id . '/banners/banner-' . $blockBanner->id);
+        if (count($blockBanner->block->banner) == 1) {
+            $blockBanner->block->delete();
+            $this->redirect(route('pagebuilder.pagebuilder', $this->link), true);
+        }
+        $blockBanner->delete();
+        $this->mount($this->link);
+        if (count($blockBanner->block->banner) != 1) {
+            $this->blockBannerOptionsTrait($this->block);
+        }
     }
 
     public function getOptionsTrait($option, $newBlock)
@@ -428,14 +507,26 @@ trait PageBuilderTrait
 
     public function submitBannerTrait()
     {
+//        dd($this->bannerImageUpload);
         foreach ($this->blockBannerItems as $item) {
             $item->update([
                 'title'       => $this->bannerTitle[$item->id],
                 'description' => $this->bannerDescription[$item->id],
                 'button'      => $this->bannerButton[$item->id],
-                'image'       => $this->bannerImage[$item->id],
                 'link'        => $this->bannerLink[$item->id],
             ]);
+//            dd(isset($this->bannerImageUpload[105]));
+            if (isset($this->bannerImageUpload[$item->id])) {
+                Storage::disk('public')->delete('pb/profiles/profile-' . $this->profile->id . '/banners/banner-' . $item->id . '/' . $item->image);
+                $filename     = $this->bannerImageUpload[$item->id]->getFilename();
+                $originalName = time() . '_' . $this->bannerImageUpload[$item->id]->getClientOriginalName();
+                $this->bannerImageUpload[$item->id]->storeAs('pb/profiles/profile-' . $this->profile->id . '/banners/banner-' . $item->id, $originalName, 'public');
+                Storage::disk('local')->delete('livewire-tmp/' . $filename);
+                $this->bannerImageUpload[$item->id] = null;
+                $item->update([
+                    'image' => $originalName,
+                ]);
+            }
         }
 
 //        dd($this->blockVisibility);

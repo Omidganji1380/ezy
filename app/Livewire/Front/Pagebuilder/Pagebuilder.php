@@ -17,7 +17,8 @@ use Storage;
 
 class Pagebuilder extends Component
 {
-    use WithFileUploads, PageBuilderTrait;
+    use WithFileUploads;
+    use PageBuilderTrait;
 
 
 //    public $blockItems=[];
@@ -86,6 +87,11 @@ class Pagebuilder extends Component
         $this->blockOptionsTrait($block);
     }
 
+    public function blockBannerOptions(Block $block/*,$newBlock*/)
+    {
+        $this->blockBannerOptionsTrait($block);
+    }
+
     public function deleteBlock()
     {
         $this->deleteBlockTrait();
@@ -95,6 +101,10 @@ class Pagebuilder extends Component
     {
         $this->deleteBlockItemTrait($blockPbOption);
     }
+    public function deleteBlockBannerItem(blockBanner $blockBanner)
+    {
+        $this->deleteBlockBannerItemTrait($blockBanner);
+    }
 
     public function getOptions($option, $newBlock)
     {
@@ -103,58 +113,28 @@ class Pagebuilder extends Component
 
     public function getOptionsBanner($option, $newBlock)
     {
-        if ($newBlock) {
-            $this->newBlock = true;
-        }
-        else {
-            $this->newBlock = false;
-        }
-        $this->insertBanner();
-
-        $this->options = [];
-        $this->option  = null;
-        $this->option  = $option;
-//dd($option);
-
-        if ($option == 'بنر')
-            $option = 'banner';
-
-        $this->options = blockBanner::query()->get();
-
-        $this->title = $option;
-        if ($option == 'banner')
-            $this->title = 'بنر';
+        $this->getOptionsBannerTrait($option, $newBlock);
     }
 
     public function insertBanner()
     {
-        if ($this->newBlock) {
-            $block = Block::create([
-                'profile_id' => $this->profile->id,
-            ]);
-            BlockOption::create([
-                'block_id'   => $block->id,
-                'blockTitle' => $this->title,
-                'option5'    => $this->title,
-            ]);
-            blockBanner::create([
-                'block_id' => $block->id,
-            ]);
-            $this->blockOptions($block);
-        }
-        else {
-            BlockOption::create([
-                'block_id'   => $this->block->id,
-                'blockTitle' => $this->title,
-                'option5'    => $this->title,
-            ]);
-            blockBanner::create([
-                'block_id' => $this->block->id,
-            ]);
-            $this->blockOptions($this->block);
-        }
-        $this->mount($this->link);
+        $this->insertBannerTrait();
+    }
 
+    public function updated()
+    {
+//        dd($this->bannerImageUpload[108]->temporaryUrl());
+    }
+
+    public function removeBannerImg(blockBanner $blockBanner)
+    {
+        Storage::disk('public')->delete('pb/profiles/profile-' . $this->profile->id . '/banners/banner-' . $blockBanner->id . '/' . $blockBanner->image);
+        $blockBanner->update([
+            'image' => null
+        ]);
+        $this->blockBannerOptionsTrait($this->block);
+//        $blockBanner->delete();
+//        $this->mount($this->link);
     }
 
     public function getBlockTitle($blockPbOption)
@@ -185,6 +165,11 @@ class Pagebuilder extends Component
     public function submitPbOption()
     {
         $this->submitPbOptionTrait();
+    }
+
+    public function submitBanner()
+    {
+        $this->submitBannerTrait();
     }
 
     public function removeImg()

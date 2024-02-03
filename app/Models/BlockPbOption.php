@@ -22,4 +22,9 @@ class BlockPbOption extends Model
     {
         return $this->hasOne(pbOption::class,'id','pbOption_id');
     }
+
+    public function block()
+    {
+        return $this->hasOne(Block::class,'id','block_id');
+    }
 }

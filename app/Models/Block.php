@@ -24,4 +24,8 @@ class Block extends Model
     {
         return $this->hasOne(BlockOption::class);
     }
+    public function banner()
+    {
+        return $this->hasMany(blockBanner::class,'block_id','id');
+    }
 }

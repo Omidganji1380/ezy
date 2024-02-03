@@ -21,6 +21,6 @@ class blockBanner extends Model
 
     public function block()
     {
-        return $this->hasOne(Block::class);
+        return $this->hasOne(Block::class,'id','block_id');
     }
 }

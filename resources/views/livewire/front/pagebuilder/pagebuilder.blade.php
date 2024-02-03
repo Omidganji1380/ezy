@@ -54,9 +54,17 @@
                 @foreach($blocks as $block)
                     <div class="col-12 my-3">
                         <div class="row p-2 flex-nowrap">
-                            <div class="col-11" onclick="showFirstTab()" data-bs-target="#blockOptions"
+                            {{--                            <input type="text" class="form-control" value="{{count($block->banner)}}">--}}
+                            <div class="col-11" onclick="showFirstTab()"
                                  data-bs-toggle="modal"
-                                 wire:click="blockOptions({{$block->id}})">
+                                 @if(count($block->banner))
+                                     data-bs-target="#blockBannerOptions"
+                                 wire:click="blockBannerOptions({{$block->id}})"
+                                 @else
+                                     data-bs-target="#blockOptions"
+                                 wire:click="blockOptions({{$block->id}})"
+                                @endif
+                            >
                                 <div class="row justify-content-center">
                                     <div class="col-12 text-center">
                                         <p class="text-center">{{$block->blockOption->blockTitle}}</p>
@@ -83,6 +91,19 @@
                                                             class="col-auto pe-0">{{$this->getBlockTitle($option->pivot)}}</div>
                                                     @endif
                                                 </div>
+                                            </button>
+                                        </div>
+                                    @endforeach
+                                    @foreach($block->banner as $banner)
+                                        {{--                                        @dd($option1)--}}
+                                        <div
+                                            class="col-12 text-center p-1">
+                                            <button dir="rtl" {{--style=""--}}
+                                            class="btn border-info w-100 overflow-hidden text-truncate px-1"
+                                                    style="border-radius: {{$this->getBlockItemsBorder($block)}};background-{{$block->blockOption->blockItemColor==2?'color':'image'}}: {{$this->getBgBlockItemColor($block,$option->color)}};border-color: {{$this->getBorderBlockItemColor($block)}} !important;color: {{$this->getTextBlockItemColor($block)}}">
+                                                <img class="w-100"
+                                                     src="{{asset('storage/pb/profiles/profile-'.$profile->id.'/banners/banner-'.$banner->id.'/'.$banner->image)}}"
+                                                     alt="">
                                             </button>
                                         </div>
                                     @endforeach
@@ -197,7 +218,7 @@
                         </li>
                         <li class="list-group-item my-1 border-dark px-4"
                             data-bs-toggle="modal"
-                            data-bs-target="#blockOptions"
+                            data-bs-target="#blockBannerOptions"
                             wire:click="getOptionsBanner('banner',true)">
                             <div class="row flex-nowrap  justify-content-sm-start">
                                 <div class="col-2 text-center pe-0">
@@ -709,6 +730,479 @@
             </div>
         </div>
     </div>
+    {{--banner options--}}
+    @if(count($blockBannerItems))
+        <div class="modal fade rounded" wire:ignore.self id="blockBannerOptions" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header p-0">
+                        <button type="button" style="width: 20px;height: 20px"
+                                class="ms-2 close btn p-0" wire:click="deleteBlock"
+                                wire:confirm="آیا از حذف این بلوک مطمئن هستید؟">
+                            <span class="fa fa-trash text-danger">{{--&times;--}}</span>
+                        </button>
+                        <h5 class="modal-title mx-auto">{{$title}}</h5>
+                        <button type="button" style="width: 20px;height: 20px;"
+                                class="me-1 close btn border-dark border-2 rounded-circle p-0"
+                                data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true" class="fa fa-close">{{--&times;--}}</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body position-relative" style="background-color: rgb(241, 243, 246);"
+                         wire:ignore.self>
+                        @if(!$blockBannerItems)
+                            <div wire:loading class="position-absolute w-100 h-100 bg-white start-0 top-0"
+                                 style="z-index: 99">
+                                <img
+                                    src="{{asset('pageBuilder/loading.gif')}}"
+                                    class="position-absolute h-100 py-2 mx-auto start-0 w-100"
+                                    style="right: 0;max-height: 100%;object-fit: none">
+                            </div>
+                        @endif
+                        <div class="row">
+                            <div class="col-12">
+                                <ul class="nav nav-pills mb-3 row pills-tab" id="" role="tablist">
+                                    <li class="nav-item btn b1 selected col-6" role="presentation">
+                                        <button class="btn btnNoFocus active w-100" id="properties1-tab"
+                                                data-bs-toggle="pill"
+                                                data-bs-target="#properties1" type="button" role="tab"
+                                                aria-controls="properties1" aria-selected="true">مشخصات
+                                        </button>
+                                    </li>
+                                    <li class="nav-item btn b2 col-6" role="presentation">
+                                        <button class="btn btnNoFocus w-100 " id="moreOptions1-tab"
+                                                data-bs-toggle="pill"
+                                                data-bs-target="#moreOptions1" type="button" role="tab"
+                                                aria-controls="moreOptions1" aria-selected="false">تنظیمات بیشتر
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 my-3 tab-content" id="accordionParent1231">
+                                <div class="tab-pane fade show active" id="properties1" role="tabpanel"
+                                     aria-labelledby="properties1-tab" wire:ignore.self>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <button {{--data-bs-target="#insertMessengers" data-bs-toggle="modal"--}}
+                                                    wire:click="getOptionsBanner('{{$title}}',false)"
+                                                    class="text-success w-100 text-center btn bg-success bg-opacity-10 border-success btnNoFocus"
+                                                    style="border: 2px dashed">
+                                                <i class="icofont-plus"></i>
+                                                آیتم دیگری به همین بلوک اضافه کنید
+                                            </button>
+                                        </div>
+                                        <div class="col-12 my-3">
+                                            <div class="row">
+                                                <div style="cursor: grab;" id="sortable2">
+                                                    @foreach($blockBannerItems as $key=>$item)
+                                                        <div class="my-1 col-12">
+                                                            <div
+                                                                class="row bg-white border border-3 mx-0 justify-content-between">
+                                                                <div class="col-11 position-relative">
+                                                                    <button onclick="removeShow({{$item->id}})"
+                                                                            class="btn w-100 bg-white py-3 btnNoFocus ms-4"
+                                                                            role="button" data-bs-toggle="collapse"
+                                                                            data-bs-target="#itemBanner{{$item->id}}"
+                                                                            aria-expanded="false"
+                                                                            aria-controls="itemBanner{{$item->id}}">
+                                                                        <div class="row" style="width: fit-content">
+
+                                                                            <div class="col-auto" dir="rtl">
+                                                                                آیتم {{$key+1}}
+                                                                            </div>
+                                                                        </div>
+                                                                    </button>
+                                                                    <div
+                                                                        class="position-absolute top-50 translate-middle-y">
+                                                                        <i class="fa fa-arrows-up-down-left-right"></i>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-1 p-1 text-center position-relative">
+                                                                    <button
+                                                                        wire:click="deleteBlockBannerItem({{$item->id}})"
+                                                                        wire:confirm="آیتم ( {{$item->title}} ) حذف شود؟"
+                                                                        type="button"
+                                                                        class="btn btnNoFocus p-0 position-absolute start-0 top-0 bottom-0"
+                                                                        style="right: 0">
+                                                                        <i class="icofont-trash text-danger fs-6"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="accordion accordion-flush"
+                                                                 id="accordionParentBanner{{$item->id}}">
+                                                                <div wire:ignore.self
+                                                                     class="collapse text-black accordion-collapse blockItemAccordion bg-white border border-3 border-top-0"
+                                                                     id="itemBanner{{$item->id}}"
+                                                                     data-bs-parent="#accordionParentBanner{{$item->id}}">
+                                                                    <div class="row">
+                                                                        <div class="col-12 my-3 px-4">
+                                                                            <label class="text-black-50 my-1">بارگذاری
+                                                                                عکس</label>
+                                                                            {{--                                                                        <input value="{{$bannerImageUpload&&isset($bannerImageUpload[$item->id])}}">--}}
+                                                                            <div
+                                                                                class="position-relative w-100 rounded text-center py-2 align-middle"
+                                                                                style="background-color: #cfffcf;border: 2px dashed green;height: 150px">
+                                                                                <div
+                                                                                    class="position-absolute h-100 w-100 top-50 translate-middle-y">
+                                                                                    <img
+                                                                                        src="{{isset($bannerImageUpload[$item->id])?$bannerImageUpload[$item->id]->temporaryUrl():asset('storage/pb/profiles/profile-'.$profile->id.'/banners/banner-'.$item->id.'/'.$item->image)}}"
+                                                                                        class="position-absolute h-100 py-2 mx-auto start-0"
+                                                                                        alt=""
+                                                                                        style="right: 0"
+                                                                                        wire:click="removeBannerImg({{$item->id}})"
+                                                                                        wire:confirm="حذف شود؟">
+                                                                                    <img wire:loading
+                                                                                         wire:target="bannerImageUpload.{{$item->id}}"
+                                                                                         src="{{asset('pageBuilder/loading.gif')}}"
+                                                                                         class="position-absolute h-100 py-2 mx-auto start-0"
+                                                                                         style="right: 0">
+                                                                                    @if(!$item->image)
+                                                                                        <input type="file"
+                                                                                               class="opacity-0 h-100 w-100"
+                                                                                               wire:model="bannerImageUpload.{{$item->id}}">
+                                                                                    @endif
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-12 my-3 px-4">
+                                                                            <label
+                                                                                class="text-black-50">عنوان
+                                                                                (اختیاری)</label>
+                                                                            <input type="text"
+                                                                                   class="my-2 form-control"
+                                                                                   {{--                                                                               onkeyup="document.querySelector('span.blockItemConnectionWay{{$key}}').innerText=('( '+ this.value +' )');--}}
+                                                                                   {{--                                                                               document.querySelector('span.blockItemConnectionWay{{$key}}').innerText==='( )'?document.querySelector('span.blockItemConnectionWay{{$key}}').innerText='':''"--}}
+                                                                                   value="{{$item->title}}"
+                                                                                   wire:model="bannerTitle.{{$item->id}}"
+                                                                                   placeholder="عنوان تصویر خود را وارد کنید">
+                                                                            <p class="text-black-50 small">برای مثال:
+                                                                                میزچوبی</p>
+                                                                        </div>
+                                                                        <div class="col-12 my-3 px-4">
+                                                                            <label
+                                                                                class="text-black-50">توضیحات
+                                                                                (اختیاری)</label>
+                                                                            <input type="text"
+                                                                                   class="my-2 form-control"
+                                                                                   {{--                                                                               onkeyup="document.querySelector('span.blockItemConnectionWay{{$key}}').innerText=('( '+ this.value +' )');--}}
+                                                                                   {{--                                                                               document.querySelector('span.blockItemConnectionWay{{$key}}').innerText==='( )'?document.querySelector('span.blockItemConnectionWay{{$key}}').innerText='':''"--}}
+                                                                                   value="{{$item->description}}"
+                                                                                   wire:model="bannerDescription.{{$item->id}}"
+                                                                                   placeholder="توضیحات خود را وارد کنید">
+                                                                            <p class="text-black-50 small">برای مثال:
+                                                                                میز
+                                                                                چوبی چهار نفره با چوب گردو</p>
+                                                                        </div>
+                                                                        <div class="col-12 my-3 px-4">
+                                                                            <label
+                                                                                class="text-black-50">متن دکمه
+                                                                                لینک</label>
+                                                                            <input type="text"
+                                                                                   class="my-2 form-control"
+                                                                                   {{--                                                                               onkeyup="document.querySelector('span.blockItemConnectionWay{{$key}}').innerText=('( '+ this.value +' )');--}}
+                                                                                   {{--                                                                               document.querySelector('span.blockItemConnectionWay{{$key}}').innerText==='( )'?document.querySelector('span.blockItemConnectionWay{{$key}}').innerText='':''"--}}
+                                                                                   value="{{$item->description}}"
+                                                                                   wire:model="bannerButton.{{$item->id}}"
+                                                                                   placeholder="متن دکمه لینک خود را وارد کنید">
+                                                                            <p class="text-black-50 small">برای مثال:
+                                                                                همین
+                                                                                حالا کلیک کنید</p>
+                                                                        </div>
+                                                                        <div class="col-12 my-3 px-4">
+                                                                            <label
+                                                                                class="text-black-50">لینک و آدرس
+                                                                                وب‌سایت</label>
+                                                                            <input type="text"
+                                                                                   class="my-2 form-control"
+                                                                                   {{--                                                                               onkeyup="document.querySelector('span.blockItemConnectionWay{{$key}}').innerText=('( '+ this.value +' )');--}}
+                                                                                   {{--                                                                               document.querySelector('span.blockItemConnectionWay{{$key}}').innerText==='( )'?document.querySelector('span.blockItemConnectionWay{{$key}}').innerText='':''"--}}
+                                                                                   value="{{$item->description}}"
+                                                                                   wire:model="bannerLink.{{$item->id}}"
+                                                                                   placeholder="لینک وبسایت خود را وارد کنید">
+                                                                            <p class="text-black-50 small">برای مثال:
+                                                                                https://yoursite.com</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="moreOptions1" role="tabpanel"
+                                     wire:ignore.self aria-labelledby="moreOptions1-tab">
+                                    <div class="row">
+                                        <div class="col-12 my-3">
+                                            <div class="row justify-content-around">
+                                                <div class="col-6">
+                                                    نمایش بلوک
+                                                </div>
+                                                <div class="col-6 text-start">
+                                                    <input type="checkbox" wire:model="blockVisibility"
+                                                           value="{{$blockVisibility}}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 my-3">
+                                            <label class="text-black-50 mb-2">عنوان بلوک</label>
+                                            <input type="text" class="my-2 form-control"
+                                                   wire:model="blockTitle"
+                                                   placeholder="عنوان بلوک خود را وارد کنید">
+                                            <p class="text-black-50 small">در صورت تمایل می‌توانید برای این بلوک یک
+                                                عنوان
+                                                انتخاب کنید</p>
+                                        </div>
+                                        <div class="col-12 my-3">
+                                            <label class="text-black-50 mb-2">عرض آیتم</label>
+                                            <div class="row justify-content-center">
+                                                <div class="col-3 text-center">
+                                                    @foreach($constOptions as $item)
+                                                        @if($loop->index == 0)
+                                                            <label class="btn w-100" for="blockItemWidthFull"
+                                                                   style="background-color: {{$item->color}};border: 1px solid #c4c4c4"
+                                                            >
+                                                                <div class="row justify-content-center">
+                                                                    <div class="col-8 align-self-center ps-0"
+                                                                         style="text-align: right">
+                                                                        {{$item->title}}
+                                                                    </div>
+                                                                    <div class="col-4 align-self-center pe-0">
+                                                                        <i style="font-size: 25px !important;"
+                                                                           class="align-middle {{$item->icon}}">
+                                                                            {!! $this->getIconPaths() !!}
+                                                                        </i>
+                                                                    </div>
+                                                                </div>
+                                                            </label>
+                                                        @endif
+                                                    @endforeach
+                                                    <div class="row justify-content-center mt-3">
+                                                        <div class="col-auto">
+                                                            <input type="radio" name="blockItemWidth"
+                                                                   wire:model="blockItemsWidth" value="full"
+                                                                   id="blockItemWidthFull" class="">
+                                                        </div>
+                                                        <div class="col-auto">
+                                                            <label for="blockItemWidthFull">تمام عرض</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4"
+                                                    {{--style="border-left: 1px solid grey;border-right: 1px solid grey;"--}}>
+                                                    <div class="row">
+                                                        @foreach($constOptions as $item)
+                                                            @if($loop->index < 2)
+                                                                <div class="col-6 px-1">
+                                                                    <label class="btn w-100" for="blockItemWidthHalf"
+                                                                           style="background-color: {{$item->color}};border: 1px solid #c4c4c4">
+                                                                        <div class="row justify-content-center">
+                                                                            <div class="col-8 align-self-center ps-0"
+                                                                                 style="text-align: right">
+                                                                                {{$item->title}}
+                                                                            </div>
+                                                                            <div class="col-4 align-self-center pe-0">
+                                                                                <i style="font-size: 25px !important;"
+                                                                                   class="align-middle {{$item->icon}}">
+                                                                                    {!! $this->getIconPaths() !!}
+                                                                                </i>
+                                                                            </div>
+                                                                        </div>
+                                                                    </label>
+                                                                </div>
+                                                            @endif
+                                                        @endforeach
+                                                        <div class="row justify-content-center mt-3">
+                                                            <div class="col-auto">
+                                                                <input type="radio" name="blockItemWidth"
+                                                                       wire:model="blockItemsWidth" value="half"
+                                                                       id="blockItemWidthHalf" class="">
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <label for="blockItemWidthHalf">نصف / نصف</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <div class="row">
+                                                        @foreach($constOptions as $item)
+                                                            @if($loop->index < 4)
+                                                                <div class="col-3 px-1">
+                                                                    <label class="btn w-100"
+                                                                           for="blockItemWidthCompress"
+                                                                           style="background-color: {{$item->color}};border: 1px solid #c4c4c4">
+                                                                        <i style="font-size: 25px !important;"
+                                                                           class="align-middle {{$item->icon}}">
+                                                                            {!! $this->getIconPaths() !!}
+                                                                        </i>
+                                                                    </label>
+                                                                </div>
+                                                            @endif
+                                                        @endforeach
+                                                        <div class="row justify-content-center mt-3">
+                                                            <div class="col-auto">
+                                                                <input type="radio" name="blockItemWidth"
+                                                                       wire:model="blockItemsWidth" value="compress"
+                                                                       id="blockItemWidthCompress" class="">
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <label for="blockItemWidthCompress">فشرده</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 my-3">
+                                            <label class="text-black-50 mb-2">رنگ بندی آیتم‌ها</label>
+                                            <select class="form-select" wire:model="blockItemColor"
+                                                    onchange="blockItemColor(this.value)"
+                                            >
+                                                <option value="1">استفاده از رنگ‌های شخصی‌سازی شده</option>
+                                                <option value="2">استفاده از رنگ برندها</option>
+                                                <option value="3">انتخاب رنگ دلخواه برای آیتم‌های این بلوک</option>
+                                            </select>
+                                            <div class="@if($blockItemColor!=3) d-none @endif my-2"
+                                                 id="blockItemColor3">
+                                                <button class="btn btnNoFocus w-100 py-2 bg-white"
+                                                        style="text-align: right;border: 1px solid lightgrey">
+                                                    پس‌زمینه بلوک‌ها
+                                                    <div wire:ignore class="my-4 grapick"></div>
+                                                    <div class="row">
+                                                        <div class="col-6">
+                                                            <select class="form-select " id="switch-type">
+                                                                <option value>- انتخاب کنید -</option>
+                                                                <option value="radial">radial</option>
+                                                                <option value="linear">linear</option>
+                                                                <option value="repeating-radial">repeating-radial
+                                                                </option>
+                                                                <option value="repeating-linear">repeating-linear
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <select class="form-select " id="switch-angle">
+                                                                <option value>- انتخاب کنید -</option>
+                                                                <option value="top">Top</option>
+                                                                <option value="right">Right</option>
+                                                                <option value="center">Center</option>
+                                                                <option value="bottom">Bottom</option>
+                                                                <option value="left">Left</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    {{--                                                <span class="float-start" dir="ltr">{{$bgBlockItemColor}}</span>--}}
+                                                </button>
+                                                <button class="btn btnNoFocus w-100 py-2 bg-white my-2"
+                                                        style="text-align: right;border: 1px solid lightgrey">
+                                                    عناوین آیتم‌ها
+                                                    <div wire:ignore class="my-4 grapick1"></div>
+                                                    <div class="row">
+                                                        <div class="col-6">
+                                                            <select class="form-select " id="switch-type1">
+                                                                <option value>- انتخاب کنید -</option>
+                                                                <option value="radial">radial</option>
+                                                                <option value="linear">linear</option>
+                                                                <option value="repeating-radial">repeating-radial
+                                                                </option>
+                                                                <option value="repeating-linear">repeating-linear
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <select class="form-select " id="switch-angle1">
+                                                                <option value>- انتخاب کنید -</option>
+                                                                <option value="top">Top</option>
+                                                                <option value="right">Right</option>
+                                                                <option value="center">Center</option>
+                                                                <option value="bottom">Bottom</option>
+                                                                <option value="left">Left</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    {{--                                                <input type="color" wire:model.live="textBlockItemColor"--}}
+                                                    {{--                                                       class="float-start ms-2"--}}
+                                                    {{--                                                       style="width: 40px;height: 20px;">--}}
+                                                    {{--                                                <span class="float-start" dir="ltr">{{$textBlockItemColor}}</span>--}}
+                                                </button>
+                                                <button class="btn btnNoFocus w-100 py-2 bg-white"
+                                                        style="text-align: right;border: 1px solid lightgrey">
+                                                    حاشیه بلوک‌ها
+                                                    <input type="color" wire:model.live="borderBlockItemColor"
+                                                           class="float-start ms-2"
+                                                           style="width: 40px;height: 20px;">
+                                                    <span class="float-start" dir="ltr">{{$borderBlockItemColor}}</span>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 my-3">
+                                            <label class="text-black-50 mb-2">نوع حاشیه بلوک</label>
+                                            <div class="row bg-white p-3">
+
+                                                @foreach($constOptions as $key=>$item)
+                                                    @if($loop->index < 4)
+                                                        <div class="col-6 my-3">
+                                                            <label class="btn w-100"
+                                                                   for="blockItemBorderRadius{{$item->id}}"
+                                                                   style="background-color: {{$item->color}};border: 1px solid black;
+                                                               border-radius: {{$loop->index==0?'0':''}}{{--{{$loop->index==1?'10px':''}}--}}{{$loop->index==2?'10px':''}}{{$loop->index==3?'100px':''}};
+                                                               "
+                                                            >
+                                                                <div class="row justify-content-around">
+                                                                    <div class="col-auto align-self-center ps-0"
+                                                                         style="text-align: right">
+                                                                        {{$item->title}}
+                                                                    </div>
+                                                                    <div class="col-auto align-self-center pe-0">
+                                                                        <i style="font-size: 25px !important;"
+                                                                           class="align-middle {{$item->icon}}">
+                                                                            {!! $this->getIconPaths() !!}
+                                                                        </i>
+                                                                    </div>
+                                                                </div>
+                                                            </label>
+                                                            <div class="row justify-content-center mt-3">
+                                                                <div class="col-auto">
+                                                                    <input type="radio" name="blockItemBorderRadius"
+                                                                           wire:model="blockItemsBorder"
+                                                                           value="{{$key}}"
+                                                                           id="blockItemBorderRadius{{$item->id}}"
+                                                                           class="">
+                                                                </div>
+                                                                {{--<div class="col-auto">
+                                                                    <label for="blockItemWidthFull">تمام عرض</label>
+                                                                </div>--}}
+                                                            </div>
+                                                        </div>
+                                                    @endif
+                                                @endforeach
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 text-end">
+                                <button class="btn btn-outline-info" data-bs-dismiss="modal" wire:click="clearInputs">
+                                    انصراف
+                                </button>
+                                <button class="btn btn-info text-white" data-bs-dismiss="modal"
+                                        wire:click="submitBanner">
+                                    ذخیره
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
     {{--profile Options--}}
     <div class="modal fade rounded" wire:ignore.self id="profileOptions" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered {{--modal-lg--}}">
@@ -1208,11 +1702,11 @@
 
             var createGrapick = function () {
                 gp1 = new Grapick({
-                                     el       : '.grapick1',
-                                     direction: 'right',
-                                     min      : 1,
-                                     max      : 99,
-                                 });
+                                      el       : '.grapick1',
+                                      direction: 'right',
+                                      min      : 1,
+                                      max      : 99,
+                                  });
                 gp1.addHandler(1, '#085078', 1);
                 gp1.addHandler(99, '#85D8CE', 1, {keepSelect: 1});
                 gp1.on('change', function (complete) {
@@ -1335,8 +1829,9 @@
             }
 
             $(function () {
-                $("#sortable1").sortable({ axis: 'y' });
-                $("#sortable").sortable({ axis: 'y' });
+                $("#sortable2").sortable({axis: 'y'});
+                $("#sortable1").sortable({axis: 'y'});
+                $("#sortable").sortable({axis: 'y'});
 
             });
         </script>
