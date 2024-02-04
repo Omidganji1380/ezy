@@ -147,7 +147,7 @@ class Pagebuilder extends Component
         return $this->getBlockItemsBorderTrait($block);
     }
 
-    public function getBgBlockItemColor(Block $block, $originalColor)
+    public function getBgBlockItemColor(Block $block, $originalColor=null)
     {
         return $this->getBgBlockItemColorTrait($block, $originalColor);
     }

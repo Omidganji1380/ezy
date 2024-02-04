@@ -75,7 +75,11 @@
                                             class="{{$this->setBlockWidthHalf($block->blockOption->blockWidth,$loop->last,$loop->index)}} {{$this->setBlockWidth($block->blockOption->blockWidth)}} text-center p-1">
                                             <button dir="rtl" {{--style=""--}}
                                             class="btn border-info w-100 overflow-hidden text-truncate px-1"
-                                                    style="border-radius: {{$this->getBlockItemsBorder($block)}};background-{{$block->blockOption->blockItemColor==2?'color':'image'}}: {{$this->getBgBlockItemColor($block,$option->color)}};border-color: {{$this->getBorderBlockItemColor($block)}} !important;color: {{$this->getTextBlockItemColor($block)}}">
+                                                    style="border-radius: {{$this->getBlockItemsBorder($block)}};
+                                                    background-{{$block->blockOption->blockItemColor==2?'color':'image'}}: {{$this->getBgBlockItemColor($block,$option->color)}};
+                                                    border-color: {{$this->getBorderBlockItemColor($block)}} !important;
+                                                    color: {{$this->getTextBlockItemColor($block)}}"
+                                            >
                                                 <div class="row justify-content-center ez-solid-aparat flex-nowrap"
                                                      style="{{$block->blockOption->blockItemColor==2?'':'background: '.$this->getTextBlockItemColor($block).';-webkit-background-clip: text;-webkit-text-fill-color: transparent;'}}"
                                                 >
@@ -100,7 +104,11 @@
                                             class="col-12 text-center p-1">
                                             <button dir="rtl" {{--style=""--}}
                                             class="btn border-info w-100 overflow-hidden text-truncate px-1"
-                                                    style="border-radius: {{$this->getBlockItemsBorder($block)}};background-{{$block->blockOption->blockItemColor==2?'color':'image'}}: {{$this->getBgBlockItemColor($block,$option->color)}};border-color: {{$this->getBorderBlockItemColor($block)}} !important;color: {{$this->getTextBlockItemColor($block)}}">
+                                                    style="border-radius: {{$this->getBlockItemsBorder($block)}};
+                                                    background-{{$block->blockOption->blockItemColor==2?'color':'image'}}: {{$this->getBgBlockItemColor($block)}};
+                                                    border-color: {{$this->getBorderBlockItemColor($block)}} !important;
+                                                    color: {{$this->getTextBlockItemColor($block)}}"
+                                            >
                                                 <img class="w-100"
                                                      src="{{asset('storage/pb/profiles/profile-'.$profile->id.'/banners/banner-'.$banner->id.'/'.$banner->image)}}"
                                                      alt="">

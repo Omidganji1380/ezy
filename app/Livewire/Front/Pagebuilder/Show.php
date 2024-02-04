@@ -44,7 +44,7 @@ class Show extends Component
     {
         return $this->getBlockItemIconTrait($icon, $blockItemColor);
     }
-    public function getBgBlockItemColor(Block $block, $originalColor)
+    public function getBgBlockItemColor(Block $block, $originalColor=null)
     {
        return $this->getBgBlockItemColorTrait($block, $originalColor);
     }

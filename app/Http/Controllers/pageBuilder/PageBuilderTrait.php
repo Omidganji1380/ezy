@@ -143,7 +143,7 @@ trait PageBuilderTrait
             abort(404);
         }
         $this->blocks = $this->profile->block;
-//dd($this->blocks[2]->banner);
+//dd($this->blocks->first()->banner);
         $this->getOptions($this->title, false);
         $this->constOptions = pbOption::query()->where('for', 'social')->get();
 //
@@ -441,7 +441,7 @@ trait PageBuilderTrait
         return $border;
     }
 
-    public function getBgBlockItemColorTrait(Block $block, $originalColor)
+    public function getBgBlockItemColorTrait(Block $block, $originalColor=null)
     {
         $blockItemColor   = $block->blockOption->blockItemColor;
         $bgBlockItemColor = $block->blockOption->bgBlockItemColor;

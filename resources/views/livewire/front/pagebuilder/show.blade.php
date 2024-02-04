@@ -186,6 +186,23 @@
                                                 </a>
                                             </div>
                                         @endforeach
+                                            @foreach($block->banner as $banner)
+                                                {{--                                        @dd($option1)--}}
+                                                <div
+                                                    class="col-12 text-center p-1">
+                                                    <button dir="rtl" {{--style=""--}}
+                                                    class="btn border-info w-100 overflow-hidden text-truncate px-1"
+                                                            style="border-radius: {{$this->getBlockItemsBorder($block)}};
+                                                    background-{{$block->blockOption->blockItemColor==2?'color':'image'}}: {{$this->getBgBlockItemColor($block)}};
+                                                    border-color: {{$this->getBorderBlockItemColor($block)}} !important;
+                                                    color: {{$this->getTextBlockItemColor($block)}}"
+                                                    >
+                                                        <img class="w-100"
+                                                             src="{{asset('storage/pb/profiles/profile-'.$profile->id.'/banners/banner-'.$banner->id.'/'.$banner->image)}}"
+                                                             alt="">
+                                                    </button>
+                                                </div>
+                                            @endforeach
                                     </div>
 {{--                                </div>--}}
 {{--                            </div>--}}
