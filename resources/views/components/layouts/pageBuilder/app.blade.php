@@ -467,6 +467,7 @@
 <script src="{{asset('pageBuilder/fontawesome-free-6.5.1-web/js/all.js')}}"></script>
 <script src="{{asset('pageBuilder/jqueryDragable/jquery-ui.js')}}"></script>
 <script src="{{asset('pageBuilder/jqueryDragable/jquery.ui.touch-punch.js')}}"></script>
+<script src="{{asset('pageBuilder/assets/js/bootstrap.bundle.min.js')}}"></script>
 {{--<script src="{{asset('pageBuilder/assets/js/grapick.min.js')}}"></script>--}}
 {{--<script src="{{asset('pageBuilder/assets/js/spectrum.min.js')}}"></script>--}}
 {{--<script src="{{asset('admin/js/bootstrap.min.js')}}"></script>--}}

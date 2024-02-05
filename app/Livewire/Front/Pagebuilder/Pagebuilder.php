@@ -35,6 +35,7 @@ class Pagebuilder extends Component
     public function mount($link)
     {
         $this->mountTrait($link);
+//        dd($this->blocks);
     }
 
     public function setBlockWidth($width)
@@ -101,6 +102,7 @@ class Pagebuilder extends Component
     {
         $this->deleteBlockItemTrait($blockPbOption);
     }
+
     public function deleteBlockBannerItem(blockBanner $blockBanner)
     {
         $this->deleteBlockBannerItemTrait($blockBanner);
@@ -121,9 +123,39 @@ class Pagebuilder extends Component
         $this->insertBannerTrait();
     }
 
-    public function updated()
+    public function updateSort($a)
     {
-//        dd($this->bannerImageUpload[108]->temporaryUrl());
+        $str = $a;
+        preg_match_all('!\d+!', $str, $matches);
+//        dd(array_search(3,$matches[0]));
+//       array_keys($matches[0]);
+        $matches = $matches[0];
+//        dd(count($matches));
+        for ($i=0;$i<count($this->blocks);$i++){
+//            dd($matches[$i]);
+            $this->blocks[$i]->update([
+                'sort'=>$matches[$i]
+            ]);
+        }
+
+//        foreach ($this->blocks as $key => $item) {
+//            dd(key($this->blocks[$key]) == key($matches));
+////            if ($key == $this->blocks[$key]) {
+////                $this->blocks[$key]->update([
+////                    'sort'=>$item
+////                ]);
+////            }
+////            if ($matches[0][$key] == $key) {
+////                dd(/*$matches[0][$key] == $key &&*/ $block->sort == $matches[0][$key]);
+////            }
+////            dd($item->sort == $matches[0][$key]);
+//            if ($item->sort != $matches[0][$key])
+//                $item->update([
+//                    'sort' => $matches[0][$key]
+//                ]);
+////            }
+//        }
+        $this->redirect(route('pagebuilder.pagebuilder', $this->link),true);
     }
 
     public function removeBannerImg(blockBanner $blockBanner)
@@ -147,7 +179,7 @@ class Pagebuilder extends Component
         return $this->getBlockItemsBorderTrait($block);
     }
 
-    public function getBgBlockItemColor(Block $block, $originalColor=null)
+    public function getBgBlockItemColor(Block $block, $originalColor = null)
     {
         return $this->getBgBlockItemColorTrait($block, $originalColor);
     }

@@ -23,7 +23,7 @@ class Show extends Component
         if (!$this->profile) {
             abort(404);
         }
-        $this->blocks = $this->profile->block;
+        $this->blocks = $this->profile->block()->get()->sortBy('sort');
     }
 
     public function getBlockItemsBorder(Block $block)

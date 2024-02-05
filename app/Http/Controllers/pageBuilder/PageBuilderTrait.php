@@ -142,8 +142,8 @@ trait PageBuilderTrait
         if (!$this->profile) {
             abort(404);
         }
-        $this->blocks = $this->profile->block;
-//dd($this->blocks->first()->banner);
+        $this->blocks = $this->profile->block()->get()->sortBy('sort');
+//dd($this->blocks);
         $this->getOptions($this->title, false);
         $this->constOptions = pbOption::query()->where('for', 'social')->get();
 //
@@ -160,8 +160,10 @@ trait PageBuilderTrait
     {
 //        dd($pbOption->block);
         if ($this->newBlock) {
-            $block = Block::create([
+            $lastSort = $this->blocks->last() ? $this->blocks->last()->sort + 1 : 0;
+            $block    = Block::create([
                 'profile_id' => $this->profile->id,
+                'sort'       => $lastSort
             ]);
             BlockOption::create([
                 'block_id'   => $block->id,
@@ -188,7 +190,8 @@ trait PageBuilderTrait
             ]);
             $this->blockOptions($this->block);
         }
-        $this->mount($this->link);
+//        $this->mount($this->link);
+        $this->redirect(route('pagebuilder.pagebuilder', $this->link), true);
 
     }
 
@@ -265,8 +268,10 @@ trait PageBuilderTrait
     public function insertBannerTrait()
     {
         if ($this->newBlock) {
-            $block = Block::create([
+            $lastSort = $this->blocks->last() ? $this->blocks->last()->sort + 1 : 0;
+            $block    = Block::create([
                 'profile_id' => $this->profile->id,
+                'sort'       => $lastSort
             ]);
             BlockOption::create([
                 'block_id'   => $block->id,
@@ -289,8 +294,8 @@ trait PageBuilderTrait
             ]);
             $this->blockBannerOptions($this->block);
         }
-        $this->mount($this->link);
-
+//        $this->mount($this->link);
+        $this->redirect(route('pagebuilder.pagebuilder', $this->link), true);
     }
 
     public function blockBannerOptionsTrait(Block $block/*,$newBlock*/)
@@ -441,7 +446,7 @@ trait PageBuilderTrait
         return $border;
     }
 
-    public function getBgBlockItemColorTrait(Block $block, $originalColor=null)
+    public function getBgBlockItemColorTrait(Block $block, $originalColor = null)
     {
         $blockItemColor   = $block->blockOption->blockItemColor;
         $bgBlockItemColor = $block->blockOption->bgBlockItemColor;
@@ -502,7 +507,8 @@ trait PageBuilderTrait
         ]);
         $this->clearVariables();
         $this->clearInputs();
-
+//        $this->mountTrait($this->link);
+        $this->redirect(route('pagebuilder.pagebuilder', $this->link), true);
     }
 
     public function submitBannerTrait()
@@ -542,7 +548,8 @@ trait PageBuilderTrait
         ]);
         $this->clearVariables();
         $this->clearInputs();
-
+//        $this->mountTrait($this->link);
+        $this->redirect(route('pagebuilder.pagebuilder', $this->link), true);
     }
 
     public function removeImgTrait()
