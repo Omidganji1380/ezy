@@ -52,7 +52,7 @@
             </div>
             <div id="sortable" style="cursor: grab;margin-bottom: 9rem !important;" wire:ignore>
                 @foreach($blocks as $key=>$block)
-                    <div class="col-12 my-3" id="sortKey-{{$key}}">
+                    <div class="col-12 my-3" id="sortKey-{{$block->id}}">
                         <div class="row p-2 flex-nowrap">
                             {{--                            <input type="text" class="form-control" value="{{count($block->banner)}}">--}}
                             <div class="col-11" onclick="showFirstTab()"
@@ -361,7 +361,7 @@
         </div>
     </div>
     {{--options--}}
-    @if($blockItems)
+{{--    @if($blockItems)--}}
         <div class="modal fade rounded" wire:ignore.self id="blockOptions" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
                 <div class="modal-content">
@@ -771,9 +771,9 @@
                 </div>
             </div>
         </div>
-    @endif
+{{--    @endif--}}
     {{--banner options--}}
-    @if(count($blockBannerItems))
+{{--    @if(count($blockBannerItems))--}}
         <div class="modal fade rounded" wire:ignore.self id="blockBannerOptions" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
                 <div class="modal-content">
@@ -1244,7 +1244,7 @@
                 </div>
             </div>
         </div>
-    @endif
+{{--    @endif--}}
     {{--profile Options--}}
     <div class="modal fade rounded" wire:ignore.self id="profileOptions" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered {{--modal-lg--}}">
@@ -1870,14 +1870,10 @@
                 // console.log('#item'+id)
             }
 
-            // $(function () {
             $(document).bind('DOMSubtreeModified', function () {
                 $('div.modal-backdrop').not(':last').remove()
             });
-            // if (a.length>1){
-            //     a.not(':last').remove()
-            // }
-            // });
+
             $(function () {
                 $("#sortable2").sortable({axis: 'y'});
                 $("#sortable1").sortable({axis: 'y'});
@@ -1885,15 +1881,12 @@
                                             axis  : 'y',
                                             update: function (event, ui) {
                                                 var data = $(this).sortable('serialize');
+                                                // alert(data)
 
-                                                // POST to server using $.post or $.ajax
-                                                @this.
-                                                updateSort(data);
-                                                {{--$.ajax({--}}
-                                                {{--           // data: data,--}}
-                                                {{--           // type: 'GET',--}}
-                                                {{--           url: @this.updateSort(data)--}}
-                                                {{--       });--}}
+                                                // setTimeout(function (){
+                                                    @this.
+                                                    updateSort(data);
+                                                // },1000)
                                             }
                                         });
 
