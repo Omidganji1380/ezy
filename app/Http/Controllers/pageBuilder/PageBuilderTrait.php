@@ -191,7 +191,7 @@ trait PageBuilderTrait
             $this->blockOptions($this->block);
         }
 //        $this->mount($this->link);
-        $this->redirect(route('pagebuilder.pagebuilder', $this->link), true);
+        $this->redirect(route('pagebuilder.pagebuilder', $this->link));
 
     }
 
@@ -295,7 +295,7 @@ trait PageBuilderTrait
             $this->blockBannerOptions($this->block);
         }
 //        $this->mount($this->link);
-        $this->redirect(route('pagebuilder.pagebuilder', $this->link), true);
+        $this->redirect(route('pagebuilder.pagebuilder', $this->link));
     }
 
     public function blockBannerOptionsTrait(Block $block/*,$newBlock*/)
@@ -346,7 +346,7 @@ trait PageBuilderTrait
             Storage::disk('public')->deleteDirectory('pb/profiles/profile-' . $this->profile->id . '/banners');
         }
         $this->block->delete();
-        $this->redirect(route('pagebuilder.pagebuilder', $this->link), true);
+        $this->redirect(route('pagebuilder.pagebuilder', $this->link));
     }
 
     public function deleteBlockItemTrait(BlockPbOption $blockPbOption)
@@ -354,7 +354,7 @@ trait PageBuilderTrait
 //        dd($blockPbOption->block->pbOption);
         if (count($blockPbOption->block->pbOption) == 1) {
             $blockPbOption->block->delete();
-            $this->redirect(route('pagebuilder.pagebuilder', $this->link), true);
+            $this->redirect(route('pagebuilder.pagebuilder', $this->link));
         }
         $blockPbOption->delete();
         $this->mount($this->link);
@@ -369,7 +369,7 @@ trait PageBuilderTrait
         Storage::disk('public')->deleteDirectory('pb/profiles/profile-' . $this->profile->id . '/banners/banner-' . $blockBanner->id);
         if (count($blockBanner->block->banner) == 1) {
             $blockBanner->block->delete();
-            $this->redirect(route('pagebuilder.pagebuilder', $this->link), true);
+            $this->redirect(route('pagebuilder.pagebuilder', $this->link));
         }
         $blockBanner->delete();
         $this->mount($this->link);
@@ -508,7 +508,7 @@ trait PageBuilderTrait
         $this->clearVariables();
         $this->clearInputs();
 //        $this->mountTrait($this->link);
-        $this->redirect(route('pagebuilder.pagebuilder', $this->link), true);
+        $this->redirect(route('pagebuilder.pagebuilder', $this->link));
     }
 
     public function submitBannerTrait()
@@ -549,7 +549,7 @@ trait PageBuilderTrait
         $this->clearVariables();
         $this->clearInputs();
 //        $this->mountTrait($this->link);
-        $this->redirect(route('pagebuilder.pagebuilder', $this->link), true);
+        $this->redirect(route('pagebuilder.pagebuilder', $this->link));
     }
 
     public function removeImgTrait()
