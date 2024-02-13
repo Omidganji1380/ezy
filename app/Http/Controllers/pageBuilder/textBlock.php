@@ -21,7 +21,7 @@ trait textBlock
 //        dd($this->blockTextText);
 //        dd($this->blockText,$this->blockTextText,$this->blockTextSize,$this->blockTextAlign,$this->blockTextColor);
         $this->blockText->update([
-            'text'      => $this->blockTextText,
+            'text'      => "\n".$this->blockTextText,
             'textSize'  => $this->blockTextSize,
             'textAlign' => $this->blockTextAlign,
             'textColor' => $this->blockTextColor,

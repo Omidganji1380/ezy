@@ -109,6 +109,16 @@
                 backdrop-filter: blur(5px)
             }
         </style>
+        <style>
+            .blockText {
+                margin: 0 0 22px;
+                width: 100%;
+                white-space: pre-wrap;
+                word-break: break-word;
+                unicode-bidi: plaintext;
+                font-family: inherit;
+            }
+        </style>
     @endpush
 
     <div style="max-width: 600px" class="container px-0">
@@ -157,10 +167,12 @@
                     {{--                                <div class="col-11">--}}
 
                     <div class="row justify-content-center">
+                        @if(!count($block->text))
                         @if($block->blockOption->blockTitle)
                             <div class="col-12 text-center mt-3">
                                 <p class="text-center">{{$block->blockOption->blockTitle}}</p>
                             </div>
+                        @endif
                         @endif
                         @foreach($block->pbOption()->get() as $option)
                             <div
@@ -187,8 +199,8 @@
                                 </a>
                             </div>
                         @endforeach
-                        <div class="col-12 text-center p-1">
-                            @if(count($block->banner))
+                        @if(count($block->banner))
+                            <div class="col-12 text-center p-1">
                                 <div id="myCarousel1" class="carousel slide" data-bs-ride="carousel">
                                     <div class="carousel-inner">
                                         @foreach($block->banner as $key=>$banner)
@@ -224,8 +236,14 @@
                                         </button>
                                     @endif
                                 </div>
+                            </div>
+                        @endif
+                            @if(count($block->text))
+                                <div class="col-12 text-center p-1 blockText"
+                                     style="{{$block->text()->where('block_id',$block->id)->first()->textSize}}{{$block->text()->where('block_id',$block->id)->first()->textAlign}}color:{{$block->text()->where('block_id',$block->id)->first()->textColor}}">
+                                    {!! $block->text()->where('block_id',$block->id)->first()->text !!}
+                                </div>
                             @endif
-                        </div>
                     </div>
                     {{--                                </div>--}}
                     {{--                            </div>--}}

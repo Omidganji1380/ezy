@@ -98,9 +98,11 @@
                                 @endif
                             >
                                 <div class="row justify-content-center">
+                                    @if(!count($block->text))
                                     <div class="col-12 text-center">
                                         <p class="text-center">{{$block->blockOption->blockTitle}}</p>
                                     </div>
+                                    @endif
                                     @foreach($block->pbOption()->get() as $option)
                                         {{--                                                                                @dd($block->blockOption->blockItemColor)--}}
                                         <div
@@ -1310,24 +1312,24 @@
                         <div class="col-12">
                             <ul class="nav nav-pills mb-3 row pills-tab" id="" role="tablist" wire:ignore>
                                 <li class="nav-item btn b1 selected col-6" role="presentation">
-                                    <button class="btn btnNoFocus active w-100" id="profileProperties-tab"
+                                    <button class="btn btnNoFocus active w-100" id="profileProperties112-tab"
                                             data-bs-toggle="pill"
-                                            data-bs-target="#profileProperties" type="button" role="tab"
-                                            aria-controls="profileProperties" aria-selected="true">مشخصات
+                                            data-bs-target="#profileProperties112" type="button" role="tab"
+                                            aria-controls="profileProperties112" aria-selected="true">مشخصات
                                     </button>
                                 </li>
                                 <li class="nav-item btn b2 col-6" role="presentation">
-                                    <button class="btn btnNoFocus w-100 " id="profileMoreOptions-tab"
+                                    <button class="btn btnNoFocus w-100 " id="profileMoreOptions112-tab"
                                             data-bs-toggle="pill"
-                                            data-bs-target="#profileMoreOptions" type="button" role="tab"
-                                            aria-controls="profileMoreOptions" aria-selected="false">تنظیمات بیشتر
+                                            data-bs-target="#profileMoreOptions112" type="button" role="tab"
+                                            aria-controls="profileMoreOptions112" aria-selected="false">تنظیمات بیشتر
                                     </button>
                                 </li>
                             </ul>
                         </div>
-                        <div class="col-12 my-3 tab-content" id="accordionParentProfile">
-                            <div class="tab-pane fade show active" id="profileProperties" role="tabpanel"
-                                 aria-labelledby="profileProperties-tab" wire:ignore.self>
+                        <div class="col-12 my-3 tab-content" id="accordionParentProfile112">
+                            <div class="tab-pane fade show active" id="profileProperties112" role="tabpanel"
+                                 aria-labelledby="profileProperties112-tab" wire:ignore.self>
                                 <div class="row">
                                     <div class="col-12 my-3" {{--wire:ignore--}}>
                                         <label class="text-black-50 my-1">متن *</label>
@@ -1361,67 +1363,21 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="profileMoreOptions" role="tabpanel"
-                                 wire:ignore.self aria-labelledby="profileMoreOptions-tab">
-                                {{--<div class="row">
+                            <div class="tab-pane fade" id="profileMoreOptions112" role="tabpanel"
+                                 wire:ignore.self aria-labelledby="profileMoreOptions112-tab">
+                                <div class="row">
                                     <div class="col-12 my-3">
-                                        <label class="text-black-50 my-1">انتخاب طرح کاور</label>
-                                        <div class="row bg-white my-2">
-                                            <div class="col-6 my-4 text-center">
-                                                <label class="w-100" style="height: 100px;border: 1px solid black"
-                                                       for="radioTriangle"></label>
-                                                <input type="radio" class="mt-3" id="radioTriangle"
-                                                       wire:model="profileBgBorder" value="0"
-                                                       {{$profileBgBorder==0?'checked':''}} name="bgStyle">
+                                        <div class="row justify-content-around">
+                                            <div class="col-6">
+                                                نمایش بلوک
                                             </div>
-                                            <div class="col-6 my-4 text-center">
-                                                <label class="w-100"
-                                                       style="height: 100px;border: 1px solid black;border-radius: 50% / 0 0 100% 100%"
-                                                       for="radioRounded"></label>
-                                                <input type="radio" class="mt-3" id="radioRounded"
-                                                       wire:model="profileBgBorder"
-                                                       {{$profileBgBorder==100?'checked':''}} name="bgStyle"
-                                                       value="100">
+                                            <div class="col-6 text-start">
+                                                <input type="checkbox" wire:model="blockVisibility"
+                                                       value="{{$blockVisibility}}">
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-12 my-3">
-                                        <label class="text-black-50 my-1">انتخاب طرح لوگو</label>
-                                        <div class="row bg-white my-2">
-                                            <div class="col-3 my-4 text-center">
-                                                <label class="w-100" style="height: 100px;border: 1px solid black"
-                                                       for="logoTriangle"></label>
-                                                <input type="radio" class="mt-3" id="logoTriangle"
-                                                       wire:model="profileImgBorder" value="0"
-                                                       {{$profileImgBorder==0?'checked':''}} name="imgStyle">
-                                            </div>
-                                            <div class="col-3 my-4 text-center">
-                                                <label class="w-100"
-                                                       style="height: 100px;border: 1px solid black;border-radius: 10%"
-                                                       for="logo10"></label>
-                                                <input type="radio" class="mt-3" id="logo10"
-                                                       wire:model="profileImgBorder" value="10"
-                                                       {{$profileImgBorder==10?'checked':''}} name="imgStyle">
-                                            </div>
-                                            <div class="col-3 my-4 text-center">
-                                                <label class="w-100"
-                                                       style="height: 100px;border: 1px solid black;border-radius: 30%"
-                                                       for="logo30"></label>
-                                                <input type="radio" class="mt-3" id="logo30"
-                                                       wire:model="profileImgBorder" value="30"
-                                                       {{$profileImgBorder==30?'checked':''}} name="imgStyle">
-                                            </div>
-                                            <div class="col-3 my-4 text-center">
-                                                <label class="w-100"
-                                                       style="height: 100px;border: 1px solid black;border-radius: 100%"
-                                                       for="logo100"></label>
-                                                <input type="radio" class="mt-3" id="logo100"
-                                                       wire:model="profileImgBorder" value="100"
-                                                       {{$profileImgBorder==100?'checked':''}} name="imgStyle">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>--}}
+                                </div>
                             </div>
                         </div>
                         <div class="col-12 text-end">
