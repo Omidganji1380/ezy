@@ -4,6 +4,7 @@ namespace App\Livewire\Front\Pagebuilder;
 
 use App\Events\UpdateShowPbPage;
 use App\Http\Controllers\pageBuilder\PageBuilderTrait;
+use App\Http\Controllers\pageBuilder\textBlock;
 use App\Models\Block;
 use App\Models\blockBanner;
 use App\Models\BlockOption;
@@ -19,6 +20,7 @@ class Pagebuilder extends Component
 {
     use WithFileUploads;
     use PageBuilderTrait;
+    use textBlock;
 
 
 //    public $blockItems=[];
@@ -116,6 +118,10 @@ class Pagebuilder extends Component
     public function getOptionsBanner($option, $newBlock)
     {
         $this->getOptionsBannerTrait($option, $newBlock);
+    }
+    public function getOptionsText($option, $newBlock)
+    {
+        $this->getOptionsTextTrait($option, $newBlock);
     }
 
     public function insertBanner()

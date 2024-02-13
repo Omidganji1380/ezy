@@ -17,15 +17,21 @@ class Block extends Model
 
     public function pbOption(): BelongsToMany
     {
-        return $this->belongsToMany(pbOption::class,'block_pb_options','block_id','pbOption_id')->withPivot('id');
+        return $this->belongsToMany(pbOption::class, 'block_pb_options', 'block_id', 'pbOption_id')->withPivot('id');
     }
 
     public function blockOption()
     {
         return $this->hasOne(BlockOption::class);
     }
+
     public function banner()
     {
-        return $this->hasMany(blockBanner::class,'block_id','id');
+        return $this->hasMany(blockBanner::class, 'block_id', 'id');
+    }
+
+    public function text()
+    {
+        return $this->hasMany(BlockText::class, 'block_id', 'id');
     }
 }

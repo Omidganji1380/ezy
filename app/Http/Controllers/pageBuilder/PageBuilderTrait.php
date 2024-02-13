@@ -144,9 +144,8 @@ trait PageBuilderTrait
         }
         $this->blocks = $this->profile->block()->get()->sortBy('sort');
 //dd($this->blocks->find(105));
-        $this->getOptions($this->title, false);
+//        $this->getOptions($this->title, false);
         $this->constOptions = pbOption::query()->where('for', 'social')->get();
-//
     }
 
     public function getIconPathsTrait()
@@ -190,7 +189,44 @@ trait PageBuilderTrait
             ]);
             $this->blockOptions($this->block);
         }
-//        $this->mount($this->link);
+        $this->refreshPage();
+    }
+
+    public function insertBannerTrait()
+    {
+        if ($this->newBlock) {
+            $lastSort = $this->blocks->last() ? $this->blocks->last()->sort + 1 : 0;
+            $block    = Block::create([
+                'profile_id' => $this->profile->id,
+                'sort'       => $lastSort
+            ]);
+            BlockOption::create([
+                'block_id'   => $block->id,
+                'blockTitle' => $this->title,
+                'option5'    => $this->title,
+            ]);
+            blockBanner::create([
+                'block_id' => $block->id,
+            ]);
+            $this->blockBannerOptions($block);
+        }
+        else {
+            BlockOption::create([
+                'block_id'   => $this->block->id,
+                'blockTitle' => $this->title,
+                'option5'    => $this->title,
+            ]);
+            blockBanner::create([
+                'block_id' => $this->block->id,
+            ]);
+            $this->blockBannerOptions($this->block);
+        }
+        $this->refreshPage();
+    }
+
+    public function refreshPage()
+    {
+//        $this->mountTrait($this->link);
         $this->redirect(route('pagebuilder.pagebuilder', $this->link));
 
     }
@@ -265,39 +301,6 @@ trait PageBuilderTrait
         $this->options = blockBanner::query()->where('block_id', $this->block->id)->get();
     }
 
-    public function insertBannerTrait()
-    {
-        if ($this->newBlock) {
-            $lastSort = $this->blocks->last() ? $this->blocks->last()->sort + 1 : 0;
-            $block    = Block::create([
-                'profile_id' => $this->profile->id,
-                'sort'       => $lastSort
-            ]);
-            BlockOption::create([
-                'block_id'   => $block->id,
-                'blockTitle' => $this->title,
-                'option5'    => $this->title,
-            ]);
-            blockBanner::create([
-                'block_id' => $block->id,
-            ]);
-            $this->blockBannerOptions($block);
-        }
-        else {
-            BlockOption::create([
-                'block_id'   => $this->block->id,
-                'blockTitle' => $this->title,
-                'option5'    => $this->title,
-            ]);
-            blockBanner::create([
-                'block_id' => $this->block->id,
-            ]);
-            $this->blockBannerOptions($this->block);
-        }
-//        $this->mount($this->link);
-        $this->redirect(route('pagebuilder.pagebuilder', $this->link));
-    }
-
     public function blockBannerOptionsTrait(Block $block/*,$newBlock*/)
     {
         $this->clearInputsTrait();
@@ -346,7 +349,7 @@ trait PageBuilderTrait
             Storage::disk('public')->deleteDirectory('pb/profiles/profile-' . $this->profile->id . '/banners');
         }
         $this->block->delete();
-        $this->redirect(route('pagebuilder.pagebuilder', $this->link));
+        $this->refreshPage();
     }
 
     public function deleteBlockItemTrait(BlockPbOption $blockPbOption)
@@ -354,7 +357,7 @@ trait PageBuilderTrait
 //        dd($blockPbOption->block->pbOption);
         if (count($blockPbOption->block->pbOption) == 1) {
             $blockPbOption->block->delete();
-            $this->redirect(route('pagebuilder.pagebuilder', $this->link));
+            $this->refreshPage();
         }
         $blockPbOption->delete();
         $this->mount($this->link);
@@ -369,7 +372,7 @@ trait PageBuilderTrait
         Storage::disk('public')->deleteDirectory('pb/profiles/profile-' . $this->profile->id . '/banners/banner-' . $blockBanner->id);
         if (count($blockBanner->block->banner) == 1) {
             $blockBanner->block->delete();
-            $this->redirect(route('pagebuilder.pagebuilder', $this->link));
+            $this->refreshPage();
         }
         $blockBanner->delete();
         $this->mount($this->link);
@@ -507,8 +510,7 @@ trait PageBuilderTrait
         ]);
         $this->clearVariables();
         $this->clearInputs();
-//        $this->mountTrait($this->link);
-        $this->redirect(route('pagebuilder.pagebuilder', $this->link));
+        $this->refreshPage();
     }
 
     public function submitBannerTrait()
@@ -548,8 +550,7 @@ trait PageBuilderTrait
         ]);
         $this->clearVariables();
         $this->clearInputs();
-//        $this->mountTrait($this->link);
-        $this->redirect(route('pagebuilder.pagebuilder', $this->link));
+        $this->refreshPage();
     }
 
     public function removeImgTrait()
