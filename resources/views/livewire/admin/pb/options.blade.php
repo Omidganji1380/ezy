@@ -23,7 +23,20 @@
             </div>
             <div class="col-sm-4 my-2">
                 <button class="btn btn-primary w-100" data-bs-toggle="modal"
-                        data-bs-target="#messengers" wire:click="getOptions('link')">                    لینک و سوپر لینک
+                        data-bs-target="#messengers" wire:click="getOptions('link')"> لینک و سوپر لینک
+                </button>
+            </div>
+        </div>
+
+        <div class="row my-5">
+            <div class="col-12">
+                <button class="btn btn-primary w-100" onclick="icons()" data-bs-toggle="modal"
+                        data-bs-target="#insertProfileOption" wire:click="clearInputs">+
+                </button>
+            </div>
+            <div class="col-sm-4 my-2">
+                <button class="btn btn-primary w-100" data-bs-toggle="modal"
+                        data-bs-target="#bg_image" wire:click="getProfileOptionsBgImage">تصاویر پس زمینه
                 </button>
             </div>
         </div>
@@ -125,12 +138,13 @@
                                            placeholder="عنوان بخش اضافه">
                                 </div>
                             </div>
-                            <input type="text" class="form-control my-1 py-0" wire:model.live.debounce="moreOptionDescription"
+                            <input type="text" class="form-control my-1 py-0"
+                                   wire:model.live.debounce="moreOptionDescription"
                                    placeholder="توضیحات بخش اضافه">
                         </div>
                         <div class="col-12 my-2">
                             <textarea type="text" class="form-control my-1" wire:model.live.debounce="moreDescription"
-                                   placeholder="توضیحات اضافه"></textarea>
+                                      placeholder="توضیحات اضافه"></textarea>
                         </div>
                         <div class="col-12 mt-4 text-center">
                             <button class="btn btn-success w-25"
@@ -141,9 +155,9 @@
                                     wire:click="clearInputs">انصراف
                             </button>
                             @if($selectedOption)
-                            <button class="btn btn-outline-danger w-25" data-bs-dismiss="modal"
-                                    wire:click="delete({{$selectedOption->id}})" wire:confirm="حذف شود؟">حذف
-                            </button>
+                                <button class="btn btn-outline-danger w-25" data-bs-dismiss="modal"
+                                        wire:click="delete({{$selectedOption->id}})" wire:confirm="حذف شود؟">حذف
+                                </button>
                             @endif
                         </div>
                         <div class="col-12 mt-4 text-center">
@@ -166,7 +180,8 @@
                     <div class="row">
                         @foreach($options as $item)
                             <div class="col-3 my-1">
-                                <button class="btn w-100" wire:click="edit({{$item->id}})" data-bs-target="#insertOption" data-bs-toggle="modal"
+                                <button class="btn w-100" wire:click="edit({{$item->id}})"
+                                        data-bs-target="#insertOption" data-bs-toggle="modal"
                                         style="background-color: {{$item->color}};border: 1px solid #c4c4c4">
                                     <div class="row justify-content-between">
                                         <div class="col-auto align-self-center" style="text-align: right">
@@ -179,6 +194,80 @@
                                         </div>
                                     </div>
                                 </button>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade rounded" wire:ignore.self id="insertProfileOption" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title mx-auto">افزودن</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row justify-content-center">
+                        <div class="col-6 my-2">
+                            <select wire:model="premium" class="form-select">
+                                <option value="0">معمولی</option>
+                                <option value="1">پریمیوم</option>
+                            </select>
+                        </div>
+                        <div class="col-12 my-2 text-center">
+                            <div class="position-relative w-30 rounded text-center py-2 align-middle mx-auto"
+                                 style="background-color: #cfffcf;border: 2px dashed green;height: 300px">
+                                <div class="position-absolute h-100 w-100 top-50 translate-middle-y">
+                                    <img
+                                        src="{{$bgImage?$bgImage->temporaryUrl():asset('storage/pb/bgImages/bgImage-'/*.$bg->img*/)}}"
+                                        class="position-absolute h-100 py-2 mx-auto start-0" alt=""
+                                        style="right: 0" wire:click="removeImg" wire:confirm="حذف شود؟">
+                                    <img wire:loading wire:target="bgImage"
+                                         src="{{asset('pageBuilder/loading.gif')}}"
+                                         class="position-absolute h-100 py-2 mx-auto start-0"
+                                         style="right: 0">
+{{--                                    @if(!$bgImage)--}}
+                                        <input type="file" class="opacity-0 h-100 w-100"
+                                               wire:model="bgImage">
+{{--                                    @endif--}}
+                                </div>
+                            </div>
+{{--                            <img src="{{asset('pageBuilder/assets/img/pbBackground/ddaf01857fffc185baa4.jpg')}}" class="w-30">--}}
+                        </div>
+                        <div class="col-12 mt-4 text-center">
+                            <button class="btn btn-success w-25"
+                                    {!! $dismissModal?'data-bs-dismiss="modal"':'' !!}
+                                    wire:click="insertBgImage">ذخیره
+                            </button>
+                            <button class="btn btn-outline-warning w-25" data-bs-dismiss="modal"
+                                    wire:click="clearInputs">انصراف
+                            </button>
+                            @if($selectedOption)
+                                <button class="btn btn-outline-danger w-25" data-bs-dismiss="modal"
+                                        wire:click="delete({{$selectedOption->id}})" wire:confirm="حذف شود؟">حذف
+                                </button>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade rounded" wire:ignore.self id="bg_image" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title mx-auto">تصاویر پس زمینه</h5>
+                </div>
+                <div class="modal-body" wire:ignore.self>
+                    <div class="row">
+                        @foreach($bgImgs as $item)
+                            <div class="col-2 my-1">
+{{--                                <button class="btn w-100" wire:click="editBgImg({{$item->id}})"--}}
+{{--                                        data-bs-target="#insertProfileOption" data-bs-toggle="modal">--}}
+{{--                                </button>--}}
+                                <img src="{{asset('storage/pb/bgImages/bgImage-'.$item->id.'/'.$item->img)}}" class="w-100">
                             </div>
                         @endforeach
                     </div>

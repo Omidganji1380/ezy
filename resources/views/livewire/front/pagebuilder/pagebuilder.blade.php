@@ -30,10 +30,16 @@
                 unicode-bidi: plaintext;
                 font-family: inherit;
             }
+
+            .bgImgSelected {
+                border: 0.13rem solid red;
+                padding: 0.3rem;
+                border-radius: 0.3rem;
+            }
         </style>
     @endpush
-    <div style="max-width: 600px" class="container">
-        <div class="row">
+    <div style="{{$this->getBackgroundImage()}};max-width: 600px" class="container">
+        <div class="row" style="height: 100%;overflow-y: auto">
             <div class="col-12" style="border-radius: 20px;box-shadow: rgba(0,0,0,0.2) 0 0 20px;">
                 <div class="row p-2 justify-content-end flex-nowrap">
                     <div class="col-auto px-1 align-self-center" dir="ltr">
@@ -99,9 +105,9 @@
                             >
                                 <div class="row justify-content-center">
                                     @if(!count($block->text))
-                                    <div class="col-12 text-center">
-                                        <p class="text-center">{{$block->blockOption->blockTitle}}</p>
-                                    </div>
+                                        <div class="col-12 text-center">
+                                            <p class="text-center">{{$block->blockOption->blockTitle}}</p>
+                                        </div>
                                     @endif
                                     @foreach($block->pbOption()->get() as $option)
                                         {{--                                                                                @dd($block->blockOption->blockItemColor)--}}
@@ -172,9 +178,9 @@
                                         </div>
                                     @endif
                                     @if(count($block->text))
-                                        <div class="col-12 text-center p-1 blockText"
+                                        <div class="col-12 text-center p-1 blockText m-0"
                                              style="{{$block->text()->where('block_id',$block->id)->first()->textSize}}{{$block->text()->where('block_id',$block->id)->first()->textAlign}}color:{{$block->text()->where('block_id',$block->id)->first()->textColor}}">
-                                                {!! $block->text()->where('block_id',$block->id)->first()->text !!}
+                                            {!! $block->text()->where('block_id',$block->id)->first()->text !!}
                                         </div>
                                     @endif
                                 </div>
@@ -1333,19 +1339,32 @@
                                 <div class="row">
                                     <div class="col-12 my-3" {{--wire:ignore--}}>
                                         <label class="text-black-50 my-1">متن *</label>
-                                        <textarea class="form-control rounded textareaTextBlock" wire:model="blockTextText" rows="5" {{--id="editor"--}}>
+                                        <textarea class="form-control rounded textareaTextBlock"
+                                                  wire:model="blockTextText" rows="5" {{--id="editor"--}}>
                                             {!! $blockTextText !!}
                                         </textarea>
                                     </div>
                                     <div class="col-12 my-3">
                                         <label class="text-black-50 my-1">اندازه متن</label>
                                         <select class="form-select rounded" wire:model="blockTextSize">
-                                            <option value="font-size: 14px !important;font-weight: 400 !important;">متن کوچک</option>
-                                            <option value="font-size: 16px !important;font-weight: 400 !important;">متن متوسط</option>
-                                            <option value="font-size: 18px !important;font-weight: 400 !important;">متن بزرگ</option>
-                                            <option value="font-size: 18px !important;font-weight: 700 !important;">عنوان کوچک</option>
-                                            <option value="font-size: 20px !important;font-weight: 700 !important;">عنوان متوسط</option>
-                                            <option value="font-size: 22px !important;font-weight: 700 !important;">عنوان بزرگ</option>
+                                            <option value="font-size: 14px !important;font-weight: 400 !important;">متن
+                                                کوچک
+                                            </option>
+                                            <option value="font-size: 16px !important;font-weight: 400 !important;">متن
+                                                متوسط
+                                            </option>
+                                            <option value="font-size: 18px !important;font-weight: 400 !important;">متن
+                                                بزرگ
+                                            </option>
+                                            <option value="font-size: 18px !important;font-weight: 700 !important;">
+                                                عنوان کوچک
+                                            </option>
+                                            <option value="font-size: 20px !important;font-weight: 700 !important;">
+                                                عنوان متوسط
+                                            </option>
+                                            <option value="font-size: 22px !important;font-weight: 700 !important;">
+                                                عنوان بزرگ
+                                            </option>
                                         </select>
                                     </div>
                                     <div class="col-12 my-3">
@@ -1605,12 +1624,12 @@
                 </div>
 
                 <div class="modal-body position-relative" style="background-color: rgb(241, 243, 246);">
-                    <div wire:loading class="position-absolute w-100 h-100 bg-white start-0 top-0" style="z-index: 99">
-                        <img
-                            src="{{asset('pageBuilder/loading.gif')}}"
-                            class="position-absolute h-100 py-2 mx-auto start-0 w-100"
-                            style="right: 0;max-height: 100%;object-fit: none">
-                    </div>
+                    {{--                    <div wire:loading class="position-absolute w-100 h-100 bg-white start-0 top-0" style="z-index: 99">--}}
+                    {{--                        <img--}}
+                    {{--                            src="{{asset('pageBuilder/loading.gif')}}"--}}
+                    {{--                            class="position-absolute h-100 py-2 mx-auto start-0 w-100"--}}
+                    {{--                            style="right: 0;max-height: 100%;object-fit: none">--}}
+                    {{--                    </div>--}}
                     <div class="row">
                         <div class="col-12">
                             <ul class="nav nav-pills mb-3 row pills-tab" wire:ignore id="" role="tablist">
@@ -1635,11 +1654,17 @@
                                     <div class="row">
                                         <div class="col-12 my-3">
                                             <label class="text-black-50 my-1">فونت نوشته‌ها</label>
-                                            <button class="btn btnNoFocus w-100 py-2 bg-white"
-                                                    style="text-align: right;border: 1px solid lightgrey">
-                                                ایران سنس
-                                                <i class="icofont-rounded-down float-start"></i>
-                                            </button>
+                                            {{--                                            <button class="btn btnNoFocus w-100 py-2 bg-white"--}}
+                                            {{--                                                    style="text-align: right;border: 1px solid lightgrey">--}}
+                                            {{--                                                ایران سنس--}}
+                                            {{--                                                <i class="icofont-rounded-down float-start"></i>--}}
+                                            {{--                                            </button>--}}
+                                            <select class="form-select">
+                                                <option value="ایران سنس">ایران سنس</option>
+                                                @foreach($fonts as $font)
+                                                    <option value="{{$font->title}}">{{$font->title}}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                         <div class="col-12 my-3">
                                             <label class="text-black-50 my-1">قالب</label>
@@ -1648,7 +1673,7 @@
                                                 نوشته‌ها و متون
                                                 <span class="float-start rounded-circle ms-2"
                                                       style="width: 20px;height: 20px;background-color: #492525"></span>
-                                                <span class="float-start">#492525</span>
+                                                <span class="float-start" dir="ltr">#492525</span>
                                             </button>
                                         </div>
                                         <div class="col-12 my-3">
@@ -1659,21 +1684,21 @@
                                                 پس‌زمینه بلوک‌ها
                                                 <span class="float-start rounded-circle ms-2"
                                                       style="width: 20px;height: 20px;background-color: #492525"></span>
-                                                <span class="float-start">#492525</span>
+                                                <span class="float-start" dir="ltr">#492525</span>
                                             </button>
                                             <button class="btn btnNoFocus w-100 py-2 bg-white my-2"
                                                     style="text-align: right;border: 1px solid lightgrey">
                                                 عناوین آیتم‌ها
                                                 <span class="float-start rounded-circle ms-2"
                                                       style="width: 20px;height: 20px;background-color: #363636"></span>
-                                                <span class="float-start">#363636</span>
+                                                <span class="float-start" dir="ltr">#363636</span>
                                             </button>
                                             <button class="btn btnNoFocus w-100 py-2 bg-white"
                                                     style="text-align: right;border: 1px solid lightgrey">
                                                 حاشیه بلوک‌ها
                                                 <span class="float-start rounded-circle ms-2"
                                                       style="width: 20px;height: 20px;background-color: #B1B3B6"></span>
-                                                <span class="float-start">#B1B3B6</span>
+                                                <span class="float-start" dir="ltr">#B1B3B6</span>
                                             </button>
                                         </div>
                                         <div class="col-12 my-3">
@@ -1706,7 +1731,8 @@
                                                                         رنگ پس‌زمینه
                                                                         <span class="float-start rounded-circle ms-2"
                                                                               style="width: 20px;height: 20px;background-color: #492525"></span>
-                                                                        <span class="float-start">#492525</span>
+                                                                        <span class="float-start"
+                                                                              dir="ltr">#492525</span>
                                                                     </button>
                                                                 </div>
                                                             </div>
@@ -1717,32 +1743,17 @@
                                                                 <div class="col-12 my-3">
                                                                     <label class="text-black-50 my-1">تصویر پس
                                                                         زمینه</label>
-                                                                    <div class="row row-cols-md-3">
-                                                                        <div class="col-auto mx-auto text-center my-1">
-                                                                            <img class="w-100"
-                                                                                 src="{{asset('pageBuilder/assets/img/pbBackground/ddaf01857fffc185baa4.jpg')}}"
-                                                                                 alt="">
-                                                                        </div>
-                                                                        <div class="col-auto mx-auto text-center my-1">
-                                                                            <img class="w-100"
-                                                                                 src="{{asset('pageBuilder/assets/img/pbBackground/ddaf01857fffc185baa4.jpg')}}"
-                                                                                 alt="">
-                                                                        </div>
-                                                                        <div class="col-auto mx-auto text-center my-1">
-                                                                            <img class="w-100"
-                                                                                 src="{{asset('pageBuilder/assets/img/pbBackground/ddaf01857fffc185baa4.jpg')}}"
-                                                                                 alt="">
-                                                                        </div>
-                                                                        <div class="col-auto mx-auto text-center my-1">
-                                                                            <img class="w-100"
-                                                                                 src="{{asset('pageBuilder/assets/img/pbBackground/ddaf01857fffc185baa4.jpg')}}"
-                                                                                 alt="">
-                                                                        </div>
-                                                                        <div class="col-auto mx-auto text-center my-1">
-                                                                            <img class="w-100"
-                                                                                 src="{{asset('pageBuilder/assets/img/pbBackground/ddaf01857fffc185baa4.jpg')}}"
-                                                                                 alt="">
-                                                                        </div>
+                                                                    <div class="row {{--row-cols-md-3--}}" wire:ignore>
+                                                                        @foreach($backgroundImages as $item)
+                                                                            <div
+                                                                                class="col-4 text-center my-1 align-self-center">
+                                                                                <img class="w-100 bgImgs {{$this->getSelectedBgImg($item->id)}}"
+                                                                                     id="bgImgSelect{{$item->id}}"
+                                                                                     onclick="bgImgSelect({{$item->id}})"
+                                                                                     src="{{asset('storage/pb/bgImages/bgImage-'.$item->id.'/'.$item->img)}}"
+                                                                                     alt="">
+                                                                            </div>
+                                                                        @endforeach
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1807,7 +1818,7 @@
                                 انصراف
                             </button>
                             <button class="btn btn-info text-white" data-bs-dismiss="modal"
-                                    wire:click="submitProfileOptions">
+                                    wire:click="submitProfileGlobalOptions">
                                 ذخیره
                             </button>
                         </div>
@@ -1818,31 +1829,40 @@
     </div>
 
     @push('js')
-            <script src="https://cdn.ckeditor.com/ckeditor5/37.0.1/super-build/ckeditor.js"></script>
-            <script>
-                $(document).ready(function () {
+        <script>
+            function bgImgSelect(id) {
+                // alert(id)
+                $('.bgImgs').removeClass("bgImgSelected");
+                $('#bgImgSelect' + id).addClass("bgImgSelected");
+                @this.
+                set('bgImgSelected', id);
+            }
+        </script>
+        <script src="https://cdn.ckeditor.com/ckeditor5/37.0.1/super-build/ckeditor.js"></script>
+        <script>
+            $(document).ready(function () {
 
-                    // This sample still does not showcase all CKEditor 5 features (!)
-                    // Visit https://ckeditor.com/docs/ckeditor5/latest/features/index.html to browse all the features.
-                    CKEDITOR.ClassicEditor
-                            .create(document.getElementById('editor'), {
-                                placeholder: 'متن خود را بنویسید',
-                            })
-                            .then(editor => {
-                                $(document).keyup(function () {
-                                    // setInterval(function (){
-                                    @this.
-                                    set('blockTextText', editor.getData());
-                                    {{--@this.
-                                    updateTexts();--}}
-                                    // },5000)
-                                });
-                            })
-                            .catch(error => {
-                                console.error(error);
+                // This sample still does not showcase all CKEditor 5 features (!)
+                // Visit https://ckeditor.com/docs/ckeditor5/latest/features/index.html to browse all the features.
+                CKEDITOR.ClassicEditor
+                        .create(document.getElementById('editor'), {
+                            placeholder: 'متن خود را بنویسید',
+                        })
+                        .then(editor => {
+                            $(document).keyup(function () {
+                                // setInterval(function (){
+                                @this.
+                                set('blockTextText', editor.getData());
+                                {{--@this.
+                                updateTexts();--}}
+                                // },5000)
                             });
-                });
-            </script>
+                        })
+                        .catch(error => {
+                            console.error(error);
+                        });
+            });
+        </script>
         <script type="text/javascript">
             var upType, unAngle, gp;
             var swType  = document.getElementById('switch-type');

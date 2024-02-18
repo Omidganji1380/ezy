@@ -121,8 +121,8 @@
         </style>
     @endpush
 
-    <div style="max-width: 600px" class="container px-0">
-        <div class="row">
+    <div style="{{$this->getBackgroundImage()}};max-width: 600px" class="container px-0">
+        <div class="row" style="height: 100%;overflow-y: auto">
             {{--<div class="col-12" style="border-radius: 20px;box-shadow: rgba(0,0,0,0.2) 0 0 20px;">
                 <div class="row p-2 justify-content-end flex-nowrap">
                     <div class="col-auto px-1 align-self-center">
@@ -239,7 +239,7 @@
                             </div>
                         @endif
                             @if(count($block->text))
-                                <div class="col-12 text-center p-1 blockText"
+                                <div class="col-12 text-center p-1 blockText m-0"
                                      style="{{$block->text()->where('block_id',$block->id)->first()->textSize}}{{$block->text()->where('block_id',$block->id)->first()->textAlign}}color:{{$block->text()->where('block_id',$block->id)->first()->textColor}}">
                                     {!! $block->text()->where('block_id',$block->id)->first()->text !!}
                                 </div>

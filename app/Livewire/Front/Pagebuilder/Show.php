@@ -3,6 +3,7 @@
 namespace App\Livewire\Front\Pagebuilder;
 
 use App\Http\Controllers\pageBuilder\PageBuilderTrait;
+use App\Http\Controllers\pageBuilder\profileGlobalOptions;
 use App\Models\Block;
 use App\Models\BlockPbOption;
 use App\Models\Profile;
@@ -12,6 +13,7 @@ use Livewire\Component;
 class Show extends Component
 {
     use PageBuilderTrait;
+    use profileGlobalOptions;
 
     public $profile;
     public $blocks;

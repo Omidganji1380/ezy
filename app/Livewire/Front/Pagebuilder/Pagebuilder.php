@@ -2,16 +2,13 @@
 
 namespace App\Livewire\Front\Pagebuilder;
 
-use App\Events\UpdateShowPbPage;
 use App\Http\Controllers\pageBuilder\PageBuilderTrait;
+use App\Http\Controllers\pageBuilder\profileGlobalOptions;
 use App\Http\Controllers\pageBuilder\textBlock;
 use App\Models\Block;
 use App\Models\blockBanner;
-use App\Models\BlockOption;
 use App\Models\BlockPbOption;
 use App\Models\pbOption;
-use App\Models\Profile;
-use GuzzleHttp\Client;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Storage;
@@ -21,6 +18,7 @@ class Pagebuilder extends Component
     use WithFileUploads;
     use PageBuilderTrait;
     use textBlock;
+    use profileGlobalOptions;
 
 
 //    public $blockItems=[];
@@ -37,6 +35,7 @@ class Pagebuilder extends Component
     public function mount($link)
     {
         $this->mountTrait($link);
+        $this->globalOptionsMount();
 //        dd($this->blocks);
     }
 
@@ -119,6 +118,7 @@ class Pagebuilder extends Component
     {
         $this->getOptionsBannerTrait($option, $newBlock);
     }
+
     public function getOptionsText($option, $newBlock)
     {
         $this->getOptionsTextTrait($option, $newBlock);

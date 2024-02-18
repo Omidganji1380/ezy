@@ -5,6 +5,7 @@ namespace App\Livewire\Admin\Pb;
 use App\Models\Icon;
 use App\Models\Log;
 use App\Models\pbOption;
+use App\Models\ProfileBackgroundImage;
 use Auth;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -17,6 +18,11 @@ class Options extends Component
     public $options = [];
     public $option;
     public $selectedOption;
+
+    public $bgImgs;
+    public $bgImg;
+    public $bgImage;
+    public $premium;
 
     public $title;
     public $icon;
@@ -84,6 +90,9 @@ class Options extends Component
         $this->moreOptionTitle       = null;
         $this->moreOptionDescription = null;
         $this->selectedOption        = null;
+        $this->bgImage               = null;
+        $this->bgImg                 = null;
+        $this->premium               = null;
     }
 
     public function insert()
@@ -104,7 +113,8 @@ class Options extends Component
                     'moreOptionDescription' => $this->moreOptionDescription,
                 ]);
                 $this->makeLog($option->id, 'آپشن ( ' . $this->title . ' ) را برای ( ' . $this->for . ' ) ایجاد کرد');
-            }else{
+            }
+            else {
                 $this->selectedOption->update([
                     'title'                 => $this->title,
                     'color'                 => $this->color,
@@ -210,6 +220,44 @@ class Options extends Component
     public function mount()
     {
 //        $this->icons = Icon::query()->get();
+    }
+
+    public function insertBgImage()
+    {
+        if ($this->bgImg) {
+            $this->bgImg->update([
+                'premium' => $this->premium?$this->premium:0,
+                'img'=>0
+            ]);
+            $this->hasBgImage($this->bgImg);
+        }
+        else {
+            $bgImg = ProfileBackgroundImage::query()->create([
+                'premium' => $this->premium?$this->premium:0,
+                'img'=>0
+            ]);
+            $this->hasBgImage($bgImg);
+        }
+        $this->clearInputs();
+    }
+
+    public function hasBgImage(ProfileBackgroundImage $profileBackgroundImage)
+    {
+        if ($this->bgImage) {
+            Storage::disk('public')->delete('pb/bgImages/bgImage-' . $profileBackgroundImage->id . '/' . $profileBackgroundImage->img);
+            $filename     = $this->bgImage->getFilename();
+            $originalName = $this->bgImage->getClientOriginalName();
+            $this->bgImage->storeAs('pb/bgImages/bgImage-' . $profileBackgroundImage->id, $originalName, 'public');
+            Storage::disk('local')->delete('livewire-tmp/' . $filename);
+            $profileBackgroundImage->update([
+                'img' => $originalName,
+            ]);
+        }
+    }
+
+    public function getProfileOptionsBgImage()
+    {
+        $this->bgImgs=ProfileBackgroundImage::query()->get();
     }
 
     public function render()

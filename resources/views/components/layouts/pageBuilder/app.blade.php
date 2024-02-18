@@ -254,7 +254,7 @@
 --}}
         <!-- Body: Body -->
         <div class="body d-flex py-3">
-            <div class="container-xxl">
+            <div class="container-xxl p-0">
                 {{$slot}}
             </div>
         </div>
