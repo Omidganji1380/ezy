@@ -39,6 +39,7 @@ trait profileGlobalOptions
                 'background_color'    => null
             ]);
         }
+        $this->refreshPage();
     }
 
     public function getSelectedBgImg(/*ProfileOption */ $profileOption)
@@ -56,7 +57,7 @@ trait profileGlobalOptions
         $ProfileGlobalOptions = ProfileOption::query()
             ->where('profile_id', $this->profile->id)
             ->first();
-        if ($ProfileGlobalOptions->background_image_id) {
+        if ($ProfileGlobalOptions&&$ProfileGlobalOptions->background_image_id) {
             return 'background-image: url('.asset('storage/pb/bgImages/bgImage-'.$ProfileGlobalOptions->background_image_id.'/'.$ProfileGlobalOptions->backgroundImage->img).') !important;
                     background-position: center center !important;
                     background-size: cover !important;

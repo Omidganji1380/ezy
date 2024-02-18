@@ -41,7 +41,7 @@
     <div style="{{$this->getBackgroundImage()}};max-width: 600px" class="container">
         <div class="row" style="height: 100%;overflow-y: auto">
             <div class="col-12" style="border-radius: 20px;box-shadow: rgba(0,0,0,0.2) 0 0 20px;">
-                <div class="row p-2 justify-content-end flex-nowrap">
+                <div class="row p-2 justify-content-end flex-nowrap text-white">
                     <div class="col-auto px-1 align-self-center" dir="ltr">
                         {{--                        {{substr(route('pb.show',$profile->link),strpos(route('pb.show',$profile->link),'http://'))}}--}}
                         {{preg_replace("(^https?://)",'',route('pb.show',$profile->link))}}
@@ -1748,6 +1748,7 @@
                                                                             <div
                                                                                 class="col-4 text-center my-1 align-self-center">
                                                                                 <img class="w-100 bgImgs {{$this->getSelectedBgImg($item->id)}}"
+                                                                                     {{--onload="getBgImgSelect({{$item->id}})"--}}
                                                                                      id="bgImgSelect{{$item->id}}"
                                                                                      onclick="bgImgSelect({{$item->id}})"
                                                                                      src="{{asset('storage/pb/bgImages/bgImage-'.$item->id.'/'.$item->img)}}"
@@ -1830,6 +1831,13 @@
 
     @push('js')
         <script>
+            {{--function getBgImgSelect(id){--}}
+            {{--    alert($(this).hasClass("bgImgSelected").toString())--}}
+            {{--    if($(this).hasClass("bgImgSelected")){--}}
+            {{--    @this.--}}
+            {{--    set('bgImgSelected', id);--}}
+            {{--}--}}
+            {{--}--}}
             function bgImgSelect(id) {
                 // alert(id)
                 $('.bgImgs').removeClass("bgImgSelected");

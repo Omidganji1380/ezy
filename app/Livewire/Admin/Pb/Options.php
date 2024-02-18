@@ -19,7 +19,7 @@ class Options extends Component
     public $option;
     public $selectedOption;
 
-    public $bgImgs;
+    public $bgImgs=[];
     public $bgImg;
     public $bgImage;
     public $premium;
