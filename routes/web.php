@@ -8,6 +8,7 @@ use App\Livewire\Admin\Dashboard;
 use App\Livewire\Admin\Options;
 use App\Livewire\Admin\Portfolios;
 use App\Livewire\Admin\Sliders;
+use App\Livewire\Admin\UrlRedirector\UrlRedirector;
 use App\Livewire\Admin\Users;
 use App\Livewire\Admin\Weblog;
 use App\Livewire\Admin\WeblogEdit;
@@ -30,6 +31,17 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', Index::class)->name('index');
 Route::get('/f/{phone}', InfoForm::class)->name('infoForm');
+Route::get('/r/{link}', function ($link) {
+    $url = \App\Models\UrlRedirector::query()->where('url', $link)->first();
+    if (!$url) {
+        abort(404);
+    }
+    else {
+        echo "<script>";
+        echo "window.location.replace('" . $url->redirectTo . "');";
+        echo "</script>";
+    }
+})->name('redirectTo');
 
 Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
     Route::get('/', \App\Livewire\Front\Dashboard\Dashboard::class)->name('front.dashboard');
@@ -46,6 +58,7 @@ Route::group(['prefix' => 'manager', 'middleware' => 'auth'], function () {
     Route::get('/options', Options::class)->name('admin.options');
     Route::get('/users', Users::class)->name('admin.users');
     Route::get('/pbOptions', \App\Livewire\Admin\Pb\Options::class)->name('admin.pbOptions');
+    Route::get('/redirector', UrlRedirector::class)->name('admin.redirector');
 
     Route::group(['prefix' => 'customers'], function () {
         Route::get('/forms', Forms::class)->name('admin.customers.forms');

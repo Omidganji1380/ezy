@@ -53,6 +53,13 @@
                     </a>
                 </li>
                 <li>
+                    <a class="m-link {{Route::is('admin.redirector')?'active':''}}" wire:navigate.hover
+                       href="{{route('admin.redirector')}}">
+                        <i class="icofont-link fs-5"></i>
+                        <span>انتقال صفحه</span>
+                    </a>
+                </li>
+                <li>
                     <a class="m-link {{Route::is('admin.categories')?'active':''}}" wire:navigate.hover
                        href="{{route('admin.categories')}}">
                         <i class="icofont-network fs-5"></i>
