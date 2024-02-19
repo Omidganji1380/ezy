@@ -7,6 +7,7 @@ use App\Http\Controllers\pageBuilder\profileGlobalOptions;
 use App\Models\Block;
 use App\Models\BlockPbOption;
 use App\Models\Profile;
+use App\Models\UrlRedirector;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -22,6 +23,10 @@ class Show extends Component
     public function mount($link)
     {
         $this->profile = Profile::query()->where('link', $link)->first();
+        $url = UrlRedirector::query()->where('url', $link)->first();
+        if ($url) {
+           return redirect(route('redirectTo',$link));
+        }
         if (!$this->profile) {
             abort(404);
         }

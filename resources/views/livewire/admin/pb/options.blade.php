@@ -237,17 +237,12 @@
                         </div>
                         <div class="col-12 mt-4 text-center">
                             <button class="btn btn-success w-25"
-                                    {!! $dismissModal?'data-bs-dismiss="modal"':'' !!}
+                                  data-bs-dismiss="modal"
                                     wire:click="insertBgImage">ذخیره
                             </button>
                             <button class="btn btn-outline-warning w-25" data-bs-dismiss="modal"
                                     wire:click="clearInputs">انصراف
                             </button>
-                            @if($selectedOption)
-                                <button class="btn btn-outline-danger w-25" data-bs-dismiss="modal"
-                                        wire:click="delete({{$selectedOption->id}})" wire:confirm="حذف شود؟">حذف
-                                </button>
-                            @endif
                         </div>
                     </div>
                 </div>
@@ -263,10 +258,7 @@
                 <div class="modal-body" wire:ignore.self>
                     <div class="row">
                         @foreach($bgImgs as $item)
-                            <div class="col-2 my-1">
-{{--                                <button class="btn w-100" wire:click="editBgImg({{$item->id}})"--}}
-{{--                                        data-bs-target="#insertProfileOption" data-bs-toggle="modal">--}}
-{{--                                </button>--}}
+                            <div class="col-2 my-1" wire:click="deleteBgImg({{$item->id}})" wire:confirm="حذف شود؟">
                                 <img src="{{asset('storage/pb/bgImages/bgImage-'.$item->id.'/'.$item->img)}}" class="w-100">
                             </div>
                         @endforeach

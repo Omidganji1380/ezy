@@ -19,7 +19,7 @@ class Options extends Component
     public $option;
     public $selectedOption;
 
-    public $bgImgs=[];
+    public $bgImgs = [];
     public $bgImg;
     public $bgImage;
     public $premium;
@@ -226,15 +226,15 @@ class Options extends Component
     {
         if ($this->bgImg) {
             $this->bgImg->update([
-                'premium' => $this->premium?$this->premium:0,
-                'img'=>0
+                'premium' => $this->premium ? $this->premium : 0,
+                'img'     => 0
             ]);
             $this->hasBgImage($this->bgImg);
         }
         else {
             $bgImg = ProfileBackgroundImage::query()->create([
-                'premium' => $this->premium?$this->premium:0,
-                'img'=>0
+                'premium' => $this->premium ? $this->premium : 0,
+                'img'     => 0
             ]);
             $this->hasBgImage($bgImg);
         }
@@ -257,7 +257,14 @@ class Options extends Component
 
     public function getProfileOptionsBgImage()
     {
-        $this->bgImgs=ProfileBackgroundImage::query()->get();
+        $this->bgImgs = ProfileBackgroundImage::query()->get();
+    }
+
+    public function deleteBgImg(ProfileBackgroundImage $profileBackgroundImage)
+    {
+        Storage::disk('public')->deleteDirectory('pb/bgImages/bgImage-'.$profileBackgroundImage->id);
+        $profileBackgroundImage->delete();
+        $this->getProfileOptionsBgImage();
     }
 
     public function render()

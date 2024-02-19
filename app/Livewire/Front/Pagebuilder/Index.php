@@ -3,6 +3,7 @@
 namespace App\Livewire\Front\Pagebuilder;
 
 use App\Models\Profile;
+use App\Models\UrlRedirector;
 use Auth;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -61,7 +62,8 @@ class Index extends Component
     {
         $this->resetErrorBag();
         if ($this->url && strlen($this->url) > 2) {
-            if (!Profile::query()->where('link', $this->url)->exists() && !$this->reservedUrls())
+            $redirectorUrlsReserved = UrlRedirector::query()->where('url', $this->url)->exists();
+            if (!Profile::query()->where('link', $this->url)->exists() && !$redirectorUrlsReserved && !$this->reservedUrls())
                 $this->nextButton = true;
             else {
                 $this->nextButton = false;

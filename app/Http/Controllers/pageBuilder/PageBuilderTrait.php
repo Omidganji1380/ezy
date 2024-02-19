@@ -9,6 +9,7 @@ use App\Models\BlockOption;
 use App\Models\BlockPbOption;
 use App\Models\pbOption;
 use App\Models\Profile;
+use Auth;
 use Livewire\WithFileUploads;
 use Storage;
 
@@ -138,7 +139,7 @@ trait PageBuilderTrait
     public function mountTrait($link)
     {
         $this->link    = $link;
-        $this->profile = Profile::query()->with('block')->where('link', $link)->first();
+        $this->profile = Profile::query()->with('block')->where(['link'=> $link,'user_id' => Auth::id()])->first();
         if (!$this->profile) {
             abort(404);
         }

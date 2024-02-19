@@ -141,7 +141,7 @@
                     </div>
                 </div>
             </div>--}}
-            <div class="col-12 mb-3 px-0">
+            <div class="col-12 mb-3{{-- px-0--}}">
                 {{--                    <div class="row p-2 flex-nowrap">--}}
                 {{--                        <div class="col-11">--}}
                 <div class="userDiv">
