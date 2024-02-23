@@ -29,6 +29,10 @@ class Block extends Model
     {
         return $this->hasMany(blockBanner::class, 'block_id', 'id');
     }
+    public function fair()
+    {
+        return $this->hasMany(FairBlock::class, 'block_id', 'id');
+    }
 
     public function text()
     {

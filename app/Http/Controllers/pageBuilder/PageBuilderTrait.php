@@ -347,7 +347,10 @@ trait PageBuilderTrait
     public function deleteBlockTrait()
     {
         foreach ($this->block->banner as $item) {
-            Storage::disk('public')->deleteDirectory('pb/profiles/profile-' . $this->profile->id . '/banners');
+            Storage::disk('public')->deleteDirectory('pb/profiles/profile-' . $this->profile->id . '/banners/banner-'.$item->id);
+        }
+        foreach ($this->block->fair as $item) {
+            Storage::disk('public')->deleteDirectory('pb/profiles/profile-' . $this->profile->id . '/fairs/fair-'.$item->id);
         }
         $this->block->delete();
         $this->refreshPage();
