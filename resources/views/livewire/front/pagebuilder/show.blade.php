@@ -250,18 +250,18 @@
                                                     border-color: {{$this->getBorderBlockItemColor($block)}} !important;
                                                     color: {{$this->getTextBlockItemColor($block)}}"
                                         >
-                                            <div class="row justify-content-between flex-nowrap"
+                                            <div class="row flex-nowrap"
                                                  style="{{$block->blockOption->blockItemColor==2?'':'background: '.$this->getTextBlockItemColor($block).';-webkit-background-clip: text;-webkit-text-fill-color: transparent;'}}"
                                             >
                                                 <div
                                                     class="col-auto align-self-center {{$block->blockOption->blockWidth!='compress'?'ps-0':''}}">
-                                                    <img class="mx-2 align-middle iii" width="25"
+                                                    <img class="mx-2 align-middle iii object-cover" style="width: 60px;height: 60px;border-radius: 50%"
                                                          src="{{asset('storage/pb/profiles/profile-'.$profile->id.'/fairs/fair-'.$item->id.'/'.$item->img)}}"
                                                          alt="">
                                                 </div>
                                                 @if($block->blockOption->blockWidth!='compress')
                                                     <div
-                                                        class="col-auto pe-0 align-self-center">
+                                                        class="col-auto pe-0 align-self-center" style="text-align: right">
                                                         @if($item->title)
                                                             <p class="fs-6 font-weight-bold m-0">
                                                                 {{$item->title}}
@@ -274,7 +274,7 @@
                                                         @endif
                                                     </div>
                                                     <div
-                                                        class="col-auto pe-0 icofont-download align-self-center"></div>
+                                                        class="col-auto pe-4 icofont-download align-self-center ms-auto fs-4"></div>
                                                 @endif
                                             </div>
                                         </a>

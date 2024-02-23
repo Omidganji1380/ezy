@@ -7413,6 +7413,10 @@ fieldset:disabled .btn {
     vertical-align: middle !important
 }
 
+.object-cover {
+    object-fit: cover !important
+}
+
 .align-bottom {
     vertical-align: bottom !important
 }
