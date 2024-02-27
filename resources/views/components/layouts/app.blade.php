@@ -1,4 +1,11 @@
-<!doctype html>
+<?php
+if (Auth::user()->role < 2) {
+    echo "<script>";
+    echo "window.location.replace('/')";
+    echo "</script>";
+}
+?>
+    <!doctype html>
 <html class="no-js" lang="en" dir="ltr">
 
 <head>
@@ -184,7 +191,7 @@
                                             </ul>
                                         </div>
                                     </div>
-{{--                                    <a class="card-footer text-center border-top-0" href="#"> مشاهده تمام اعلان ها</a>--}}
+                                    {{--                                    <a class="card-footer text-center border-top-0" href="#"> مشاهده تمام اعلان ها</a>--}}
                                 </div>
                             </div>
                         </div>
@@ -472,11 +479,11 @@
     $('#myDataTable')
         .addClass('nowrap')
         .dataTable({
-            responsive: true,
-            columnDefs: [
-                {targets: [-1, -3], className: 'dt-body-right'}
-            ]
-        });
+                       responsive: true,
+                       columnDefs: [
+                           {targets: [-1, -3], className: 'dt-body-right'}
+                       ]
+                   });
 
     $(window).ready(function () {
         var icon = $('.ez');
