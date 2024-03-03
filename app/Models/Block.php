@@ -33,6 +33,10 @@ class Block extends Model
     {
         return $this->hasMany(FairBlock::class, 'block_id', 'id');
     }
+    public function menu()
+    {
+        return $this->hasMany(MenuBlock::class, 'block_id', 'id');
+    }
 
     public function text()
     {

@@ -3,6 +3,7 @@
 namespace App\Livewire\Front\Pagebuilder;
 
 use App\Http\Controllers\pageBuilder\Fair;
+use App\Http\Controllers\pageBuilder\Menu;
 use App\Http\Controllers\pageBuilder\PageBuilderTrait;
 use App\Http\Controllers\pageBuilder\profileGlobalOptions;
 use App\Http\Controllers\pageBuilder\textBlock;
@@ -20,8 +21,8 @@ class Pagebuilder extends Component
     use PageBuilderTrait;
     use textBlock;
     use profileGlobalOptions;
+    use Menu;
     use Fair;
-
 
 //    public $blockItems=[];
     public function submitProfileOptions()
