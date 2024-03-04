@@ -118,11 +118,19 @@
                 unicode-bidi: plaintext;
                 font-family: inherit;
             }
+            .menuTitle::before{
+                content:'';
+                background: repeating-linear-gradient(to right, currentColor, currentColor 1px, transparent 2px, transparent 4px);
+                height: 1px;
+                flex-grow: 1;
+                display: inline-block;
+                margin-top: 1em;
+            }
         </style>
     @endpush
 
     <div style="{{$this->getBackgroundImage()}};max-width: 600px" class="container px-0">
-        <div class="row" style="height: 100%;overflow-y: auto">
+        <div class="row" style="/*height: 100%;*/overflow-y: auto">
             {{--<div class="col-12" style="border-radius: 20px;box-shadow: rgba(0,0,0,0.2) 0 0 20px;">
                 <div class="row p-2 justify-content-end flex-nowrap">
                     <div class="col-auto px-1 align-self-center">
@@ -238,49 +246,64 @@
                                 </div>
                             </div>
                         @endif
-                            @if(count($block->fair))
-                                @foreach($block->fair as $item)
-                                    {{--                                            @dd($block->pbOption()->get())--}}
-                                    <div
-                                        class="{{$this->setBlockWidthHalf($block->blockOption->blockWidth,$loop->last,$loop->index)}} {{$this->setBlockWidth($block->blockOption->blockWidth)}} text-center p-1">
-                                        <a dir="rtl" href="{{$item->link}}"
-                                        class="btn border-info w-100 overflow-hidden text-truncate px-1"
-                                                style="border-radius: {{$this->getBlockItemsBorder($block)}};
+                        @if(count($block->fair))
+                            @foreach($block->fair as $item)
+                                {{--                                            @dd($block->pbOption()->get())--}}
+                                <div
+                                    class="{{$this->setBlockWidthHalf($block->blockOption->blockWidth,$loop->last,$loop->index)}} {{$this->setBlockWidth($block->blockOption->blockWidth)}} text-center p-1">
+                                    <a dir="rtl" href="{{$item->link}}"
+                                       class="btn border-info w-100 overflow-hidden text-truncate px-1"
+                                       style="border-radius: {{$this->getBlockItemsBorder($block)}};
                                                     background-{{$block->blockOption->blockItemColor==2?'color':'image'}}: {{$this->getBgBlockItemColor($block)}};
                                                     border-color: {{$this->getBorderBlockItemColor($block)}} !important;
                                                     color: {{$this->getTextBlockItemColor($block)}}"
+                                    >
+                                        <div class="row flex-nowrap"
+                                             style="{{$block->blockOption->blockItemColor==2?'':'background: '.$this->getTextBlockItemColor($block).';-webkit-background-clip: text;-webkit-text-fill-color: transparent;'}}"
                                         >
-                                            <div class="row flex-nowrap"
-                                                 style="{{$block->blockOption->blockItemColor==2?'':'background: '.$this->getTextBlockItemColor($block).';-webkit-background-clip: text;-webkit-text-fill-color: transparent;'}}"
-                                            >
-                                                <div
-                                                    class="col-auto align-self-center {{$block->blockOption->blockWidth!='compress'?'ps-0':''}}">
-                                                    <img class="mx-2 align-middle iii object-cover" style="width: 60px;height: 60px;border-radius: 50%"
-                                                         src="{{asset('storage/pb/profiles/profile-'.$profile->id.'/fairs/fair-'.$item->id.'/'.$item->img)}}"
-                                                         alt="">
-                                                </div>
-                                                @if($block->blockOption->blockWidth!='compress')
-                                                    <div
-                                                        class="col-auto pe-0 align-self-center" style="text-align: right">
-                                                        @if($item->title)
-                                                            <p class="fs-6 font-weight-bold m-0">
-                                                                {{$item->title}}
-                                                            </p>
-                                                        @endif
-                                                        @if($item->description)
-                                                            <p class="m-0">
-                                                                {{$item->description}}
-                                                            </p>
-                                                        @endif
-                                                    </div>
-                                                    <div
-                                                        class="col-auto pe-4 icofont-download align-self-center ms-auto fs-4"></div>
-                                                @endif
+                                            <div
+                                                class="col-auto align-self-center {{$block->blockOption->blockWidth!='compress'?'ps-0':''}}">
+                                                <img class="mx-2 align-middle iii object-cover"
+                                                     style="width: 60px;height: 60px;border-radius: 50%"
+                                                     src="{{asset('storage/pb/profiles/profile-'.$profile->id.'/fairs/fair-'.$item->id.'/'.$item->img)}}"
+                                                     alt="">
                                             </div>
-                                        </a>
-                                    </div>
-                                @endforeach
-                            @endif
+                                            @if($block->blockOption->blockWidth!='compress')
+                                                <div
+                                                    class="col-auto pe-0 align-self-center" style="text-align: right">
+                                                    @if($item->title)
+                                                        <p class="fs-6 font-weight-bold m-0">
+                                                            {{$item->title}}
+                                                        </p>
+                                                    @endif
+                                                    @if($item->description)
+                                                        <p class="m-0">
+                                                            {{$item->description}}
+                                                        </p>
+                                                    @endif
+                                                </div>
+                                                <div
+                                                    class="col-auto pe-4 icofont-download align-self-center ms-auto fs-4"></div>
+                                            @endif
+                                        </div>
+                                    </a>
+                                </div>
+                            @endforeach
+                        @endif
+                        @if(count($block->menu))
+                            @foreach($block->menu as $item)
+                                <ul class="w-100">
+                                    <li>
+                                        <h5 class="d-flex w-100">
+                                            {{$item->title}}
+                                            <span
+                                                class="text-start d-flex flex-grow-1 menuTitle">{{$item->price}}</span>
+                                        </h5>
+                                        <p>{{$item->description}}</p>
+                                    </li>
+                                </ul>
+                            @endforeach
+                        @endif
                         @if(count($block->text))
                             <div class="col-12 text-center p-1 blockText m-0"
                                  style="{{$block->text()->where('block_id',$block->id)->first()->textSize}}{{$block->text()->where('block_id',$block->id)->first()->textAlign}}color:{{$block->text()->where('block_id',$block->id)->first()->textColor}}">
