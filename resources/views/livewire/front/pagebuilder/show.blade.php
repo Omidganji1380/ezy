@@ -305,8 +305,8 @@
                             @endforeach
                         @endif
                         @if(count($block->text))
-                            <div class="col-12 text-center p-1 blockText m-0"
-                                 style="{{$block->text()->where('block_id',$block->id)->first()->textSize}}{{$block->text()->where('block_id',$block->id)->first()->textAlign}}color:{{$block->text()->where('block_id',$block->id)->first()->textColor}}">
+                            <div class="col-12 text-center p-1 blockText"
+                                 style="margin: -40px 0;{{$block->text()->where('block_id',$block->id)->first()->textSize}}{{$block->text()->where('block_id',$block->id)->first()->textAlign}}color:{{$block->text()->where('block_id',$block->id)->first()->textColor}}">
                                 {!! $block->text()->where('block_id',$block->id)->first()->text !!}
                             </div>
                         @endif
