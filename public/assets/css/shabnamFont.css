@@ -1,0 +1,267 @@
+:root {
+
+}
+
+@font-face {
+    font-family: 'shabnam';
+    src: url('../fonts/shabnam-font/Shabnam.eot') format('eot'),
+    url('../fonts/shabnam-font/Shabnam.ttf') format('truetype'),
+    url('../fonts/shabnam-font/Shabnam.woff') format('woff'),
+    url('../fonts/shabnam-font/Shabnam.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'shabnam-bold';
+    src: url('../fonts/shabnam-font/Shabnam-Bold.eot') format('eot'),
+    url('../fonts/shabnam-font/Shabnam-Bold.ttf') format('truetype'),
+    url('../fonts/shabnam-font/Shabnam-Bold.woff') format('woff'),
+    url('../fonts/shabnam-font/Shabnam-Bold.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'shabnam-light';
+    src: url('../fonts/shabnam-font/Shabnam-Light.eot') format('eot'),
+    url('../fonts/shabnam-font/Shabnam-Light.ttf') format('truetype'),
+    url('../fonts/shabnam-font/Shabnam-Light.woff') format('woff'),
+    url('../fonts/shabnam-font/Shabnam-Light.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'shabnam-medium';
+    src: url('../fonts/shabnam-font/Shabnam-Medium.eot') format('eot'),
+    url('../fonts/shabnam-font/Shabnam-Medium.ttf') format('truetype'),
+    url('../fonts/shabnam-font/Shabnam-Medium.woff') format('woff'),
+    url('../fonts/shabnam-font/Shabnam-Medium.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'shabnam-thin';
+    src: url('../fonts/shabnam-font/Shabnam-Thin.eot') format('eot'),
+    url('../fonts/shabnam-font/Shabnam-Thin.ttf') format('truetype'),
+    url('../fonts/shabnam-font/Shabnam-Thin.woff') format('woff'),
+    url('../fonts/shabnam-font/Shabnam-Thin.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'shabnam-fd';
+    src: url('../fonts/shabnam-font/Farsi-Digits/Shabnam-FD.eot') format('eot'),
+    url('../fonts/shabnam-font/Farsi-Digits/Shabnam-FD.ttf') format('truetype'),
+    url('../fonts/shabnam-font/Farsi-Digits/Shabnam-FD.woff') format('woff'),
+    url('../fonts/shabnam-font/Farsi-Digits/Shabnam-FD.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'shabnam-bold-fd';
+    src: url('../fonts/shabnam-font/Farsi-Digits/Shabnam-bold-FD.eot') format('eot'),
+    url('../fonts/shabnam-font/Farsi-Digits/Shabnam-bold-FD.ttf') format('truetype'),
+    url('../fonts/shabnam-font/Farsi-Digits/Shabnam-bold-FD.woff') format('woff'),
+    url('../fonts/shabnam-font/Farsi-Digits/Shabnam-bold-FD.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'shabnam-light-fd';
+    src: url('../fonts/shabnam-font/Farsi-Digits/Shabnam-Light-FD.eot') format('eot'),
+    url('../fonts/shabnam-font/Farsi-Digits/Shabnam-Light-FD.ttf') format('truetype'),
+    url('../fonts/shabnam-font/Farsi-Digits/Shabnam-Light-FD.woff') format('woff'),
+    url('../fonts/shabnam-font/Farsi-Digits/Shabnam-Light-FD.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'shabnam-medium-fd';
+    src: url('../fonts/shabnam-font/Farsi-Digits/Shabnam-Medium-FD.eot') format('eot'),
+    url('../fonts/shabnam-font/Farsi-Digits/Shabnam-Medium-FD.ttf') format('truetype'),
+    url('../fonts/shabnam-font/Farsi-Digits/Shabnam-Medium-FD.woff') format('woff'),
+    url('../fonts/shabnam-font/Farsi-Digits/Shabnam-Medium-FD.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'shabnam-thin-fd';
+    src: url('../fonts/shabnam-font/Farsi-Digits/Shabnam-Thin-FD.eot') format('eot'),
+    url('../fonts/shabnam-font/Farsi-Digits/Shabnam-Thin-FD.ttf') format('truetype'),
+    url('../fonts/shabnam-font/Farsi-Digits/Shabnam-Thin-FD.woff') format('woff'),
+    url('../fonts/shabnam-font/Farsi-Digits/Shabnam-Thin-FD.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'shabnam-fd-wol';
+    src: url('../fonts/shabnam-font/Farsi-Digits-Without-Latin/Shabnam-FD-WOL.eot') format('eot'),
+    url('../fonts/shabnam-font/Farsi-Digits-Without-Latin/Shabnam-FD-WOL.ttf') format('truetype'),
+    url('../fonts/shabnam-font/Farsi-Digits-Without-Latin/Shabnam-FD-WOL.woff') format('woff'),
+    url('../fonts/shabnam-font/Farsi-Digits-Without-Latin/Shabnam-FD-WOL.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'shabnam-bold-fd-wol';
+    src: url('../fonts/shabnam-font/Farsi-Digits-Without-Latin/Shabnam-Bold-FD-WOL.eot') format('eot'),
+    url('../fonts/shabnam-font/Farsi-Digits-Without-Latin/Shabnam-Bold-FD-WOL.ttf') format('truetype'),
+    url('../fonts/shabnam-font/Farsi-Digits-Without-Latin/Shabnam-Bold-FD-WOL.woff') format('woff'),
+    url('../fonts/shabnam-font/Farsi-Digits-Without-Latin/Shabnam-Bold-FD-WOL.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'shabnam-light-fd';
+    src: url('../fonts/shabnam-font/Farsi-Digits-Without-Latin/Shabnam-Light-FD-WOL.eot') format('eot'),
+    url('../fonts/shabnam-font/Farsi-Digits-Without-Latin/Shabnam-Light-FD-WOL.ttf') format('truetype'),
+    url('../fonts/shabnam-font/Farsi-Digits-Without-Latin/Shabnam-Light-FD-WOL.woff') format('woff'),
+    url('../fonts/shabnam-font/Farsi-Digits-Without-Latin/Shabnam-Light-FD-WOL.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'shabnam-medium-fd';
+    src: url('../fonts/shabnam-font/Farsi-Digits-Without-Latin/Shabnam-Medium-FD-WOL.eot') format('eot'),
+    url('../fonts/shabnam-font/Farsi-Digits-Without-Latin/Shabnam-Medium-FD-WOL.ttf') format('truetype'),
+    url('../fonts/shabnam-font/Farsi-Digits-Without-Latin/Shabnam-Medium-FD-WOL.woff') format('woff'),
+    url('../fonts/shabnam-font/Farsi-Digits-Without-Latin/Shabnam-Medium-FD-WOL.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'shabnam-thin-fd';
+    src: url('../fonts/shabnam-font/Farsi-Digits-Without-Latin/Shabnam-Thin-FD-WOL.eot') format('eot'),
+    url('../fonts/shabnam-font/Farsi-Digits-Without-Latin/Shabnam-Thin-FD-WOL.ttf') format('truetype'),
+    url('../fonts/shabnam-font/Farsi-Digits-Without-Latin/Shabnam-Thin-FD-WOL.woff') format('woff'),
+    url('../fonts/shabnam-font/Farsi-Digits-Without-Latin/Shabnam-Thin-FD-WOL.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'shabnam-wol';
+    src: url('../fonts/shabnam-font/Without-Latin/Shabnam-WOL.eot') format('eot'),
+    url('../fonts/shabnam-font/Without-Latin/Shabnam-WOL.ttf') format('truetype'),
+    url('../fonts/shabnam-font/Without-Latin/Shabnam-WOL.woff') format('woff'),
+    url('../fonts/shabnam-font/Without-Latin/Shabnam-WOL.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'shabnam-bold-fd-wol';
+    src: url('../fonts/shabnam-font/Without-Latin/Shabnam-Bold-WOL.eot') format('eot'),
+    url('../fonts/shabnam-font/Without-Latin/Shabnam-Bold-WOL.ttf') format('truetype'),
+    url('../fonts/shabnam-font/Without-Latin/Shabnam-Bold-WOL.woff') format('woff'),
+    url('../fonts/shabnam-font/Without-Latin/Shabnam-Bold-WOL.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'shabnam-light-fd';
+    src: url('../fonts/shabnam-font/Without-Latin/Shabnam-Light-WOL.eot') format('eot'),
+    url('../fonts/shabnam-font/Without-Latin/Shabnam-Light-WOL.ttf') format('truetype'),
+    url('../fonts/shabnam-font/Without-Latin/Shabnam-Light-WOL.woff') format('woff'),
+    url('../fonts/shabnam-font/Without-Latin/Shabnam-Light-WOL.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'shabnam-medium-fd';
+    src: url('../fonts/shabnam-font/Without-Latin/Shabnam-Medium-WOL.eot') format('eot'),
+    url('../fonts/shabnam-font/Without-Latin/Shabnam-Medium-WOL.ttf') format('truetype'),
+    url('../fonts/shabnam-font/Without-Latin/Shabnam-Medium-WOL.woff') format('woff'),
+    url('../fonts/shabnam-font/Without-Latin/Shabnam-Medium-WOL.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'shabnam-thin-fd';
+    src: url('../fonts/shabnam-font/Without-Latin/Shabnam-Thin-WOL.eot') format('eot'),
+    url('../fonts/shabnam-font/Without-Latin/Shabnam-Thin-WOL.ttf') format('truetype'),
+    url('../fonts/shabnam-font/Without-Latin/Shabnam-Thin-WOL.woff') format('woff'),
+    url('../fonts/shabnam-font/Without-Latin/Shabnam-Thin-WOL.woff2') format('woff2');
+}
+
+*, html, body {
+    font-family:
+    shabnam,
+    shabnam-bold,
+    shabnam-light,
+    shabnam-medium,
+    shabnam-thin,
+    shabnam-fd,
+    shabnam-bold-fd,
+    shabnam-light-fd,
+    shabnam-medium-fd,
+    shabnam-thin-fd,
+    shabnam-fd-wol,
+    shabnam-bold-fd-wol,
+    shabnam-light-fd,
+    shabnam-medium-fd,
+    shabnam-thin-fd,
+    shabnam-wol,
+    shabnam-bold-fd-wol,
+    shabnam-light-fd,
+    shabnam-medium-fd,
+    shabnam-thin-fd,
+    sans-serif;
+}
+.font-shabnam{
+    font-family: 'shabnam',sans-serif !important;
+}
+.font-shabnam-bold{
+    font-family: 'shabnam-bold',sans-serif !important;
+}
+.font-shabnam-light{
+    font-family: 'shabnam-light',sans-serif !important;
+}
+.font-shabnam-medium{
+    font-family: 'shabnam-medium',sans-serif !important;
+}
+.font-shabnam-thin{
+    font-family: 'shabnam-thin',sans-serif !important;
+}
+.font-shabnam-fd{
+    font-family: 'shabnam-fd',sans-serif !important;
+}
+.font-shabnam-bold-fd{
+    font-family: 'shabnam-bold-fd',sans-serif !important;
+}
+.font-shabnam-light-fd{
+    font-family: 'shabnam-light-fd',sans-serif !important;
+}
+.font-shabnam-medium-fd{
+    font-family: 'shabnam-medium-fd',sans-serif !important;
+}
+.font-shabnam-thin-fd{
+    font-family: 'shabnam-thin-fd',sans-serif !important;
+}
+.font-shabnam-fd-wol{
+    font-family: 'shabnam-fd-wol',sans-serif !important;
+}
+.font-shabnam-bold-fd-wol{
+    font-family: 'shabnam-bold-fd-wol',sans-serif !important;
+}
+.font-shabnam-light-fd{
+    font-family: 'shabnam-light-fd',sans-serif !important;
+}
+.font-shabnam-medium-fd{
+    font-family: 'shabnam-medium-fd',sans-serif !important;
+}
+.font-shabnam-thin-fd{
+    font-family: 'shabnam-thin-fd',sans-serif !important;
+}
+.font-shabnam-wol{
+    font-family: 'shabnam-wol',sans-serif !important;
+}
+.font-shabnam-bold-fd-wol{
+    font-family: 'shabnam-bold-fd-wol',sans-serif !important;
+}
+.font-shabnam-light-fd{
+    font-family: 'shabnam-light-fd',sans-serif !important;
+}
+.font-shabnam-medium-fd{
+    font-family: 'shabnam-medium-fd',sans-serif !important;
+}
+.font-shabnam-thin-fd{
+    font-family: 'shabnam-thin-fd',sans-serif !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

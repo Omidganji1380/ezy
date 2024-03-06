@@ -1,12 +1,12 @@
 import {createRouter, createWebHistory} from 'vue-router'
-import Index from '../views/ClientView/Index.vue'
+import Login from '../views/ClientView/Login.vue'
 import PageBuilder from '../views/ClientView/PageBuilder/PageBuilder.vue'
 
 const routes = [
     {
         path     : '/',
         name     : 'ClientView_Index',
-        component: Index
+        component: Login
     }, {
         path     : '/page-builder',
         name     : 'ClientView_PageBuilder',
