@@ -1851,6 +1851,11 @@
         <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered {{--modal-lg--}}">
             <div class="modal-content">
                 <div class="modal-header p-0">
+                    <button type="button" style="width: 20px;height: 20px"
+                            class="ms-2 close btn p-0" wire:click="deleteBlock"
+                            wire:confirm="آیا از حذف این بلوک مطمئن هستید؟">
+                        <span class="fa fa-trash text-danger">{{--&times;--}}</span>
+                    </button>
                     <h5 class="modal-title mx-auto">{{$title}}</h5>
                     <button type="button" style="width: 20px;height: 20px;"
                             class="me-1 close btn border-dark border-2 rounded-circle p-0"
