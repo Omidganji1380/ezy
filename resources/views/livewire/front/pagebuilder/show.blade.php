@@ -169,7 +169,7 @@
                 </div>
             </div>
             {{--                <div id="sortable" style="cursor: grab;margin-bottom: 6rem !important;" wire:ignore.self>--}}
-            @foreach($blocks as $block)
+            @foreach($blocks as $key=>$block)
                 <div class="col-12 my-0 px-4">
                     {{--                            <div class="row p-2 flex-nowrap">--}}
                     {{--                                <div class="col-11">--}}
@@ -209,7 +209,7 @@
                         @endforeach
                         @if(count($block->banner))
                             <div class="col-12 text-center p-1">
-                                <div id="myCarousel1" class="carousel slide" data-bs-ride="carousel">
+                                <div id="myCarousel1{{$key}}" class="carousel slide" data-bs-ride="carousel">
                                     <div class="carousel-inner">
                                         @foreach($block->banner as $key=>$banner)
                                             {{--                                                        <div class="carousel-caption">--}}
@@ -231,13 +231,13 @@
                                     </div>
                                     @if(count($block->banner)>1)
                                         <button class="carousel-control-prev" type="button"
-                                                data-bs-target="#myCarousel1" data-bs-slide="prev">
+                                                data-bs-target="#myCarousel1{{$key}}" data-bs-slide="prev">
                                                         <span class="carousel-control-prev-icon"
                                                               aria-hidden="true"></span>
                                             <span class="visually-hidden">Previous</span>
                                         </button>
                                         <button class="carousel-control-next" type="button"
-                                                data-bs-target="#myCarousel1" data-bs-slide="next">
+                                                data-bs-target="#myCarousel1{{$key}}" data-bs-slide="next">
                                                         <span class="carousel-control-next-icon"
                                                               aria-hidden="true"></span>
                                             <span class="visually-hidden">Next</span>

@@ -155,7 +155,7 @@
                                     @endforeach
                                     @if(count($block->banner))
                                         <div class="col-12 text-center p-1">
-                                            <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+                                            <div id="myCarousel{{$key}}" class="carousel slide" data-bs-ride="carousel">
                                                 <div class="carousel-inner">
                                                     @foreach($block->banner as $key=>$banner)
                                                         {{--                                                        <div class="carousel-caption">--}}
@@ -177,13 +177,13 @@
                                                 </div>
                                                 @if(count($block->banner)>1)
                                                     <button class="carousel-control-prev" type="button"
-                                                            data-bs-target="#myCarousel" data-bs-slide="prev">
+                                                            data-bs-target="#myCarousel{{$key}}" data-bs-slide="prev">
                                                         <span class="carousel-control-prev-icon"
                                                               aria-hidden="true"></span>
                                                         <span class="visually-hidden">Previous</span>
                                                     </button>
                                                     <button class="carousel-control-next" type="button"
-                                                            data-bs-target="#myCarousel" data-bs-slide="next">
+                                                            data-bs-target="#myCarousel{{$key}}" data-bs-slide="next">
                                                         <span class="carousel-control-next-icon"
                                                               aria-hidden="true"></span>
                                                         <span class="visually-hidden">Next</span>
