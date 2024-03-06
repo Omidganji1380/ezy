@@ -211,7 +211,7 @@
                             <div class="col-12 text-center p-1">
                                 <div id="myCarousel1{{$key}}" class="carousel slide" data-bs-ride="carousel">
                                     <div class="carousel-inner">
-                                        @foreach($block->banner as $key=>$banner)
+                                        @foreach($block->banner as $banner)
                                             {{--                                                        <div class="carousel-caption">--}}
                                             <div class="carousel-item {{$loop->first?'active':''}}">
                                                 <button dir="rtl" style=""
