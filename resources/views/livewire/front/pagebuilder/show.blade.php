@@ -291,8 +291,8 @@
                             @endforeach
                         @endif
                         @if(count($block->menu))
-                            @foreach($block->menu as $item)
-                                <ul class="w-100">
+                                <ol class="w-100 list-unstyled">
+                                @foreach($block->menu as $item)
                                     <li>
                                         <h5 class="d-flex w-100">
                                             {{$item->title}}
@@ -301,9 +301,10 @@
                                         </h5>
                                         <p>{{$item->description}}</p>
                                     </li>
-                                </ul>
                             @endforeach
-                        @endif
+                                </ol>
+
+                            @endif
                         @if(count($block->text))
                             <div class="col-12 text-center p-1 blockText"
                                  style="margin: -40px 0;{{$block->text()->where('block_id',$block->id)->first()->textSize}}{{$block->text()->where('block_id',$block->id)->first()->textAlign}}color:{{$block->text()->where('block_id',$block->id)->first()->textColor}}">

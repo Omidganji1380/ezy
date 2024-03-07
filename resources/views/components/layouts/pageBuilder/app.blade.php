@@ -133,7 +133,7 @@
     </div>
 --}}
     <!-- main body area -->
-    <div class="main px-lg-4 px-md-4 overflow-x-hidden">
+    <div class="main px-lg-4 px-md-4" style="overflow-x: hidden">
 
       {{--  <!-- Body: Header -->
         <div class="header" wire:ignore>
