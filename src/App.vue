@@ -27,9 +27,8 @@ export default {
   margin-left: auto;
   margin-right: auto;
 }*/
-//#app{
-//  input:focus-visible{
-//    outline: none;
-//  }
-//}
+#app{
+  max-width: 600px;
+  margin: auto;
+}
 </style>
