@@ -17,10 +17,11 @@
           <span class="pb-0 underline-offset-4 underline col-auto px-0">{{ phone }}</span>
         </span>
         <div class="" name="inputs">
-          <input type="text" v-model="phone" dir="ltr" id="phoneNumberInput" v-if="!this.showSmsCodeForm"
-                 class="w-100 px-0 !pl-24 fs-3 h-[56px] border-solid border-2 border-[#009606] focus-visible:outline-0 leading-10 rounded-[20px] bg-[#F0FCF3] text-[#009606]">
+          <input type="text" @keydown.prevent="handleInputPhoneNumber($event)" v-model="phone" dir="ltr"
+                 id="phoneNumberInput" v-if="!this.showSmsCodeForm"
+                 class="w-100 px-0 !pl-14 fs-3 h-[56px] border-solid border-2 border-[#009606] focus-visible:outline-0 leading-10 rounded-[20px] bg-[#F0FCF3] text-[#009606]">
           <div class="" name="smsCodeForm" v-if="this.showSmsCodeForm">
-            <otp/>
+            <otp @InputDigitsFull="activeSubmitButton"/>
           </div>
         </div>
         <p class="subtitle my-3 max-w-fit text-truncate" v-if="!showSmsCodeForm">
@@ -30,17 +31,22 @@
           </a>
           ایزی کانکت را می‌پذیرم.</p>
         <div class="text-center mt-3">
-          <button @click="showSmsCodeFormMethod"
-                  class="btn rounded-[20px] transition ease-in-out duration-500 hover:text-black hover:bg-[#00a807] h-[56px] w-[170px] text-[#F0FCF3] bg-[#009606]">
+          <button @click="showSmsCodeFormMethod" v-if="!showSmsCodeForm"
+                  class="rounded-[20px] h-[56px] w-[170px] text-[#F0FCF3] bg-[#009606]">
             ثبت نام و ورود
+          </button>
+          <button @click="showSmsCodeFormMethod" v-if="showSmsCodeForm"
+                  :class="{'!bg-[#F0FCF3] !border-[#009606] border-solid border-2 !text-[#009606]':!SubmitButton}"
+                  class="rounded-[20px] h-[56px] w-[170px] text-[#F0FCF3] bg-[#009606]">
+            تائید
           </button>
         </div>
         <div name="sendSmsCodeAgain" class="mx-auto my-4 row flex-nowrap w-fit" v-if="showSmsCodeForm">
-          <img :class="{'d-none':countDownTimer===0}" src="assets/img/PageBuilder/Login-SmsForm/timeCircle.svg"
+          <img :class="{'d-none':!countDownTimer}" src="assets/img/PageBuilder/Login-SmsForm/timeCircle.svg"
                class="d-inline-block col-auto pr-0">
           <span class="col-auto pr-0 underline-offset-8 underline">
             ارسال مجدد کد
-            {{ countDownTimer !== '-1 : -1' ? 'بعد از ' + countDownTimer : '' }}
+            {{ countDownTimer ? 'بعد از ' + countDownTimer : '' }}
           </span>
         </div>
       </div>
@@ -64,11 +70,16 @@ export default {
       phone          : '',
       sendAgainTime  : 2 * 1000 * 60,
       countDownTimer : '-1 : -1',
-      // otpValue       : ref('')
+      SubmitButton   : false,
     }
+  },
+  updated() {
   },
   components: {otp},
   methods   : {
+    activeSubmitButton(bool) {
+      this.SubmitButton = bool
+    },
     showSmsCodeFormMethod() {
       if (this.countDownTimer === '-1 : -1' && !this.showSmsCodeForm) {
         this.countDownSmsCode()
@@ -88,13 +99,13 @@ export default {
     intlTelInput() {
       const phoneInputField = document.querySelector("#phoneNumberInput");
       this.phoneInput       = window.intlTelInput(phoneInputField, {
-        showSelectedDialCode : true,
-        autoInsertDialCode   : false,
-        formatOnDisplay      : false,
+        showSelectedDialCode: false,
+        autoInsertDialCode  : false,
+        formatOnDisplay     : false,
         placeholderNumberType: 'MOBILE',
-        // useFullscreenPopup   : false,
-        initialCountry: "ir",
-        utilsScript   : "https://cdn.jsdelivr.net/npm/intl-tel-input@19.5.6/build/js/utils.js"
+        useFullscreenPopup: true,
+        initialCountry    : "ir",
+        utilsScript       : "https://cdn.jsdelivr.net/npm/intl-tel-input@19.5.6/build/js/utils.js"
 
       },);
     },
@@ -104,23 +115,25 @@ export default {
       var x               = setInterval(() => {
         var now      = new Date().getTime();
         var distance = countDownDate - now;
-        // var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        // var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-
         var minutes         = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         var seconds         = Math.floor((distance % (1000 * 60)) / 1000);
         this.countDownTimer = seconds + " : " + minutes;
-        // this.countDownTimer= days + "d " + hours + "h "
-        //                      + minutes + "m " + seconds + "s ";
-        // console.log(this.countDownTimer)
         if (distance < 0) {
           clearInterval(x);
-          // document.getElementById("demo").innerHTML = "EXPIRED";
+          this.countDownTimer = false
         }
-        // alert(this.countDownTimer)
       })
     },
+    handleInputPhoneNumber(event) {
+      if (event.key === 'Backspace') {
+        this.phone = this.phone.slice(0, -1);
+      }
+      if ((new RegExp('^([0-9])$')).test(event.key)) {
+        this.phone += event.key;
+      }
+    },
   },
+
   mounted() {
     // setTimeout(() => {
     //   setTimeout(() => {
@@ -169,5 +182,13 @@ export default {
 .iti__selected-dial-code {
   margin-left: 15px !important;
   font-size: 20px;
+}
+
+.iti__country.iti__standard {
+  justify-content: space-between;
+}
+
+.iti.iti--container.iti--country-search.iti--fullscreen-popup {
+  padding: 70px 10px;
 }
 </style>
