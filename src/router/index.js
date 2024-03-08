@@ -6,7 +6,8 @@ const routes = [
     {
         path     : '/',
         name     : 'ClientView_Index',
-        component: Login
+        component: Login,
+        props    : true
     }, {
         path     : '/page-builder',
         name     : 'ClientView_PageBuilder',

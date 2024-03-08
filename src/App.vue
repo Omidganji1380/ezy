@@ -1,8 +1,8 @@
 <template>
-<!--  <AppHeader/>-->
-<!--  <AppBottomMenu/>-->
+  <!--  <AppHeader/>-->
+  <!--  <AppBottomMenu/>-->
 
-  <router-view/>
+  <router-view :baseURL="baseURL"/>
   <BaseJs/>
 </template>
 
@@ -10,11 +10,25 @@
 import BaseJs from '@/components/baseJs/BaseJs.vue'
 import AppBottomMenu from '@/components/ClientIncludes/AppBottomMenu.vue'
 import AppHeader from "@/components/ClientIncludes/AppHeader.vue";
+import axios from "axios";
+// axios.create({
+//                baseURL: '127.0.0.1:8000'
+//              })
 
 export default {
   components: {
     BaseJs, AppBottomMenu, AppHeader
   },
+  data() {
+    return {
+      baseURL: 'http://127.0.0.1:8000/api/v1/'
+    }
+  },
+  // mounted() {
+  //   axios.create({
+  //                  baseURL: '127.0.0.1:8000'
+  //                })
+  // },
 }
 </script>
 
@@ -27,7 +41,7 @@ export default {
   margin-left: auto;
   margin-right: auto;
 }*/
-#app{
+#app {
   max-width: 430px;
   margin: auto;
 }

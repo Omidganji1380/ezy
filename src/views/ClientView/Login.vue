@@ -57,10 +57,12 @@
 
 <script>
 import otp from '@/components/pageBuilder/otp/otp.vue';
+import axios from 'axios';
 // import {ref} from "vue";
 
 export default {
-  name: 'Login',
+  name : 'Login',
+  props: ['baseURL'],
   data() {
     return {
       fadedLogo      : true,
@@ -68,12 +70,14 @@ export default {
       showSmsCodeForm: false,
       phoneInput     : null,
       phone          : '',
-      sendAgainTime  : 2 * 1000 * 60,
+      sendAgainTime  : null,
       countDownTimer : '-1 : -1',
       SubmitButton   : false,
+      smsCodeSent    : null,
     }
   },
   updated() {
+    // alert(this.baseURL + 'auth/' + this.phone)
   },
   components: {otp},
   methods   : {
@@ -81,14 +85,28 @@ export default {
       this.SubmitButton = bool
     },
     showSmsCodeFormMethod() {
-      if (this.countDownTimer === '-1 : -1' && !this.showSmsCodeForm) {
-        this.countDownSmsCode()
-      }
-      this.phone = this.phone.replace(/\s/g, '')
-      if (!this.showSmsCodeForm) {
-        this.showSmsCodeForm = true;
-        this.phoneInput.destroy()
-      }
+      axios({
+              method: 'get',
+              url   : this.baseURL + 'auth/' + this.phone,
+              // data  : {
+              //   phone: this.phone
+              // }
+            })
+          .then(res => {
+            if (res.data.status === 200) {
+              if (this.countDownTimer === '-1 : -1' && !this.showSmsCodeForm) {
+                this.sendAgainTime = res.data.sendAgainTime
+                this.smsCodeSent = res.data.smsCodeSent
+                this.countDownSmsCode()
+              }
+              this.phone = this.phone.replace(/\s/g, '')
+              if (!this.showSmsCodeForm) {
+                this.showSmsCodeForm = true;
+                this.phoneInput.destroy()
+              }
+            }
+          })
+          .catch(err => console.log(err))
     },
     showIntroForm() {
       this.showSmsCodeForm = false;
@@ -99,13 +117,13 @@ export default {
     intlTelInput() {
       const phoneInputField = document.querySelector("#phoneNumberInput");
       this.phoneInput       = window.intlTelInput(phoneInputField, {
-        showSelectedDialCode: false,
-        autoInsertDialCode  : false,
-        formatOnDisplay     : false,
+        showSelectedDialCode : false,
+        autoInsertDialCode   : false,
+        formatOnDisplay      : false,
         placeholderNumberType: 'MOBILE',
-        useFullscreenPopup: true,
-        initialCountry    : "ir",
-        utilsScript       : "https://cdn.jsdelivr.net/npm/intl-tel-input@19.5.6/build/js/utils.js"
+        useFullscreenPopup   : true,
+        initialCountry       : "ir",
+        utilsScript          : "https://cdn.jsdelivr.net/npm/intl-tel-input@19.5.6/build/js/utils.js"
 
       },);
     },
@@ -113,8 +131,8 @@ export default {
       this.countDownTimer = '';
       var countDownDate   = new Date().getTime() + (this.sendAgainTime);
       var x               = setInterval(() => {
-        var now      = new Date().getTime();
-        var distance = countDownDate - now;
+        var now             = new Date().getTime();
+        var distance        = countDownDate - now;
         var minutes         = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         var seconds         = Math.floor((distance % (1000 * 60)) / 1000);
         this.countDownTimer = seconds + " : " + minutes;
