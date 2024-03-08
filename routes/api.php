@@ -17,3 +17,12 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::get('/v1/getUsers',function (){
+    $users=\App\Models\User::all();
+    return response()->json($users);
+});
+Route::get('/v1/getUsers/{id}',function ($id){
+    $users=\App\Models\User::findOrFail($id);
+    return response()->json($users);
+});
+Route::resource('/v1/auth/{phone}',\App\Http\Controllers\api\v1\Auth::class);
