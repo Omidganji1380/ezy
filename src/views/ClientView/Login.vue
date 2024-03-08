@@ -11,12 +11,18 @@
         <p class="subtitle mb-3 max-w-fit text-truncate" v-else>کد 5 رقمی ارسال شده به شماره زیر را وارد کن.</p>
       </div>
       <div class="section mt-3 mb-3">
-        <div class="text-center my-3 row justify-center flex-nowrap" v-if="showSmsCodeForm">
+        <span class="text-center my-3 row justify-center flex-nowrap cursor-pointer w-fit mx-auto"
+              v-if="showSmsCodeForm" @click="showIntroForm">
           <img src="assets/img/PageBuilder/Login-SmsForm/Edit.svg" class="d-inline-block col-auto pr-0">
-          <span class="border-b-[1px] pb-0 border-[#101010] col-auto px-0">09389497958</span>
+          <span class="pb-0 underline-offset-4 underline col-auto px-0">{{ phone }}</span>
+        </span>
+        <div class="" name="inputs">
+          <input type="text" v-model="phone" dir="ltr" id="phoneNumberInput" v-if="!this.showSmsCodeForm"
+                 class="w-100 px-0 !pl-24 fs-3 h-[56px] border-solid border-2 border-[#009606] focus-visible:outline-0 leading-10 rounded-[20px] bg-[#F0FCF3] text-[#009606]">
+          <div class="" name="smsCodeForm" v-if="this.showSmsCodeForm">
+            <otp/>
+          </div>
         </div>
-        <input type="text" placeholder="" dir="ltr" id="phoneNumberInput"
-               class="w-100 px-0 !pl-24 fs-3 h-[56px] border-solid border-2 border-[#009606] focus-visible:outline-0 leading-10 rounded-[20px] bg-[#F0FCF3] text-[#009606]">
         <p class="subtitle my-3 max-w-fit text-truncate" v-if="!showSmsCodeForm">
           با ثبت نام و ورود
           <a href="#" class="text-[#6772E5]">
@@ -29,7 +35,14 @@
             ثبت نام و ورود
           </button>
         </div>
-
+        <div name="sendSmsCodeAgain" class="mx-auto my-4 row flex-nowrap w-fit" v-if="showSmsCodeForm">
+          <img :class="{'d-none':countDownTimer===0}" src="assets/img/PageBuilder/Login-SmsForm/timeCircle.svg"
+               class="d-inline-block col-auto pr-0">
+          <span class="col-auto pr-0 underline-offset-8 underline">
+            ارسال مجدد کد
+            {{ countDownTimer !== '-1 : -1' ? 'بعد از ' + countDownTimer : '' }}
+          </span>
+        </div>
       </div>
     </div>
   </div>
@@ -37,6 +50,9 @@
 </template>
 
 <script>
+import otp from '@/components/pageBuilder/otp/otp.vue';
+// import {ref} from "vue";
+
 export default {
   name: 'Login',
   data() {
@@ -45,17 +61,29 @@ export default {
       showIntro      : true,
       showSmsCodeForm: false,
       phoneInput     : null,
+      phone          : '',
+      sendAgainTime  : 2 * 1000 * 60,
+      countDownTimer : '-1 : -1',
+      // otpValue       : ref('')
     }
   },
-  components: {},
+  components: {otp},
   methods   : {
     showSmsCodeFormMethod() {
-      this.showSmsCodeForm = !this.showSmsCodeForm;
-      if (this.showSmsCodeForm) {
-        this.phoneInput.destroy()
-      } else {
-        this.intlTelInput()
+      if (this.countDownTimer === '-1 : -1' && !this.showSmsCodeForm) {
+        this.countDownSmsCode()
       }
+      this.phone = this.phone.replace(/\s/g, '')
+      if (!this.showSmsCodeForm) {
+        this.showSmsCodeForm = true;
+        this.phoneInput.destroy()
+      }
+    },
+    showIntroForm() {
+      this.showSmsCodeForm = false;
+      setTimeout(() => {
+        this.intlTelInput()
+      }, 100)
     },
     intlTelInput() {
       const phoneInputField = document.querySelector("#phoneNumberInput");
@@ -64,14 +92,33 @@ export default {
         autoInsertDialCode   : false,
         formatOnDisplay      : false,
         placeholderNumberType: 'MOBILE',
-        useFullscreenPopup   : false,
-        initialCountry       : "ir",
-        // customPlaceholder: function (selectedCountryPlaceholder, selectedCountryData) {
-        //   return "e.g. " + selectedCountryPlaceholder;
-        // },
-        utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@19.5.6/build/js/utils.js"
+        // useFullscreenPopup   : false,
+        initialCountry: "ir",
+        utilsScript   : "https://cdn.jsdelivr.net/npm/intl-tel-input@19.5.6/build/js/utils.js"
 
       },);
+    },
+    countDownSmsCode() {
+      this.countDownTimer = '';
+      var countDownDate   = new Date().getTime() + (this.sendAgainTime);
+      var x               = setInterval(() => {
+        var now      = new Date().getTime();
+        var distance = countDownDate - now;
+        // var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        // var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+        var minutes         = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds         = Math.floor((distance % (1000 * 60)) / 1000);
+        this.countDownTimer = seconds + " : " + minutes;
+        // this.countDownTimer= days + "d " + hours + "h "
+        //                      + minutes + "m " + seconds + "s ";
+        // console.log(this.countDownTimer)
+        if (distance < 0) {
+          clearInterval(x);
+          // document.getElementById("demo").innerHTML = "EXPIRED";
+        }
+        // alert(this.countDownTimer)
+      })
     },
   },
   mounted() {

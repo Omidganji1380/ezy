@@ -2,6 +2,11 @@ const {defineConfig} = require('@vue/cli-service')
 const webpack        = require('webpack');
 
 module.exports = defineConfig({
+                                  devServer            : {
+                                      client: {
+                                          overlay:false
+                                      }
+                                  },
                                   transpileDependencies: true,
                                   chainWebpack         : config => {
                                       config.module
@@ -23,5 +28,5 @@ module.exports = defineConfig({
                                                                        __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: 'false',
                                                                    })
                                       ],
-                                  },
+                                  }
                               })

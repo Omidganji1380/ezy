@@ -28,7 +28,7 @@ export default {
   margin-right: auto;
 }*/
 #app{
-  max-width: 600px;
+  max-width: 430px;
   margin: auto;
 }
 </style>
