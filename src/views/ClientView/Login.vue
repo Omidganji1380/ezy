@@ -21,7 +21,7 @@
                  id="phoneNumberInput" v-if="!this.showSmsCodeForm"
                  class="w-100 px-0 !pl-14 fs-3 h-[56px] border-solid border-2 border-[#009606] focus-visible:outline-0 leading-10 rounded-[20px] bg-[#F0FCF3] text-[#009606]">
           <div class="" name="smsCodeForm" v-if="this.showSmsCodeForm">
-            <otp @InputDigitsFull="activeSubmitButton"/>
+            <otp @InputDigitsFull="activeSubmitButton" @otpCode="loginByOtp" :otpCodeTrue="otpCodeTrue"/>
           </div>
         </div>
         <p class="subtitle my-3 max-w-fit text-truncate" v-if="!showSmsCodeForm">
@@ -31,11 +31,11 @@
           </a>
           ایزی کانکت را می‌پذیرم.</p>
         <div class="text-center mt-3">
-          <button @click="showSmsCodeFormMethod" v-if="!showSmsCodeForm"
+          <button @click.prevent="showSmsCodeFormMethod" v-if="!showSmsCodeForm"
                   class="rounded-[20px] h-[56px] w-[170px] text-[#F0FCF3] bg-[#009606]">
             ثبت نام و ورود
           </button>
-          <button @click="showSmsCodeFormMethod" v-if="showSmsCodeForm"
+          <button @click.prevent="loginByOtp" v-if="showSmsCodeForm"
                   :class="{'!bg-[#F0FCF3] !border-[#009606] border-solid border-2 !text-[#009606]':!SubmitButton}"
                   class="rounded-[20px] h-[56px] w-[170px] text-[#F0FCF3] bg-[#009606]">
             تائید
@@ -70,10 +70,12 @@ export default {
       showSmsCodeForm: false,
       phoneInput     : null,
       phone          : '',
-      sendAgainTime  : null,
-      countDownTimer : '-1 : -1',
+      sendAgainTime  : 0,
+      countDownTimer : '',
       SubmitButton   : false,
       smsCodeSent    : null,
+      x              : null,
+      otpCodeTrue    : true,
     }
   },
   updated() {
@@ -81,24 +83,37 @@ export default {
   },
   components: {otp},
   methods   : {
+    loginByOtp(otpCode) {
+      if (this.smsCodeSent !== otpCode) {
+        this.otpCodeTrue = true;
+      } else {
+        this.otpCodeTrue = false;
+      }
+    },
     activeSubmitButton(bool) {
       this.SubmitButton = bool
     },
     showSmsCodeFormMethod() {
       axios({
-              method: 'get',
-              url   : this.baseURL + 'auth/' + this.phone,
-              // data  : {
-              //   phone: this.phone
-              // }
+              method : 'get',
+              headers: {'Content-Type': 'application/json'},
+              url    : this.baseURL + 'auth/' + this.phone,
+              data   : {
+                phone: this.phone
+              }
             })
           .then(res => {
             if (res.data.status === 200) {
-              if (this.countDownTimer === '-1 : -1' && !this.showSmsCodeForm) {
-                this.sendAgainTime = res.data.sendAgainTime
-                this.smsCodeSent = res.data.smsCodeSent
-                this.countDownSmsCode()
-              }
+              // if (this.countDownTimer === '-1 : 1' && !this.showSmsCodeForm) {
+              this.countDownTimer = '';
+              this.sendAgainTime  = 0
+              this.smsCodeSent    = null
+              this.x              = clearInterval(this.x)
+              this.sendAgainTime  = res.data.sendAgainTime
+              this.smsCodeSent    = res.data.smsCodeSent
+              console.log(this.smsCodeSent)
+              this.countDownSmsCode()
+              // }
               this.phone = this.phone.replace(/\s/g, '')
               if (!this.showSmsCodeForm) {
                 this.showSmsCodeForm = true;
@@ -128,19 +143,19 @@ export default {
       },);
     },
     countDownSmsCode() {
-      this.countDownTimer = '';
-      var countDownDate   = new Date().getTime() + (this.sendAgainTime);
-      var x               = setInterval(() => {
+      var countDownDate = new Date().getTime() + (this.sendAgainTime * 1000);
+
+      this.x = setInterval(() => {
         var now             = new Date().getTime();
         var distance        = countDownDate - now;
         var minutes         = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         var seconds         = Math.floor((distance % (1000 * 60)) / 1000);
         this.countDownTimer = seconds + " : " + minutes;
         if (distance < 0) {
-          clearInterval(x);
+          clearInterval(this.x);
           this.countDownTimer = false
         }
-      })
+      }, 1000)
     },
     handleInputPhoneNumber(event) {
       if (event.key === 'Backspace') {

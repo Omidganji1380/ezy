@@ -12,4 +12,4 @@ import './assets/tailwind/index.css'
 //     optionSuccessStatus:200
 // })
 
-createApp(App).use(cors).use(store).use(router).mount('#app')
+createApp(App).use(store).use(router).mount('#app')

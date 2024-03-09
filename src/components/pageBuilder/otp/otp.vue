@@ -2,6 +2,7 @@
   <div ref="otpCont" dir="ltr" class="row w-100 flex-nowrap mx-auto justify-between">
     <input
         type="number" @keydown.prevent="handleKeyDown($event, ind)"
+        :class="{'!text-red-600 !border-red-600':otpCodeTrue}"
         class="digit-box w-[56px] text-center fs-3 h-[56px] border-solid border-2 border-[#009606] focus-visible:outline-0 leading-10 rounded-[20px] bg-[#F0FCF3] text-[#009606]"
         v-for="(el, ind) in digits"
         :key="el+ind"
@@ -19,30 +20,37 @@
 import {ref, reactive} from 'vue';
 
 export default {
-  name: "otp",
+  name : "otp",
+  props: ['otpCodeTrue'],
   data() {
     return {
       default          : '',
       digits           : reactive([]),
       digitCount       : 5,
       isInputDigitsFull: false,
+      otpCode          : null,
+      otpCodeIsTrue    : true,
     }
   },
   updated() {
     if (this.digits[0] === null) {
       document.getElementById('otpInput0').focus()
     }
+    // console.log(this.smsCodeSent,this.otpCode,this.smsCodeSent === this.otpCode)
+    // this.otpCodeIsTrue = this.smsCodeSent !== this.otpCode;
   },
   methods: {
+    // otpCodeTrue(){
+    //   return !!this.otpCodeTrue;
+    // },
     isDigitsFull(index) {
       if (index + 1 === this.digitCount) {
         this.isInputDigitsFull = true
         this.$emit('InputDigitsFull', this.isInputDigitsFull)
+        this.otpCode = this.digits.join('')
+        this.otpCode = parseInt(this.otpCode)
+        this.$emit('otpCode', this.otpCode)
       }
-      // if (!this.digits[index] === '') {
-      //   this.isInputDigitsFull = true
-      //   this.$emit('InputDigitsFull', this.isInputDigitsFull)
-      // }
     },
     handleKeyDown(event, index) {
       this.isInputDigitsFull = false

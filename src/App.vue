@@ -21,7 +21,7 @@ export default {
   },
   data() {
     return {
-      baseURL: 'http://127.0.0.1:8000/api/v1/'
+      baseURL: 'https://ezycompany.liara.run/api/lS_Hp~wrQjdm;9*JEv0sfFrCpN734stkHV-|ea|8PVT[J$CMt(;+L"66CrR%@(4Ne+-j29EQ`km(NDe=i=]5=w0SzIVRoD=WV<tr/v1/'
     }
   },
   // mounted() {
