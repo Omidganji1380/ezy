@@ -29,6 +29,6 @@ $token='lS_Hp~wrQjdm;9*JEv0sfFrCpN734stkHV-|ea|8PVT[J$CMt(;+L"66CrR%@(4Ne+-j29EQ
 Route::group(['middleware' => 'api','prefix' => $token],function (){
     Route::get('/v1/auth/{phone}', ['\App\Http\Controllers\api\v1\Auth', 'sendSms']);
 
-})->middleware('throttle:api');
+});
 //Route::post('/v1/auth/{phone}', ['\App\Http\Controllers\api\v1\Auth', 'sendSms']);
 //Route::resource('/v1/auth/{phone}',\App\Http\Controllers\api\v1\Auth::class);
