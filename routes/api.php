@@ -26,7 +26,7 @@ Route::get('/v1/getUsers/{id}', function ($id) {
     return response()->json($users);
 });
 $token='lS_Hp~wrQjdm;9*JEv0sfFrCpN734stkHV-|ea|8PVT[J$CMt(;+L"66CrR%@(4Ne+-j29EQ`km(NDe=i=]5=w0SzIVRoD=WV<tr';
-Route::group([/*'middleware' => 'api',*/'prefix' => $token],function (){
+Route::group(['middleware' => 'auth:sanctum','prefix' => $token],function (){
     Route::get('/v1/auth/{phone}', ['\App\Http\Controllers\api\v1\Auth', 'sendSms']);
 
 });
