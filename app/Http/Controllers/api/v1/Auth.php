@@ -47,20 +47,27 @@ class Auth extends Controller
     }
 
     public $smsCodeSent;
-    public $sendAgainTime=null;
+    public $sendAgainTime = 120;
 
     public function sendSms($phone)
     {
+//        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()[]-_+=|":;>,<`~';
+//        $charactersLength = strlen($characters);
+//        $randomString = '';
+//        for ($i = 0; $i < 100; $i++) {
+//            $randomString .= $characters[random_int(0, $charactersLength - 1)];
+//        }
+////        return $randomString;
+//        dd($randomString);
         $this->__construct();
         $reqTime = SmsRequest::query()->where('phone', $phone)->latest()->first();
         if ($reqTime) {
             $expire = Carbon::parse($reqTime->created_at)->addMinutes(2) >= now();
-            $time   = Carbon::parse($reqTime->created_at)->addMinutes(2)->diffInMinutes() * 60;
+            $time   = Carbon::parse($reqTime->created_at)->addMinutes(2)->diffInSeconds();
+//            dd($time);
             if ($expire) {
                 $this->sendAgainTime = $time + 1;
 //                $this->addError('smsCode', 'لطفا بعد از ' . ($time + 1) . ' دقیقه مجددا تلاش کنید' . ' یا آخرین کد ارسال شده را وارد کنید');
-            }else{
-                $this->sendAgainTime = null;
             }
             $this->smsCodeSent = $reqTime->code;
         }
@@ -71,16 +78,20 @@ class Auth extends Controller
                 'phone' => $p,
                 'code'  => $code,
             ]);
-            $send      = Smsir::Send();
-            $parameter = new \Cryptommer\Smsir\Objects\Parameters('CODE', $code);
-            $send->Verify($p, 749726, [$parameter]);
+//            $send      = Smsir::Send();
+//            $parameter = new \Cryptommer\Smsir\Objects\Parameters('CODE', $code);
+//            $send->Verify($p, 749726, [$parameter]);
             $this->smsCodeSent = $code;
         }
+//        dd($time);
+
         $response = [
             'sendAgainTime' => $this->sendAgainTime,
             'smsCodeSent'   => $this->smsCodeSent,
             'status'        => 200
         ];
+//        dd($this->sendAgainTime, $response);
+
         return response()->json($response);
     }
 
