@@ -212,9 +212,13 @@
                                 <div id="myCarousel1{{$key}}" class="carousel slide" data-bs-ride="carousel">
                                     <div class="carousel-inner">
                                         @foreach($block->banner as $banner)
+{{--                                            @dd($block->banner->count())--}}
                                             {{--                                                        <div class="carousel-caption">--}}
                                             <div class="carousel-item {{$loop->first?'active':''}}">
-                                                <button dir="rtl" style=""
+                                                <a dir="rtl"
+                                                    @if($block->banner->count()==1)
+                                                        href="{{$banner->link}}" target="_blank"
+                                                    @endif
                                                         class="btn w-100 overflow-hidden text-truncate px-1"
                                                         style="border-radius: {{$this->getBlockItemsBorder($block)}};
                                                                             background-{{$block->blockOption->blockItemColor==2?'color':'image'}}: {{$this->getBgBlockItemColor($block)}};
@@ -224,7 +228,7 @@
                                                     <img class="w-100"
                                                          src="{{asset('storage/pb/profiles/profile-'.$profile->id.'/banners/banner-'.$banner->id.'/'.$banner->image)}}"
                                                          alt="">
-                                                </button>
+                                                </a>
                                             </div>
                                             {{--                                                        </div>--}}
                                         @endforeach
