@@ -28,6 +28,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::group(['prefix' => '/v1/auth'], function () {
     Route::get('p/{phone}', ['\App\Http\Controllers\api\v1\Auth', 'sendSms']);
     Route::post('login', '\App\Http\Controllers\api\v1\Auth@login');
+    Route::post('logout', '\App\Http\Controllers\api\v1\Auth@logout');
 });
 
 //$token = 'FX)zt6(T@Pt`,%-[Pb00j`|L7Cj6+*f';

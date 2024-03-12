@@ -77,18 +77,18 @@ class Auth extends Controller
         return response()->json($data);
     }
 
-    public function register(Request $request)
-    {
-        $request->validate([
-            'phone' => ['required']
-        ]);
-        User::create([
-            'phone' => $this->phone
-        ]);
-        return response()->json([
-            'msg' => 'user created',
-        ]);
-    }
+//    public function register(Request $request)
+//    {
+//        $request->validate([
+//            'phone' => ['required']
+//        ]);
+//        User::create([
+//            'phone' => $this->phone
+//        ]);
+//        return response()->json([
+//            'msg' => 'user created',
+//        ]);
+//    }
 
     public function login(Request $request)
     {
@@ -139,6 +139,14 @@ class Auth extends Controller
 
     public function logout(Request $request)
     {
-
+        $userToLogout = User::find($request->id);
+        if ($userToLogout) {
+            \Auth::setUser($userToLogout);
+            \Auth::logout();
+            $data = [
+                'status' => 200
+            ];
+            return response()->json($data);
+        }
     }
 }
