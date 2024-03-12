@@ -3,6 +3,7 @@
     <div class="header-large-title">
       <span class="title fs-3">Your Profiles</span>
     </div>
+    <button class="btn btn-danger" @click.prevent="logoutMethod">logout</button>
     <div class="section mt-3 mb-3">
       <div class="row">
         <div class="col-12 mb-2">
@@ -35,11 +36,40 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
+  props  : ['baseURL'],
+  methods: {
+    logoutMethod() {
+      let token = localStorage.getItem('token')
+      token     = JSON.parse(token)
+      // console.log(token.id)
+      axios({
+              method : 'POST',
+              url    : this.baseURL + 'api/v1/auth/logout',
+              data   : {
+                id: token.id
+              },
+              headers: {
+                'Content-Type'                    : 'application/json',
+                'Access-Control-Allow-Credentials': true,
+              }
+            })
+          .then((res) => {
+            console.log(res)
+            if (res.data.status === 200) {
+              this.$router.push('/')
+              localStorage.removeItem('token')
+            }
+          })
+          .catch(err => console.log(err))
+    }
+  },
   mounted() {
     // localStorage.storedData
     // localStorage.setItem('token',[omid=>'omid',])
-    var a=JSON.parse(localStorage.getItem('token'))
+    var a = JSON.parse(localStorage.getItem('token'))
 
     console.log(a)
 

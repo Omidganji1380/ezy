@@ -32,7 +32,7 @@
           ایزی کانکت را می‌پذیرم.</p>
         <div class="text-center mt-3">
           <button @click.prevent="showSmsCodeFormMethod" v-if="!showSmsCodeForm"
-                  class="rounded-[20px] btn btn-danger h-[56px] w-[170px] text-[#F0FCF3] bg-[#009606]">
+                  class="rounded-[20px] h-[56px] w-[170px] text-[#F0FCF3] bg-[#009606]">
             ثبت نام و ورود
           </button>
           <button @click.prevent="loginByOtp" v-if="showSmsCodeForm"

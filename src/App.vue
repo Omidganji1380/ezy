@@ -21,7 +21,7 @@ export default {
   },
   data() {
     return {
-      baseURL: 'https://ezy.company/'
+      baseURL: 'http://127.0.0.1:8000/'
     }
   },
   beforeMount() {
