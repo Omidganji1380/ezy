@@ -17,18 +17,22 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::get('/v1/getUsers', function () {
-    $users = \App\Models\User::all();
-    return response()->json($users);
+//Route::get('/v1/getUsers', function () {
+//    $users = \App\Models\User::all();
+//    return response()->json($users);
+//});
+//Route::get('/v1/getUsers/{id}', function ($id) {
+//    $users = \App\Models\User::findOrFail($id);
+//    return response()->json($users);
+//});
+Route::group(['prefix' => '/v1/auth'], function () {
+    Route::get('p/{phone}', ['\App\Http\Controllers\api\v1\Auth', 'sendSms']);
+    Route::post('login', '\App\Http\Controllers\api\v1\Auth@login');
 });
-Route::get('/v1/getUsers/{id}', function ($id) {
-    $users = \App\Models\User::findOrFail($id);
-    return response()->json($users);
-});
-$token='lS_Hp~wrQjdm;9*JEv0sfFrCpN734stkHV-|ea|8PVT[J$CMt(;+L"66CrR%@(4Ne+-j29EQ`km(NDe=i=]5=w0SzIVRoD=WV<tr';
-Route::group(['middleware' => 'auth:sanctum','prefix' => $token],function (){
-    Route::get('/v1/auth/{phone}', ['\App\Http\Controllers\api\v1\Auth', 'sendSms']);
 
-});
+//$token = 'FX)zt6(T@Pt`,%-[Pb00j`|L7Cj6+*f';
+//Route::group(['middleware' => 'api'/*,'prefix' => $token*/], function () {
+//
+//});
 //Route::post('/v1/auth/{phone}', ['\App\Http\Controllers\api\v1\Auth', 'sendSms']);
 //Route::resource('/v1/auth/{phone}',\App\Http\Controllers\api\v1\Auth::class);

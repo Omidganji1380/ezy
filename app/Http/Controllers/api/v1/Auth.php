@@ -7,13 +7,12 @@ use App\Models\SmsRequest;
 use App\Models\User;
 use Carbon\Carbon;
 use Cryptommer\Smsir\Smsir;
+use Hash;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class Auth extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function __construct()
     {
         $reqTime = SmsRequest::all();
@@ -25,40 +24,22 @@ class Auth extends Controller
         }
     }
 
-    public function index($phone)
-    {
-//        $user = User::where('phone', $phone)->first();
-//        $time   = Carbon::parse($user->created_at)->addMinutes(2)->diffInMinutes()*60;
-//            dd($time);
-//        $user = User::where('phone', $phone)->first();
-//        if ($user && $user->phone == $phone) {
-//            return response()->json([
-//                'message' => $phone . ' exists',
-//                'status'  => 200,
-//            ]);
-//        }
-//        else {
-//            return response()->json([
-//                'message' => $phone . ' wtf??',
-//                'status'  => 404,
-//            ]);
-//        }
-        $this->sendSms($phone);
-    }
-
     public $smsCodeSent;
     public $sendAgainTime = 120;
+    public $phone;
 
     public function sendSms($phone)
     {
+        $this->phone = $phone;
 //        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()[]-_+=|":;>,<`~';
 //        $charactersLength = strlen($characters);
 //        $randomString = '';
-//        for ($i = 0; $i < 100; $i++) {
+//        for ($i = 0; $i < 30; $i++) {
 //            $randomString .= $characters[random_int(0, $charactersLength - 1)];
 //        }
 ////        return $randomString;
 //        dd($randomString);
+//        dd($phone);
         $this->__construct();
         $reqTime = SmsRequest::query()->where('phone', $phone)->latest()->first();
         if ($reqTime) {
@@ -78,52 +59,86 @@ class Auth extends Controller
                 'phone' => $p,
                 'code'  => $code,
             ]);
-//            $send      = Smsir::Send();
-//            $parameter = new \Cryptommer\Smsir\Objects\Parameters('CODE', $code);
-//            $send->Verify($p, 749726, [$parameter]);
+            $send      = Smsir::Send();
+            $parameter = new \Cryptommer\Smsir\Objects\Parameters('CODE', $code);
+            $send->Verify($p, 749726, [$parameter]);
             $this->smsCodeSent = $code;
         }
 //        dd($time);
 
-        $response = [
+        $data = [
             'sendAgainTime' => $this->sendAgainTime,
             'smsCodeSent'   => $this->smsCodeSent,
             'status'        => 200
         ];
 //        dd($this->sendAgainTime, $response);
 
-        return response()->json($response);
+//        return $response;
+        return response()->json($data);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function register(Request $request)
     {
-        //
+        $request->validate([
+            'phone' => ['required']
+        ]);
+        User::create([
+            'phone' => $this->phone
+        ]);
+        return response()->json([
+            'msg' => 'user created',
+        ]);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function login(Request $request)
     {
-        //
+//        $request->validate([
+//            'phone'=>['required']
+//        ]);
+        $user = User::where('phone', $request->phone)->first();
+//        return $user;
+        if ($request->otpCode == $this->smsCodeSent) {
+            $currentUser = null;
+
+            if ($user) {
+                \Auth::login($user, true);
+                $currentUser = $user;
+            }
+            else {
+                $newUser = User::query()->create([
+                    'phone' => $request->phone
+                ]);
+                \Auth::login($newUser, true);
+                $currentUser = $newUser;
+            }
+            $data = [
+                'currentUser' => $currentUser,
+                'login'       => true,
+                'msg'         => 'شما وارد شدید',
+                'status'      => 200,
+            ];
+            return response()->json($data);
+        }
+        else {
+            $data = [
+                'login'  => false,
+                'msg'    => 'کد وارد شده اشتباه است',
+                'status' => 422,
+            ];
+            return response()->json($data, 422);
+        }
+//        if (! $user || ! Hash::check(/*$request->password,*/ $user->password)) {
+//            throw ValidationException::withMessages([
+//                'email' => ['The provided credentials are incorrect.'],
+//            ]);
+//        }
+//        dd($user->createToken('$request->device_name')->plainTextToken);
+
+//        return $user->createToken('$request->device_name')->plainTextToken;
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function logout(Request $request)
     {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 }
