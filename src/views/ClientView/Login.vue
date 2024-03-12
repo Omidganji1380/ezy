@@ -14,10 +14,10 @@
         <span class="text-center my-3 row justify-center flex-nowrap cursor-pointer w-fit mx-auto"
               v-if="showSmsCodeForm" @click="showIntroForm">
           <img src="assets/img/PageBuilder/Login-SmsForm/Edit.svg" class="d-inline-block col-auto pr-0">
-          <span class="pb-0 underline-offset-4 underline col-auto px-0">{{ phone }}</span>
+          <span class="pb-0 underline-offset-4 underline col-auto px-0">{{ data.phone }}</span>
         </span>
         <div class="" name="inputs">
-          <input type="text" @keydown.prevent="handleInputPhoneNumber($event)" v-model="phone" dir="ltr"
+          <input type="text" @keydown.prevent="handleInputPhoneNumber($event)" v-model="data.phone" dir="ltr"
                  id="phoneNumberInput" v-if="!this.showSmsCodeForm"
                  class="w-100 px-0 !pl-14 fs-3 h-[56px] border-solid border-2 border-[#009606] focus-visible:outline-0 leading-10 rounded-[20px] bg-[#F0FCF3] text-[#009606]">
           <div class="" name="smsCodeForm" v-if="this.showSmsCodeForm">
@@ -32,7 +32,7 @@
           ایزی کانکت را می‌پذیرم.</p>
         <div class="text-center mt-3">
           <button @click.prevent="showSmsCodeFormMethod" v-if="!showSmsCodeForm"
-                  class="rounded-[20px] h-[56px] w-[170px] text-[#F0FCF3] bg-[#009606]">
+                  class="rounded-[20px] btn btn-danger h-[56px] w-[170px] text-[#F0FCF3] bg-[#009606]">
             ثبت نام و ورود
           </button>
           <button @click.prevent="loginByOtp" v-if="showSmsCodeForm"
@@ -44,7 +44,7 @@
         <div name="sendSmsCodeAgain" class="mx-auto my-4 row flex-nowrap w-fit" v-if="showSmsCodeForm">
           <img :class="{'d-none':!countDownTimer}" src="assets/img/PageBuilder/Login-SmsForm/timeCircle.svg"
                class="d-inline-block col-auto pr-0">
-          <span class="col-auto pr-0 underline-offset-8 underline">
+          <span class="col-auto pr-0 underline-offset-8 underline" @click="otpSendAgain">
             ارسال مجدد کد
             {{ countDownTimer ? 'بعد از ' + countDownTimer : '' }}
           </span>
@@ -65,11 +65,14 @@ export default {
   props: ['baseURL'],
   data() {
     return {
-      fadedLogo      : true,
-      showIntro      : true,
+      fadedLogo      : false,
+      showIntro      : false,
       showSmsCodeForm: false,
       phoneInput     : null,
-      phone          : '',
+      data           : {
+        phone      : '',
+        device_name: 'browser',
+      },
       sendAgainTime  : 0,
       countDownTimer : '',
       SubmitButton   : false,
@@ -79,32 +82,62 @@ export default {
     }
   },
   updated() {
-    // alert(this.baseURL + 'auth/' + this.phone)
+    // alert(this.baseURL + 'auth/' + this.data.phone)
   },
   components: {otp},
   methods   : {
+    otpSendAgain(){
+      if (!this.countDownTimer){
+        this.showSmsCodeFormMethod()
+      }
+    },
     loginByOtp(otpCode) {
+      // console.log(this.smsCodeSent !== otpCode)
       if (this.smsCodeSent !== otpCode) {
         this.otpCodeTrue = true;
       } else {
         this.otpCodeTrue = false;
+        axios({
+                url    : this.baseURL + 'api/v1/auth/login',
+                method : 'post',
+                headers: {
+                  'Content-Type'                    : 'application/json',
+                  'Access-Control-Allow-Credentials': true,
+                },
+                data   : {
+                  smsCode: otpCode,
+                  phone  : this.data.phone
+                }
+              })
+            .then((res) => {
+              console.log(res.data.currentUser)
+              localStorage.removeItem('token')
+              localStorage.setItem('token', JSON.stringify(res.data.currentUser))
+              this.$router.push('/page-builder')
+            })
+            .catch((err) => {
+              console.log(err)
+            })
       }
     },
     activeSubmitButton(bool) {
       this.SubmitButton = bool
     },
-    showSmsCodeFormMethod() {
+    showSmsCodeFormMethod:function () {
       axios({
-              method : 'get',
-              headers: {'Content-Type': 'application/json'},
-              url    : this.baseURL + 'auth/' + this.phone,
+              url    : this.baseURL + "api/v1/auth/p/" + this.data.phone,
+              method : 'GET',
+              headers: {
+                'Content-Type'                    : 'application/json',
+                // 'Access-Control-Allow-Credentials': true,
+              },
               data   : {
-                phone: this.phone
+                phone: this.data.phone
               }
             })
-          .then(res => {
+          .then((res) => {
+            // console.log(res, res.data)
             if (res.data.status === 200) {
-              // if (this.countDownTimer === '-1 : 1' && !this.showSmsCodeForm) {
               this.countDownTimer = '';
               this.sendAgainTime  = 0
               this.smsCodeSent    = null
@@ -113,15 +146,18 @@ export default {
               this.smsCodeSent    = res.data.smsCodeSent
               console.log(this.smsCodeSent)
               this.countDownSmsCode()
-              // }
-              this.phone = this.phone.replace(/\s/g, '')
+              this.data.phone = this.data.phone.replace(/\s/g, '')
               if (!this.showSmsCodeForm) {
                 this.showSmsCodeForm = true;
                 this.phoneInput.destroy()
               }
+            } else {
+              console.log("Error: " + res.data.message);
             }
           })
-          .catch(err => console.log(err))
+          .catch((error) => {
+            console.log("error :>> ", error);
+          });
     },
     showIntroForm() {
       this.showSmsCodeForm = false;
@@ -159,21 +195,24 @@ export default {
     },
     handleInputPhoneNumber(event) {
       if (event.key === 'Backspace') {
-        this.phone = this.phone.slice(0, -1);
+        this.data.phone = this.data.phone.slice(0, -1);
+      }
+      if (event.key === 'Enter') {
+        this.showSmsCodeFormMethod();
       }
       if ((new RegExp('^([0-9])$')).test(event.key)) {
-        this.phone += event.key;
+        this.data.phone += event.key;
       }
     },
   },
 
   mounted() {
-    // setTimeout(() => {
-    //   setTimeout(() => {
-    //     this.showIntro = true
-    //   }, 100)
-    //   this.fadedLogo = true
-    // }, 1500)
+    setTimeout(() => {
+      setTimeout(() => {
+        this.showIntro = true
+      }, 100)
+      this.fadedLogo = true
+    }, 1500)
     this.intlTelInput()
 
   },
