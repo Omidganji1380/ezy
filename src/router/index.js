@@ -9,7 +9,7 @@ const routes = [
         component: Login,
         props    : true
     }, {
-        path     : '/page-builder',
+        path     : '/user/page-builder',
         name     : 'ClientView_PageBuilder',
         component: PageBuilder,
         props    : true

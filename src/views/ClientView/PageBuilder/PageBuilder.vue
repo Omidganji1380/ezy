@@ -1,10 +1,21 @@
 <template>
-  <div id="appCapsule">
-    <div class="header-large-title">
-      <span class="title fs-3">Your Profiles</span>
+  <div id="appCapsule" class="mx-5 h-[100vh] relative">
+    <div class="header-large-title row flex-nowrap justify-content-between border-b-2 pb-1 flex-row-reverse">
+      <span class="title fs-3 col-auto self-center">
+        <img src="/assets/img/PageBuilder/sidebarHambergery.png" alt="">
+      </span>
+      <span class="title fs-3 col-auto self-center font-shabnam-bold">
+        صفحه ساز ایزی
+      </span>
+      <span class="title fs-3 col-auto self-center">
+        <img src="/assets/img/PageBuilder/headerEzyLogo.png" alt="">
+      </span>
     </div>
-    <button class="btn btn-danger" @click.prevent="logoutMethod">logout</button>
     <div class="section mt-3 mb-3">
+      <img src="/assets/img/PageBuilder/nothing.svg" class="mx-auto" alt="">
+      <p class="text-center fs-4 my-4 font-shabnam-bold">هنوز صفحه ای ایجاد نکردی</p>
+    </div>
+    <div class="section mt-3 mb-3 d-none">
       <div class="row">
         <div class="col-12 mb-2">
           <div class="card px-4">
@@ -23,7 +34,7 @@
                   omid
                 </div>
                 <div class="col-2">
-                  <img src="assets/img/PageBuilder/userGray.png" alt="">
+                  <img src="/assets/img/PageBuilder/userGray.png" alt="">
                 </div>
               </div>
             </div>
@@ -31,6 +42,28 @@
         </div>
       </div>
 
+    </div>
+    <!--    <button class="btn btn-danger" @click.prevent="logoutMethod">logout</button>-->
+    <div class="position-absolute w-100 bottom-10">
+      <div class="section my-3 px-0 font-shabnam-bold">
+        <button class="btn bg-[#009606] text-white w-100">
+          ساخت صفحه
+          <img src="/assets/img/PageBuilder/createPagePlus.svg" alt="" class="ml-1">
+        </button>
+      </div>
+      <div class="bg-[#62DF85] rounded-pill">
+        <div class="row h-[56px] flex-nowrap">
+          <button class="btn h-[57px] bg-[#F0FCF3] col-5">
+            <img src="/assets/img/PageBuilder/shopping-cart.svg" alt="">
+          </button>
+          <button class="btn h-[57px] col-2">
+            <img src="/assets/img/PageBuilder/Category-insertBtn.svg" alt="">
+          </button>
+          <button class="btn h-[57px] bg-[#F0FCF3] col-5">
+            <img src="/assets/img/PageBuilder/ProfileIcon.svg" alt="">
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -77,6 +110,6 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style>
 
 </style>

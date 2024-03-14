@@ -30,7 +30,7 @@ export default {
     if (!token) {
         this.$router.push('/');
     } else {
-        this.$router.push('/page-builder');
+        this.$router.push('/user/page-builder');
     }
   },
   // mounted() {

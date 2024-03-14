@@ -113,7 +113,7 @@ export default {
               console.log(res.data.currentUser)
               localStorage.removeItem('token')
               localStorage.setItem('token', JSON.stringify(res.data.currentUser))
-              this.$router.push('/page-builder')
+              this.$router.push('/user/page-builder')
             })
             .catch((err) => {
               console.log(err)
