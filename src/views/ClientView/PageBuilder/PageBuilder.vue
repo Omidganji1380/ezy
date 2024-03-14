@@ -1,17 +1,17 @@
 <template>
-  <div id="appCapsule" class="mx-5 h-[100vh] relative">
-    <div class="header-large-title row flex-nowrap justify-content-between border-b-2 pb-1 flex-row-reverse">
-      <span class="title fs-3 col-auto self-center">
+  <div id="appCapsule" class="h-[100vh] relative !pt-[29px]">
+    <div class="px-[34px] header-large-title row flex-nowrap justify-content-between border-b-2 pb-1 flex-row-reverse">
+      <span class="p-0 title fs-3 col-auto self-center">
         <img src="/assets/img/PageBuilder/sidebarHambergery.png" alt="">
       </span>
-      <span class="title fs-3 col-auto self-center font-shabnam-bold">
+      <span class="p-0 title fs-3 col-auto self-center font-shabnam-bold">
         صفحه ساز ایزی
       </span>
-      <span class="title fs-3 col-auto self-center">
+      <span class="p-0 title fs-3 col-auto self-center">
         <img src="/assets/img/PageBuilder/headerEzyLogo.png" alt="">
       </span>
     </div>
-    <div class="section mt-3 mb-3">
+    <div class="section mt-[46px] mb-3">
       <img src="/assets/img/PageBuilder/nothing.svg" class="mx-auto" alt="">
       <p class="text-center fs-4 my-4 font-shabnam-bold">هنوز صفحه ای ایجاد نکردی</p>
     </div>
@@ -44,22 +44,22 @@
 
     </div>
     <!--    <button class="btn btn-danger" @click.prevent="logoutMethod">logout</button>-->
-    <div class="position-absolute w-100 bottom-10">
+    <div class="fixed-bottom container pb-[34px] bg-[#F9F9F9] max-w-[430px]">
       <div class="section my-3 px-0 font-shabnam-bold">
         <button class="btn bg-[#009606] text-white w-100">
           ساخت صفحه
           <img src="/assets/img/PageBuilder/createPagePlus.svg" alt="" class="ml-1">
         </button>
       </div>
-      <div class="bg-[#62DF85] rounded-pill">
+      <div class="bg-[#62DF85] rounded-full">
         <div class="row h-[56px] flex-nowrap">
-          <button class="btn h-[57px] bg-[#F0FCF3] col-5">
+          <button class="btn h-[57px] bg-[#F0FCF3] col-5 drop-shadow-md rounded-r-[250rem] rounded-l-full">
             <img src="/assets/img/PageBuilder/shopping-cart.svg" alt="">
           </button>
-          <button class="btn h-[57px] col-2">
+          <button class="btn h-[57px] col-2 px-0">
             <img src="/assets/img/PageBuilder/Category-insertBtn.svg" alt="">
           </button>
-          <button class="btn h-[57px] bg-[#F0FCF3] col-5">
+          <button class="btn h-[57px] bg-[#F0FCF3] col-5 drop-shadow-md rounded-l-[250rem] rounded-r-full">
             <img src="/assets/img/PageBuilder/ProfileIcon.svg" alt="">
           </button>
         </div>
