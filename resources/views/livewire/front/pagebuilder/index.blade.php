@@ -119,11 +119,11 @@
             @endforeach
         </div>
     </div>
-    <div class="fixed-bottom">
+    <div class="fixed-bottom" style="width: fit-content">
         <button class="btn btn-info fs-2 p-4 rounded-circle"
                 data-bs-toggle="modal"
                 data-bs-target="#insertProfile"
-                style="margin: 0 100px 100px 0"><i class="icofont-plus fs-3 text-white"></i></button>
+                style="margin: 0 60px 60px 0"><i class="icofont-plus fs-3 text-white"></i></button>
     </div>
     @push('css')
         <link rel="stylesheet" href="{{asset('pageBuilder/assets/css/tailwind.min.css')}}">

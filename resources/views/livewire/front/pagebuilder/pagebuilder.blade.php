@@ -36,8 +36,9 @@
                 padding: 0.3rem;
                 border-radius: 0.3rem;
             }
-            .menuTitle::before{
-                content:'';
+
+            .menuTitle::before {
+                content: '';
                 background: repeating-linear-gradient(to right, currentColor, currentColor 1px, transparent 2px, transparent 4px);
                 height: 1px;
                 flex-grow: 1;
@@ -238,12 +239,32 @@
                                         @endforeach
                                     @endif
                                     @if(count($block->menu))
+                                        <div class="col-12 text-center p-1">
+                                            <div class="carousel-inner">
+                                                @if($block->menu->first()->img)
+                                                    <div class="carousel-item active">
+                                                        <button dir="rtl"
+                                                                class="btn w-100 overflow-hidden text-truncate px-1"
+                                                                style="border-radius: {{$this->getBlockItemsBorder($block)}};
+                                                                            background-{{$block->blockOption->blockItemColor==2?'color':'image'}}: {{$this->getBgBlockItemColor($block)}};
+                                                                            border-color: {{$this->getBorderBlockItemColor($block)}} !important;
+                                                                            color: {{$this->getTextBlockItemColor($block)}}"
+                                                        >
+                                                            <img class="w-100"
+                                                                 src="{{asset('storage/pb/profiles/profile-'.$profile->id.'/menus/'.$block->menu->first()->img)}}"
+                                                                 alt="">
+                                                        </button>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        </div>
                                         @foreach($block->menu as $item)
                                             <ul class="w-100">
                                                 <li>
                                                     <h5 class="d-flex w-100">
-                                                    {{$item->title}}
-                                                    <span class="text-start d-flex flex-grow-1 menuTitle">{{$item->price}}</span>
+                                                        {{$item->title}}
+                                                        <span
+                                                            class="text-start d-flex flex-grow-1 menuTitle">{{$item->price}}</span>
                                                     </h5>
                                                     <p>{{$item->description}}</p>
                                                 </li>
@@ -2033,7 +2054,37 @@
                                     </div>
                                     <div class="col-12 my-3">
                                         <div class="row">
+                                            <div class="col-12 my-3 px-4">
+                                                <label class="text-black-50 my-1">بارگذاری
+                                                    عکس</label>
+                                                {{--                                                                        <input value="{{$bannerImageUpload&&isset($bannerImageUpload[$item->id])}}">--}}
+                                                <div
+                                                    class="position-relative w-100 rounded text-center py-2 align-middle"
+                                                    style="background-color: #cfffcf;border: 2px dashed green;height: 150px">
+                                                    <div
+                                                        class="position-absolute h-100 w-100 top-50 translate-middle-y">
+                                                        <img
+                                                            src="{{$menuImageUpload?$menuImageUpload->temporaryUrl():($blockMenuItems?asset('storage/pb/profiles/profile-'.$profile->id.'/menus/'.$blockMenuItems[0]->img):'')}}"
+                                                            class="position-absolute h-100 py-2 mx-auto start-0"
+                                                            alt=""
+                                                            style="right: 0"
+                                                            wire:click="removeMenuImg"
+                                                            wire:confirm="حذف شود؟">
+                                                        <img wire:loading
+                                                             wire:target="menuImageUpload"
+                                                             src="{{asset('pageBuilder/loading.gif')}}"
+                                                             class="position-absolute h-100 py-2 mx-auto start-0"
+                                                             style="right: 0">
+                                                        @if($blockMenuItems && !$blockMenuItems[0]->img)
+                                                            <input type="file"
+                                                                   class="opacity-0 h-100 w-100"
+                                                                   wire:model="menuImageUpload">
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <div style="cursor: grab;" {{--id="sortable3"--}}>
+
                                                 @foreach($blockMenuItems as $key=>$item)
                                                     <div class="my-1 col-12">
                                                         <div
@@ -2082,7 +2133,8 @@
                                                                                value="{{$item->title}}"
                                                                                wire:model="MenuTitle.{{$item->id}}"
                                                                                placeholder="عنوان را وارد کنید">
-                                                                        <p class="text-black-50 small">برای مثال پیتزا ایتالیایی</p>
+                                                                        <p class="text-black-50 small">برای مثال پیتزا
+                                                                            ایتالیایی</p>
                                                                     </div>
                                                                     <div class="col-6 my-3 px-4">
                                                                         <label
@@ -2104,7 +2156,8 @@
                                                                                value="{{$item->description}}"
                                                                                wire:model="MenuDescription.{{$item->id}}"
                                                                                placeholder="توضیحات غذا را وارد کنید">
-                                                                        <p class="text-black-50 small">برای مثال: پنیر، سس، قارچ، گوشت</p>
+                                                                        <p class="text-black-50 small">برای مثال: پنیر،
+                                                                            سس، قارچ، گوشت</p>
                                                                     </div>
                                                                 </div>
                                                             </div>

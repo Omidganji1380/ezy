@@ -5,6 +5,7 @@ namespace App\Http\Controllers\pageBuilder;
 use App\Models\Block;
 use App\Models\BlockOption;
 use App\Models\MenuBlock;
+use Storage;
 
 trait Menu
 {
@@ -12,6 +13,18 @@ trait Menu
     public $MenuTitle       = [];
     public $MenuPrice       = [];
     public $MenuDescription = [];
+    public $menuImageUpload;
+
+    public function removeMenuImg()
+    {
+        Storage::disk('public')->delete('pb/profiles/profile-' . $this->profile->id . '/menus/' . $this->blockMenuItems[0]->img);
+        foreach ($this->blockMenuItems as $item) {
+            $item->update([
+                'img' => null
+            ]);
+        }
+        $this->blockMenuOptions($this->block);
+    }
 
     public function getOptionsMenu($option, $newBlock)
     {
@@ -95,6 +108,7 @@ trait Menu
     public function deleteBlockMenuItem(MenuBlock $MenuBlock)
     {
         if (count($MenuBlock->block->Menu) == 1) {
+            Storage::disk('public')->delete('pb/profiles/profile-' . $this->profile->id . '/menus/' . $this->blockMenuItems[0]->img);
             $MenuBlock->block->delete();
             $this->mount($this->link);
         }
@@ -117,14 +131,27 @@ trait Menu
 
     public function submitMenu()
     {
+        if ($this->menuImageUpload) {
+            Storage::disk('public')->delete('pb/profiles/profile-' . $this->profile->id . '/menus/' . $this->blockMenuItems[0]->img);
+            $filename     = $this->menuImageUpload->getFilename();
+            $originalName = time() . '_' . $this->menuImageUpload->getClientOriginalName();
+            $this->menuImageUpload->storeAs('pb/profiles/profile-' . $this->profile->id . '/menus/', $originalName, 'public');
+            Storage::disk('local')->delete('livewire-tmp/' . $filename);
+        }
         foreach ($this->blockMenuItems as $item) {
             $item->update([
                 'title'       => $this->MenuTitle[$item->id],
                 'description' => $this->MenuDescription[$item->id],
                 'price'       => $this->MenuPrice[$item->id],
             ]);
-        }
 
+            if ($this->menuImageUpload) {
+                $item->update([
+                    'img' => $originalName
+                ]);
+            }
+        }
+        $this->menuImageUpload = null;
 
         $this->block->blockOption->update([
             'blockTitle'           => $this->blockTitle,
@@ -144,7 +171,9 @@ trait Menu
         $this->MenuPrice       = [];
         $this->mount($this->link);
     }
-    function menuDotted($string) {
+
+    function menuDotted($string)
+    {
         //Clean up multiple dashes or whitespaces
         $string = preg_replace("/[\s-]+/", " ", $string);
         //Convert whitespaces and underscore to dash

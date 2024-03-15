@@ -118,8 +118,9 @@
                 unicode-bidi: plaintext;
                 font-family: inherit;
             }
-            .menuTitle::before{
-                content:'';
+
+            .menuTitle::before {
+                content: '';
                 background: repeating-linear-gradient(to right, currentColor, currentColor 1px, transparent 2px, transparent 4px);
                 height: 1px;
                 flex-grow: 1;
@@ -212,15 +213,15 @@
                                 <div id="myCarousel1{{$key}}" class="carousel slide" data-bs-ride="carousel">
                                     <div class="carousel-inner">
                                         @foreach($block->banner as $banner)
-{{--                                            @dd($block->banner->count())--}}
+                                            {{--                                            @dd($block->banner->count())--}}
                                             {{--                                                        <div class="carousel-caption">--}}
                                             <div class="carousel-item {{$loop->first?'active':''}}">
                                                 <a dir="rtl"
-                                                    @if($block->banner->count()==1)
-                                                        href="{{$banner->link}}" target="_blank"
-                                                    @endif
-                                                        class="btn w-100 overflow-hidden text-truncate px-1"
-                                                        style="border-radius: {{$this->getBlockItemsBorder($block)}};
+                                                   @if($block->banner->count()==1)
+                                                       href="{{$banner->link}}" target="_blank"
+                                                   @endif
+                                                   class="btn w-100 overflow-hidden text-truncate px-1"
+                                                   style="border-radius: {{$this->getBlockItemsBorder($block)}};
                                                                             background-{{$block->blockOption->blockItemColor==2?'color':'image'}}: {{$this->getBgBlockItemColor($block)}};
                                                                             border-color: {{$this->getBorderBlockItemColor($block)}} !important;
                                                                             color: {{$this->getTextBlockItemColor($block)}}"
@@ -295,20 +296,61 @@
                             @endforeach
                         @endif
                         @if(count($block->menu))
-                                <ol class="w-100 list-unstyled">
-                                @foreach($block->menu as $item)
-                                    <li>
-                                        <h5 class="d-flex w-100">
-                                            {{$item->title}}
-                                            <span
-                                                class="text-start d-flex flex-grow-1 menuTitle">{{$item->price}}</span>
-                                        </h5>
-                                        <p>{{$item->description}}</p>
-                                    </li>
-                            @endforeach
-                                </ol>
+                            <div class="col-12 text-center p-1">
+                                <div class="carousel-inner">
+                                    @if($block->menu->first()->img)
+                                        <div class="accordion accordion-flush"
+                                             id="aMenu{{$key}}">
+                                            <button dir="rtl"
+                                                    onclick="removeShow({{$key}})"
+                                                    role="button" data-bs-toggle="collapse"
+                                                    data-bs-target="#menu{{$key}}"
+                                                    aria-expanded="true"
+                                                    aria-controls="menu{{$key}}"
+                                                    class="btn btnNoFocus w-100 overflow-hidden text-truncate px-1"
+                                                    style="border-radius: {{$this->getBlockItemsBorder($block)}};
+                                                                            background-{{$block->blockOption->blockItemColor==2?'color':'image'}}: {{$this->getBgBlockItemColor($block)}};
+                                                                            border-color: {{$this->getBorderBlockItemColor($block)}} !important;
+                                                                            color: {{$this->getTextBlockItemColor($block)}}"
+                                            >
+                                                <img class="w-100"
+                                                     src="{{asset('storage/pb/profiles/profile-'.$profile->id.'/menus/'.$block->menu->first()->img)}}"
+                                                     alt="">
+                                            </button>
 
+                                            <ol class="w-100 px-2 list-unstyled collapse accordion-collapse blockItemAccordion"
+                                                id="menu{{$key}}"
+                                                data-bs-parent="#aMenu{{$key}}">
+                                                @foreach($block->menu as $item)
+                                                    <li>
+                                                        <h5 class="d-flex w-100">
+                                                            {{$item->title}}
+                                                            <span
+                                                                class="text-start d-flex flex-grow-1 menuTitle">{{$item->price}}</span>
+                                                        </h5>
+                                                        <p style="text-align: right">{{$item->description}}</p>
+                                                    </li>
+                                                @endforeach
+                                            </ol>
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                            @if(!$block->menu->first()->img)
+                                <ol class="w-100 list-unstyled">
+                                    @foreach($block->menu as $item)
+                                        <li>
+                                            <h5 class="d-flex w-100">
+                                                {{$item->title}}
+                                                <span
+                                                    class="text-start d-flex flex-grow-1 menuTitle">{{$item->price}}</span>
+                                            </h5>
+                                            <p>{{$item->description}}</p>
+                                        </li>
+                                    @endforeach
+                                </ol>
                             @endif
+                        @endif
                         @if(count($block->text))
                             <div class="col-12 text-center p-1 blockText"
                                  style="margin: -40px 0;{{$block->text()->where('block_id',$block->id)->first()->textSize}}{{$block->text()->where('block_id',$block->id)->first()->textAlign}}color:{{$block->text()->where('block_id',$block->id)->first()->textColor}}">
@@ -368,6 +410,22 @@
             {{--      .listen('UpdateShowPbPage', (e) => {--}}
             {{--          @this.pageRefresh();--}}
             {{--      })--}}
+            function removeShow(id) {
+                var blockItemAccordion = $('.blockItemAccordion')
+
+                if (blockItemAccordion.hasClass('show')) {
+
+                    blockItemAccordion.addClass('collapsing');
+                    setTimeout(function () {
+                        blockItemAccordion.fade();
+                        // $('#item' + id).removeClass('collapsing')
+                    }, 300)
+                    $('#item' + id).show()
+
+                    // blockItemAccordion.addClass('collapsing');
+                }
+                // console.log('#item'+id)
+            }
         </script>
     @endpush
 </div>

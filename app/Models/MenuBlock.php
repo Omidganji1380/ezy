@@ -14,6 +14,7 @@ class MenuBlock extends Model
         'title',
         'price',
         'description',
+        'img',
     ];
     public function block()
     {
