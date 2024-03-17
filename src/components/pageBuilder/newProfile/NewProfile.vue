@@ -124,7 +124,7 @@ export default {
   data() {
     return {
       usernameInput: null,
-      step         : 1,
+      step         : 0,
     }
   },
   methods: {
