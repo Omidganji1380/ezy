@@ -1,6 +1,6 @@
 <template>
   <div
-      class="absolute px-2 top-0 bottom-0 bg-[#000] bg-opacity-10 translate-middle-x w-[100vw] left-1/2 z-[2000] backdrop-blur-sm">
+      class="fixed overscroll-y-none px-2 top-0 bottom-0 bg-[#000] bg-opacity-10 translate-middle-x w-[100vw] left-1/2 z-[2000] backdrop-blur-sm">
     <div class="bg-white mx-auto max-w-[430px] h-[318px] top-1/2 relative translate-middle-y rounded-[20px] z-[2001]">
         <span class="absolute top-[16.5px] right-[25.5px]" @click.prevent="toggleCreateModal">
           <img src="/assets/img/PageBuilder/modal-Close-Square.svg" alt="">
@@ -39,8 +39,8 @@ export default {
     }
   },
   methods: {
-    toggleCreateModal(){
-      this.$emit('toggleCreateModal',false)
+    toggleCreateModal() {
+      this.$emit('toggleCreateModal', false)
     }
   },
 }

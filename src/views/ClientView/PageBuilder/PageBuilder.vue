@@ -1,5 +1,5 @@
 <template>
-  <div id="appCapsule" class="h-[100vh] relative !pt-[29px]">
+  <div id="appCapsule" class="h-[100vh] relative !pt-[29px] my-3">
     <Header/>
 
     <div class="section mt-[46px] mb-3" v-if="!profiles.length">
@@ -31,7 +31,7 @@
         </div>
         <div class="row gap-x-10">
           <button
-              class="col-12 mt-[30px] mb-[20px] h-[39px] bg-[#F0FCF3] rounded-[7px] border-solid border-1 border-[#009606] text-[#009606]">
+              class="col-12 whitespace-nowrap overflow-hidden mt-[30px] mb-[20px] h-[39px] bg-[#F0FCF3] rounded-[7px] border-solid border-1 border-[#009606] text-[#009606]">
             دسته بندی و مشاوره رایگان
           </button>
           <div class="col-12">
