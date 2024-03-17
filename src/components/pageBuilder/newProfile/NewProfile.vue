@@ -74,10 +74,27 @@
                  width="13" height="13" alt="">
           </div>
         </div>
+        <div class="row px-[50px] mx-auto overflow-x-auto whitespace-nowrap flex-nowrap">
+          <div class="col-auto">
+            <span class="w-[130px] rounded-[10px] h-[270px] bg-gray-400 d-block"></span>
+          </div>
+          <div class="col-auto">
+            <span class="w-[130px] rounded-[10px] h-[270px] bg-gray-400 d-block"></span>
+          </div>
+          <div class="col-auto">
+            <span class="w-[130px] rounded-[10px] h-[270px] bg-gray-400 d-block"></span>
+          </div>
+          <div class="col-auto">
+            <span class="w-[130px] rounded-[10px] h-[270px] bg-gray-400 d-block"></span>
+          </div>
+          <div class="col-auto">
+            <span class="w-[130px] rounded-[10px] h-[270px] bg-gray-400 d-block"></span>
+          </div>
+        </div>
       </div>
 
 
-      <div class="row justify-center flex-nowrap bottom-[70px] mx-auto absolute translate-middle-x left-1/2">
+      <div class="row justify-center flex-nowrap bottom-[50px] mx-auto absolute translate-middle-x left-1/2">
         <button @click.prevent="toggleCreateModal"
                 class="col-auto w-[138px] h-[51.5px] bg-[#F0FCF3] rounded-[18px] mx-[8.25px] border-solid border-1 border-[#009606] text-[#009606]">
           لغو
@@ -107,7 +124,7 @@ export default {
   data() {
     return {
       usernameInput: null,
-      step         : 0,
+      step         : 1,
     }
   },
   methods: {
