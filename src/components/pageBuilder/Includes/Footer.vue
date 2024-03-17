@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed-bottom container pb-[34px] bg-[#F9F9F9] max-w-[430px]">
+  <div class="fixed-bottom container p-[12px] pt-0 bg-[#F9F9F9] max-w-[430px]">
     <div class="section my-3 px-0 font-shabnam-bold">
       <button class="btn bg-[#009606] text-white w-100" @click.prevent="toggleCreateModal">
         ساخت صفحه
