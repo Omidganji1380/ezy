@@ -1,13 +1,14 @@
 <template>
-  <div id="appCapsule" class="h-[100vh] relative !pt-[29px] my-3">
-    <Header/>
+  <div class="h-[100vh] w-[430px] bg-green-800 -z-10 fixed"></div>
+  <div id="appCapsule" class=" relative !pt-[29px] bg-[#f9f9f9]">
+    <Header @showMenu="showMenu"/>
 
     <div class="section mt-[46px] mb-3" v-if="!profiles.length">
       <img src="/assets/img/PageBuilder/nothing.svg" class="mx-auto" alt="">
       <p class="text-center fs-4 my-4 font-shabnam-bold">هنوز صفحه ای ایجاد نکردی</p>
     </div>
 
-    <div class="pb-[170px]" v-else>
+    <div class="pb-[170px] bg-[#f9f9f9] pt-1" v-else>
       <div class="section m-[29px] px-[23px] rounded-[15px] bg-[#f9fffb] drop-shadow-md py-[16px]">
         <div class="row overflow-hidden flex-nowrap content-start bg-[#009606] h-[31px] rounded-[7px] px-[10px]">
        <span class="col-auto p-0 self-center">
@@ -140,6 +141,13 @@ export default {
     }
   },
   methods: {
+    showMenu(showMenu) {
+      if (showMenu === true) {
+        document.getElementById('appCapsule').classList.add('show-menu')
+      } else {
+        document.getElementById('appCapsule').classList.remove('show-menu')
+      }
+    },
     toggleCreateModal() {
       this.createModal = !this.createModal
     },
@@ -180,5 +188,21 @@ export default {
 </script>
 
 <style>
+.show-menu {
+  transform: scale(0.8) !important;
+  right: 60% !important;
+  overflow: auto;
+  pointer-events: none;
+  transition: all ease-in-out 300ms !important;
+  top: 20% !important;
+  height: 80vh !important;
+  padding-bottom: 0 !important;
+}
 
+#appCapsule {
+//scale: 1; right: 0; height: 100vh;
+  border-radius: 20px;
+  top: 0;
+  transition: all ease-in-out 300ms;
+}
 </style>

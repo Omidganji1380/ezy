@@ -53,5 +53,7 @@ export default {
 #app {
   max-width: 430px;
   margin: auto;
+  overflow-x: hidden;
+  height: 100vh;
 }
 </style>

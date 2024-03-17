@@ -1,6 +1,7 @@
 <template>
-  <div class="px-[34px] overflow-hidden whitespace-nowrap pt-1 mx-auto fixed-top container max-w-[430px] bg-[#f9f9f9] header-large-title row flex-nowrap justify-content-between border-b-2 pb-1 flex-row-reverse">
-      <span class="p-0 title fs-3 col-auto self-center">
+  <div
+      class="px-[34px] overflow-hidden whitespace-nowrap pt-1 mx-auto fixed-top container max-w-[430px] bg-[#f9f9f9] header-large-title row flex-nowrap justify-content-between border-b-2 pb-1 flex-row-reverse">
+      <span class="p-0 title fs-3 col-auto self-center row pointer-events-auto" @click.prevent="showMenu">
         <img src="/assets/img/PageBuilder/sidebarHambergery.png" alt="">
       </span>
     <span class="p-0 title fs-3 col-auto self-center font-shabnam-bold">
@@ -14,7 +15,18 @@
 
 <script>
 export default {
-  name: "Header"
+  name: "Header",
+  data() {
+    return {
+      sideMenu: false
+    }
+  },
+  methods: {
+    showMenu() {
+      this.sideMenu = !this.sideMenu
+      this.$emit('showMenu', this.sideMenu)
+    }
+  },
 }
 </script>
 
