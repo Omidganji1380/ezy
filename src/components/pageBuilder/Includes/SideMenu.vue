@@ -7,17 +7,34 @@
     <br>
     <span class="sticky text-white font-shabnam-medium-fd text-[22px] right-[25px]">برنامه نویس</span>
     <br>
-    <button class="sticky whitespace-nowrap right-[25px] text-[14px] h-[26px] w-[124.5px] border-1 mt-[25px] rounded-pill text-white">
+    <button class="sticky whitespace-nowrap right-[25px] my-[25px] text-[14px] h-[26px] w-[124.5px] border-1 rounded-pill text-white">
       ویرایش پروفایل
       <img src="/assets/img/PageBuilder/profile-edit-pen.svg" class="d-inline-block" alt="">
     </button>
     <br>
-    <ul class="text-white sticky right-[25px] d-inline-block mt-3">
-      <li>exit</li>
-      <li>exit</li>
+    <span class="hr bg-gradient-to-l from-[#ffffff] to-[#ffffff00]"></span>
+    <ul class="text-white sticky right-[25px] d-inline-block text-[16px]">
       <li>
-        <button @click.prevent="logoutMethod" class="btn btn-danger">exit</button>
+        <img src="/assets/img/PageBuilder/sidebar-wallet.svg" alt="">
+        کیف پول
       </li>
+      <li>
+        <img src="/assets/img/PageBuilder/sidebar-learning.svg" alt="">
+        آموزش
+      </li>
+    </ul>
+    <span class="hr bg-gradient-to-l from-[#ffffff] to-[#ffffff00]"></span>
+    <ul class="text-white sticky right-[25px] d-inline-block text-[16px]">
+      <li>
+        <img src="/assets/img/PageBuilder/sidebar-wallet.svg" alt="">
+        کیف پول
+      </li>
+      <li>
+        <img src="/assets/img/PageBuilder/sidebar-learning.svg" alt="">
+        آموزش
+      </li><li>
+      <button @click.prevent="logoutMethod" class="btn btn-danger">exit</button>
+    </li>
     </ul>
   </div>
 
@@ -59,6 +76,19 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
-
+<style scoped>
+.hr{
+  margin: 12px 0;
+  position: sticky;
+  right: 25px;
+  display: block;
+  height: 1px;
+  width: 266px;
+  //background-color: red;
+}
+ul li{
+  display: flex;
+  gap: 12px;
+  margin-bottom: 10px;
+}
 </style>

@@ -1,6 +1,6 @@
 <template>
   <SideMenu :baseURL="baseURL"/>
-  <div id="appCapsule" class=" relative !pt-[29px] bg-[#f9f9f9]">
+  <div id="appCapsule" class=" relative !pt-[29px] bg-[#f9f9f9] show-menu">
     <Header @showMenu="showMenu"/>
 
     <div class="section mt-[46px] mb-3" v-if="!profiles.length">
