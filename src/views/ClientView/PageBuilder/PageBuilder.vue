@@ -1,6 +1,6 @@
 <template>
   <SideMenu :baseURL="baseURL"/>
-  <div id="appCapsule" class=" relative !pt-[29px] bg-[#f9f9f9] show-menu">
+  <div id="appCapsule" class=" relative !pt-[29px] bg-[#f9f9f9]">
     <Header @showMenu="showMenu"/>
 
     <div class="section mt-[46px] mb-3" v-if="!profiles.length">
@@ -170,16 +170,18 @@ export default {
   right: 60% !important;
   overflow: auto;
   pointer-events: none;
-  transition: all ease-in-out 300ms !important;
+  transition: all ease-in-out 250ms !important;
   top: 20% !important;
   height: 80vh !important;
   padding-bottom: 0 !important;
+  box-shadow: 0 0 30px 0 !important;
 }
 
 #appCapsule {
 //scale: 1; right: 0; height: 100vh;
   border-radius: 20px;
   top: 0;
-  transition: all ease-in-out 300ms;
+  transition: all ease-in-out 250ms;
+  box-shadow: 0 0 0 0;
 }
 </style>
