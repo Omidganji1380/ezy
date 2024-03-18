@@ -1,5 +1,5 @@
 <template>
-  <div class="h-[100vh] w-[430px] bg-green-800 -z-10 fixed"></div>
+  <SideMenu :baseURL="baseURL"/>
   <div id="appCapsule" class=" relative !pt-[29px] bg-[#f9f9f9]">
     <Header @showMenu="showMenu"/>
 
@@ -130,10 +130,11 @@ import axios from "axios";
 import NewProfile from "@/components/pageBuilder/newProfile/NewProfile.vue";
 import Footer from "@/components/pageBuilder/Includes/Footer.vue";
 import Header from "@/components/pageBuilder/Includes/Header.vue";
+import SideMenu from "@/components/pageBuilder/Includes/SideMenu.vue";
 
 export default {
   props     : ['baseURL'],
-  components: {NewProfile, Footer, Header},
+  components: {NewProfile, Footer, Header,SideMenu},
   data() {
     return {
       createModal: false,
@@ -151,30 +152,6 @@ export default {
     toggleCreateModal() {
       this.createModal = !this.createModal
     },
-    logoutMethod() {
-      let token = localStorage.getItem('token')
-      token     = JSON.parse(token)
-      // console.log(token.id)
-      axios({
-              method : 'POST',
-              url    : this.baseURL + 'api/v1/auth/logout',
-              data   : {
-                id: token.id
-              },
-              headers: {
-                'Content-Type'                    : 'application/json',
-                'Access-Control-Allow-Credentials': true,
-              }
-            })
-          .then((res) => {
-            console.log(res)
-            if (res.data.status === 200) {
-              this.$router.push('/')
-              localStorage.removeItem('token')
-            }
-          })
-          .catch(err => console.log(err))
-    }
   },
   mounted() {
     // localStorage.storedData

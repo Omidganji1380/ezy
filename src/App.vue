@@ -32,6 +32,7 @@ export default {
     } else {
         this.$router.push('/user/page-builder');
     }
+    localStorage.setItem("MobilekitDarkMode", "0")
   },
   // mounted() {
   //   axios.create({

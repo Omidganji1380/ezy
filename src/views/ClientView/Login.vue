@@ -124,6 +124,9 @@ export default {
       this.SubmitButton = bool
     },
     showSmsCodeFormMethod:function () {
+      console.log(this.data.phone)
+      this.data.phone = this.data.phone.replace(/\s/g, '')
+      console.log(this.data.phone)
       axios({
               url    : this.baseURL + "api/v1/auth/p/" + this.data.phone,
               method : 'GET',
