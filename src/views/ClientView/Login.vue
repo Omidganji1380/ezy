@@ -74,8 +74,8 @@ export default {
   props: ['baseURL'],
   data() {
     return {
-      fadedLogo      : true,
-      showIntro      : true,
+      fadedLogo      : false,
+      showIntro      : false,
       showSmsCodeForm: false,
       phoneInput     : null,
       data           : {
@@ -272,7 +272,7 @@ export default {
   border-left: unset !important;
   border-right: unset !important;
   border-top: unset !important;
-  width: 20px;
+  width: 20px !important;
   height: unset;
 }
 
