@@ -1,11 +1,17 @@
 <template>
   <!-- App Capsule -->
-  <div id="appCapsule" class="container">
-    <img src="assets/img/logo.svg" :class="{'fade':fadedLogo}" v-if="!fadedLogo"
-         class="left-1/2 position-absolute top-1/2 -translate-x-1/2 -translate-y-1/2">
+  <div id="appCapsule" class="container d-ltr">
+    <img src="/assets/img/logo.svg" :class="{'fade':fadedLogo}" v-if="!fadedLogo"
+         class="left-1/2 position-absolute top-1/2 -translate-x-1/2 -translate-y-1/2" alt="">
     <div class="intro fade" dir="rtl" :class="{'show':showIntro}">
       <div class="header-large-title">
-        <p class="title mb-4 max-w-fit text-truncate">به <span class="text-[#009606]">ایزی کانکت</span> خوش اومدی</p>
+        <div class="row flex-nowrap justify-between">
+          <span class="col-auto mb-4  whitespace-nowrap truncate  text-[calc(1.3em+1vw)]">به <span
+              class="text-[#009606]">ایزی کانکت</span> خوش اومدی</span>
+          <span class="col-auto left-0">
+            <img src="/assets/img/PageBuilder/Login-SmsForm/fa-to-en.svg" alt="">
+          </span>
+        </div>
         <p class="subtitle mb-3 max-w-fit text-truncate" v-if="!showSmsCodeForm">برای ورود به اپلیکیشن، شماره موبایلت را
           وارد کن.</p>
         <p class="subtitle mb-3 max-w-fit text-truncate" v-else>کد 5 رقمی ارسال شده به شماره زیر را وارد کن.</p>
@@ -13,13 +19,13 @@
       <div class="section mt-3 mb-3">
         <span class="text-center my-3 row justify-center flex-nowrap cursor-pointer w-fit mx-auto"
               v-if="showSmsCodeForm" @click="showIntroForm">
-          <img src="assets/img/PageBuilder/Login-SmsForm/Edit.svg" class="d-inline-block col-auto pr-0">
-          <span class="pb-0 underline-offset-4 underline col-auto px-0">{{ data.phone }}</span>
+          <img src="/assets/img/PageBuilder/Login-SmsForm/Edit.svg" class="d-inline-block col-auto pr-0" alt="">
+          <span class="pb-0 underline-offset-4 underline col-auto px-0 d-ltr">{{ dialCode }} {{ data.phone }}</span>
         </span>
         <div class="" name="inputs">
           <input type="text" @keydown.prevent="handleInputPhoneNumber($event)" v-model="data.phone" dir="ltr"
                  id="phoneNumberInput" v-if="!this.showSmsCodeForm"
-                 class="w-100 px-0 !pl-14 fs-3 h-[56px] border-solid border-2 border-[#009606] focus-visible:outline-0 leading-10 rounded-[20px] bg-[#F0FCF3] text-[#009606]">
+                 class="w-100 text-[20px] px-0 !pl-[135px] h-[56px] border-solid border-2 border-[#009606] focus-visible:outline-0 rounded-[20px] bg-[#F0FCF3] text-[#009606]">
           <div class="" name="smsCodeForm" v-if="this.showSmsCodeForm">
             <otp @InputDigitsFull="activeSubmitButton" @otpCode="loginByOtp" :otpCodeTrue="otpCodeTrue"/>
           </div>
@@ -42,8 +48,8 @@
           </button>
         </div>
         <div name="sendSmsCodeAgain" class="mx-auto my-4 row flex-nowrap w-fit" v-if="showSmsCodeForm">
-          <img :class="{'d-none':!countDownTimer}" src="assets/img/PageBuilder/Login-SmsForm/timeCircle.svg"
-               class="d-inline-block col-auto pr-0">
+          <img :class="{'d-none':!countDownTimer}" src="/assets/img/PageBuilder/Login-SmsForm/timeCircle.svg"
+               class="d-inline-block col-auto pr-0" alt="">
           <span class="col-auto pr-0 underline-offset-8 underline" @click="otpSendAgain">
             ارسال مجدد کد
             {{ countDownTimer ? 'بعد از ' + countDownTimer : '' }}
@@ -53,6 +59,9 @@
     </div>
   </div>
   <!-- * App Capsule -->
+  <!--  <span id="arrowFlag" class="d-none">-->
+  <!--    <img src="/assets/img/PageBuilder/Login-SmsForm/arrow-select-national.svg" alt="">-->
+  <!--  </span>-->
 </template>
 
 <script>
@@ -65,8 +74,8 @@ export default {
   props: ['baseURL'],
   data() {
     return {
-      fadedLogo      : false,
-      showIntro      : false,
+      fadedLogo      : true,
+      showIntro      : true,
       showSmsCodeForm: false,
       phoneInput     : null,
       data           : {
@@ -79,15 +88,17 @@ export default {
       smsCodeSent    : null,
       x              : null,
       otpCodeTrue    : true,
+      dialCode       : null,
     }
   },
   updated() {
     // alert(this.baseURL + 'auth/' + this.data.phone)
+
   },
   components: {otp},
   methods   : {
-    otpSendAgain(){
-      if (!this.countDownTimer){
+    otpSendAgain() {
+      if (!this.countDownTimer) {
         this.showSmsCodeFormMethod()
       }
     },
@@ -123,19 +134,20 @@ export default {
     activeSubmitButton(bool) {
       this.SubmitButton = bool
     },
-    showSmsCodeFormMethod:function () {
-      console.log(this.data.phone)
-      this.data.phone = this.data.phone.replace(/\s/g, '')
+    showSmsCodeFormMethod: function () {
+      this.dialCode = document.querySelector('.iti__selected-dial-code').innerHTML
+      var phone = this.dialCode + this.data.phone;
+      phone     = this.data.phone.replace(/\s/g, '')
       console.log(this.data.phone)
       axios({
               url    : this.baseURL + "api/v1/auth/p/" + this.data.phone,
               method : 'GET',
               headers: {
-                'Content-Type'                    : 'application/json',
+                'Content-Type': 'application/json',
                 // 'Access-Control-Allow-Credentials': true,
               },
               data   : {
-                phone: this.data.phone
+                phone: phone
               }
             })
           .then((res) => {
@@ -166,15 +178,17 @@ export default {
       this.showSmsCodeForm = false;
       setTimeout(() => {
         this.intlTelInput()
-      }, 100)
+        this.addArrow()
+      }, 10)
     },
     intlTelInput() {
       const phoneInputField = document.querySelector("#phoneNumberInput");
       this.phoneInput       = window.intlTelInput(phoneInputField, {
-        showSelectedDialCode : false,
+        showSelectedDialCode : true,
         autoInsertDialCode   : false,
         formatOnDisplay      : false,
         placeholderNumberType: 'MOBILE',
+        nationalMode         : false,
         useFullscreenPopup   : true,
         initialCountry       : "ir",
         utilsScript          : "https://cdn.jsdelivr.net/npm/intl-tel-input@19.5.6/build/js/utils.js"
@@ -207,6 +221,16 @@ export default {
         this.data.phone += event.key;
       }
     },
+    addArrow() {
+      var el       = document.createElement('div')
+      el.className = 'iti__arrow'
+      el.innerHTML = "<img src=\"/assets/img/PageBuilder/Login-SmsForm/arrow-select-national.svg\" alt=\"\">"
+      var flag     = document.querySelector('.iti__flag')
+
+      flag.parentNode.insertBefore(el, flag.nextSibling);
+      var arrow = document.querySelector('.iti__selected-flag')
+      arrow.lastChild.remove()
+    }
   },
 
   mounted() {
@@ -217,6 +241,8 @@ export default {
       this.fadedLogo = true
     }, 1500)
     this.intlTelInput()
+
+    this.addArrow()
 
   },
 }
@@ -241,13 +267,19 @@ export default {
 }
 
 .iti__arrow {
-  margin: 0 10px !important;
-  display: none !important;
+  margin-left: 14.34px !important;
+  margin-right: 9px !important;
+  border-left: unset !important;
+  border-right: unset !important;
+  border-top: unset !important;
+  width: 20px;
+  height: unset;
 }
 
 .iti__flag {
   scale: 1.5;
   margin-left: 5px;
+  border-radius: 3.68px;
 }
 
 .iti__selected-flag {
@@ -255,8 +287,10 @@ export default {
 }
 
 .iti__selected-dial-code {
-  margin-left: 15px !important;
-  font-size: 20px;
+  font-size: 20px !important;
+  border-left: 1px solid #ddd !important;
+  padding-left: 3px;
+  color: #009606;
 }
 
 .iti__country.iti__standard {

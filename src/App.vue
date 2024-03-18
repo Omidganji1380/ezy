@@ -57,4 +57,10 @@ export default {
   overflow-x: hidden;
   height: 100vh;
 }
+.d-ltr{
+  direction: ltr !important;
+}
+.d-rtl{
+  direction: rtl !important;
+}
 </style>
