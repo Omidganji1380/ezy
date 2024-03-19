@@ -1,6 +1,6 @@
 <template>
-  <Fa v-if="lang==='fa'"/>
-  <En v-if="lang==='en'"/>
+  <Fa v-if="lang==='fa'" :baseURL="baseURL"/>
+  <En v-if="lang==='en'" :baseURL="baseURL"/>
 </template>
 
 <script>
@@ -15,7 +15,8 @@ export default {
   },
   data() {
     return {
-      lang: useStorage('lang').value
+      lang: useStorage('lang').value,
+      baseURL: this.baseURL,
     }
   },
   props: ['baseURL', 'lang'],
