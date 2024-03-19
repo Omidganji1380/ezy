@@ -3,7 +3,7 @@
     <input
         type="number" @keydown.prevent="handleKeyDown($event, ind)"
         :class="{'!text-red-600 !border-red-600':otpCodeTrue}"
-        class="digit-box w-[56px] text-center fs-3 h-[56px] border-solid border-2 border-[#009606] focus-visible:outline-0 leading-10 rounded-[20px] bg-[#F0FCF3] text-[#009606]"
+        class="digit-box w-[56px] text-center fs-3 h-[56px] border-solid border-2 border-pri-color focus-visible:outline-0 leading-10 rounded-[20px] bg-sec-color text-pri-color"
         v-for="(el, ind) in digits"
         :key="el+ind"
         v-model="digits[ind]"

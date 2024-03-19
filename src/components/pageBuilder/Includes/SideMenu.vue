@@ -1,5 +1,5 @@
 <template>
-  <div class="h-[100vh] w-[430px] bg-gradient-to-br from-[#009606] to-[#009E28] fixed pr-[25px]" dir="rtl">
+  <div class="h-[100vh] w-[430px] bg-gradient-to-br from-pri-color to-[#009E28] fixed pr-[25px]" dir="rtl">
     <span
         class="border-1 w-[50px] h-[50px] bg-[#62df85] mb-[55px] d-block sticky right-[25px] top-[47px] rounded-circle">
       <img src="" alt="">

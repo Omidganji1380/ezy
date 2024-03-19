@@ -2,7 +2,7 @@
   <!--  <AppHeader/>-->
   <!--  <AppBottomMenu/>-->
 
-  <router-view :baseURL="baseURL"/>
+  <router-view :baseURL="baseURL" :lang="lang"/>
   <BaseJs/>
 </template>
 
@@ -10,6 +10,7 @@
 import BaseJs from '@/components/baseJs/BaseJs.vue'
 import AppBottomMenu from '@/components/ClientIncludes/AppBottomMenu.vue'
 import AppHeader from "@/components/ClientIncludes/AppHeader.vue";
+import {useStorage} from '@vueuse/core';
 import axios from "axios";
 // axios.create({
 //                baseURL: '127.0.0.1:8000'
@@ -21,24 +22,33 @@ export default {
   },
   data() {
     return {
-      baseURL: 'https://ezy.company/'
+      baseURL: 'https://ezy.company/',
+      lang   : null
     }
   },
   beforeMount() {
-    const token=localStorage.getItem('token');
-    console.log(token)
+    const token = localStorage.getItem('token');
     if (!token) {
-        this.$router.push('/');
+      this.$router.push('/');
     } else {
-        this.$router.push('/user/page-builder');
+      this.$router.push('/user/page-builder');
     }
     localStorage.setItem("MobilekitDarkMode", "0")
   },
-  // mounted() {
-  //   axios.create({
-  //                  baseURL: '127.0.0.1:8000'
-  //                })
-  // },
+  mounted() {
+    // localStorage.removeItem('lang')
+    useStorage('lang', 'en')
+    var lang = useStorage('lang').value
+
+    // console.log(lang)
+    if (lang === 'en') {
+      useStorage('lang', 'en')
+    } else {
+      useStorage('lang', 'fa')
+    }
+    this.lang = lang
+
+  },
 }
 </script>
 
@@ -57,10 +67,5 @@ export default {
   overflow-x: hidden;
   height: 100vh;
 }
-.d-ltr{
-  direction: ltr !important;
-}
-.d-rtl{
-  direction: rtl !important;
-}
+
 </style>
