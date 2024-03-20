@@ -6,7 +6,7 @@
     <div class="intro fade" dir="rtl" :class="{'show':showIntro}">
       <div class="header-large-title">
         <div
-             class="row flex-nowrap justify-between flex-row-reverse">
+            class="row flex-nowrap justify-between flex-row-reverse">
           <span class="col-auto mb-4 whitespace-nowrap truncate text-[calc(1.4em+0.5vw)]">
             Welcome to
             <span class="text-pri-color">
@@ -44,7 +44,7 @@
           <a href="#" class="text-[#6772E5]">
             rules and regulations.
           </a>
-          </p>
+        </p>
         <div class="text-center mt-3">
           <button @click.prevent="showSmsCodeFormMethod" v-if="!showSmsCodeForm"
                   class="rounded-[20px] h-[56px] w-[170px] text-sec-color bg-pri-color">
@@ -81,7 +81,7 @@ import {useStorage} from "@vueuse/core";
 
 export default {
   name : 'En',
-  props: ['baseURL', 'lang'],
+  props: ['lang'],
   data() {
     return {
       fadedLogo      : true,
@@ -122,7 +122,7 @@ export default {
       } else {
         this.otpCodeTrue = false;
         axios({
-                url    : this.baseURL + 'api/v1/auth/login',
+                url    : 'v1/auth/login',
                 method : 'post',
                 headers: {
                   'Content-Type'                    : 'application/json',
@@ -153,8 +153,8 @@ export default {
       phone         = this.data.phone.replace(/\s/g, '')
       console.log(this.data.phone)
       axios({
-              url    : this.baseURL + "api/v1/auth/p/" + this.data.phone,
-              method : 'GET',
+              url    : "v1/auth/p",
+              method : 'POST',
               headers: {
                 'Content-Type': 'application/json',
                 // 'Access-Control-Allow-Credentials': true,

@@ -1,5 +1,5 @@
 <template>
-  <SideMenu :baseURL="baseURL"/>
+  <SideMenu/>
   <div id="appCapsule" class=" relative !pt-[29px] bg-[#f9f9f9]">
     <Header @showMenu="showMenu"/>
 
@@ -9,7 +9,64 @@
     </div>
 
     <div class="pb-[170px] bg-[#f9f9f9] pt-1" v-else>
-      <div class="section m-[29px] px-[23px] rounded-[15px] bg-[#f9fffb] drop-shadow-md py-[16px]">
+      <!--
+            <div class="section m-[29px] px-[23px] rounded-[15px] bg-[#f9fffb] drop-shadow-md py-[16px]">
+              <div class="row overflow-hidden flex-nowrap content-start bg-pri-color h-[31px] rounded-[7px] px-[10px]">
+             <span class="col-auto p-0 self-center">
+                <img src="/assets/img/PageBuilder/copy-profile-url.svg" alt="">
+             </span>
+                <span class="col-auto py-0 self-center px-1">
+                <img src="/assets/img/PageBuilder/share-profile-url.svg" alt="">
+             </span>
+                <span class="col-auto p-0 border-[#92929277] border-l-[1px] my-1"> </span>
+                <span class="col-auto py-0 text-white self-center text-[12px] px-[8px]">ezy.company/Omid</span>
+                <span class="col-auto p-0 text-white self-center ml-auto text-[12.7px]">رایگان</span>
+              </div>
+              <div class="row overflow-hidden mt-[15px] content-end flex-nowrap" dir="rtl">
+              <span class="col-auto p-0">
+                <img src="/assets/img/PageBuilder/demoImg.jpg" class="w-[91px] h-[91px] rounded-circle" alt="">
+              </span>
+                <div class="col-auto py-0 self-center pl-0 pr-[8px] max-w-[100%] text-truncate">
+                  <p class="font-shabnam-fd-wol text-[18px] pr-[8px]">امید گنجی</p>
+                  <p class="font-shabnam-light-fd text-[16px]">برنامه نویس asdasdasdada sdsadasdasd </p>
+                </div>
+              </div>
+              <div class="row gap-x-10">
+                <button
+                    class="col-12 whitespace-nowrap overflow-hidden mt-[30px] mb-[20px] h-[39px] bg-sec-color rounded-[7px] border-solid border-1 border-pri-color text-pri-color">
+                  دسته بندی و مشاوره رایگان
+                </button>
+                <div class="col-12">
+                  <div class="row flex-nowrap w-[99%]">
+                    <button
+                        class="whitespace-nowrap overflow-hidden col-6 mr-[10px] text-right px-0 mb-[8px] h-[52px] bg-sec-color rounded-[7px] border-solid border-1 border-pri-color text-pri-color">
+                      حساب تجاری
+                      <img src="/assets/img/PageBuilder/diamond.svg" class="d-inline mx-[10px] max-h-[17.5px]" alt="">
+                    </button>
+                    <button
+                        class="whitespace-nowrap overflow-hidden col-6 ml-[10px] text-right px-0 mb-[8px] h-[52px] bg-sec-color rounded-[7px] border-solid border-1 border-pri-color text-pri-color">
+                      ذخیره خودکار
+                      <img src="/assets/img/PageBuilder/vcf.svg" class="d-inline mx-[10px] max-h-[17.5px]" alt="">
+                    </button>
+                  </div>
+                  <div class="row flex-nowrap w-[99%]">
+                    <button
+                        class="whitespace-nowrap overflow-hidden col-6 mr-[10px] text-right px-0 h-[52px] bg-sec-color rounded-[7px] border-solid border-1 border-pri-color text-pri-color">
+                      پیش نمایش
+                      <img src="/assets/img/PageBuilder/preview-eye.svg" class="d-inline mx-[10px] max-h-[17.5px]" alt="">
+                    </button>
+                    <button
+                        class="whitespace-nowrap overflow-hidden col-6 ml-[10px] text-right px-0 h-[52px] bg-sec-color rounded-[7px] border-solid border-1 border-pri-color text-pri-color">
+                      ویرایش
+                      <img src="/assets/img/PageBuilder/pen-edit.svg" class="d-inline mx-[10px] max-h-[17.5px]" alt="">
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+      -->
+      <div class="section m-[29px] px-[23px] rounded-[15px] bg-[#f9fffb] drop-shadow-md py-[16px]"
+           v-for="(profile,index) in profiles" :key="index">
         <div class="row overflow-hidden flex-nowrap content-start bg-pri-color h-[31px] rounded-[7px] px-[10px]">
        <span class="col-auto p-0 self-center">
           <img src="/assets/img/PageBuilder/copy-profile-url.svg" alt="">
@@ -18,70 +75,18 @@
           <img src="/assets/img/PageBuilder/share-profile-url.svg" alt="">
        </span>
           <span class="col-auto p-0 border-[#92929277] border-l-[1px] my-1"> </span>
-          <span class="col-auto py-0 text-white self-center text-[12px] px-[8px]">ezy.company/Omid</span>
+          <span class="col-auto py-0 text-white self-center text-[12px] px-[8px]">{{
+              ezyLink + profileLinks[index]
+            }}</span>
           <span class="col-auto p-0 text-white self-center ml-auto text-[12.7px]">رایگان</span>
         </div>
         <div class="row overflow-hidden mt-[15px] content-end flex-nowrap" dir="rtl">
         <span class="col-auto p-0">
-          <img src="/assets/img/PageBuilder/demoImg.jpg" class="w-[91px] h-[91px] rounded-circle" alt="">
+          <img :src="profileImgs[index]" class="w-[91px] h-[91px] rounded-circle object-cover" alt=" ">
         </span>
           <div class="col-auto py-0 self-center pl-0 pr-[8px] max-w-[100%] text-truncate">
-            <p class="font-shabnam-fd-wol text-[18px] pr-[8px]">امید گنجی</p>
-            <p class="font-shabnam-light-fd text-[16px]">برنامه نویس asdasdasdada sdsadasdasd </p>
-          </div>
-        </div>
-        <div class="row gap-x-10">
-          <button
-              class="col-12 whitespace-nowrap overflow-hidden mt-[30px] mb-[20px] h-[39px] bg-sec-color rounded-[7px] border-solid border-1 border-pri-color text-pri-color">
-            دسته بندی و مشاوره رایگان
-          </button>
-          <div class="col-12">
-            <div class="row flex-nowrap w-[99%]">
-              <button
-                  class="whitespace-nowrap overflow-hidden col-6 mr-[10px] text-right px-0 mb-[8px] h-[52px] bg-sec-color rounded-[7px] border-solid border-1 border-pri-color text-pri-color">
-                حساب تجاری
-                <img src="/assets/img/PageBuilder/diamond.svg" class="d-inline mx-[10px] max-h-[17.5px]" alt="">
-              </button>
-              <button
-                  class="whitespace-nowrap overflow-hidden col-6 ml-[10px] text-right px-0 mb-[8px] h-[52px] bg-sec-color rounded-[7px] border-solid border-1 border-pri-color text-pri-color">
-                ذخیره خودکار
-                <img src="/assets/img/PageBuilder/vcf.svg" class="d-inline mx-[10px] max-h-[17.5px]" alt="">
-              </button>
-            </div>
-            <div class="row flex-nowrap w-[99%]">
-              <button
-                  class="whitespace-nowrap overflow-hidden col-6 mr-[10px] text-right px-0 h-[52px] bg-sec-color rounded-[7px] border-solid border-1 border-pri-color text-pri-color">
-                پیش نمایش
-                <img src="/assets/img/PageBuilder/preview-eye.svg" class="d-inline mx-[10px] max-h-[17.5px]" alt="">
-              </button>
-              <button
-                  class="whitespace-nowrap overflow-hidden col-6 ml-[10px] text-right px-0 h-[52px] bg-sec-color rounded-[7px] border-solid border-1 border-pri-color text-pri-color">
-                ویرایش
-                <img src="/assets/img/PageBuilder/pen-edit.svg" class="d-inline mx-[10px] max-h-[17.5px]" alt="">
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="section m-[29px] px-[23px] rounded-[15px] bg-[#f9fffb] drop-shadow-md py-[16px]">
-        <div class="row overflow-hidden flex-nowrap content-start bg-pri-color h-[31px] rounded-[7px] px-[10px]">
-       <span class="col-auto p-0 self-center">
-          <img src="/assets/img/PageBuilder/copy-profile-url.svg" alt="">
-       </span>
-          <span class="col-auto py-0 self-center px-1">
-          <img src="/assets/img/PageBuilder/share-profile-url.svg" alt="">
-       </span>
-          <span class="col-auto p-0 border-[#92929277] border-l-[1px] my-1"> </span>
-          <span class="col-auto py-0 text-white self-center text-[12px] px-[8px]">ezy.company/Omid</span>
-          <span class="col-auto p-0 text-white self-center ml-auto text-[12.7px]">رایگان</span>
-        </div>
-        <div class="row overflow-hidden mt-[15px] content-end flex-nowrap" dir="rtl">
-        <span class="col-auto p-0">
-          <img src="/assets/img/PageBuilder/demoImg.jpg" class="w-[91px] h-[91px] rounded-circle" alt="">
-        </span>
-          <div class="col-auto py-0 self-center pl-0 pr-[8px] max-w-[100%] text-truncate">
-            <p class="font-shabnam-fd-wol text-[18px] pr-[8px]">امید گنجی</p>
-            <p class="font-shabnam-light-fd text-[16px]">برنامه نویس asdasdasdada sdsadasdasd </p>
+            <p class="font-shabnam-fd-wol text-[18px] pr-[8px]">{{ profileTitles[index] }}</p>
+            <p class="font-shabnam-light-fd text-[16px]">{{ profileSubtitles[index] }}</p>
           </div>
         </div>
         <div class="row gap-x-10">
@@ -131,14 +136,19 @@ import NewProfile from "@/components/pageBuilder/newProfile/NewProfile.vue";
 import Footer from "@/components/pageBuilder/Includes/Footer.vue";
 import Header from "@/components/pageBuilder/Includes/Header.vue";
 import SideMenu from "@/components/pageBuilder/Includes/SideMenu.vue";
+import {trim} from "core-js/internals/string-trim";
 
 export default {
-  props     : ['baseURL'],
-  components: {NewProfile, Footer, Header,SideMenu},
+  components: {NewProfile, Footer, Header, SideMenu},
   data() {
     return {
-      createModal: false,
-      profiles   : [''],
+      createModal     : false,
+      profiles        : [],
+      profileImgs     : {},
+      profileTitles   : {},
+      profileSubtitles: {},
+      profileLinks    : {},
+      ezyLink         : '',
     }
   },
   methods: {
@@ -150,17 +160,56 @@ export default {
       }
     },
     toggleCreateModal() {
-      this.createModal = !this.createModal
+      // this.createModal = !this.createModal
     },
+    getProfileImg(profile) {
+      // console.log(JSON.(profile))
+      // var img = '';
+      axios({
+              url   : 'v1/dashboard/getImg',
+              method: 'POST',
+              data  : {
+                profile: JSON.stringify(profile)
+              }
+            })
+          .then(res => {
+            // res.data;
+            console.log(res.data)
+            console.log(res)
+
+          })
+
+          .catch(err => console.log(err))
+      // console.log(return img)
+      // return null;
+    }
   },
   mounted() {
-    // localStorage.storedData
-    // localStorage.setItem('token',[omid=>'omid',])
-    var a = JSON.parse(localStorage.getItem('token'))
+    var userToken = JSON.parse(localStorage.getItem('token'))
+    // console.log(userToken)
+    // console.log(userToken.id)
+    axios({
+            url   : 'v1/dashboard',
+            method: 'POST',
+            data  : {
+              userId: userToken.id
+            }
+          })
+        .then(res => {
+          console.log(res.data)
+          this.profiles         = res.data.profiles
+          this.profileImgs      = res.data.profileImgs
+          this.profileTitles    = res.data.profileTitles
+          this.profileSubtitles = res.data.profileSubtitles
+          this.profileLinks     = res.data.profileLinks
+        })
+        .catch(err => console.log(err))
 
-    console.log(a)
-
+    this.ezyLink = axios.defaults.baseURL;
+    this.ezyLink = this.ezyLink.replace(/(^\w+:|^)\/\//, '');
+    this.ezyLink = this.ezyLink.replace('api/', '')
   },
+
 }
 </script>
 
@@ -178,10 +227,6 @@ export default {
 }
 
 #appCapsule {
-//scale: 1; right: 0; height: 100vh;
-  border-radius: 20px;
-  top: 0;
-  transition: all ease-in-out 250ms;
-  box-shadow: 0 0 0 0;
+//scale: 1; right: 0; height: 100vh; border-radius: 20px; top: 0; transition: all ease-in-out 250ms; box-shadow: 0 0 0 0;
 }
 </style>

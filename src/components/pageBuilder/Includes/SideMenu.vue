@@ -67,7 +67,6 @@ import axios from "axios";
 
 export default {
   name   : "SideMenu",
-  props  : ['baseURL'],
   methods: {
     logoutMethod() {
 
@@ -76,7 +75,7 @@ export default {
       // console.log(token.id)
       axios({
               method : 'POST',
-              url    : this.baseURL + 'api/v1/auth/logout',
+              url    :  'v1/auth/logout',
               data   : {
                 id: token.id
               },

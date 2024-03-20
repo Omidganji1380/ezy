@@ -74,7 +74,7 @@ import {useStorage} from "@vueuse/core";
 
 export default {
   name : 'Fa',
-  props: ['baseURL', 'lang'],
+  props: ['lang'],
   data() {
     return {
       fadedLogo      : true,
@@ -115,7 +115,7 @@ export default {
       } else {
         this.otpCodeTrue = false;
         axios({
-                url    : this.baseURL + 'api/v1/auth/login',
+                url    :  'v1/auth/login',
                 method : 'post',
                 headers: {
                   'Content-Type'                    : 'application/json',
@@ -146,8 +146,8 @@ export default {
       phone         = this.data.phone.replace(/\s/g, '')
       console.log(this.data.phone)
       axios({
-              url    : this.baseURL + "api/v1/auth/p/" + this.data.phone,
-              method : 'GET',
+              url    : "v1/auth/p",
+              method : 'POST',
               headers: {
                 'Content-Type': 'application/json',
                 // 'Access-Control-Allow-Credentials': true,

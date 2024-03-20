@@ -2,7 +2,7 @@
   <!--  <AppHeader/>-->
   <!--  <AppBottomMenu/>-->
 
-  <router-view :baseURL="baseURL" :lang="lang"/>
+  <router-view :lang="lang"/>
   <BaseJs/>
 </template>
 
@@ -22,7 +22,6 @@ export default {
   },
   data() {
     return {
-      baseURL: 'https://ezy.company/',
       lang   : null
     }
   },
