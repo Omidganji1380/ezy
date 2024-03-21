@@ -28,9 +28,9 @@ class Auth extends Controller
     public $sendAgainTime = 120;
     public $phone;
 
-    public function sendSms($phone)
+    public function sendSms(Request $request)
     {
-        $this->phone = $phone;
+        $this->phone = $request->phone;
 //        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()[]-_+=|":;>,<`~';
 //        $charactersLength = strlen($characters);
 //        $randomString = '';
@@ -41,19 +41,17 @@ class Auth extends Controller
 //        dd($randomString);
 //        dd($phone);
         $this->__construct();
-        $reqTime = SmsRequest::query()->where('phone', $phone)->latest()->first();
+        $reqTime = SmsRequest::query()->where('phone', $this->phone)->latest()->first();
         if ($reqTime) {
             $expire = Carbon::parse($reqTime->created_at)->addMinutes(2) >= now();
             $time   = Carbon::parse($reqTime->created_at)->addMinutes(2)->diffInSeconds();
-//            dd($time);
             if ($expire) {
                 $this->sendAgainTime = $time + 1;
-//                $this->addError('smsCode', 'لطفا بعد از ' . ($time + 1) . ' دقیقه مجددا تلاش کنید' . ' یا آخرین کد ارسال شده را وارد کنید');
             }
             $this->smsCodeSent = $reqTime->code;
         }
         else {
-            $p    = $phone;
+            $p    = $this->phone;
             $code = rand(11111, 99999);
             SmsRequest::query()->create([
                 'phone' => $p,
@@ -64,16 +62,12 @@ class Auth extends Controller
             $send->Verify($p, 749726, [$parameter]);
             $this->smsCodeSent = $code;
         }
-//        dd($time);
 
         $data = [
             'sendAgainTime' => $this->sendAgainTime,
             'smsCodeSent'   => $this->smsCodeSent,
             'status'        => 200
         ];
-//        dd($this->sendAgainTime, $response);
-
-//        return $response;
         return response()->json($data);
     }
 

@@ -26,9 +26,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //    return response()->json($users);
 //});
 Route::group(['prefix' => '/v1/auth'], function () {
-    Route::get('p/{phone}', ['\App\Http\Controllers\api\v1\Auth', 'sendSms']);
+    Route::post('p', ['\App\Http\Controllers\api\v1\Auth', 'sendSms']);
     Route::post('login', '\App\Http\Controllers\api\v1\Auth@login');
     Route::post('logout', '\App\Http\Controllers\api\v1\Auth@logout');
+});
+Route::group(['prefix' => '/v1/dashboard'], function () {
+    Route::post('/', '\App\Http\Controllers\api\v1\PageBuilder\Dashboard@getProfiles');
+    Route::post('/getImg', '\App\Http\Controllers\api\v1\PageBuilder\Dashboard@getProfileImg');
 });
 
 //$token = 'FX)zt6(T@Pt`,%-[Pb00j`|L7Cj6+*f';
