@@ -36,8 +36,12 @@
         <div class="row">
           <div class="col-12">
             <label for="coverImage"
-                   class="d-block bg-[#F0FCF3] relative rounded-b-[80px] h-[100px] mx-[25px] border-solid border-1 border-[#009606]">
-              <div class="row top-[40%] flex-nowrap overflow-hidden left-1/2 translate-middle absolute" dir="rtl">
+                   class="d-block overflow-hidden bg-[#F0FCF3] relative rounded-b-[80px] h-[100px] mx-[25px] border-solid border-1 border-[#009606]">
+              <img :src="coverImagePreview" :class="{'opacity-0':!coverImagePreview}" class="object-cover w-full h-full" alt="">
+
+              <div :class="{'d-none':coverImagePreview}"
+                  class="row top-[40%] flex-nowrap overflow-hidden left-1/2 translate-middle absolute"
+                   dir="rtl">
                 <div class="col-auto p-0 !pl-[6px]">
                   <img src="/assets/img/PageBuilder/upload-cover.svg" width="22" height="22" alt="">
                 </div>
@@ -47,12 +51,17 @@
               </div>
 
             </label>
-            <label for="profileImage"
+            <label for="profileImage" :class="{'overflow-hidden':profileImagePreview}"
                    class="d-block mx-auto bg-[#F0FCF3] rounded-circle relative -top-[20%] h-[120px] max-w-[120px] border-solid border-1 border-[#009606]">
-              <img src="/assets/img/PageBuilder/upload-cover.svg" class="top-1/2 left-1/2 translate-middle absolute"
+              <img :src="profileImagePreview" :class="{'opacity-0':!profileImagePreview}" class="object-cover w-full h-full" alt="">
+
+              <img src="/assets/img/PageBuilder/upload-cover.svg" :class="{'d-none':profileImagePreview}"
+                   class="top-1/2 left-1/2 translate-middle absolute"
                    width="30" height="30" alt="">
-              <span class="bg-[#009606] w-[31px] h-[31px] d-block bottom-0 right-0 absolute rounded-circle">
-                <img src="/assets/img/PageBuilder/upload-image-camera.svg" class="top-1/2 left-1/2 translate-middle absolute"
+              <span :class="{'d-none':profileImagePreview}"
+                  class="bg-[#009606] w-[31px] h-[31px] d-block bottom-0 right-0 absolute rounded-circle">
+                <img src="/assets/img/PageBuilder/upload-image-camera.svg"
+                     class="top-1/2 left-1/2 translate-middle absolute"
                      width="14" height="11" alt="">
               </span>
             </label>
@@ -60,7 +69,7 @@
         </div>
         <div class="row px-[55px]">
           <div class="col-12 mb-[18px]">
-            <input type="text" placeholder="عنوان"
+            <input type="text" placeholder="عنوان" v-model="title"
                    class="col-auto w-100 text-center px-0.5 h-[34px] rounded-pill border-solid border-1 border-[#009606] focus-visible:outline-0 leading-10 rounded-[20px] bg-[#F0FCF3] text-[#009606]">
           </div>
           <div class="col-12 mb-[18px]">
@@ -70,7 +79,8 @@
           <div class="col-12 mb-[18px] relative overflow-hidden">
             <input type="text" placeholder="جستجو مثال املاک"
                    class="col-auto w-100 text-center px-0.5 h-[34px] rounded-pill border-solid border-1 border-[#009606] focus-visible:outline-0 leading-10 rounded-[20px] bg-[#F0FCF3] text-[#009606]">
-            <img src="/assets/img/PageBuilder/template-search.svg" class="top-1/2 left-[13.5px] translate-middle-y absolute"
+            <img src="/assets/img/PageBuilder/template-search.svg"
+                 class="top-1/2 left-[13.5px] translate-middle-y absolute"
                  width="13" height="13" alt="">
           </div>
         </div>
@@ -107,8 +117,10 @@
       </div>
     </div>
 
-    <input type="file" class="d-none" id="coverImage">
-    <input type="file" class="d-none" id="profileImage">
+    <input type="file" class="d-none" @input="event => coverImage = event.target.files[0]" id="coverImage"
+           v-on:change="setImg">
+    <input type="file" class="d-none" @input="event => profileImage = event.target.files[0]" id="profileImage"
+           v-on:change="setImg">
   </div>
 
 </template>
@@ -123,11 +135,31 @@ export default {
   },
   data() {
     return {
-      usernameInput: null,
-      step         : 0,
+      usernameInput      : null,
+      step               : 0,
+      coverImage         : null,
+      profileImage       : null,
+      coverImagePreview  : null,
+      profileImagePreview: null,
+      title              : null,
     }
   },
+  updated() {
+
+
+    // if (this.profileImage){
+    //   alert('asd')
+    // }
+  },
   methods: {
+    setImg() {
+      if (this.coverImage) {
+        this.coverImagePreview = URL.createObjectURL(this.coverImage)
+      }
+      if (this.profileImage) {
+        this.profileImagePreview = URL.createObjectURL(this.profileImage)
+      }
+    },
     toggleCreateModal() {
       this.step = 0
       this.$emit('toggleCreateModal', false)

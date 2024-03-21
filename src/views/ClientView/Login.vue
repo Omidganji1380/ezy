@@ -48,7 +48,7 @@ export default {
   border-right: unset !important;
   border-top: unset !important;
   width: 20px !important;
-  height: unset;
+  height: unset !important;
 }
 
 .iti__flag {

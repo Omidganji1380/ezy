@@ -2,11 +2,20 @@ const {defineConfig} = require('@vue/cli-service')
 const webpack        = require('webpack');
 
 module.exports = defineConfig({
-                                  devServer            : {
+                                  // pages: {
+                                  //     index: {
+                                  //         // entry for the page
+                                  //         entry: 'src/main.js',
+                                  //         title: 'EZY',
+                                  //     },
+                                  // },
+
+                                  devServer: {
                                       client: {
-                                          overlay:false
+                                          overlay: false
                                       }
                                   },
+
                                   transpileDependencies: true,
                                   chainWebpack         : config => {
                                       config.module
@@ -20,7 +29,8 @@ module.exports = defineConfig({
                                                 return options
                                             })
                                   },
-                                  configureWebpack     : {
+
+                                  configureWebpack: {
                                       plugins: [
                                           new webpack.DefinePlugin({
                                                                        // Vue CLI is in maintenance mode, and probably won't merge my PR to fix this in their tooling
