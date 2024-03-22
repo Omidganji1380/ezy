@@ -2,7 +2,7 @@
   <!--  <AppHeader/>-->
   <!--  <AppBottomMenu/>-->
 
-  <router-view :lang="lang"/>
+  <router-view/>
   <BaseJs/>
 </template>
 
@@ -20,33 +20,38 @@ export default {
   components: {
     BaseJs, AppBottomMenu, AppHeader
   },
-  data() {
-    return {
-      lang   : null
+  methods   : {
+    checkToken() {
+      const token = localStorage.getItem('token');
+      // console.log(token)
+      if (!token && this.$route.name === 'ClientView_PageBuilder') {
+        this.$router.push({name: 'ClientView_Index'});
+      }
+      if (token && this.$route.name === 'ClientView_Index') {
+        this.$router.push({name: 'ClientView_PageBuilder'});
+      }
+    },
+    checkLang() {
+      // localStorage.removeItem('lang')
+      useStorage('lang', 'en')
+      var lang = useStorage('lang').value
+
+      // console.log(lang)
+      if (lang === 'en') {
+        useStorage('lang', 'en')
+      } else {
+        useStorage('lang', 'fa')
+      }
     }
   },
   beforeMount() {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      this.$router.push('/');
-    } else {
-      this.$router.push('/user/page-builder');
-    }
+    setTimeout(() => {
+      this.checkToken()
+    }, 10)
     localStorage.setItem("MobilekitDarkMode", "0")
   },
   mounted() {
-    // localStorage.removeItem('lang')
-    useStorage('lang', 'en')
-    var lang = useStorage('lang').value
-
-    // console.log(lang)
-    if (lang === 'en') {
-      useStorage('lang', 'en')
-    } else {
-      useStorage('lang', 'fa')
-    }
-    this.lang = lang
-
+    this.checkLang()
   },
 }
 </script>
@@ -66,5 +71,8 @@ export default {
   overflow-x: hidden;
   height: 100vh;
 }
-
+a:hover{
+  color: var(--pri-color);
+  cursor: pointer;
+}
 </style>

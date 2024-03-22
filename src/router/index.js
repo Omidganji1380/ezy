@@ -1,6 +1,7 @@
 import {createRouter, createWebHistory} from 'vue-router'
 import Login from '../views/ClientView/Login.vue'
 import PageBuilder from '../views/ClientView/PageBuilder/PageBuilder.vue'
+import Preview from "@/views/ClientView/PageBuilder/Preview/Preview.vue";
 
 const routes = [
     {
@@ -8,7 +9,14 @@ const routes = [
         name     : 'ClientView_Index',
         component: Login,
         props    : true
-    }, {
+    },
+    {
+        path     : '/:link',
+        name     : 'ClientView_Preview',
+        component: Preview,
+        props    : true
+    },
+    {
         path     : '/user/page-builder',
         name     : 'ClientView_PageBuilder',
         component: PageBuilder,

@@ -16,10 +16,8 @@ export default {
   data() {
     return {
       lang: useStorage('lang').value,
-      // baseURL: this.baseURL,
     }
   },
-  props: [ 'lang'],
 }
 </script>
 

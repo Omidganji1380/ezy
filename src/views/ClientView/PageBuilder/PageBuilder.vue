@@ -40,28 +40,28 @@
           </button>
           <div class="col-12">
             <div class="row flex-nowrap w-[99%]">
-              <button
-                  class="whitespace-nowrap overflow-hidden col-6 mr-[10px] text-right px-0 mb-[8px] h-[52px] bg-sec-color rounded-[7px] border-solid border-1 border-pri-color text-pri-color">
+              <a
+                  class="flex justify-end items-center whitespace-nowrap overflow-hidden col-6 mr-[10px] text-right px-0 mb-[8px] h-[52px] bg-sec-color rounded-[7px] border-solid border-1 border-pri-color text-pri-color">
                 حساب تجاری
                 <img src="/assets/img/PageBuilder/diamond.svg" class="d-inline mx-[10px] max-h-[17.5px]" alt="">
-              </button>
-              <button
-                  class="whitespace-nowrap overflow-hidden col-6 ml-[10px] text-right px-0 mb-[8px] h-[52px] bg-sec-color rounded-[7px] border-solid border-1 border-pri-color text-pri-color">
+              </a>
+              <a
+                  class="flex justify-end items-center whitespace-nowrap overflow-hidden col-6 ml-[10px] text-right px-0 mb-[8px] h-[52px] bg-sec-color rounded-[7px] border-solid border-1 border-pri-color text-pri-color">
                 ذخیره خودکار
                 <img src="/assets/img/PageBuilder/vcf.svg" class="d-inline mx-[10px] max-h-[17.5px]" alt="">
-              </button>
+              </a>
             </div>
             <div class="row flex-nowrap w-[99%]">
-              <button
-                  class="whitespace-nowrap overflow-hidden col-6 mr-[10px] text-right px-0 h-[52px] bg-sec-color rounded-[7px] border-solid border-1 border-pri-color text-pri-color">
+              <router-link :to="{name:'ClientView_Preview',params:{link:profileLinks[index]}}"
+                  class="flex justify-end items-center whitespace-nowrap overflow-hidden col-6 mr-[10px] text-right px-0 h-[52px] bg-sec-color rounded-[7px] border-solid border-1 border-pri-color text-pri-color">
                 پیش نمایش
                 <img src="/assets/img/PageBuilder/preview-eye.svg" class="d-inline mx-[10px] max-h-[17.5px]" alt="">
-              </button>
-              <button
-                  class="whitespace-nowrap overflow-hidden col-6 ml-[10px] text-right px-0 h-[52px] bg-sec-color rounded-[7px] border-solid border-1 border-pri-color text-pri-color">
+              </router-link>
+              <a
+                  class="flex justify-end items-center whitespace-nowrap overflow-hidden col-6 ml-[10px] text-right px-0 h-[52px] bg-sec-color rounded-[7px] border-solid border-1 border-pri-color text-pri-color">
                 ویرایش
                 <img src="/assets/img/PageBuilder/pen-edit.svg" class="d-inline mx-[10px] max-h-[17.5px]" alt="">
-              </button>
+              </a>
             </div>
           </div>
         </div>
@@ -106,27 +106,6 @@ export default {
     toggleCreateModal() {
       this.createModal = !this.createModal
     },
-    getProfileImg(profile) {
-      // console.log(JSON.(profile))
-      // var img = '';
-      axios({
-              url   : 'v1/dashboard/getImg',
-              method: 'POST',
-              data  : {
-                profile: JSON.stringify(profile)
-              }
-            })
-          .then(res => {
-            // res.data;
-            console.log(res.data)
-            console.log(res)
-
-          })
-
-          .catch(err => console.log(err))
-      // console.log(return img)
-      // return null;
-    }
   },
   mounted() {
     var userToken = JSON.parse(localStorage.getItem('token'))
@@ -140,7 +119,6 @@ export default {
             }
           })
         .then(res => {
-          console.log(res.data)
           this.profiles         = res.data.profiles
           this.profileImgs      = res.data.profileImgs
           this.profileTitles    = res.data.profileTitles
