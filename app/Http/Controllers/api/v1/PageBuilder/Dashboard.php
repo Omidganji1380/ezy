@@ -4,11 +4,15 @@ namespace App\Http\Controllers\api\v1\PageBuilder;
 
 use App\Http\Controllers\Controller;
 use App\Models\Profile;
+use App\Models\UrlRedirector;
 use Auth;
 use Illuminate\Http\Request;
 
 class Dashboard extends Controller
 {
+    public $profile;
+    public $blocks;
+
     public function getProfiles(Request $request)
     {
         $profileImgs      = [];
@@ -32,12 +36,23 @@ class Dashboard extends Controller
         return response()->json($data);
     }
 
-//    public function getProfileImg(Request $request)
-//    {
-////        dd($request->profile);
-//        $profileImg = Profile::query()->find(2);
-//        $profileImg = asset('/storage/pb/profiles/profile-' . $profileImg->id . '/' . $profileImg->img);
-////        dd($profileImg);
-//        return response()->json($profileImg);
-//    }
+    public function getView(Request $request)
+    {
+        $link = $request->link;
+
+        $this->profile = Profile::query()->where('link', $link)->first();
+        $url           = UrlRedirector::query()->where('url', $link)->first();
+        if ($url) {
+            return redirect(route('redirectTo', $link));
+        }
+        if (!$this->profile) {
+            return response()->json('404');
+        }
+        $this->blocks = $this->profile->block()->get()->sortBy('sort');
+        $data         = [
+            'blocks'  => $this->blocks,
+            'profile' => $this->profile,
+        ];
+        return response()->json($data);
+    }
 }

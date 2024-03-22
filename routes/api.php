@@ -32,7 +32,7 @@ Route::group(['prefix' => '/v1/auth'], function () {
 });
 Route::group(['prefix' => '/v1/dashboard'], function () {
     Route::post('/', '\App\Http\Controllers\api\v1\PageBuilder\Dashboard@getProfiles');
-    Route::post('/getImg', '\App\Http\Controllers\api\v1\PageBuilder\Dashboard@getProfileImg');
+    Route::post('/getView', '\App\Http\Controllers\api\v1\PageBuilder\Dashboard@getView');
 });
 
 //$token = 'FX)zt6(T@Pt`,%-[Pb00j`|L7Cj6+*f';
