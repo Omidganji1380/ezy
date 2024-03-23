@@ -52,11 +52,11 @@
               </a>
             </div>
             <div class="row flex-nowrap w-[99%]">
-              <router-link :to="{name:'ClientView_Preview',params:{link:profileLinks[index]}}"
-                  class="flex justify-end items-center whitespace-nowrap overflow-hidden col-6 mr-[10px] text-right px-0 h-[52px] bg-sec-color rounded-[7px] border-solid border-1 border-pri-color text-pri-color">
+              <a @click.prevent="showPreviewModal(profileLinks[index])"
+                 class="flex justify-end items-center whitespace-nowrap overflow-hidden col-6 mr-[10px] text-right px-0 h-[52px] bg-sec-color rounded-[7px] border-solid border-1 border-pri-color text-pri-color">
                 پیش نمایش
                 <img src="/assets/img/PageBuilder/preview-eye.svg" class="d-inline mx-[10px] max-h-[17.5px]" alt="">
-              </router-link>
+              </a>
               <a
                   class="flex justify-end items-center whitespace-nowrap overflow-hidden col-6 ml-[10px] text-right px-0 h-[52px] bg-sec-color rounded-[7px] border-solid border-1 border-pri-color text-pri-color">
                 ویرایش
@@ -68,10 +68,12 @@
       </div>
     </div>
 
+
     <Footer @toggleCreateModal="toggleCreateModal"/>
 
     <NewProfile v-show="createModal" @toggleCreateModal="toggleCreateModal"/>
   </div>
+  <PreviewModal :link="PreviewLink" @closeModal="showPreview=false" v-if="showPreview"/>
 </template>
 
 <script>
@@ -80,10 +82,10 @@ import NewProfile from "@/components/pageBuilder/newProfile/NewProfile.vue";
 import Footer from "@/components/pageBuilder/Includes/Footer.vue";
 import Header from "@/components/pageBuilder/Includes/Header.vue";
 import SideMenu from "@/components/pageBuilder/Includes/SideMenu.vue";
-import {trim} from "core-js/internals/string-trim";
+import PreviewModal from "@/components/pageBuilder/Preview/PreviewModal.vue";
 
 export default {
-  components: {NewProfile, Footer, Header, SideMenu},
+  components: {NewProfile, Footer, Header, SideMenu, PreviewModal},
   data() {
     return {
       createModal     : false,
@@ -93,9 +95,15 @@ export default {
       profileSubtitles: {},
       profileLinks    : {},
       ezyLink         : '',
+      PreviewLink     : null,
+      showPreview     : false,
     }
   },
   methods: {
+    showPreviewModal(link) {
+      this.PreviewLink = link
+      this.showPreview = true
+    },
     showMenu(showMenu) {
       if (showMenu === true) {
         document.getElementById('appCapsule').classList.add('show-menu')
