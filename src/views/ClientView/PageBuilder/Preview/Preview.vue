@@ -2,7 +2,7 @@
     <div class="backImg relative">
       <img src="/assets/img/demoRect.jpg" class="w-full max-h-[200px] object-cover" alt="">
 <!--      <div class="absolute left-1/2 translate-middle-x top-[calc(75%/1.1)] w-[calc(25%*1.3)] h-[calc(53.5%*1.3)] bg-white rounded-circle"></div>-->
-      <img src="/assets/img/previewPageBuilder/backProfileCurve.svg" class="absolute bottom-0" alt="">
+      <img src="/assets/img/previewPageBuilder/backProfileCurve.png" class="absolute bottom-0" alt="">
       <img src="/assets/img/PageBuilder/demoImg.png" class="absolute left-1/2 translate-middle-x top-[75%] w-[25%] h-[53.5%] object-contain" alt="">
     </div>
 </template>
