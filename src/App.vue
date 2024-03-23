@@ -52,6 +52,7 @@ export default {
   },
   mounted() {
     this.checkLang()
+    document.addEventListener('contextmenu', event => event.preventDefault());
   },
 }
 </script>
@@ -74,5 +75,13 @@ export default {
 a:hover{
   color: var(--pri-color);
   cursor: pointer;
+}
+body{
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 </style>

@@ -34,7 +34,7 @@ a {
 
 a:hover, a:active, a:focus {
   outline: 0 !important;
-  color: #1E74FD;
+  /*color: #1E74FD;*/
   text-decoration: none;
 }
 
