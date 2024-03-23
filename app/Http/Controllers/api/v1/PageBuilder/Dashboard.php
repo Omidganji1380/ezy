@@ -49,9 +49,16 @@ class Dashboard extends Controller
             return response()->json('404');
         }
         $this->blocks = $this->profile->block()->get()->sortBy('sort');
-        $data         = [
+//        dd($this->profile);
+        $data = [
             'blocks'  => $this->blocks,
-            'profile' => $this->profile,
+            'profile' => [
+                'profile'         => $this->profile,
+                'profileBgImg'    => asset('/storage/pb/profiles/profile-' . $this->profile->id . '/' . $this->profile->bg_img),
+                'profileImg'      => asset('/storage/pb/profiles/profile-' . $this->profile->id . '/' . $this->profile->img),
+                'profileTitle'    => $this->profile->title,
+                'profileSubtitle' => $this->profile->subtitle,
+            ]
         ];
         return response()->json($data);
     }
