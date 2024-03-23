@@ -83,5 +83,6 @@ body{
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  overscroll-behavior: contain !important;
 }
 </style>
