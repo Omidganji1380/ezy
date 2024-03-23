@@ -6,7 +6,7 @@
 
     <!--    >-->
     <img :src="profile.profileImg" :class="{'mt-3':!profile.profileBgImg}"
-         class="top-[75%] absolute left-1/2 -translate-x-1/2 rounded-full object-cover rounded-circle" alt="">
+         class="top-[75%] w-[111px] h-[111px] absolute left-1/2 -translate-x-1/2 rounded-full object-cover rounded-circle" alt="">
     <!--    </div>-->
   </div>
   <div class="row justify-center">
