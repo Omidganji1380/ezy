@@ -18,7 +18,7 @@
     <h1 class="col-12 text-center text-[18px] font-shabnam-medium-fd mb-[8px]">{{ profile.profileTitle }}</h1>
     <h2 class="col-12 text-[16px] font-shabnam-light-fd text-center description">{{ profile.profileSubtitle }}</h2>
   </div>
-  <div class="mx-[44px] mx-[10px]">
+  <div class="mx-[44px]">
     <div class="row mb-[16px] text-[18px] justify-between" v-for="(block,key) in blocks.blocks">
       <div
           class="px-0 mb-[14px]"
@@ -29,7 +29,7 @@
         <a :href="blocks.blockLinks[index]" target="_blank"
            class="d-flex px-2 flex-nowrap overflow-hidden text-nowrap flex-row-reverse rounded-[8px] items-center h-[44px] border-1 !border-b-2 border-black w-full justify-between">
           <i class="ez ez-Apple-Music-solid col-auto"></i>
-          <span class="font-shabnam-medium-fd col-auto">{{ blocks.blockTitles[key][index] }}</span>
+          <span class="font-shabnam-medium-fd col-auto max-w-[90%] text-truncate">{{ blocks.blockTitles[key][index] }}</span>
         </a>
       </div>
     </div>
