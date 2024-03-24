@@ -33,6 +33,7 @@ Route::group(['prefix' => '/v1/auth'], function () {
 Route::group(['prefix' => '/v1/dashboard'], function () {
     Route::post('/', '\App\Http\Controllers\api\v1\PageBuilder\Dashboard@getProfiles');
     Route::post('/getView', '\App\Http\Controllers\api\v1\PageBuilder\Dashboard@getView');
+    Route::post('/getView/getBlockItemTitle', '\App\Http\Controllers\api\v1\PageBuilder\Dashboard@getBlockItemTitle');
 });
 
 //$token = 'FX)zt6(T@Pt`,%-[Pb00j`|L7Cj6+*f';
