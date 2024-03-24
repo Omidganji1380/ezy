@@ -58,8 +58,12 @@ class Dashboard extends Controller
         if (!$this->profile) {
             return response()->json('404');
         }
-        $this->blocks = $this->profile->block()->with(['pbOption', 'blockOption'])->get()->sortBy('sort');
-//        dd($this->blocks[0]);
+        $this->blocks = $this->profile->block()->orderBy('sort')
+            ->with(['pbOption', 'blockOption'])
+            ->get()
+//            ->sortBy('sort')
+        ;
+//        dd($this->blocks);
         $data = [
             'profile' => [
                 'profile'         => $this->profile,
