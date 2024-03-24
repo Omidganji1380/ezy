@@ -130,6 +130,7 @@ a:hover {
 
 .w-half-block {
   width: 48.5%;
+  margin-bottom: 0 !important;
 }
 
 .col-12 {
