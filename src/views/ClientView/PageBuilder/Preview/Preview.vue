@@ -14,22 +14,24 @@
          class="top-[75%] w-[111px] h-[111px] absolute left-1/2 -translate-x-1/2 rounded-full object-cover rounded-circle"
          alt="">
   </div>
-  <div class="row justify-center">
+  <div class="row justify-center mb-2 ">
     <h1 class="col-12 text-center text-[18px] font-shabnam-medium-fd mb-[8px]">{{ profile.profileTitle }}</h1>
     <h2 class="col-12 text-[16px] font-shabnam-light-fd text-center description">{{ profile.profileSubtitle }}</h2>
   </div>
-  <div class="row mx-[44px] mt-[24px] text-[18px] justify-between" v-for="(block,key) in blocks.blocks">
-    <div
-        class="px-0 mb-[16px]"
-        :class="blocks.blockWidth[key][index].setBlockWidth+' '+blocks.blockWidth[key][index].lastHalf"
-        v-for="(option,index) in block.pb_option"
-        :key="index">
+  <div class="mx-[44px] mx-[10px]">
+    <div class="row mb-[16px] text-[18px] justify-between" v-for="(block,key) in blocks.blocks">
+      <div
+          class="px-0 mb-[14px]"
+          :class="{'!mb-0':index === block.pb_option.length - 1},blocks.blockWidth[key][index].setBlockWidth+' '+blocks.blockWidth[key][index].lastHalf"
+          v-for="(option,index) in block.pb_option"
+          :key="index">
 
-      <a :href="blocks.blockLinks[index]" target="_blank"
-          class="mb-[14px] d-flex px-2 flex-nowrap overflow-hidden text-nowrap flex-row-reverse rounded-[8px] items-center h-[44px] border-2 border-black w-full justify-between">
-        <span class="font-shabnam-medium-fd col-auto">©</span>
-        <span class="font-shabnam-medium-fd col-auto">{{ blocks.blockTitles[key][index] }}</span>
-      </a>
+        <a :href="blocks.blockLinks[index]" target="_blank"
+           class="d-flex px-2 flex-nowrap overflow-hidden text-nowrap flex-row-reverse rounded-[8px] items-center h-[44px] border-1 !border-b-2 border-black w-full justify-between">
+          <i class="ez ez-Apple-Music-solid col-auto"></i>
+          <span class="font-shabnam-medium-fd col-auto">{{ blocks.blockTitles[key][index] }}</span>
+        </a>
+      </div>
     </div>
     <!--    <div class="col-12 px-0">
           <div class="row">
@@ -117,17 +119,20 @@ export default {
 </script>
 
 <style scoped>
-a:hover{
+a:hover {
   color: unset;
 }
+
 .description {
   unicode-bidi: plaintext;
   word-break: break-word;
 }
-.w-half-block{
+
+.w-half-block {
   width: 48.5%;
 }
-.col-12{
+
+.col-12 {
   width: 100% !important;
 }
 </style>
