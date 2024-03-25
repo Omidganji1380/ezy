@@ -1,5 +1,6 @@
 <template>
-  <div id="profileImg" class="-mt-[100%] fixedHeader fixed-top max-w-[430px] mx-auto p-05 !bg-white !bg-opacity-40 backdrop-blur-[6px] shadow-[0_10px_10px_-15px] rounded-b-3xl">
+  <div id="profileImg"
+       class="-mt-[100%] transition-all duration-1000 fixedHeader fixed-top max-w-[430px] mx-auto p-05 !bg-white !bg-opacity-40 backdrop-blur-[6px] shadow-[0_10px_10px_-15px] rounded-b-3xl">
     <div class="row justify-between flex-nowrap">
       <div class="col-auto">
         <img onerror="this.style.display='none'"
@@ -46,6 +47,10 @@
       <PbOptions :blocks="blocks" :block="block" :arrayKey="key"/>
       <PbOptions :blocks="blocks" :block="block" :arrayKey="key"/>
       <PbOptions :blocks="blocks" :block="block" :arrayKey="key"/>
+      <PbOptions :blocks="blocks" :block="block" :arrayKey="key"/>
+      <PbOptions :blocks="blocks" :block="block" :arrayKey="key"/>
+      <PbOptions :blocks="blocks" :block="block" :arrayKey="key"/>
+      <PbOptions :blocks="blocks" :block="block" :arrayKey="key"/>
     </div>
   </div>
 </template>
@@ -68,7 +73,6 @@ export default {
         profile        : null,
         profileBgImg   : null,
         profileImg     : null,
-        fixedProfileImg: false,
         profileTitle   : null,
         profileSubtitle: null,
       },
@@ -85,9 +89,6 @@ export default {
     j_stringify($json) {
       return JSON.stringify($json)
     },
-    aaa(e) {
-      alert('asd')
-    }
   },
   beforeMount() {
     document.querySelector('body').classList.add('!bg-white')
@@ -117,17 +118,14 @@ export default {
           // },2000)
         })
         .catch(err => console.log(err))
-
+document.querySelector('body').style.overflowY='unset';
   },
   updated() {
     window.addEventListener("scroll", function () {
       if (window.scrollY >= 300) {
-        document.querySelector('#profileImg').classList.add('fixedProfileImg')
-        // this.fixedProfileImg = true
+        document.querySelector('#profileImg').classList.add('mt-0')
       } else {
-        document.querySelector('#profileImg').classList.remove('fixedProfileImg')
-
-        // this.fixedProfileImg = false
+        document.querySelector('#profileImg').classList.remove('mt-0')
       }
     });
   },
@@ -155,19 +153,5 @@ a:hover {
 
 #app {
   height: unset !important;
-}
-
-.fixedProfileImg {
-  //left: unset !important;
-  //top: 0 !important;
-  //margin: 10px 0 0 10px !important;
-  //position: fixed !important;
-  //transform: unset !important;
-  //max-width: 70px !important;
-  //max-height: 70px !important;
-transition: all ease-in-out 500ms;
-
-margin-top: 0 !important;
-
 }
 </style>
