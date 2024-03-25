@@ -118,7 +118,7 @@ export default {
           // },2000)
         })
         .catch(err => console.log(err))
-document.querySelector('body').style.overflowY='unset';
+document.querySelector('body').style.overflowY='unset !important';
   },
   updated() {
     window.addEventListener("scroll", function () {
