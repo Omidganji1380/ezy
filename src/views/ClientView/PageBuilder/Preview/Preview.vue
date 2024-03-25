@@ -1,4 +1,20 @@
 <template>
+  <div id="profileImg" class="-mt-[100%] fixedHeader fixed-top max-w-[430px] mx-auto p-05 !bg-white !bg-opacity-40 backdrop-blur-[6px] shadow-[0_10px_10px_-15px] rounded-b-3xl">
+    <div class="row justify-between flex-nowrap">
+      <div class="col-auto">
+        <img onerror="this.style.display='none'"
+             :src="profile.profileImg" id="profileImg"
+             class="w-[70px] h-[70px] object-cover rounded-full"
+             alt="">
+      </div>
+      <div class="col-auto self-center">
+        <h1 class="text-center text-[18px] font-shabnam-medium-fd mb-[8px]">{{ profile.profileTitle }}</h1>
+      </div>
+      <div class="col-auto self-center d-none">
+        <h1 class="btn btn-success text-center text-[18px] font-shabnam-medium-fd mb-[8px]">ذخیره مخاطب</h1>
+      </div>
+    </div>
+  </div>
   <div class="backImg relative pointer-events-none mb-[80px]"
        :class="{'mb-[150px]':!profile.profileBgImg,'!mb-[30px]':!profile.profileImg}">
     <img onerror="this.style.display='none'"
@@ -20,48 +36,31 @@
   </div>
   <div class="mx-[44px]">
     <div class="row mb-[16px] text-[18px] justify-between" v-for="(block,key) in blocks.blocks">
-      <div
-          class="px-0 mb-[14px]"
-          :class="{'!mb-0':index === block.pb_option.length - 1},blocks.blockWidth[key][index].setBlockWidth+' '+blocks.blockWidth[key][index].lastHalf"
-          v-for="(option,index) in block.pb_option"
-          :key="index">
-
-        <a :href="blocks.blockLinks[index]" target="_blank"
-           class="d-flex px-2 flex-nowrap overflow-hidden text-nowrap flex-row-reverse rounded-[8px] items-center h-[44px] border-1 !border-b-2 border-black w-full justify-between">
-          <i class="ez ez-Apple-Music-solid col-auto"></i>
-          <span class="font-shabnam-medium-fd col-auto max-w-[90%] text-truncate">{{ blocks.blockTitles[key][index] }}</span>
-        </a>
-      </div>
+      <PbOptions :blocks="blocks" :block="block" :arrayKey="key"/>
+      <PbOptions :blocks="blocks" :block="block" :arrayKey="key"/>
+      <PbOptions :blocks="blocks" :block="block" :arrayKey="key"/>
+      <PbOptions :blocks="blocks" :block="block" :arrayKey="key"/>
+      <PbOptions :blocks="blocks" :block="block" :arrayKey="key"/>
+      <PbOptions :blocks="blocks" :block="block" :arrayKey="key"/>
+      <PbOptions :blocks="blocks" :block="block" :arrayKey="key"/>
+      <PbOptions :blocks="blocks" :block="block" :arrayKey="key"/>
+      <PbOptions :blocks="blocks" :block="block" :arrayKey="key"/>
+      <PbOptions :blocks="blocks" :block="block" :arrayKey="key"/>
     </div>
-    <!--    <div class="col-12 px-0">
-          <div class="row">
-            <div class="col-6">
-              <button
-                  class="mb-[14px] d-flex px-2 flex-nowrap overflow-hidden text-nowrap flex-row-reverse rounded-[8px] items-center h-[44px] border-2 border-black w-full justify-start">
-                <span class="font-shabnam-medium-fd col-auto ml-[11px]">©</span>
-                <span class="font-shabnam-medium-fd col-auto">تماس</span>
-              </button>
-            </div>
-            <div class="col-6">
-
-              <button
-                  class="d-flex px-2 flex-nowrap overflow-hidden text-nowrap flex-row-reverse rounded-[8px] items-center h-[44px] border-2 border-black w-full justify-start">
-                <span class="font-shabnam-medium-fd col-auto ml-[11px]">©</span>
-                <span class="font-shabnam-medium-fd col-auto">پیامک</span>
-              </button>
-            </div>
-          </div>
-        </div>-->
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import PbOptions from "@/components/pageBuilder/Preview/Blocks/PbOptions.vue";
 
 export default {
-  name : "Preview",
-  props: {
+  name      : "Preview",
+  props     : {
     link: ''
+  },
+  components: {
+    PbOptions,
   },
   data() {
     return {
@@ -69,6 +68,7 @@ export default {
         profile        : null,
         profileBgImg   : null,
         profileImg     : null,
+        fixedProfileImg: false,
         profileTitle   : null,
         profileSubtitle: null,
       },
@@ -85,6 +85,9 @@ export default {
     j_stringify($json) {
       return JSON.stringify($json)
     },
+    aaa(e) {
+      alert('asd')
+    }
   },
   beforeMount() {
     document.querySelector('body').classList.add('!bg-white')
@@ -114,11 +117,24 @@ export default {
           // },2000)
         })
         .catch(err => console.log(err))
+
+  },
+  updated() {
+    window.addEventListener("scroll", function () {
+      if (window.scrollY >= 300) {
+        document.querySelector('#profileImg').classList.add('fixedProfileImg')
+        // this.fixedProfileImg = true
+      } else {
+        document.querySelector('#profileImg').classList.remove('fixedProfileImg')
+
+        // this.fixedProfileImg = false
+      }
+    });
   },
 }
 </script>
 
-<style scoped>
+<style>
 a:hover {
   color: unset;
 }
@@ -135,5 +151,23 @@ a:hover {
 
 .col-12 {
   width: 100% !important;
+}
+
+#app {
+  height: unset !important;
+}
+
+.fixedProfileImg {
+  //left: unset !important;
+  //top: 0 !important;
+  //margin: 10px 0 0 10px !important;
+  //position: fixed !important;
+  //transform: unset !important;
+  //max-width: 70px !important;
+  //max-height: 70px !important;
+transition: all ease-in-out 500ms;
+
+margin-top: 0 !important;
+
 }
 </style>
