@@ -9,7 +9,8 @@
     </div>
 
     <div class="pb-[170px] bg-[#f9f9f9] pt-1" v-else>
-      <div class="section m-[29px] px-[23px] rounded-[15px] bg-[#f9fffb] drop-shadow-md py-[16px]"
+      <div :class="{'mt-0':index===0}"
+          class="section m-[29px] px-[23px] rounded-[15px] bg-[#f9fffb] drop-shadow-md py-[16px]"
            v-for="(profile,index) in profiles" :key="index">
         <div class="row overflow-hidden flex-nowrap content-start bg-pri-color h-[31px] rounded-[7px] px-[10px]">
        <span class="col-auto p-0 self-center">
