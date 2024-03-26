@@ -72,7 +72,7 @@
 
     <Footer @toggleCreateModal="toggleCreateModal"/>
 
-    <NewProfile v-show="createModal" @toggleCreateModal="toggleCreateModal"/>
+    <NewProfile v-if="createModal" @toggleCreateModal="toggleCreateModal"/>
   </div>
   <PreviewModal :link="PreviewLink" @closeModal="showPreview=false" v-if="showPreview"/>
 </template>

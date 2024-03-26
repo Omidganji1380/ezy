@@ -119,6 +119,7 @@ export default {
         })
         .catch(err => console.log(err))
     document.querySelector('body').classList.add('!overflow-y-auto');
+    document.querySelector('#app').classList.add('!h-[unset]');
   },
   updated() {
     window.addEventListener("scroll", function () {
@@ -151,7 +152,4 @@ a:hover {
   width: 100% !important;
 }
 
-#app {
-  height: unset !important;
-}
 </style>

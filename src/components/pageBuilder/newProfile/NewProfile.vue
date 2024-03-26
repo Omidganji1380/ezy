@@ -10,19 +10,30 @@
       <p dir="rtl" class="text-center mt-[7px] text-[#707070] text-[12.9px]">از صفحه ساز ایزی کانکت لذت ببرید !</p>
       <div class="row flex-nowrap justify-center mt-[40px]">
         <span class="col-auto px-0 self-center font-shabnam-fd text-[#009606] text-[16.5px]">www.ezy.company / </span>
-        <input type="text" placeholder="نام کاربری" v-model="usernameInput"
-               class="col-auto text-center px-0.5 w-[137px] h-[31px] rounded-pill border-solid border-1 border-[#009606] focus-visible:outline-0 leading-10 rounded-[20px] bg-[#F0FCF3] text-[#009606]">
+        <input
+            :class="{'!border-[#ff0000]':!nextButton}"
+            type="text"
+            @keyup.prevent="checkReservedLinks"
+            placeholder="نام کاربری"
+            v-model="usernameInput"
+            class="col-auto text-center px-0.5 w-[137px] h-[31px] rounded-pill border-solid border-1 border-[#009606] focus-visible:outline-0 leading-10 rounded-[20px] bg-[#F0FCF3] text-[#009606]">
       </div>
-      <div class="w-[290px] mx-auto text-[#707070] text-[12.9px] mt-[7.5px]">
+      <div
+          :class="{'!text-[#cc0000]':!nextButton}"
+          class="w-[290px] mx-auto text-[#707070] text-[12.9px] mt-[7.5px]">
         Https://ezy.company/{{ usernameInput }}
+        <p v-if="!nextButton" class="text-right text-gray-400 pt-1">نام کاربری <span class="text-danger">تکراری</span> است نام دیگری انتخاب کنید</p>
+
       </div>
       <div class="row justify-center flex-nowrap bottom-[70px] mx-auto absolute translate-middle-x left-1/2">
         <button @click.prevent="toggleCreateModal"
                 class="col-auto w-[138px] h-[51.5px] bg-[#F0FCF3] rounded-[18px] mx-[8.25px] border-solid border-1 border-[#009606] text-[#009606]">
           لغو
         </button>
-        <button @click.prevent="step++"
-                class="d-flex justify-center col-auto w-[138px] h-[51.5px] bg-[#009606] rounded-[18px] mx-[8.25px] text-white">
+        <button
+            :disabled="!nextButton || !usernameInput"
+            @click.prevent="step++"
+            class="d-flex justify-center col-auto w-[138px] h-[51.5px] bg-[#009606] rounded-[18px] mx-[8.25px] text-white">
           <span class="self-center">ادامه</span>
           <img class="self-center ml-[9px]" src="/assets/img/PageBuilder/modal-next-arrow.svg" alt="">
         </button>
@@ -37,10 +48,11 @@
           <div class="col-12">
             <label for="coverImage"
                    class="d-block overflow-hidden bg-[#F0FCF3] relative rounded-b-[80px] h-[100px] mx-[25px] border-solid border-1 border-[#009606]">
-              <img :src="coverImagePreview" :class="{'opacity-0':!coverImagePreview}" class="object-cover w-full h-full" alt="">
+              <img :src="coverImagePreview" :class="{'opacity-0':!coverImagePreview}" class="object-cover w-full h-full"
+                   alt="">
 
               <div :class="{'d-none':coverImagePreview}"
-                  class="row top-[40%] flex-nowrap overflow-hidden left-1/2 translate-middle absolute"
+                   class="row top-[40%] flex-nowrap overflow-hidden left-1/2 translate-middle absolute"
                    dir="rtl">
                 <div class="col-auto p-0 !pl-[6px]">
                   <img src="/assets/img/PageBuilder/upload-cover.svg" width="22" height="22" alt="">
@@ -53,13 +65,14 @@
             </label>
             <label for="profileImage" :class="{'overflow-hidden':profileImagePreview}"
                    class="d-block mx-auto bg-[#F0FCF3] rounded-circle relative -top-[20%] h-[120px] max-w-[120px] border-solid border-1 border-[#009606]">
-              <img :src="profileImagePreview" :class="{'opacity-0':!profileImagePreview}" class="object-cover w-full h-full" alt="">
+              <img :src="profileImagePreview" :class="{'opacity-0':!profileImagePreview}"
+                   class="object-cover w-full h-full" alt="">
 
               <img src="/assets/img/PageBuilder/upload-cover.svg" :class="{'d-none':profileImagePreview}"
                    class="top-1/2 left-1/2 translate-middle absolute"
                    width="30" height="30" alt="">
               <span :class="{'d-none':profileImagePreview}"
-                  class="bg-[#009606] w-[31px] h-[31px] d-block bottom-0 right-0 absolute rounded-circle">
+                    class="bg-[#009606] w-[31px] h-[31px] d-block bottom-0 right-0 absolute rounded-circle">
                 <img src="/assets/img/PageBuilder/upload-image-camera.svg"
                      class="top-1/2 left-1/2 translate-middle absolute"
                      width="14" height="11" alt="">
@@ -127,6 +140,7 @@
 
 <script>
 import Header from "@/components/pageBuilder/Includes/Header.vue";
+import axios from "axios";
 
 export default {
   name      : "NewProfile",
@@ -142,16 +156,41 @@ export default {
       coverImagePreview  : null,
       profileImagePreview: null,
       title              : null,
+      allReservedLinks   : [],
+      nextButton         : true,
     }
   },
-  updated() {
-
-
-    // if (this.profileImage){
-    //   alert('asd')
-    // }
+  mounted() {
+    axios({
+            method: 'post',
+            url   : 'v1/dashboard/getAllReservedLinks',
+          })
+        .then(res => {
+          this.allReservedLinks = res.data
+        })
+        .catch(err => {
+          console.log(err)
+        })
   },
   methods: {
+    searchStringInArray(input, array) {
+      for (let i = 0; i <= Object.keys(array).length; i++) {
+        if (array[i] === input) {
+          return input;
+        }
+      }
+    },
+    checkReservedLinks() {
+      var linkExists = this.searchStringInArray(this.usernameInput, this.allReservedLinks)
+      if (linkExists || this.usernameInput.length < 3) {
+        this.nextButton = false
+      } else {
+        this.nextButton = true
+      }
+      if (!this.usernameInput.length) {
+        this.nextButton = true
+      }
+    },
     setImg() {
       if (this.coverImage) {
         this.coverImagePreview = URL.createObjectURL(this.coverImage)

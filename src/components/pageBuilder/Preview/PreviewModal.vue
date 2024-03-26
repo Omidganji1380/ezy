@@ -33,6 +33,7 @@ export default {
   },
   methods   : {
     closeModal() {
+      document.querySelector('#app').classList.remove('!h-[unset]')
       document.querySelector('#modall').classList.remove('showModal')
       document.querySelector('#backdrop').classList.remove('showModal')
       document.querySelector('#modalHeader').classList.remove('showModal')
