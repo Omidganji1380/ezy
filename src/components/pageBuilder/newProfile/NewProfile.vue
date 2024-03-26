@@ -16,7 +16,7 @@
             @keyup.prevent="checkReservedLinks"
             placeholder="نام کاربری"
             v-model="usernameInput"
-            class="col-auto text-center px-0.5 w-[137px] h-[31px] rounded-pill border-solid border-1 border-[#009606] focus-visible:outline-0 leading-10 rounded-[20px] bg-[#F0FCF3] text-[#009606]">
+            class="lowercase col-auto text-center px-0.5 w-[137px] h-[31px] rounded-pill border-solid border-1 border-[#009606] focus-visible:outline-0 leading-10 rounded-[20px] bg-[#F0FCF3] text-[#009606]">
       </div>
       <div
           :class="{'!text-[#cc0000]':!nextButton}"
@@ -181,6 +181,7 @@ export default {
       }
     },
     checkReservedLinks() {
+      this.usernameInput=this.usernameInput.toLowerCase()
       var linkExists = this.searchStringInArray(this.usernameInput, this.allReservedLinks)
       if (linkExists || this.usernameInput.length < 3) {
         this.nextButton = false
