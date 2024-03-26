@@ -11,6 +11,7 @@ use App\Models\Profile;
 use App\Models\UrlRedirector;
 use Auth;
 use Illuminate\Http\Request;
+use Route;
 
 class Dashboard extends Controller
 {
@@ -60,10 +61,7 @@ class Dashboard extends Controller
         }
         $this->blocks = $this->profile->block()->orderBy('sort')
             ->with(['pbOption', 'blockOption'])
-            ->get()
-//            ->sortBy('sort')
-        ;
-//        dd($this->blocks);
+            ->get();
         $data = [
             'profile' => [
                 'profile'         => $this->profile,
@@ -81,7 +79,7 @@ class Dashboard extends Controller
                 $blockTitles[$index][$key] = $this->getBlockTitleTrait($option->pivot);
                 $blockLinks[$key]          = $option->link . $this->getBlockLink($option->pivot);
                 $blockWidth[$index][$key]  = [
-                    'lastHalf'      => $this->setBlockWidthHalf($block->blockOption->blockWidth, $i == $pbOptionCount - 1??$i, $key),
+                    'lastHalf'      => $this->setBlockWidthHalf($block->blockOption->blockWidth, $i == $pbOptionCount - 1 ?? $i, $key),
                     'setBlockWidth' => $this->setBlockWidth($block->blockOption->blockWidth),
                 ];
                 $i++;
@@ -93,16 +91,12 @@ class Dashboard extends Controller
             'blockLinks'  => $blockLinks,
             'blockWidth'  => $blockWidth,
         ];
-
-//                dd($data['blocks']['blockLinks']);
         return response()->json($data);
     }
 
     public function getBlockLink($link)
     {
-//        dd($link);
         $link = BlockPbOption::query()->where(['pbOption_id' => $link['pbOption_id'], 'block_id' => $link['block_id'], 'id' => $link['id']])->first();
-//        dd($link);
         return $link->connectionWay;
     }
 
@@ -125,4 +119,28 @@ class Dashboard extends Controller
             return 'col-auto';
         }
     }
+
+    public function getAllReservedLinks()
+    {
+        $routes = Route::getRoutes()->getRoutes();
+        $nr     = [];
+        $nr2    = [];
+        foreach ($routes as $route) {
+            $nr[] = explode('/', $route->uri);
+        }
+        foreach ($nr as $item) {
+            foreach ($item as $i) {
+                $nr2[] = $i;
+            }
+        }
+        $nr2              = array_unique($nr2);
+        $nr2              = array_filter($nr2);
+        $reservedProfiles = Profile::query()->get()->pluck('link');
+        foreach ($reservedProfiles as $reservedProfile) {
+            array_push($nr2, $reservedProfile);
+        }
+        $nr2=array_values($nr2);
+        return response()->json($nr2);
+    }
+
 }
