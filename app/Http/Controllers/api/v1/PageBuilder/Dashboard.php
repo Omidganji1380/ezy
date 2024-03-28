@@ -20,6 +20,8 @@ class Dashboard extends Controller
 
     public $profile;
     public $blocks;
+    public $reservedLink;
+    public $profileUrl;
 
     public function getProfiles(Request $request)
     {
@@ -62,14 +64,14 @@ class Dashboard extends Controller
         $this->blocks = $this->profile->block()->orderBy('sort')
             ->with(['pbOption', 'blockOption'])
             ->get();
-        $data = [
+        $data         = [
             'profile' => [
                 'profile'         => $this->profile,
                 'profileBgImg'    => asset('/storage/pb/profiles/profile-' . $this->profile->id . '/' . $this->profile->bg_img),
                 'profileImg'      => asset('/storage/pb/profiles/profile-' . $this->profile->id . '/' . $this->profile->img),
                 'profileTitle'    => $this->profile->title,
                 'profileSubtitle' => $this->profile->subtitle,
-            ]
+            ],
         ];
 
         foreach ($this->blocks as $index => $block) {
@@ -133,14 +135,48 @@ class Dashboard extends Controller
                 $nr2[] = $i;
             }
         }
-        $nr2              = array_unique($nr2);
-        $nr2              = array_filter($nr2);
-        $reservedProfiles = Profile::query()->get()->pluck('link');
+        $nr2                = array_unique($nr2);
+        $nr2                = array_filter($nr2);
+        $this->reservedLink = array_search($this->profileUrl, $nr2);
+        $reservedProfiles   = Profile::query()->get()->pluck('link');
         foreach ($reservedProfiles as $reservedProfile) {
             array_push($nr2, $reservedProfile);
         }
-        $nr2=array_values($nr2);
+        $nr2 = array_values($nr2);
         return response()->json($nr2);
     }
 
+    public function submitNewProfile(Request $request)
+    {
+        $this->profileUrl = $request->usernameInput;
+        $this->getAllReservedLinks();
+        $coverImage   = $request->file('coverImage');
+        $profileImage = $request->file('profileImage');
+        $title        = $request->title;
+        $subtitle     = $request->subtitle;
+        $user_id      = $request->user_id;
+
+        if (!Profile::query()->where('link', $this->profileUrl)->exists() && !$this->reservedLink) {
+            $profile = Profile::query()->create([
+                'link'     => $this->profileUrl,
+                'title'    => $title,
+                'subtitle' => $subtitle,
+                'user_id'  => $user_id,
+            ]);
+            if ($coverImage) {
+                $coverImage->storeAs('pb/profiles/profile-' . $profile->id, $request->coverImageName, 'public');
+                $imgName = $request->coverImageName;
+                $profile->update([
+                    'bg_img' => $imgName,
+                ]);
+            }
+            if ($profileImage) {
+                $profileImage->storeAs('pb/profiles/profile-' . $profile->id, $request->profileImageName, 'public');
+                $imgName = $request->profileImageName;
+                $profile->update([
+                    'img' => $imgName,
+                ]);
+            }
+        }
+    }
 }
