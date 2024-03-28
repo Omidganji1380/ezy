@@ -9,8 +9,9 @@
     </div>
 
     <div class="pb-[170px] bg-[#f9f9f9] pt-1" v-else>
-      <div :class="{'mt-0':index===0,'mb-0':profiles.length-1===index}"
-          class="section m-[29px] px-[23px] rounded-[15px] bg-[#f9fffb] drop-shadow-md py-[16px]"
+      <div :class="[{'mt-0':index===0,'mb-0':profiles.length-1===index},'contextMenuProfiles'+index]"
+           @click.right.prevent.="contextMenu(index)"
+           class="section m-[29px] px-[23px] rounded-[15px] bg-[#f9fffb] drop-shadow-md py-[16px]"
            v-for="(profile,index) in profiles" :key="index">
         <div class="row overflow-hidden flex-nowrap content-start bg-pri-color h-[31px] rounded-[7px] px-[10px]">
        <span class="col-auto p-0 self-center">
@@ -75,6 +76,21 @@
     <NewProfile v-if="createModal" @toggleCreateModal="toggleCreateModal"/>
   </div>
   <PreviewModal :link="PreviewLink" @closeModal="showPreview=false" v-if="showPreview"/>
+  <div class="absolute w-[100px] z-[999999999999999] fade" style="left: 0" id="contextMenu">
+    <div class="menu">
+      <ul class="text-white rounded-xl list-group">
+        <li class="px-2 py-1 list-group-item bg-gray-300 list-group-item-action transition-all delay-75 text-gray-600">
+          test
+        </li>
+        <li class="px-2 py-1 list-group-item bg-gray-300 list-group-item-action transition-all delay-75 text-gray-600">
+          test
+        </li>
+        <li class="px-2 py-1 list-group-item bg-gray-300 list-group-item-action transition-all delay-75 text-danger">
+          delete
+        </li>
+      </ul>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -116,7 +132,7 @@ export default {
       this.createModal = !this.createModal
       this.firstMount()
     },
-    firstMount(){
+    firstMount() {
       var userToken = JSON.parse(localStorage.getItem('token'))
       axios({
               url   : 'v1/dashboard',
@@ -138,9 +154,41 @@ export default {
       this.ezyLink = this.ezyLink.replace(/(^\w+:|^)\/\//, '');
       this.ezyLink = this.ezyLink.replace('api/', '')
     },
+    contextMenu(index) {
+      var menu                = document.getElementById("contextMenu");
+      var contextMenuProfiles = document.querySelector(".contextMenuProfiles"+index);
+
+      setTimeout(() => {
+        contextMenuProfiles.addEventListener('contextmenu', (e) => {
+          menu.classList.add('show');
+          menu.style.top           = e.clientY + 'px'
+          menu.style.left          = e.clientX + 'px'
+          window.event.returnValue = false;
+        });
+        }, 50)
+
+      document.addEventListener("click", () => {
+        menu.classList.remove('show')
+      });
+
+      if (menu.classList.contains('show')){
+        window.onscroll = function(e) {
+          e.preventDefault();
+        }
+      }
+
+      document.addEventListener("scroll", () => {
+        menu.classList.remove('show')
+      });
+    },
   },
   mounted() {
     this.firstMount()
+    // setTimeout(() => {
+    //   this.contextMenu()
+    // }, 1000)
+    // if (document.addEventListener) {
+
   },
 
 }

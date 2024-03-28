@@ -4,6 +4,7 @@
 
   <router-view/>
   <BaseJs/>
+
 </template>
 
 <script>
@@ -72,11 +73,13 @@ export default {
   overflow-x: hidden;
   height: 100vh;
 }
-a:hover{
+
+a:hover {
   color: var(--pri-color);
   cursor: pointer;
 }
-body{
+
+body {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
