@@ -10,7 +10,7 @@
 
     <div class="pb-[170px] bg-[#f9f9f9] pt-1" v-else>
       <div :class="[{'mt-0':index===0,'mb-0':profiles.length-1===index},'contextMenuProfiles'+index]"
-           @click.right.prevent.="contextMenu(index)"
+           @click.right.prevent="contextMenu(index)"
            class="section m-[29px] px-[23px] rounded-[15px] bg-[#f9fffb] drop-shadow-md py-[16px]"
            v-for="(profile,index) in profiles" :key="index">
         <div class="row overflow-hidden flex-nowrap content-start bg-pri-color h-[31px] rounded-[7px] px-[10px]">
@@ -100,6 +100,7 @@ import Footer from "@/components/pageBuilder/Includes/Footer.vue";
 import Header from "@/components/pageBuilder/Includes/Header.vue";
 import SideMenu from "@/components/pageBuilder/Includes/SideMenu.vue";
 import PreviewModal from "@/components/pageBuilder/Preview/PreviewModal.vue";
+import $ from 'jquery'
 
 export default {
   components: {NewProfile, Footer, Header, SideMenu, PreviewModal},
@@ -155,31 +156,30 @@ export default {
       this.ezyLink = this.ezyLink.replace('api/', '')
     },
     contextMenu(index) {
-      var menu                = document.getElementById("contextMenu");
-      var contextMenuProfiles = document.querySelector(".contextMenuProfiles"+index);
+      var menu                = $("#contextMenu");
+      var contextMenuProfiles = document.querySelector(".contextMenuProfiles" + index);
 
       setTimeout(() => {
         contextMenuProfiles.addEventListener('contextmenu', (e) => {
-          menu.classList.add('show');
-          menu.style.top           = e.clientY + 'px'
-          menu.style.left          = e.clientX + 'px'
+          menu.addClass('show');
+          menu.css({'top': e.clientY + 'px'})
+          menu.css({'left': e.clientX + 'px'})
           window.event.returnValue = false;
         });
-        }, 50)
+      }, 50)
 
       document.addEventListener("click", () => {
-        menu.classList.remove('show')
+        menu.removeClass('show')
       });
-
-      if (menu.classList.contains('show')){
-        window.onscroll = function(e) {
-          e.preventDefault();
+      setTimeout(() => {
+        if (menu.hasClass('show')) {
+          contextMenuProfiles.on('scroll touchmove mousewheel', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+          })
         }
-      }
-
-      document.addEventListener("scroll", () => {
-        menu.classList.remove('show')
-      });
+      }, 1000)
     },
   },
   mounted() {
