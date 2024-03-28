@@ -9,7 +9,7 @@
     </div>
 
     <div class="pb-[170px] bg-[#f9f9f9] pt-1" v-else>
-      <div :class="{'mt-0':index===0}"
+      <div :class="{'mt-0':index===0,'mb-0':profiles.length-1===index}"
           class="section m-[29px] px-[23px] rounded-[15px] bg-[#f9fffb] drop-shadow-md py-[16px]"
            v-for="(profile,index) in profiles" :key="index">
         <div class="row overflow-hidden flex-nowrap content-start bg-pri-color h-[31px] rounded-[7px] px-[10px]">
@@ -114,31 +114,33 @@ export default {
     },
     toggleCreateModal() {
       this.createModal = !this.createModal
+      this.firstMount()
+    },
+    firstMount(){
+      var userToken = JSON.parse(localStorage.getItem('token'))
+      axios({
+              url   : 'v1/dashboard',
+              method: 'POST',
+              data  : {
+                userId: userToken.id
+              }
+            })
+          .then(res => {
+            this.profiles         = res.data.profiles
+            this.profileImgs      = res.data.profileImgs
+            this.profileTitles    = res.data.profileTitles
+            this.profileSubtitles = res.data.profileSubtitles
+            this.profileLinks     = res.data.profileLinks
+          })
+          .catch(err => console.log(err))
+
+      this.ezyLink = axios.defaults.baseURL;
+      this.ezyLink = this.ezyLink.replace(/(^\w+:|^)\/\//, '');
+      this.ezyLink = this.ezyLink.replace('api/', '')
     },
   },
   mounted() {
-    var userToken = JSON.parse(localStorage.getItem('token'))
-    // console.log(userToken)
-    // console.log(userToken.id)
-    axios({
-            url   : 'v1/dashboard',
-            method: 'POST',
-            data  : {
-              userId: userToken.id
-            }
-          })
-        .then(res => {
-          this.profiles         = res.data.profiles
-          this.profileImgs      = res.data.profileImgs
-          this.profileTitles    = res.data.profileTitles
-          this.profileSubtitles = res.data.profileSubtitles
-          this.profileLinks     = res.data.profileLinks
-        })
-        .catch(err => console.log(err))
-
-    this.ezyLink = axios.defaults.baseURL;
-    this.ezyLink = this.ezyLink.replace(/(^\w+:|^)\/\//, '');
-    this.ezyLink = this.ezyLink.replace('api/', '')
+    this.firstMount()
   },
 
 }

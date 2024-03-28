@@ -13,6 +13,7 @@
         <input
             :class="{'!border-[#ff0000]':!nextButton}"
             type="text"
+            @keydown.enter.prevent="step++"
             @keyup.prevent="checkReservedLinks"
             placeholder="نام کاربری"
             v-model="usernameInput"
@@ -22,7 +23,8 @@
           :class="{'!text-[#cc0000]':!nextButton}"
           class="w-[290px] mx-auto text-[#707070] text-[12.9px] mt-[7.5px]">
         Https://ezy.company/{{ usernameInput }}
-        <p v-if="!nextButton" class="text-right text-gray-400 pt-1">نام کاربری <span class="text-danger">تکراری</span> است نام دیگری انتخاب کنید</p>
+        <p v-if="!nextButton" class="text-right text-gray-400 pt-1">نام کاربری <span class="text-danger">تکراری</span>
+          است نام دیگری انتخاب کنید</p>
 
       </div>
       <div class="row justify-center flex-nowrap bottom-[70px] mx-auto absolute translate-middle-x left-1/2">
@@ -43,97 +45,100 @@
     <div :class="{'d-none':step!==1}"
          class="z-[99999999999] relative max-w-[430px] bg-white text-center mx-auto h-[100vh]">
       <Header/>
-      <div class="pt-[60px]">
-        <div class="row">
-          <div class="col-12">
-            <label for="coverImage"
-                   class="d-block overflow-hidden bg-[#F0FCF3] relative rounded-b-[80px] h-[100px] mx-[25px] border-solid border-1 border-[#009606]">
-              <img :src="coverImagePreview" :class="{'opacity-0':!coverImagePreview}" class="object-cover w-full h-full"
-                   alt="">
+      <form @submit.prevent="submitNewProfile" enctype="multipart/form-data">
+        <div class="pt-[60px]">
+          <div class="row">
+            <div class="col-12">
+              <label for="coverImage"
+                     class="d-block overflow-hidden bg-[#F0FCF3] relative rounded-b-[80px] h-[100px] mx-[25px] border-solid border-1 border-[#009606]">
+                <img :src="coverImagePreview" :class="{'opacity-0':!coverImagePreview}"
+                     class="object-cover w-full h-full"
+                     alt="">
 
-              <div :class="{'d-none':coverImagePreview}"
-                   class="row top-[40%] flex-nowrap overflow-hidden left-1/2 translate-middle absolute"
-                   dir="rtl">
-                <div class="col-auto p-0 !pl-[6px]">
-                  <img src="/assets/img/PageBuilder/upload-cover.svg" width="22" height="22" alt="">
+                <div :class="{'d-none':coverImagePreview}"
+                     class="row top-[40%] flex-nowrap overflow-hidden left-1/2 translate-middle absolute"
+                     dir="rtl">
+                  <div class="col-auto p-0 !pl-[6px]">
+                    <img src="/assets/img/PageBuilder/upload-cover.svg" width="22" height="22" alt="">
+                  </div>
+                  <div class="col-auto p-0 text-[13px] self-end">
+                    عکس کاور
+                  </div>
                 </div>
-                <div class="col-auto p-0 text-[13px] self-end">
-                  عکس کاور
-                </div>
-              </div>
 
-            </label>
-            <label for="profileImage" :class="{'overflow-hidden':profileImagePreview}"
-                   class="d-block mx-auto bg-[#F0FCF3] rounded-circle relative -top-[20%] h-[120px] max-w-[120px] border-solid border-1 border-[#009606]">
-              <img :src="profileImagePreview" :class="{'opacity-0':!profileImagePreview}"
-                   class="object-cover w-full h-full" alt="">
+              </label>
+              <label for="profileImage" :class="{'overflow-hidden':profileImagePreview}"
+                     class="d-block mx-auto bg-[#F0FCF3] rounded-circle relative -top-[20%] h-[120px] max-w-[120px] border-solid border-1 border-[#009606]">
+                <img :src="profileImagePreview" :class="{'opacity-0':!profileImagePreview}"
+                     class="object-cover w-full h-full" alt="">
 
-              <img src="/assets/img/PageBuilder/upload-cover.svg" :class="{'d-none':profileImagePreview}"
-                   class="top-1/2 left-1/2 translate-middle absolute"
-                   width="30" height="30" alt="">
-              <span :class="{'d-none':profileImagePreview}"
-                    class="bg-[#009606] w-[31px] h-[31px] d-block bottom-0 right-0 absolute rounded-circle">
+                <img src="/assets/img/PageBuilder/upload-cover.svg" :class="{'d-none':profileImagePreview}"
+                     class="top-1/2 left-1/2 translate-middle absolute"
+                     width="30" height="30" alt="">
+                <span :class="{'d-none':profileImagePreview}"
+                      class="bg-[#009606] w-[31px] h-[31px] d-block bottom-0 right-0 absolute rounded-circle">
                 <img src="/assets/img/PageBuilder/upload-image-camera.svg"
                      class="top-1/2 left-1/2 translate-middle absolute"
                      width="14" height="11" alt="">
               </span>
-            </label>
+              </label>
+            </div>
+          </div>
+          <div class="row px-[55px]">
+            <div class="col-12 mb-[18px]">
+              <input type="text" placeholder="عنوان" v-model="title" :class="{'border-danger':!title}"
+                     class="col-auto w-100 text-center px-0.5 h-[34px] rounded-pill border-solid border-1 border-[#009606] focus-visible:outline-0 leading-10 rounded-[20px] bg-[#F0FCF3] text-[#009606]">
+            </div>
+            <div class="col-12 mb-[18px]">
+              <input type="text" placeholder="زیرعنوان" v-model="subtitle"
+                     class="col-auto w-100 text-center px-0.5 h-[34px] rounded-pill border-solid border-1 border-[#009606] focus-visible:outline-0 leading-10 rounded-[20px] bg-[#F0FCF3] text-[#009606]">
+            </div>
+            <div class="col-12 mb-[18px] relative overflow-hidden">
+              <input type="text" placeholder="جستجو مثال املاک"
+                     class="col-auto w-100 text-center px-0.5 h-[34px] rounded-pill border-solid border-1 border-[#009606] focus-visible:outline-0 leading-10 rounded-[20px] bg-[#F0FCF3] text-[#009606]">
+              <img src="/assets/img/PageBuilder/template-search.svg"
+                   class="top-1/2 left-[13.5px] translate-middle-y absolute"
+                   width="13" height="13" alt="">
+            </div>
+          </div>
+          <div class="row px-[50px] mx-auto overflow-x-auto whitespace-nowrap flex-nowrap">
+            <div class="col-auto">
+              <span class="w-[130px] rounded-[10px] h-[270px] bg-gray-400 d-block"></span>
+            </div>
+            <div class="col-auto">
+              <span class="w-[130px] rounded-[10px] h-[270px] bg-gray-400 d-block"></span>
+            </div>
+            <div class="col-auto">
+              <span class="w-[130px] rounded-[10px] h-[270px] bg-gray-400 d-block"></span>
+            </div>
+            <div class="col-auto">
+              <span class="w-[130px] rounded-[10px] h-[270px] bg-gray-400 d-block"></span>
+            </div>
+            <div class="col-auto">
+              <span class="w-[130px] rounded-[10px] h-[270px] bg-gray-400 d-block"></span>
+            </div>
           </div>
         </div>
-        <div class="row px-[55px]">
-          <div class="col-12 mb-[18px]">
-            <input type="text" placeholder="عنوان" v-model="title"
-                   class="col-auto w-100 text-center px-0.5 h-[34px] rounded-pill border-solid border-1 border-[#009606] focus-visible:outline-0 leading-10 rounded-[20px] bg-[#F0FCF3] text-[#009606]">
-          </div>
-          <div class="col-12 mb-[18px]">
-            <input type="text" placeholder="زیرعنوان"
-                   class="col-auto w-100 text-center px-0.5 h-[34px] rounded-pill border-solid border-1 border-[#009606] focus-visible:outline-0 leading-10 rounded-[20px] bg-[#F0FCF3] text-[#009606]">
-          </div>
-          <div class="col-12 mb-[18px] relative overflow-hidden">
-            <input type="text" placeholder="جستجو مثال املاک"
-                   class="col-auto w-100 text-center px-0.5 h-[34px] rounded-pill border-solid border-1 border-[#009606] focus-visible:outline-0 leading-10 rounded-[20px] bg-[#F0FCF3] text-[#009606]">
-            <img src="/assets/img/PageBuilder/template-search.svg"
-                 class="top-1/2 left-[13.5px] translate-middle-y absolute"
-                 width="13" height="13" alt="">
-          </div>
-        </div>
-        <div class="row px-[50px] mx-auto overflow-x-auto whitespace-nowrap flex-nowrap">
-          <div class="col-auto">
-            <span class="w-[130px] rounded-[10px] h-[270px] bg-gray-400 d-block"></span>
-          </div>
-          <div class="col-auto">
-            <span class="w-[130px] rounded-[10px] h-[270px] bg-gray-400 d-block"></span>
-          </div>
-          <div class="col-auto">
-            <span class="w-[130px] rounded-[10px] h-[270px] bg-gray-400 d-block"></span>
-          </div>
-          <div class="col-auto">
-            <span class="w-[130px] rounded-[10px] h-[270px] bg-gray-400 d-block"></span>
-          </div>
-          <div class="col-auto">
-            <span class="w-[130px] rounded-[10px] h-[270px] bg-gray-400 d-block"></span>
-          </div>
-        </div>
-      </div>
 
 
-      <div class="row justify-center flex-nowrap bottom-[50px] mx-auto absolute translate-middle-x left-1/2">
-        <button @click.prevent="toggleCreateModal"
-                class="col-auto w-[138px] h-[51.5px] bg-[#F0FCF3] rounded-[18px] mx-[8.25px] border-solid border-1 border-[#009606] text-[#009606]">
-          لغو
-        </button>
-        <button
-            class="d-flex justify-center col-auto w-[138px] h-[51.5px] bg-[#009606] rounded-[18px] mx-[8.25px] text-white">
-          <span class="self-center">ادامه</span>
-          <img class="self-center ml-[9px]" src="/assets/img/PageBuilder/modal-next-arrow.svg" alt="">
-        </button>
-      </div>
+        <div class="row justify-center flex-nowrap bottom-[50px] mx-auto absolute translate-middle-x left-1/2">
+          <button @click.prevent="toggleCreateModal"
+                  class="col-auto w-[138px] h-[51.5px] bg-[#F0FCF3] rounded-[18px] mx-[8.25px] border-solid border-1 border-[#009606] text-[#009606]">
+            لغو
+          </button>
+          <button :disabled="!title" type="submit"
+                  class="d-flex justify-center col-auto w-[138px] h-[51.5px] bg-[#009606] rounded-[18px] mx-[8.25px] text-white">
+            <span class="self-center">ادامه</span>
+            <img class="self-center ml-[9px]" src="/assets/img/PageBuilder/modal-next-arrow.svg" alt="">
+          </button>
+        </div>
+      </form>
     </div>
 
-    <input type="file" class="d-none" @input="event => coverImage = event.target.files[0]" id="coverImage"
-           v-on:change="setImg">
-    <input type="file" class="d-none" @input="event => profileImage = event.target.files[0]" id="profileImage"
-           v-on:change="setImg">
+    <input type="file" class="d-none" id="coverImage"
+           @change="setCoverImg($event)">
+    <input type="file" class="d-none" id="profileImage"
+           @change="setProfileImg($event)">
   </div>
 
 </template>
@@ -141,6 +146,7 @@
 <script>
 import Header from "@/components/pageBuilder/Includes/Header.vue";
 import axios from "axios";
+import {useStorage} from "@vueuse/core";
 
 export default {
   name      : "NewProfile",
@@ -156,8 +162,10 @@ export default {
       coverImagePreview  : null,
       profileImagePreview: null,
       title              : null,
+      subtitle           : null,
       allReservedLinks   : [],
       nextButton         : true,
+      user_id            : JSON.parse(localStorage.getItem('token')).id,
     }
   },
   mounted() {
@@ -173,6 +181,44 @@ export default {
         })
   },
   methods: {
+    submitNewProfile() {
+      if (this.title) {
+        var fData = new FormData();
+        fData.append('user_id', this.user_id);
+        fData.append('usernameInput', this.usernameInput);
+        fData.append('title', this.title);
+        if (this.subtitle) {
+          fData.append('subtitle', this.subtitle);
+        }
+        if (this.coverImage) {
+          fData.append('coverImage', this.coverImage)
+          fData.append('coverImageName', this.coverImage.name)
+        }
+        if (this.profileImage) {
+          fData.append('profileImage', this.profileImage)
+          fData.append('profileImageName', this.profileImage.name)
+        }
+        // for (let i of fData.entries()) {
+        //   this.data[i[0]] = i[1]
+        // }
+        axios({
+                method : 'POST',
+                url    : 'v1/dashboard/submitNewProfile',
+                data   : fData,
+                headers: {
+                  'Content-Type': 'multipart/form-data',
+                }
+              })
+            .then(res => {
+              if (res.status === 201) {
+                this.toggleCreateModal()
+              }
+            })
+            .catch(err => {
+              console.log(err)
+            })
+      }
+    },
     searchStringInArray(input, array) {
       for (let i = 0; i <= Object.keys(array).length; i++) {
         if (array[i] === input) {
@@ -181,24 +227,20 @@ export default {
       }
     },
     checkReservedLinks() {
-      this.usernameInput=this.usernameInput.toLowerCase()
-      var linkExists = this.searchStringInArray(this.usernameInput, this.allReservedLinks)
-      if (linkExists || this.usernameInput.length < 3) {
-        this.nextButton = false
-      } else {
-        this.nextButton = true
-      }
+      this.usernameInput = this.usernameInput.toLowerCase()
+      var linkExists     = this.searchStringInArray(this.usernameInput, this.allReservedLinks)
+      this.nextButton    = !(linkExists || this.usernameInput.length < 3);
       if (!this.usernameInput.length) {
         this.nextButton = true
       }
     },
-    setImg() {
-      if (this.coverImage) {
-        this.coverImagePreview = URL.createObjectURL(this.coverImage)
-      }
-      if (this.profileImage) {
-        this.profileImagePreview = URL.createObjectURL(this.profileImage)
-      }
+    setCoverImg(e) {
+      this.coverImage        = e.target.files[0]
+      this.coverImagePreview = URL.createObjectURL(e.target.files[0])
+    },
+    setProfileImg(e) {
+      this.profileImage        = e.target.files[0]
+      this.profileImagePreview = URL.createObjectURL(e.target.files[0])
     },
     toggleCreateModal() {
       this.step = 0
