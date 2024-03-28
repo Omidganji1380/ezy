@@ -177,6 +177,7 @@ class Dashboard extends Controller
                     'img' => $imgName,
                 ]);
             }
+            return response()->json('profile created', 201);
         }
     }
 }
