@@ -78,24 +78,10 @@
     <NewProfile v-if="createModal" @toggleCreateModal="toggleCreateModal"/>
   </div>
   <PreviewModal :link="PreviewLink" @closeModal="showPreview=false" v-if="showPreview"/>
-  <div class="bottom-0 top-0 left-0 right-0 bg-[#00960610] d-none backdrop-blur-md z-[99999] absolute fade"
-       id="contextMenuBackdrop">s
-  </div>
-  <div class="absolute w-[100px] z-[999999] fade d-none" style="left: 0" id="contextMenu">
-    <div class="menu">
-      <ul class="text-white rounded-xl list-group">
-        <li class="px-2 py-1 list-group-item bg-gray-300 list-group-item-action transition-all delay-75 text-gray-600">
-          test
-        </li>
-        <li class="px-2 py-1 list-group-item bg-gray-300 list-group-item-action transition-all delay-75 text-gray-600">
-          test
-        </li>
-        <li class="px-2 py-1 list-group-item bg-gray-300 list-group-item-action transition-all delay-75 text-danger">
-          delete
-        </li>
-      </ul>
-    </div>
-  </div>
+  <ContextMenu :contextOptions="contextMenuProfilesOptions"
+               :contextMenuProfiles="contextMenuProfiles"
+               v-if="contextMenuProfiles"
+               @closeContextMenu="contextMenuProfiles=null"/>
 </template>
 
 <script>
@@ -106,20 +92,30 @@ import Header from "@/components/pageBuilder/Includes/Header.vue";
 import SideMenu from "@/components/pageBuilder/Includes/SideMenu.vue";
 import PreviewModal from "@/components/pageBuilder/Preview/PreviewModal.vue";
 import $ from 'jquery'
+import ContextMenu from "@/components/pageBuilder/Includes/ContextMenu.vue";
 
 export default {
-  components: {NewProfile, Footer, Header, SideMenu, PreviewModal},
+  components: {
+    NewProfile,
+    Footer,
+    Header,
+    SideMenu,
+    PreviewModal,
+    ContextMenu
+  },
   data() {
     return {
-      createModal     : false,
-      profiles        : [],
-      profileImgs     : {},
-      profileTitles   : {},
-      profileSubtitles: {},
-      profileLinks    : {},
-      ezyLink         : '',
-      PreviewLink     : null,
-      showPreview     : false,
+      createModal               : false,
+      profiles                  : [],
+      profileImgs               : {},
+      profileTitles             : {},
+      profileSubtitles          : {},
+      profileLinks              : {},
+      ezyLink                   : '',
+      PreviewLink               : null,
+      showPreview               : false,
+      contextMenuProfiles       : null,
+      contextMenuProfilesOptions: null,
     }
   },
   methods: {
@@ -153,7 +149,7 @@ export default {
             this.profileTitles    = res.data.profileTitles
             this.profileSubtitles = res.data.profileSubtitles
             this.profileLinks     = res.data.profileLinks
-            this.contextMenu()
+            // this.contextMenu()
 
           })
           .catch(err => console.log(err))
@@ -163,6 +159,13 @@ export default {
       this.ezyLink = this.ezyLink.replace('api/', '')
     },
     contextMenu(index) {
+      this.contextMenuProfiles = document.getElementById("contextMenuProfiles_" + index)
+      this.contextMenuProfilesOptions={
+        omid:'dsa',
+        ganji:'asd'
+      }
+    },
+    /*contextMenu(index) {
       var menu                = $("#contextMenu");
       var contextMenuBackdrop = $("#contextMenuBackdrop");
       var contextMenuProfiles = document.getElementById("contextMenuProfiles_" + index);
@@ -208,7 +211,7 @@ export default {
         contextMenuBackdrop.addClass('d-none');
         contextMenuProfiles.removeEventListener('wheel')
       }, 50)
-    },
+    },*/
   },
   mounted() {
     this.firstMount()
