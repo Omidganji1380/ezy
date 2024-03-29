@@ -51,7 +51,7 @@ export default {
             this.closeContextMenu(menu, contextMenuBackdrop, contextMenuProfiles)
           })
           setTimeout(() => {
-            navigator.vibrate([200,100,200,100,200,100,200,100])
+            navigator.vibrate([200])
             contextMenuProfiles.classList.add('relative', 'z-[999999]')
             contextMenuBackdrop.addClass('show');
             menu.addClass('show');

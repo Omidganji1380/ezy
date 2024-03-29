@@ -13,7 +13,7 @@
         <input
             :class="{'!border-[#ff0000]':!nextButton}"
             type="text"
-            @keydown.enter.prevent="step++"
+            @keydown.enter.prevent="nextButton?step++:''"
             @keyup.prevent="checkReservedLinks"
             placeholder="نام کاربری"
             v-model="usernameInput"
@@ -44,9 +44,9 @@
 
     <div :class="{'d-none':step!==1}"
          class="z-[99999999999] relative max-w-[430px] bg-white text-center mx-auto h-[100vh]">
-      <Header/>
+      <!--      <Header/>-->
       <form @submit.prevent="submitNewProfile" enctype="multipart/form-data">
-        <div class="pt-[60px]">
+        <div class="pt-[0px]">
           <div class="row">
             <div class="col-12">
               <label for="coverImage"
@@ -198,9 +198,6 @@ export default {
           fData.append('profileImage', this.profileImage)
           fData.append('profileImageName', this.profileImage.name)
         }
-        // for (let i of fData.entries()) {
-        //   this.data[i[0]] = i[1]
-        // }
         axios({
                 method : 'POST',
                 url    : 'v1/dashboard/submitNewProfile',
@@ -222,14 +219,19 @@ export default {
     searchStringInArray(input, array) {
       for (let i = 0; i <= Object.keys(array).length; i++) {
         if (array[i] === input) {
+          navigator.vibrate([400])
           return input;
         }
       }
     },
     checkReservedLinks() {
       this.usernameInput = this.usernameInput.toLowerCase()
-      var linkExists     = this.searchStringInArray(this.usernameInput, this.allReservedLinks)
-      this.nextButton    = !(linkExists || this.usernameInput.length < 3);
+      const regex        = /^[a-z0-9\-_+]+$/i;
+      if (!regex.test(this.usernameInput)) {
+        this.usernameInput = this.usernameInput.replace(/[^a-z0-9\-_+]/g, '');
+      }
+      var linkExists  = this.searchStringInArray(this.usernameInput, this.allReservedLinks)
+      this.nextButton = !(linkExists || this.usernameInput.length < 3);
       if (!this.usernameInput.length) {
         this.nextButton = true
       }
