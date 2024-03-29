@@ -9,8 +9,10 @@
     </div>
 
     <div class="pb-[170px] bg-[#f9f9f9] pt-1" v-else>
-      <div :class="[{'mt-0':index===0,'mb-0':profiles.length-1===index},'contextMenuProfiles'+index]"
-           @click.right.prevent="contextMenu(index)"
+      <div :class="[{'mt-0':index===0,'mb-0':profiles.length-1===index}]"
+           :id="'contextMenuProfiles_'+index"
+           @mousedown.right.prevent="contextMenu(index)"
+           @pointerdown.prevent="contextMenu(index)"
            class="section m-[29px] px-[23px] rounded-[15px] bg-[#f9fffb] drop-shadow-md py-[16px]"
            v-for="(profile,index) in profiles" :key="index">
         <div class="row overflow-hidden flex-nowrap content-start bg-pri-color h-[31px] rounded-[7px] px-[10px]">
@@ -148,6 +150,8 @@ export default {
             this.profileTitles    = res.data.profileTitles
             this.profileSubtitles = res.data.profileSubtitles
             this.profileLinks     = res.data.profileLinks
+            this.contextMenu()
+
           })
           .catch(err => console.log(err))
 
@@ -157,33 +161,81 @@ export default {
     },
     contextMenu(index) {
       var menu                = $("#contextMenu");
-      var contextMenuProfiles = document.querySelector(".contextMenuProfiles" + index);
+      var contextMenuProfiles = document.getElementById("contextMenuProfiles_" + index);
+      // for (var i = 0; i < this.profiles.length; i++) {
+      //   if (i === index ) {
+      //
+      //     contextMenuProfiles.addEventListener('contextmenu', (e) => {
+      //       menu.addClass('show');
+      //       menu.css({'top': e.clientY + 'px'})
+      //       menu.css({'left': e.clientX + 'px'})
+      //       window.event.returnValue = false;
+      //     });
+      //   }
+      //   if (i === index) {
+      //     contextMenuProfiles.addEventListener('contextmenu', (e) => {
+      //       menu.addClass('show');
+      //       menu.css({'top': e.clientY + 'px'})
+      //       menu.css({'left': e.clientX + 'px'})
+      //       window.event.returnValue = false;
+      //     });
+      //   }
+      // }
+      // if (document.addEventListener) {
+      //   document.addEventListener('contextmenu', function (e) {
+      //     // alert("You've tried to open context menu"); //here you draw your own menu
+      //     e.preventDefault();
+      //   }, false);
+      // } else {
+        // document.addEventListener('contextmenu', event => event.preventDefault());
 
-      setTimeout(() => {
         contextMenuProfiles.addEventListener('contextmenu', (e) => {
           menu.addClass('show');
           menu.css({'top': e.clientY + 'px'})
           menu.css({'left': e.clientX + 'px'})
           window.event.returnValue = false;
         });
+      // }
+      // var contextMenuProfiles = $("#contextMenuProfiles_" + index);
+
+      setTimeout(() => {
+
       }, 50)
+
 
       document.addEventListener("click", () => {
         menu.removeClass('show')
       });
-      setTimeout(() => {
-        if (menu.hasClass('show')) {
-          contextMenuProfiles.on('scroll touchmove mousewheel', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-            return false;
-          })
-        }
-      }, 1000)
+      // setTimeout(() => {
+      //   if (menu.hasClass('show')) {
+      //     contextMenuProfiles.on('scroll touchmove mousewheel', function (e) {
+      //       e.preventDefault();
+      //       e.stopPropagation();
+      //       return false;
+      //     })
+      //   }
+      // }, 1000)
     },
   },
   mounted() {
     this.firstMount()
+    // if (document.addEventListener) {
+    //   document.addEventListener('contextmenu', function(e) {
+    //     // alert("You've tried to open context menu"); //here you draw your own menu
+    //     e.preventDefault();
+    //   }, false);
+    // } else {
+    // document.addEventListener('contextmenu', event => event.preventDefault());
+    // var menu = $("#contextMenu");
+    // // var contextMenuProfiles = document.getElementById("contextMenuProfiles_" + index);
+    //
+    // document.addEventListener('contextmenu', (e) => {
+    //   menu.addClass('show');
+    //   menu.css({'top': e.clientY + 'px'})
+    //   menu.css({'left': e.clientX + 'px'})
+    //   window.event.returnValue = false;
+    // });
+    // }
     // setTimeout(() => {
     //   this.contextMenu()
     // }, 1000)
