@@ -1,6 +1,6 @@
 <template>
   <div id="profileImg"
-       class="-mt-[100%] transition-all duration-1000 fixedHeader fixed-top max-w-[430px] mx-auto p-05 !bg-white !bg-opacity-40 backdrop-blur-[6px] shadow-[0_10px_10px_-15px] rounded-b-3xl">
+       class="-mt-[100%] transition-all duration-1000 fixedHeader fixed-top w-[430px] mx-auto p-05 !bg-white !bg-opacity-40 backdrop-blur-[6px] shadow-[0_10px_10px_-15px] rounded-b-3xl">
     <div class="row justify-between flex-nowrap">
       <div class="col-auto">
         <img onerror="this.style.display='none'"
@@ -119,7 +119,7 @@ export default {
         })
         .catch(err => console.log(err))
     document.querySelector('body').classList.add('!overflow-y-auto');
-    document.querySelector('#app').classList.add('!h-[unset]');
+    // document.querySelector('#app').classList.add('!h-[unset]');
   },
   updated() {
     window.addEventListener("scroll", function () {

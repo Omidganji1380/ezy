@@ -45,24 +45,24 @@
           <div class="col-12">
             <div class="row flex-nowrap w-[99%]">
               <a
-                  class="flex justify-end items-center whitespace-nowrap overflow-hidden col-6 mr-[10px] text-right px-0 mb-[8px] h-[52px] bg-sec-color rounded-[7px] border-solid border-1 border-pri-color text-pri-color">
+                  class="hover:text-pri-color flex justify-end items-center whitespace-nowrap overflow-hidden col-6 mr-[10px] text-right px-0 mb-[8px] h-[52px] bg-sec-color rounded-[7px] border-solid border-1 border-pri-color text-pri-color">
                 حساب تجاری
                 <img src="/assets/img/PageBuilder/diamond.svg" class="d-inline mx-[10px] max-h-[17.5px]" alt="">
               </a>
               <a
-                  class="flex justify-end items-center whitespace-nowrap overflow-hidden col-6 ml-[10px] text-right px-0 mb-[8px] h-[52px] bg-sec-color rounded-[7px] border-solid border-1 border-pri-color text-pri-color">
+                  class="hover:text-pri-color flex justify-end items-center whitespace-nowrap overflow-hidden col-6 ml-[10px] text-right px-0 mb-[8px] h-[52px] bg-sec-color rounded-[7px] border-solid border-1 border-pri-color text-pri-color">
                 ذخیره خودکار
                 <img src="/assets/img/PageBuilder/vcf.svg" class="d-inline mx-[10px] max-h-[17.5px]" alt="">
               </a>
             </div>
             <div class="row flex-nowrap w-[99%]">
               <a @click.prevent="showPreviewModal(profileLinks[index])"
-                 class="flex justify-end items-center whitespace-nowrap overflow-hidden col-6 mr-[10px] text-right px-0 h-[52px] bg-sec-color rounded-[7px] border-solid border-1 border-pri-color text-pri-color">
+                 class="hover:text-pri-color flex justify-end items-center whitespace-nowrap overflow-hidden col-6 mr-[10px] text-right px-0 h-[52px] bg-sec-color rounded-[7px] border-solid border-1 border-pri-color text-pri-color">
                 پیش نمایش
                 <img src="/assets/img/PageBuilder/preview-eye.svg" class="d-inline mx-[10px] max-h-[17.5px]" alt="">
               </a>
               <a
-                  class="flex justify-end items-center whitespace-nowrap overflow-hidden col-6 ml-[10px] text-right px-0 h-[52px] bg-sec-color rounded-[7px] border-solid border-1 border-pri-color text-pri-color">
+                  class="hover:text-pri-color flex justify-end items-center whitespace-nowrap overflow-hidden col-6 ml-[10px] text-right px-0 h-[52px] bg-sec-color rounded-[7px] border-solid border-1 border-pri-color text-pri-color">
                 ویرایش
                 <img src="/assets/img/PageBuilder/pen-edit.svg" class="d-inline mx-[10px] max-h-[17.5px]" alt="">
               </a>
@@ -78,7 +78,10 @@
     <NewProfile v-if="createModal" @toggleCreateModal="toggleCreateModal"/>
   </div>
   <PreviewModal :link="PreviewLink" @closeModal="showPreview=false" v-if="showPreview"/>
-  <div class="absolute w-[100px] z-[999999999999999] fade" style="left: 0" id="contextMenu">
+  <div class="bottom-0 top-0 left-0 right-0 bg-[#00960610] d-none backdrop-blur-md z-[99999] absolute fade"
+       id="contextMenuBackdrop">s
+  </div>
+  <div class="absolute w-[100px] z-[999999] fade d-none" style="left: 0" id="contextMenu">
     <div class="menu">
       <ul class="text-white rounded-xl list-group">
         <li class="px-2 py-1 list-group-item bg-gray-300 list-group-item-action transition-all delay-75 text-gray-600">
@@ -161,86 +164,54 @@ export default {
     },
     contextMenu(index) {
       var menu                = $("#contextMenu");
+      var contextMenuBackdrop = $("#contextMenuBackdrop");
       var contextMenuProfiles = document.getElementById("contextMenuProfiles_" + index);
-      // for (var i = 0; i < this.profiles.length; i++) {
-      //   if (i === index ) {
-      //
-      //     contextMenuProfiles.addEventListener('contextmenu', (e) => {
-      //       menu.addClass('show');
-      //       menu.css({'top': e.clientY + 'px'})
-      //       menu.css({'left': e.clientX + 'px'})
-      //       window.event.returnValue = false;
-      //     });
-      //   }
-      //   if (i === index) {
-      //     contextMenuProfiles.addEventListener('contextmenu', (e) => {
-      //       menu.addClass('show');
-      //       menu.css({'top': e.clientY + 'px'})
-      //       menu.css({'left': e.clientX + 'px'})
-      //       window.event.returnValue = false;
-      //     });
-      //   }
-      // }
-      // if (document.addEventListener) {
-      //   document.addEventListener('contextmenu', function (e) {
-      //     // alert("You've tried to open context menu"); //here you draw your own menu
-      //     e.preventDefault();
-      //   }, false);
-      // } else {
-        // document.addEventListener('contextmenu', event => event.preventDefault());
 
-        contextMenuProfiles.addEventListener('contextmenu', (e) => {
-          menu.addClass('show');
-          menu.css({'top': e.clientY + 'px'})
-          menu.css({'left': e.clientX + 'px'})
+      contextMenuProfiles.addEventListener('contextmenu', (e) => {
+        // e.preventDefault()
+        contextMenuBackdrop.removeClass('d-none');
+        menu.removeClass('d-none');
+        setTimeout(() => {
+          menu.removeClass('show');
+          contextMenuBackdrop.removeClass('show');
+        }, 50)
+        if (menu.hasClass('show') === false) {
+          this.addListenerMulti(contextMenuProfiles, 'touchmove wheel', () => {
+            this.closeContextMenu(menu, contextMenuBackdrop, contextMenuProfiles)
+          })
+          setTimeout(() => {
+            contextMenuProfiles.classList.add('relative', 'z-[999999]')
+            contextMenuBackdrop.addClass('show');
+            menu.addClass('show');
+            menu.css({'top': e.clientY + 5 + 'px'})
+            menu.css({'left': e.clientX - 50 + 'px'})
+          }, 50)
           window.event.returnValue = false;
-        });
-      // }
-      // var contextMenuProfiles = $("#contextMenuProfiles_" + index);
-
-      setTimeout(() => {
-
-      }, 50)
-
-
-      document.addEventListener("click", () => {
-        menu.removeClass('show')
+        }
       });
-      // setTimeout(() => {
-      //   if (menu.hasClass('show')) {
-      //     contextMenuProfiles.on('scroll touchmove mousewheel', function (e) {
-      //       e.preventDefault();
-      //       e.stopPropagation();
-      //       return false;
-      //     })
-      //   }
-      // }, 1000)
+      document.addEventListener("click", () => {
+        this.closeContextMenu(menu, contextMenuBackdrop, contextMenuProfiles)
+      });
+    },
+    addListenerMulti(element, eventNames, listener) {
+      var events = eventNames.split(' ');
+      for (var i = 0, iLen = events.length; i < iLen; i++) {
+        element.addEventListener(events[i], listener, false);
+      }
+    },
+    closeContextMenu(menu, contextMenuBackdrop, contextMenuProfiles) {
+      menu.removeClass('show')
+      contextMenuBackdrop.removeClass('show')
+      setTimeout(() => {
+        contextMenuProfiles.classList.remove('relative', 'z-[999999]')
+        menu.addClass('d-none');
+        contextMenuBackdrop.addClass('d-none');
+        contextMenuProfiles.removeEventListener('wheel')
+      }, 50)
     },
   },
   mounted() {
     this.firstMount()
-    // if (document.addEventListener) {
-    //   document.addEventListener('contextmenu', function(e) {
-    //     // alert("You've tried to open context menu"); //here you draw your own menu
-    //     e.preventDefault();
-    //   }, false);
-    // } else {
-    // document.addEventListener('contextmenu', event => event.preventDefault());
-    // var menu = $("#contextMenu");
-    // // var contextMenuProfiles = document.getElementById("contextMenuProfiles_" + index);
-    //
-    // document.addEventListener('contextmenu', (e) => {
-    //   menu.addClass('show');
-    //   menu.css({'top': e.clientY + 'px'})
-    //   menu.css({'left': e.clientX + 'px'})
-    //   window.event.returnValue = false;
-    // });
-    // }
-    // setTimeout(() => {
-    //   this.contextMenu()
-    // }, 1000)
-    // if (document.addEventListener) {
-
   },
 
 }
