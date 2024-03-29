@@ -51,12 +51,12 @@ export default {
             this.closeContextMenu(menu, contextMenuBackdrop, contextMenuProfiles)
           })
           setTimeout(() => {
-            navigator.vibrate([200])
             contextMenuProfiles.classList.add('relative', 'z-[999999]')
             contextMenuBackdrop.addClass('show');
             menu.addClass('show');
             menu.css({'top': e.clientY + 5 + 'px'})
             menu.css({'left': e.clientX - 50 + 'px'})
+            navigator.vibrate([200])
           }, 50)
           window.event.returnValue = false;
         }
