@@ -31,6 +31,7 @@ export default {
   components: {
     Preview,
   },
+  emits:['closeModal'],
   methods   : {
     closeModal() {
       document.querySelector('#app').classList.remove('!h-[unset]')
