@@ -33,7 +33,7 @@ export default {
       contextSection: null,
     }
   },
-  emits:['closeContextMenu'],
+  /*emits:['closeContextMenu'],*/
   methods: {
     contextMenu(contextMenuProfiles) {
       var menu                = $("#contextMenu");
