@@ -61,11 +61,11 @@
                 پیش نمایش
                 <img src="/assets/img/PageBuilder/preview-eye.svg" class="d-inline mx-[10px] max-h-[17.5px]" alt="">
               </a>
-              <a
+              <router-link :to="{name:'ClientView_PageBuilder_Edit',params:{id:profile.id}}"
                   class="hover:text-pri-color flex justify-end items-center whitespace-nowrap overflow-hidden col-6 ml-[10px] text-right px-0 h-[52px] bg-sec-color rounded-[7px] border-solid border-1 border-pri-color text-pri-color">
                 ویرایش
                 <img src="/assets/img/PageBuilder/pen-edit.svg" class="d-inline mx-[10px] max-h-[17.5px]" alt="">
-              </a>
+              </router-link>
             </div>
           </div>
         </div>
@@ -78,10 +78,10 @@
     <NewProfile v-if="createModal" @toggleCreateModal="toggleCreateModal"/>
   </div>
   <PreviewModal :link="PreviewLink" @closeModal="showPreview=false" v-if="showPreview"/>
-  <ContextMenu :contextOptions="contextMenuProfilesOptions"
+<!--  <ContextMenu :contextOptions="contextMenuProfilesOptions"
                :contextMenuProfiles="contextMenuProfiles"
                v-if="contextMenuProfiles"
-               @closeContextMenu="contextMenuProfiles=null"/>
+               @closeContextMenu="contextMenuProfiles=null"/>-->
 </template>
 
 <script>
@@ -123,13 +123,13 @@ export default {
       this.PreviewLink = link
       this.showPreview = true
     },
-    showMenu(showMenu) {
+    /*showMenu(showMenu) {
       if (showMenu === true) {
         document.getElementById('appCapsule').classList.add('show-menu')
       } else {
         document.getElementById('appCapsule').classList.remove('show-menu')
       }
-    },
+    },*/
     toggleCreateModal() {
       this.createModal = !this.createModal
       this.firstMount()
@@ -165,53 +165,6 @@ export default {
         ganji:'asd'
       }
     },
-    /*contextMenu(index) {
-      var menu                = $("#contextMenu");
-      var contextMenuBackdrop = $("#contextMenuBackdrop");
-      var contextMenuProfiles = document.getElementById("contextMenuProfiles_" + index);
-
-      contextMenuProfiles.addEventListener('contextmenu', (e) => {
-        // e.preventDefault()
-        contextMenuBackdrop.removeClass('d-none');
-        menu.removeClass('d-none');
-        setTimeout(() => {
-          menu.removeClass('show');
-          contextMenuBackdrop.removeClass('show');
-        }, 50)
-        if (menu.hasClass('show') === false) {
-          this.addListenerMulti(contextMenuProfiles, 'touchmove wheel', () => {
-            this.closeContextMenu(menu, contextMenuBackdrop, contextMenuProfiles)
-          })
-          setTimeout(() => {
-            contextMenuProfiles.classList.add('relative', 'z-[999999]')
-            contextMenuBackdrop.addClass('show');
-            menu.addClass('show');
-            menu.css({'top': e.clientY + 5 + 'px'})
-            menu.css({'left': e.clientX - 50 + 'px'})
-          }, 50)
-          window.event.returnValue = false;
-        }
-      });
-      document.addEventListener("click", () => {
-        this.closeContextMenu(menu, contextMenuBackdrop, contextMenuProfiles)
-      });
-    },
-    addListenerMulti(element, eventNames, listener) {
-      var events = eventNames.split(' ');
-      for (var i = 0, iLen = events.length; i < iLen; i++) {
-        element.addEventListener(events[i], listener, false);
-      }
-    },
-    closeContextMenu(menu, contextMenuBackdrop, contextMenuProfiles) {
-      menu.removeClass('show')
-      contextMenuBackdrop.removeClass('show')
-      setTimeout(() => {
-        contextMenuProfiles.classList.remove('relative', 'z-[999999]')
-        menu.addClass('d-none');
-        contextMenuBackdrop.addClass('d-none');
-        contextMenuProfiles.removeEventListener('wheel')
-      }, 50)
-    },*/
   },
   mounted() {
     this.firstMount()
