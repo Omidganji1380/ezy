@@ -29,7 +29,7 @@ class Dashboard extends Controller
         $profileTitles    = [];
         $profileSubtitles = [];
         $profileLinks     = [];
-        $profiles         = Profile::query()->where('user_id', $request->userId)->orderByDesc('created_at')->get();
+        $profiles         = Profile::query()->where('user_id', $request->userId)->orderByDesc('updated_at')->get();
         foreach ($profiles as $profile) {
             array_push($profileImgs, asset('/storage/pb/profiles/profile-' . $profile->id . '/' . $profile->img));
             array_push($profileTitles, $profile->title);
