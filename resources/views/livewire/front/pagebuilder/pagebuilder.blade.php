@@ -100,14 +100,8 @@
                         <div class="row p-2 flex-nowrap">
                             {{--                            <input type="text" class="form-control" value="{{count($block->banner)}}">--}}
                             <div class="col-11"
-                                 ondrag="stopSortable({{$key}})"
-                                 ondrop="Sortable({{$key}})"
-                                 onmousedown="stopSortable({{$key}})"
-                                 onmouseup="Sortable({{$key}})"
-                                 onpointerdown="stopSortable({{$key}})"
-                                 onpointerup="Sortable({{$key}})"
                                  onclick="showFirstTab()"
-                                 data-bs-toggle="modal" id="block--{{$key}}"
+                                 data-bs-toggle="modal"
                                  @if(count($block->banner))
                                      data-bs-target="#blockBannerOptions"
                                  wire:click="blockBannerOptions({{$block->id}})"
@@ -286,7 +280,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="col-1 text-center w-auto rounded"
+                            <div class="col-1 text-center w-auto rounded ui-sss"
                                  style="cursor: grab;background-color: rgb(239, 239, 239);pointer-events: auto !important;">
                                 <i class="fa fa-arrows-up-down-left-right top-50 position-relative translate-middle-y"></i>
                             </div>
@@ -2866,13 +2860,14 @@
     @push('js')
         <script>
             function stopSortable(key) {
-                window.event.returnValue=false
-                // document.getElementById('block--' + key).style.pointerEvents='none !important'
+                // window.event.preventDefault()
+                // window.event.returnValue=false
+                document.getElementById('block--' + key).style.pointerEvents='none !important';
             }
 
             function Sortable(key) {
-                window.event.returnValue=true
-                // document.getElementById('block--' + key).style.pointerEvents='auto !important'
+                // window.event.returnValue=true
+                document.getElementById('block--' + key).style.pointerEvents='auto !important';
             }
             {{--function getBgImgSelect(id){--}}
             {{--    alert($(this).hasClass("bgImgSelected").toString())--}}
@@ -3180,13 +3175,12 @@
                 // $("#sortable1").sortable({axis: 'y'});
                 $("#sortable").sortable({
                                             axis  : 'y',
+                                            handle: $('.ui-sss'),
                                             update: function (event, ui) {
                                                 var data = $(this).sortable('serialize');
                                                 // alert(data)
-
                                                 // setTimeout(function (){
-                                                @this.
-                                                updateSort(data);
+                                                @this.updateSort(data);
                                                 // },1000)
                                             }
                                         });
