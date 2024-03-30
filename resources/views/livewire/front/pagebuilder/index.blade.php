@@ -1,8 +1,8 @@
 <div>
-    <div class="container">
+    <div style="margin-bottom: 50%" class="container">
         <div class="row justify-content-center">
             @foreach($profiles as $item)
-                <div class="col-md-6 col-lg-4 col-xxl-3 my-4">
+                <div class="col-md-6 col-lg-4 my-4">
                     <div class="card" style="border-radius: 20px;box-shadow: rgba(0,0,0,0.2) 0 0 20px">
                         <div class="container" style="">
                             {{--<div class="card-header">

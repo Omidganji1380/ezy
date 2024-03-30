@@ -39,6 +39,9 @@ class Pagebuilder extends Component
     {
         $this->mountTrait($link);
         $this->globalOptionsMount();
+        $this->profile->update([
+            'updated_at'=>now()
+        ]);
 //        dd($this->blocks);
     }
 

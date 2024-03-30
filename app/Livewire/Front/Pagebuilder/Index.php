@@ -54,7 +54,7 @@ class Index extends Component
 
     public function mount()
     {
-        $this->profiles = Profile::query()->where('user_id', Auth::id())->orderByDesc('created_at')->get();
+        $this->profiles = Profile::query()->where('user_id', Auth::id())->orderByDesc('updated_at')->get();
 //        $this->reservedUrls();
     }
 
