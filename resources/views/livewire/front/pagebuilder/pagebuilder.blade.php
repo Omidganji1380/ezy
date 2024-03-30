@@ -94,13 +94,16 @@
                     </div>
                 </div>
             </div>
-            <div id="sortable" style="cursor: grab;margin-bottom: 9rem !important;" {{--wire:ignore--}}>
+            <div id="sortable" style="margin-bottom: 9rem !important;" {{--wire:ignore--}}>
                 @foreach($blocks as $key=>$block)
                     <div class="col-12 my-3" id="sortKey-{{$block->id}}">
                         <div class="row p-2 flex-nowrap">
                             {{--                            <input type="text" class="form-control" value="{{count($block->banner)}}">--}}
-                            <div class="col-11" onclick="showFirstTab()"
-                                 data-bs-toggle="modal"
+                            <div class="col-11"
+                                 onpointerdown="stopSortable({{$key}})"
+                                 onpointerup="Sortable({{$key}})"
+                                 onclick="showFirstTab()"
+                                 data-bs-toggle="modal" id="block--{{$key}}"
                                  @if(count($block->banner))
                                      data-bs-target="#blockBannerOptions"
                                  wire:click="blockBannerOptions({{$block->id}})"
@@ -279,7 +282,8 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="col-1 text-center w-auto rounded" style="background-color: rgb(239, 239, 239);">
+                            <div class="col-1 text-center w-auto rounded"
+                                 style="cursor: grab;background-color: rgb(239, 239, 239);pointer-events: auto !important;">
                                 <i class="fa fa-arrows-up-down-left-right top-50 position-relative translate-middle-y"></i>
                             </div>
                         </div>
@@ -2857,6 +2861,15 @@
 
     @push('js')
         <script>
+            function stopSortable(key) {
+                window.event.returnValue=false
+                // document.getElementById('block--' + key).style.pointerEvents='none !important'
+            }
+
+            function Sortable(key) {
+                window.event.returnValue=true
+                // document.getElementById('block--' + key).style.pointerEvents='auto !important'
+            }
             {{--function getBgImgSelect(id){--}}
             {{--    alert($(this).hasClass("bgImgSelected").toString())--}}
             {{--    if($(this).hasClass("bgImgSelected")){--}}

@@ -143,7 +143,7 @@ trait PageBuilderTrait
         if (!$this->profile) {
             abort(404);
         }
-        $this->blocks = $this->profile->block()->get()->sortBy('sort');
+        $this->blocks = $this->profile->block()->orderBy('sort')->get();
 //dd($this->blocks->find(105));
 //        $this->getOptions($this->title, false);
         $this->constOptions = pbOption::query()->where('for', 'social')->get();
