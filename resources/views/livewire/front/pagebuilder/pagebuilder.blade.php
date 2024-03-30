@@ -100,6 +100,10 @@
                         <div class="row p-2 flex-nowrap">
                             {{--                            <input type="text" class="form-control" value="{{count($block->banner)}}">--}}
                             <div class="col-11"
+                                 ondrag="stopSortable({{$key}})"
+                                 ondrop="Sortable({{$key}})"
+                                 onmousedown="stopSortable({{$key}})"
+                                 onmouseup="Sortable({{$key}})"
                                  onpointerdown="stopSortable({{$key}})"
                                  onpointerup="Sortable({{$key}})"
                                  onclick="showFirstTab()"
