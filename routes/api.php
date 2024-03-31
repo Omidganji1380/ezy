@@ -34,9 +34,11 @@ Route::group(['prefix' => 'v1'], function () {
     Route::group(['prefix' => 'dashboard'], function () {
         Route::post('/', '\App\Http\Controllers\api\v1\PageBuilder\Dashboard@getProfiles');
         Route::post('/getView', '\App\Http\Controllers\api\v1\PageBuilder\Dashboard@getView');
-        Route::post('/getView/getBlockItemTitle', '\App\Http\Controllers\api\v1\PageBuilder\Dashboard@getBlockItemTitle');
         Route::post('/getAllReservedLinks', '\App\Http\Controllers\api\v1\PageBuilder\Dashboard@getAllReservedLinks');
         Route::post('/submitNewProfile', '\App\Http\Controllers\api\v1\PageBuilder\Dashboard@submitNewProfile');
+    });
+    Route::group(['prefix' => 'pb'], function () {
+        Route::post('edit', '\App\Http\Controllers\api\v1\PageBuilder\Edit@pageBuilderEdit');
     });
 });
 
