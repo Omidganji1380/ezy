@@ -21,6 +21,7 @@ export default {
       sideMenu: false
     }
   },
+  emits:['showMenu'],
   methods: {
     showMenu() {
       this.sideMenu = !this.sideMenu

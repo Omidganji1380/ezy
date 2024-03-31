@@ -1,4 +1,5 @@
 <template>
+  <loading-spinner :loading="loading"></loading-spinner>
   <SideMenu/>
   <div id="appCapsule" class=" relative !pt-[29px] bg-[#f9f9f9]">
     <Header @showMenu="showMenu"/>
@@ -62,7 +63,7 @@
                 <img src="/assets/img/PageBuilder/preview-eye.svg" class="d-inline mx-[10px] max-h-[17.5px]" alt="">
               </a>
               <router-link :to="{name:'ClientView_PageBuilder_Edit',params:{id:profile.id}}"
-                  class="hover:text-pri-color flex justify-end items-center whitespace-nowrap overflow-hidden col-6 ml-[10px] text-right px-0 h-[52px] bg-sec-color rounded-[7px] border-solid border-1 border-pri-color text-pri-color">
+                           class="hover:text-pri-color flex justify-end items-center whitespace-nowrap overflow-hidden col-6 ml-[10px] text-right px-0 h-[52px] bg-sec-color rounded-[7px] border-solid border-1 border-pri-color text-pri-color">
                 ویرایش
                 <img src="/assets/img/PageBuilder/pen-edit.svg" class="d-inline mx-[10px] max-h-[17.5px]" alt="">
               </router-link>
@@ -78,10 +79,10 @@
     <NewProfile v-if="createModal" @toggleCreateModal="toggleCreateModal"/>
   </div>
   <PreviewModal :link="PreviewLink" @closeModal="showPreview=false" v-if="showPreview"/>
-<!--  <ContextMenu :contextOptions="contextMenuProfilesOptions"
-               :contextMenuProfiles="contextMenuProfiles"
-               v-if="contextMenuProfiles"
-               @closeContextMenu="contextMenuProfiles=null"/>-->
+  <!--  <ContextMenu :contextOptions="contextMenuProfilesOptions"
+                 :contextMenuProfiles="contextMenuProfiles"
+                 v-if="contextMenuProfiles"
+                 @closeContextMenu="contextMenuProfiles=null"/>-->
 </template>
 
 <script>
@@ -92,30 +93,32 @@ import Header from "@/components/pageBuilder/Includes/Header.vue";
 import SideMenu from "@/components/pageBuilder/Includes/SideMenu.vue";
 import PreviewModal from "@/components/pageBuilder/Preview/PreviewModal.vue";
 import $ from 'jquery'
-import ContextMenu from "@/components/pageBuilder/Includes/ContextMenu.vue";
+import LoadingSpinner from "@/components/pageBuilder/Loading/LoadingSpinner.vue";
+// import ContextMenu from "@/components/pageBuilder/Includes/ContextMenu.vue";
 
 export default {
   components: {
+    LoadingSpinner,
     NewProfile,
     Footer,
     Header,
     SideMenu,
     PreviewModal,
-    ContextMenu
   },
   data() {
     return {
-      createModal               : false,
-      profiles                  : [],
-      profileImgs               : {},
-      profileTitles             : {},
-      profileSubtitles          : {},
-      profileLinks              : {},
-      ezyLink                   : '',
-      PreviewLink               : null,
-      showPreview               : false,
-      contextMenuProfiles       : null,
-      contextMenuProfilesOptions: null,
+      loading         : true,
+      createModal     : false,
+      profiles        : [],
+      profileImgs     : {},
+      profileTitles   : {},
+      profileSubtitles: {},
+      profileLinks    : {},
+      ezyLink         : '',
+      PreviewLink     : null,
+      showPreview     : false,
+      /*contextMenuProfiles       : null,
+      contextMenuProfilesOptions: null,*/
     }
   },
   methods: {
@@ -123,13 +126,13 @@ export default {
       this.PreviewLink = link
       this.showPreview = true
     },
-    /*showMenu(showMenu) {
+    showMenu(showMenu) {
       if (showMenu === true) {
         document.getElementById('appCapsule').classList.add('show-menu')
       } else {
         document.getElementById('appCapsule').classList.remove('show-menu')
       }
-    },*/
+    },
     toggleCreateModal() {
       this.createModal = !this.createModal
       this.firstMount()
@@ -150,7 +153,9 @@ export default {
             this.profileSubtitles = res.data.profileSubtitles
             this.profileLinks     = res.data.profileLinks
             // this.contextMenu()
-
+            setTimeout(() => {
+              this.loading = false
+            }, 100)
           })
           .catch(err => console.log(err))
 
@@ -158,13 +163,13 @@ export default {
       this.ezyLink = this.ezyLink.replace(/(^\w+:|^)\/\//, '');
       this.ezyLink = this.ezyLink.replace('api/', '')
     },
-    contextMenu(index) {
+    /*contextMenu(index) {
       this.contextMenuProfiles = document.getElementById("contextMenuProfiles_" + index)
       this.contextMenuProfilesOptions={
         omid:'dsa',
         ganji:'asd'
       }
-    },
+    },*/
   },
   mounted() {
     this.firstMount()

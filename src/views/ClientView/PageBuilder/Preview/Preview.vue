@@ -1,4 +1,5 @@
 <template>
+  <loading-spinner :loading="loading"/>
   <div id="profileImg"
        class="-mt-[100%] transition-all duration-1000 fixedHeader fixed-top w-[430px] mx-auto p-05 !bg-white !bg-opacity-40 backdrop-blur-[6px] shadow-[0_10px_10px_-15px] rounded-b-3xl">
     <div class="row justify-between flex-nowrap">
@@ -58,6 +59,7 @@
 <script>
 import axios from "axios";
 import PbOptions from "@/components/pageBuilder/Preview/Blocks/PbOptions.vue";
+import LoadingSpinner from "@/components/pageBuilder/Loading/LoadingSpinner.vue";
 
 export default {
   name      : "Preview",
@@ -65,10 +67,12 @@ export default {
     link: ''
   },
   components: {
+    LoadingSpinner,
     PbOptions,
   },
   data() {
     return {
+      loading:true,
       profile: {
         profile        : null,
         profileBgImg   : null,
@@ -86,9 +90,7 @@ export default {
     }
   },
   methods: {
-    j_stringify($json) {
-      return JSON.stringify($json)
-    },
+
   },
   beforeMount() {
     document.querySelector('body').classList.add('!bg-white')
@@ -102,20 +104,20 @@ export default {
             }
           })
         .then(res => {
-          // setTimeout(()=>{
           var profile                  = res.data.profile
           this.profile.profile         = profile.profile
           this.profile.profileBgImg    = profile.profileBgImg
           this.profile.profileImg      = profile.profileImg
           this.profile.profileTitle    = profile.profileTitle
           this.profile.profileSubtitle = profile.profileSubtitle
-          // console.log(this.profileBgImg)
+
           this.blocks.blocks           = res.data.blocks.blocks
           this.blocks.blockTitles      = res.data.blocks.blockTitles
           this.blocks.blockLinks       = res.data.blocks.blockLinks
           this.blocks.blockWidth       = res.data.blocks.blockWidth
-          console.log(this.blocks.blockWidth)
-          // },2000)
+          setTimeout(() => {
+            this.loading = false
+          }, 100)
         })
         .catch(err => console.log(err))
     document.querySelector('body').classList.add('!overflow-y-auto');
