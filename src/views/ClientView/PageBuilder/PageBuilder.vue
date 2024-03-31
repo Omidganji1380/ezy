@@ -29,11 +29,13 @@
             </div>
           </div>
           <div class="col-1 self-center p-0">
-            <span class="col-auto p-0 text-white self-center ml-auto text-[12.7px]">
+            <span class="col-auto p-0 text-white self-center ml-auto text-[12.7px]"
+                  @click.prevent="profileMenuDots(index)">
               <img src="/assets/img/PageBuilder/profileMenuDots.svg" class="ml-auto" alt="">
             </span>
           </div>
-          <div dir="rtl" class="absolute overflow-hidden shadow-md border-b-2 px-0 border-b-gray-300 bg-white top-full w-[106px] right-[12px] rounded-[6px]">
+          <div :id="'profileMenuDots-'+index" dir="rtl"
+               class="profileMenuDots absolute d-none fade overflow-hidden shadow-md border-b-2 px-0 border-b-gray-300 bg-white top-full w-[106px] right-[12px] rounded-[6px]">
             <a class="row items-center justify-between flex-nowrap py-[9px] px-3">
               <span class="col-auto text-[12.75px] p-0 text-gray-600 font-shabnam-medium-fd">حذف</span>
               <span class="col-auto text-[12.75px] p-0 text-gray-600 font-shabnam-medium-fd">
@@ -142,6 +144,14 @@ export default {
     }
   },
   methods: {
+    profileMenuDots(index) {
+      setTimeout(() => {
+        $('.profileMenuDots').removeClass('d-none show')
+      }, 60)
+      setTimeout(() => {
+        $('#profileMenuDots-' + index).addClass('show')
+      }, 200)
+    },
     showPreviewModal(link) {
       this.PreviewLink = link
       this.showPreview = true
@@ -193,6 +203,12 @@ export default {
   },
   mounted() {
     this.firstMount()
+    document.addEventListener('click', () => {
+      $('.profileMenuDots').removeClass('show')
+      setTimeout(() => {
+        $('.profileMenuDots').addClass('d-none')
+      }, 50)
+    })
   },
 
 }
