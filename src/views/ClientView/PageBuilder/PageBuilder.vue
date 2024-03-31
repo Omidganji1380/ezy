@@ -11,23 +11,43 @@
 
     <div class="pb-[170px] bg-[#f9f9f9] pt-1" v-else>
       <div :class="[{'mt-0':index===0,'mb-0':profiles.length-1===index}]"
-           :id="'contextMenuProfiles_'+index"
-           @mousedown.right.prevent="contextMenu(index)"
-           @pointerdown.prevent="contextMenu(index)"
            class="section m-[29px] px-[23px] rounded-[15px] bg-[#f9fffb] drop-shadow-md py-[16px]"
            v-for="(profile,index) in profiles" :key="index">
-        <div class="row overflow-hidden flex-nowrap content-start bg-pri-color h-[31px] rounded-[7px] px-[10px]">
-       <span class="col-auto p-0 self-center">
-          <img src="/assets/img/PageBuilder/copy-profile-url.svg" alt="">
-       </span>
-          <span class="col-auto py-0 self-center px-1">
+        <div class="row h-[31px] px-[10px] relative">
+          <div class="col-11 p-0">
+            <div class="row bg-pri-color rounded-[7px] overflow-hidden flex-nowrap content-start">
+          <span class="col-auto p-0 self-center">
+            <img src="/assets/img/PageBuilder/copy-profile-url.svg" alt="">
+          </span>
+              <span class="col-auto py-0 self-center px-1">
           <img src="/assets/img/PageBuilder/share-profile-url.svg" alt="">
        </span>
-          <span class="col-auto p-0 border-[#92929277] border-l-[1px] my-1"> </span>
-          <span class="col-auto py-0 text-white self-center text-[12px] px-[8px]">
+              <span class="col-auto p-0 border-[#92929277] border-l-[1px] my-1"> </span>
+              <span class="col-auto py-0 text-white self-center text-[12px] px-[8px]">
             {{ ezyLink + profileLinks[index] }}
           </span>
-          <span class="col-auto p-0 text-white self-center ml-auto text-[12.7px]">رایگان</span>
+            </div>
+          </div>
+          <div class="col-1 self-center p-0">
+            <span class="col-auto p-0 text-white self-center ml-auto text-[12.7px]">
+              <img src="/assets/img/PageBuilder/profileMenuDots.svg" class="ml-auto" alt="">
+            </span>
+          </div>
+          <div dir="rtl" class="absolute overflow-hidden shadow-md border-b-2 px-0 border-b-gray-300 bg-white top-full w-[106px] right-[12px] rounded-[6px]">
+            <a class="row items-center justify-between flex-nowrap py-[9px] px-3">
+              <span class="col-auto text-[12.75px] p-0 text-gray-600 font-shabnam-medium-fd">حذف</span>
+              <span class="col-auto text-[12.75px] p-0 text-gray-600 font-shabnam-medium-fd">
+                <img src="/assets/img/PageBuilder/profileMenuDotsTrash.svg" alt="">
+              </span>
+            </a>
+            <hr>
+            <a class="row items-center justify-between flex-nowrap py-[9px] px-3">
+              <span class="col-auto text-[12.75px] p-0 text-gray-600 font-shabnam-medium-fd">جابه جایی</span>
+              <span class="col-auto text-[12.75px] p-0 text-gray-600 font-shabnam-medium-fd">
+                <img src="/assets/img/PageBuilder/profileMenuDotsMove.svg" alt="">
+              </span>
+            </a>
+          </div>
         </div>
         <div class="row overflow-hidden mt-[15px] content-end flex-nowrap" dir="rtl">
         <span class="col-auto p-0">
