@@ -18,7 +18,7 @@ export default {
     if (this.loading === false) {
       setTimeout(() => {
         this.loadingDiv = false
-      }, 1000)
+      }, 200)
     }
   },
 };

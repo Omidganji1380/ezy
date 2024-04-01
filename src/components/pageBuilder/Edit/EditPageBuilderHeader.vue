@@ -32,16 +32,6 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
-.show-menu {
-  transform: scale(0.8) !important;
-  right: 60% !important;
-  overflow: auto;
-  pointer-events: none;
-  transition: all ease-in-out 250ms !important;
-  top: 20% !important;
-  height: 80vh !important;
-  padding-bottom: 0 !important;
-  box-shadow: 0 0 30px 0 !important;
-}
+<style>
+
 </style>

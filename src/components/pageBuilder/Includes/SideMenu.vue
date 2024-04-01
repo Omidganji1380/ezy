@@ -1,5 +1,5 @@
 <template>
-  <div class="h-[100vh] w-[429px] bg-gradient-to-br from-pri-color to-[#009E28] fixed pr-[25px]" dir="rtl">
+  <div id="sideMenu" class="h-[100vh] w-[429px] bg-gradient-to-br from-pri-color to-[#009E28] fixed pr-[25px]" dir="rtl">
     <span
         class="border-1 w-[50px] h-[50px] bg-[#62df85] mb-[55px] d-block sticky right-[25px] top-[47px] rounded-circle">
       <img src="" alt="">
@@ -47,6 +47,10 @@
         <img src="/assets/img/PageBuilder/sidebar-contactUs.svg" alt="">
         ارتباط با ما
       </li>
+      <li>
+        <img src="/assets/img/PageBuilder/diamond.svg" alt="">
+        حساب تجاری
+      </li>
 
     </ul>
     <span class="hr bg-gradient-to-l from-[#ffffff] to-[#ffffff00]"></span>
@@ -57,9 +61,6 @@
       </li>
     </ul>
   </div>
-  <li>
-    <button @click.prevent="logoutMethod" class="btn btn-danger">exit</button>
-  </li>
 </template>
 
 <script>
@@ -112,5 +113,22 @@ ul li {
   display: flex;
   gap: 12px;
   margin-bottom: 10px;
+}
+.show-menu {
+  transform: scale(0.8) translate(20%, -60%) !important;
+  overflow: auto;
+  pointer-events: none;
+  transition: all ease-in-out 250ms !important;
+  height: 80vh !important;
+  padding-bottom: 0 !important;
+  box-shadow: 0 0 30px 0 !important;
+}
+.sideMenu{
+  transform: scale(1) translate(0) !important;
+  transition: all ease-in-out 250ms;
+}
+#sideMenu{
+  transform: scale(0) translate(-50%);
+  transition: all ease-in-out 250ms;
 }
 </style>

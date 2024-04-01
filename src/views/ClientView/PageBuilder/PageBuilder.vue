@@ -61,16 +61,15 @@
           </div>
         </div>
         <div class="row gap-x-10">
-          <button
-              class="col-12 mt-[30px] mb-[20px] h-[39px] bg-sec-color rounded-[7px] border-solid border-1 border-pri-color text-pri-color">
-            دسته بندی و مشاوره رایگان
-          </button>
-          <div class="col-12">
+<!--          <button-->
+<!--              class="col-12 mt-[30px] mb-[20px] h-[39px] bg-sec-color rounded-[7px] border-solid border-1 border-pri-color text-pri-color">-->
+<!--            دسته بندی و مشاوره رایگان-->
+<!--          </button>-->
+          <div class="col-12 mt-[30px]">
             <div class="row flex-nowrap w-[99%]">
               <a
-                  class="hover:text-pri-color flex justify-end items-center whitespace-nowrap overflow-hidden col-6 mr-[10px] text-right px-0 mb-[8px] h-[52px] bg-sec-color rounded-[7px] border-solid border-1 border-pri-color text-pri-color">
-                حساب تجاری
-                <img src="/assets/img/PageBuilder/diamond.svg" class="d-inline mx-[10px] max-h-[17.5px]" alt="">
+                  class="hover:text-pri-color flex justify-center items-center whitespace-nowrap overflow-hidden col-6 mr-[10px] text-right px-0 mb-[8px] h-[52px] bg-sec-color rounded-[7px] border-solid border-1 border-pri-color text-pri-color">
+                دسته بندی
               </a>
               <a
                   class="hover:text-pri-color flex justify-end items-center whitespace-nowrap overflow-hidden col-6 ml-[10px] text-right px-0 mb-[8px] h-[52px] bg-sec-color rounded-[7px] border-solid border-1 border-pri-color text-pri-color">
@@ -158,9 +157,11 @@ export default {
     },
     showMenu(showMenu) {
       if (showMenu === true) {
-        document.getElementById('appCapsule').classList.add('show-menu')
+        $('#appCapsule').addClass('show-menu')
+        $('#sideMenu').addClass('sideMenu')
       } else {
-        document.getElementById('appCapsule').classList.remove('show-menu')
+        $('#appCapsule').removeClass('show-menu')
+        $('#sideMenu').removeClass('sideMenu')
       }
     },
     toggleCreateModal() {
