@@ -1,5 +1,10 @@
 <template>
-  <div id="sideMenu" class="h-[100vh] w-[429px] bg-gradient-to-br from-pri-color to-[#009E28] fixed pr-[25px]" dir="rtl">
+  <div id="sideMenu" class="h-[100vh] w-[429px] bg-gradient-to-br from-pri-color to-[#009E28] fixed px-[25px]"
+       dir="rtl">
+    <button class="float-left btn btn-danger top-[50px] left-[25px] sticky" @click.prevent="logoutMethod">
+      <img src="/assets/img/PageBuilder/sidebar-exit.svg" class="pl-2" alt="">
+      خروج
+    </button>
     <span
         class="border-1 w-[50px] h-[50px] bg-[#62df85] mb-[55px] d-block sticky right-[25px] top-[47px] rounded-circle">
       <img src="" alt="">
@@ -53,8 +58,8 @@
       </li>
 
     </ul>
-    <span class="hr bg-gradient-to-l from-[#ffffff] to-[#ffffff00]"></span>
-    <ul class="text-white sticky right-[25px] d-inline-block text-[16px]">
+    <span class="hr bg-gradient-to-l from-[#ffffff] to-[#ffffff00] d-none"></span>
+    <ul class="text-white sticky right-[25px] d-inline-block text-[16px] d-none">
       <li @click.prevent="logoutMethod">
         <img src="/assets/img/PageBuilder/sidebar-exit.svg" alt="">
         خروج
@@ -76,7 +81,7 @@ export default {
       // console.log(token.id)
       axios({
               method : 'POST',
-              url    :  'v1/auth/logout',
+              url    : 'v1/auth/logout',
               data   : {
                 id: token.id
               },
@@ -114,6 +119,7 @@ ul li {
   gap: 12px;
   margin-bottom: 10px;
 }
+
 .show-menu {
   transform: scale(0.8) translate(20%, -60%) !important;
   overflow: auto;
@@ -123,11 +129,13 @@ ul li {
   padding-bottom: 0 !important;
   box-shadow: 0 0 30px 0 !important;
 }
-.sideMenu{
+
+.sideMenu {
   transform: scale(1) translate(0) !important;
   transition: all ease-in-out 250ms;
 }
-#sideMenu{
+
+#sideMenu {
   transform: scale(0) translate(-50%);
   transition: all ease-in-out 250ms;
 }

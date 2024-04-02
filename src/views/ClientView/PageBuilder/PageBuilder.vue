@@ -1,7 +1,7 @@
 <template>
   <loading-spinner :loading="loading"></loading-spinner>
   <SideMenu/>
-  <div id="appCapsule" class=" relative !pt-[29px] bg-[#f9f9f9]">
+  <div id="appCapsule" class=" relative !pt-[15%] bg-[#f9f9f9] transition-all">
     <Header @showMenu="showMenu"/>
 
     <div class="section mt-[46px] mb-3" v-if="!profiles.length">
