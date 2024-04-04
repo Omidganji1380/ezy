@@ -1,5 +1,5 @@
 <template>
-  <div id="sideMenu" class="h-[100vh] w-[429px] bg-gradient-to-br from-pri-color to-[#009E28] fixed px-[25px]"
+  <div id="sideMenu" class="h-[100vh] w-p-1 bg-gradient-to-br from-pri-color to-[#009E28] fixed px-[25px]"
        dir="rtl">
     <button class="float-left btn btn-danger top-[50px] left-[25px] sticky" @click.prevent="logoutMethod">
       <img src="/assets/img/PageBuilder/sidebar-exit.svg" class="pl-2" alt="">

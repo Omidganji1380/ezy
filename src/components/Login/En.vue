@@ -84,8 +84,8 @@ export default {
   props: ['lang'],
   data() {
     return {
-      fadedLogo      : true,
-      showIntro      : true,
+      fadedLogo      : false,
+      showIntro      : false,
       showSmsCodeForm: false,
       phoneInput     : null,
       data           : {
@@ -97,7 +97,7 @@ export default {
       SubmitButton   : false,
       smsCodeSent    : null,
       x              : null,
-      otpCodeTrue    : true,
+      otpCodeTrue    : false,
       dialCode       : null,
       rtl            : this.lang,
     }
@@ -122,7 +122,7 @@ export default {
       } else {
         this.otpCodeTrue = false;
         axios({
-                url    : 'v1/auth/login',
+                url    :  'v1/auth/login',
                 method : 'post',
                 headers: {
                   'Content-Type'                    : 'application/json',
@@ -199,7 +199,7 @@ export default {
       this.phoneInput       = window.intlTelInput(phoneInputField, {
         showSelectedDialCode : true,
         autoInsertDialCode   : false,
-        formatOnDisplay      : false,
+        formatOnDisplay      : true,
         placeholderNumberType: 'MOBILE',
         nationalMode         : false,
         useFullscreenPopup   : true,
@@ -242,7 +242,9 @@ export default {
 
       flag.parentNode.insertBefore(el, flag.nextSibling);
       var arrow = document.querySelector('.iti__selected-flag')
+      var dial_code = document.querySelector('.iti__selected-dial-code')
       arrow.lastChild.remove()
+      dial_code.classList.add('font-shabnam-fd')
     }
   },
 

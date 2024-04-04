@@ -7,15 +7,18 @@
 import Fa from "@/components/Login/Fa.vue";
 import En from "@/components/Login/En.vue";
 import {useStorage} from "@vueuse/core";
+import LoadingSpinner from "@/components/pageBuilder/Loading/LoadingSpinner.vue";
+import loadingSpinner from "@/components/pageBuilder/Loading/LoadingSpinner.vue";
 
 export default {
-  name:'Login',
+  name      : 'Login',
   components: {
-    Fa,En
+    LoadingSpinner,
+    Fa, En
   },
   data() {
     return {
-      lang: useStorage('lang').value,
+      lang   : useStorage('lang').value,
     }
   },
 }

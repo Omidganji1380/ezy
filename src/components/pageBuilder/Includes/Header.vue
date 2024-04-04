@@ -1,6 +1,6 @@
 <template>
   <div
-      class="pt-[15px] px-[34px] overflow-hidden whitespace-nowrap mx-auto fixed-top container max-w-[430px] bg-[#f9f9f9] header-large-title row flex-nowrap justify-content-between border-b-2 pb-1 shadow-[0_10px_15px_-20px] flex-row-reverse">
+      class="pt-[15px] px-[34px] overflow-hidden whitespace-nowrap mx-auto fixed-top container max-w-p bg-[#f9f9f9] header-large-title row flex-nowrap justify-content-between border-b-2 pb-1 shadow-[0_10px_15px_-20px] flex-row-reverse">
       <span class="p-0 title fs-3 col-auto self-center row pointer-events-auto" @click.prevent="showMenu">
         <img src="/assets/img/PageBuilder/sidebarHambergery.png" alt="">
       </span>

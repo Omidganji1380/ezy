@@ -67,6 +67,13 @@ export default {
   margin-left: auto;
   margin-right: auto;
 }*/
+
+:root {
+  --pri-color: #009606;
+  --sec-color: #F0FCF3;
+  --platform-width: 430px;
+  --platform-width-1: 429px;
+}
 #app {
   max-width: 430px;
   margin: auto;

@@ -7,22 +7,30 @@
 //   plugins: [],
 // }
 module.exports = {
-  purge: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
-  darkMode: false, // or 'media' or 'class'
-  theme: {
-    extend: {
-      colors:{
-        "pri-color": "var(--pri-color)",
-        "sec-color": "var(--sec-color)"
-      },
-      fontFamily: {
-        'shabnam-fd': ['shabnam-fd', 'sans-serif']
-      },
+    purge   : ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
+    darkMode: false, // or 'media' or 'class'
+    theme   : {
+        extend: {
+            colors    : {
+                "pri-color": "var(--pri-color)",
+                "sec-color": "var(--sec-color)"
+            },
+            fontFamily: {
+                'shabnam-fd': ['shabnam-fd', 'sans-serif']
+            },
+            width     : {
+                'p'  : 'var(--platform-width)',
+                'p-1': 'var(--platform-width-1)',
+            },
+            maxWidth     : {
+                'p'  : 'var(--platform-width)',
+                'p-1': 'var(--platform-width-1)',
+            },
+        },
     },
-  },
-  variants: {
-    extend: {},
-  },
-  plugins: [],
+    variants: {
+        extend: {},
+    },
+    plugins : [],
 }
 

@@ -1,7 +1,7 @@
 <template>
   <!--  <div class="relative top-100 ">-->
   <div class="!bg-[#ffffff80] backdrop-blur-sm bottom-0 closeModal left-0 right-0 fixed z-[4000]" id="backdrop"></div>
-    <div id="modalHeader" class="mt-[15%] fixed-top bg-white closeModal max-w-[430px] mx-auto z-[999999999] rounded-t-[30px]">
+    <div id="modalHeader" class="mt-[15%] fixed-top bg-white closeModal max-w-p mx-auto z-[999999999] rounded-t-[30px]">
      <span class="absolute right-[28px] top-[19px] z-[9999]" @click.prevent="closeModal">
         <img src="/assets/img/PageBuilder/modal-Close-Square.svg" alt="">
       </span>
@@ -12,7 +12,7 @@
       </div>
     </div>
     <div
-        class="mt-[15%] absolute w-full rounded-t-[30px] overflow-y-scroll max-w-[430px] bottom-0 z-[5000] closeModal bg-white drop-shadow-md "
+        class="mt-[15%] absolute w-full rounded-t-[30px] overflow-y-scroll max-w-p bottom-0 z-[5000] closeModal bg-white drop-shadow-md "
         id="modall">
 
       <div class="mt-[15%]">

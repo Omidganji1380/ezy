@@ -2,7 +2,7 @@
   <div :class="{'px-2':step===0}"
        class="fixed top-0 bottom-0 bg-[#000] bg-opacity-10 translate-middle-x w-[100vw] left-1/2 z-[2000] backdrop-blur-sm">
     <div :class="{'d-none':step!==0}"
-         class="bg-white mx-auto max-w-[430px] h-[318px] top-1/2 relative translate-middle-y rounded-[20px] z-[2001]">
+         class="bg-white mx-auto max-w-p h-[318px] top-1/2 relative translate-middle-y rounded-[20px] z-[2001]">
         <span class="absolute top-[16.5px] right-[25.5px]" @click.prevent="toggleCreateModal">
           <img src="/assets/img/PageBuilder/modal-Close-Square.svg" alt="">
         </span>
@@ -43,7 +43,7 @@
     </div>
 
     <div :class="{'d-none':step!==1}"
-         class="z-[99999999999] relative max-w-[430px] bg-white text-center mx-auto h-[100vh]">
+         class="z-[99999999999] relative max-w-p bg-white text-center mx-auto h-[100vh]">
       <!--      <Header/>-->
       <form @submit.prevent="submitNewProfile" enctype="multipart/form-data">
         <div class="pt-[0px]">

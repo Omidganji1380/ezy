@@ -77,8 +77,8 @@ export default {
   props: ['lang'],
   data() {
     return {
-      fadedLogo      : true,
-      showIntro      : true,
+      fadedLogo      : false,
+      showIntro      : false,
       showSmsCodeForm: false,
       phoneInput     : null,
       data           : {
@@ -90,7 +90,7 @@ export default {
       SubmitButton   : false,
       smsCodeSent    : null,
       x              : null,
-      otpCodeTrue    : true,
+      otpCodeTrue    : false,
       dialCode       : null,
       rtl            : this.lang,
     }

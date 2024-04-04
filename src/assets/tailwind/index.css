@@ -1,9 +1,3 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-
-:root{
-    --pri-color: #009606;
-    --sec-color: #F0FCF3;
-}

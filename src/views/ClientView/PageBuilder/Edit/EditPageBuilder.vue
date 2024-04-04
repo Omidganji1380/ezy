@@ -1,39 +1,44 @@
 <template>
   <loading-spinner :loading="loading"></loading-spinner>
   <SideMenu/>
-  <div id="appCapsule" class="relative bg-[#f9f9f9] bg-gradient-to-r from-indigo-950 to-red-900">
+  <div id="appCapsule" class="relative bg-[#f9f9f9]">
     <EditPageBuilderHeader @showMenu="showMenu"/>
-
-    <div class="backImg relative pointer-events-none mb-[80px]"
-         :class="{'mb-[150px]':!profile.profileBgImg,'!mb-[30px]':!profile.profileImg}">
-
-      <img onerror="this.style.display='none'" id="bgImage"
-           :src="profile.profileBgImg"
-           style="mask-image: url(/assets/img/previewPageBuilder/backProfileCurve.png);mask-position: center;"
-           class="border-0 w-full h-[200px] object-cover reverse-mask" alt="">
-
-      <img onerror="this.style.display='none'"
-           :src="profile.profileImg"
-           :class="{'mt-3':!profile.profileBgImg,'d-none':!profile.profileImg}"
-           class="top-[75%] w-[111px] h-[111px] absolute left-1/2 -translate-x-1/2 rounded-full object-cover rounded-circle"
-           alt="">
+    <div class="intro">
+      <div class="backImg relative pointer-events-none mb-[80px]"
+           :class="{'mb-[150px]':!profile.profileBgImg,'!mb-[30px]':!profile.profileImg}">
+        <img onerror="this.style.display='none'" id="bgImage"
+             :src="profile.profileBgImg"
+             style="mask-image: url(/assets/img/previewPageBuilder/backProfileCurve.png);mask-position: center;"
+             class="border-0 w-full h-[200px] object-cover reverse-mask" alt="">
+        <img onerror="this.style.display='none'"
+             :src="profile.profileImg"
+             :class="{'mt-3':!profile.profileBgImg,'d-none':!profile.profileImg}"
+             class="top-[75%] w-[111px] h-[111px] absolute left-1/2 -translate-x-1/2 rounded-full object-cover rounded-circle"
+             alt="">
+      </div>
+      <div class="description text-center">
+        <h1 class="text-[18px] font-shabnam-medium-fd">{{ profile.profileTitle }}</h1>
+        <p class="text-[16px] font-shabnam-light-fd">{{ profile.profileSubtitle }}</p>
+      </div>
     </div>
-
+    <div class="h-[500px]">sdfgdfg</div>
   </div>
+  <EditPageBuilderFooter/>
 </template>
 
 <script>
 
-import EditPageBuilderHeader from "@/components/pageBuilder/Edit/EditPageBuilderHeader.vue";
+import EditPageBuilderHeader from "@/components/pageBuilder/Edit/includes/EditPageBuilderHeader.vue";
 import axios from "axios";
 import $ from "jquery";
 import {useStorage} from "@vueuse/core";
 import SideMenu from "@/components/pageBuilder/Includes/SideMenu.vue";
 import LoadingSpinner from "@/components/pageBuilder/Loading/LoadingSpinner.vue";
+import EditPageBuilderFooter from "@/components/pageBuilder/Edit/includes/EditPageBuilderFooter.vue";
 
 export default {
   name      : "EditPageBuilder",
-  components: {LoadingSpinner, SideMenu, EditPageBuilderHeader},
+  components: {EditPageBuilderFooter, LoadingSpinner, SideMenu, EditPageBuilderHeader},
   data() {
     return {
       loading   : true,
