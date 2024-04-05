@@ -68,23 +68,23 @@
           <div class="col-12 mt-[30px]">
             <div class="row flex-nowrap w-[99%]">
               <a
-                  class="hover:text-pri-color flex justify-center items-center whitespace-nowrap overflow-hidden col-6 mr-[10px] text-right px-0 mb-[8px] h-[52px] bg-sec-color rounded-[7px] border-solid border-1 border-pri-color text-pri-color">
+                  class=" flex justify-center items-center whitespace-nowrap overflow-hidden col-6 mr-[10px] text-right px-0 mb-[8px] h-[52px] bg-sec-color rounded-[7px] border-solid border-1 border-pri-color text-pri-color">
                 دسته بندی
               </a>
               <a
-                  class="hover:text-pri-color flex justify-end items-center whitespace-nowrap overflow-hidden col-6 ml-[10px] text-right px-0 mb-[8px] h-[52px] bg-sec-color rounded-[7px] border-solid border-1 border-pri-color text-pri-color">
+                  class=" flex justify-end items-center whitespace-nowrap overflow-hidden col-6 ml-[10px] text-right px-0 mb-[8px] h-[52px] bg-sec-color rounded-[7px] border-solid border-1 border-pri-color text-pri-color">
                 ذخیره خودکار
                 <img src="/assets/img/PageBuilder/vcf.svg" class="d-inline mx-[10px] max-h-[17.5px]" alt="">
               </a>
             </div>
             <div class="row flex-nowrap w-[99%]">
               <a @click.prevent="showPreviewModal(profileLinks[index])"
-                 class="hover:text-pri-color flex justify-end items-center whitespace-nowrap overflow-hidden col-6 mr-[10px] text-right px-0 h-[52px] bg-sec-color rounded-[7px] border-solid border-1 border-pri-color text-pri-color">
+                 class=" flex justify-end items-center whitespace-nowrap overflow-hidden col-6 mr-[10px] text-right px-0 h-[52px] bg-sec-color rounded-[7px] border-solid border-1 border-pri-color text-pri-color">
                 پیش نمایش
                 <img src="/assets/img/PageBuilder/preview-eye.svg" class="d-inline mx-[10px] max-h-[17.5px]" alt="">
               </a>
               <router-link :to="{name:'ClientView_PageBuilder_Edit',params:{id:profile.id}}"
-                           class="hover:text-pri-color flex justify-end items-center whitespace-nowrap overflow-hidden col-6 ml-[10px] text-right px-0 h-[52px] bg-sec-color rounded-[7px] border-solid border-1 border-pri-color text-pri-color">
+                           class="flex justify-end items-center whitespace-nowrap overflow-hidden col-6 ml-[10px] text-right px-0 h-[52px] bg-sec-color rounded-[7px] border-solid border-1 border-pri-color text-pri-color">
                 ویرایش
                 <img src="/assets/img/PageBuilder/pen-edit.svg" class="d-inline mx-[10px] max-h-[17.5px]" alt="">
               </router-link>

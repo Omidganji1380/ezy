@@ -58,7 +58,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style>
 /*#app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -74,6 +74,7 @@ export default {
   --platform-width: 430px;
   --platform-width-1: 429px;
 }
+
 #app {
   max-width: 430px;
   margin: auto;
@@ -81,7 +82,7 @@ export default {
   height: 100vh;
 }
 
-a:hover {
+a:hover{
   color: var(--pri-color);
   cursor: pointer;
 }
