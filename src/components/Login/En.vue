@@ -107,7 +107,6 @@ export default {
     enToFa() {
       localStorage.removeItem('lang')
       useStorage('lang', 'fa')
-      console.log(useStorage('lang').value)
       this.$router.go(this.$router.currentRoute)
     },
     otpSendAgain() {
@@ -134,7 +133,6 @@ export default {
                 }
               })
             .then((res) => {
-              console.log(res.data.currentUser)
               localStorage.removeItem('token')
               localStorage.setItem('token', JSON.stringify(res.data.currentUser))
               this.$router.push('/user/page-builder')
@@ -151,7 +149,6 @@ export default {
       this.dialCode = document.querySelector('.iti__selected-dial-code').innerHTML
       var phone     = this.dialCode + this.data.phone;
       phone         = this.data.phone.replace(/\s/g, '')
-      console.log(this.data.phone)
       axios({
               url    : "v1/auth/p",
               method : 'POST',
