@@ -25,6 +25,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //    $users = \App\Models\User::findOrFail($id);
 //    return response()->json($users);
 //});
+
 Route::group(['prefix' => 'v1'], function () {
     Route::group(['prefix' => 'auth'], function () {
         Route::post('p', ['\App\Http\Controllers\api\v1\Auth', 'sendSms']);
