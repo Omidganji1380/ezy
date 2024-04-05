@@ -7,8 +7,7 @@
 //   plugins: [],
 // }
 module.exports = {
-    purge   : ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
-    darkMode: false, // or 'media' or 'class'
+    content   : ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
     theme   : {
         extend: {
             colors    : {
@@ -19,17 +18,14 @@ module.exports = {
                 'shabnam-fd': ['shabnam-fd', 'sans-serif']
             },
             width     : {
-                'p'  : 'var(--platform-width)',
-                'p-1': 'var(--platform-width-1)',
+                "p"  : "var(--platform-width)",
+                "p-1": "var(--platform-width-1)",
             },
             maxWidth     : {
-                'p'  : 'var(--platform-width)',
-                'p-1': 'var(--platform-width-1)',
+                "p"  : "var(--platform-width)",
+                "p-1": "var(--platform-width-1)",
             },
         },
-    },
-    variants: {
-        extend: {},
     },
     plugins : [],
 }

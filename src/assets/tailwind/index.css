@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+    --pri-color: #009606;
+    --sec-color: #F0FCF3;
+    --platform-width: 430px;
+    --platform-width-1: 429px;
+}
