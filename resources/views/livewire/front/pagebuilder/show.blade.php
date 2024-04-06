@@ -131,7 +131,7 @@
     @endpush
 
     <div style="{{$this->getBackgroundImage()}};max-width: 600px" class="container px-0">
-        <div class="row" style="/*height: 100%;*/overflow-y: clip">
+        <div class="row" style="height: 100%;overflow-y: auto">
             {{--<div class="col-12" style="border-radius: 20px;box-shadow: rgba(0,0,0,0.2) 0 0 20px;">
                 <div class="row p-2 justify-content-end flex-nowrap">
                     <div class="col-auto px-1 align-self-center">
