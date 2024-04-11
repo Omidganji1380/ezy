@@ -8,12 +8,14 @@
 // }
 
 module.exports = {
-    content   : ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
-    theme   : {
+    content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
+    theme  : {
         extend: {
             colors    : {
                 "pri-color": "var(--pri-color)",
-                "sec-color": "var(--sec-color)"
+                "sec-color": "var(--sec-color)",
+                "d8"       : "var(--d8-color)",
+                "333"       : "var(--333-color)",
             },
             fontFamily: {
                 'shabnam-fd': ['shabnam-fd', 'sans-serif']
@@ -22,12 +24,12 @@ module.exports = {
                 "p"  : "var(--platform-width)",
                 "p-1": "var(--platform-width-1)",
             },
-            maxWidth     : {
+            maxWidth  : {
                 "p"  : "var(--platform-width)",
                 "p-1": "var(--platform-width-1)",
             },
         },
     },
-    plugins : [],
+    plugins: [],
 }
 

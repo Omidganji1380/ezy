@@ -7,15 +7,21 @@
       <div class="header-large-title">
         <div
              class="row flex-nowrap justify-between ">
-          <span class="col-auto mb-4  whitespace-nowrap truncate  text-[calc(1.4em+0.5vw)]">به <span
-              class="text-pri-color">ایزی کانکت</span> خوش اومدی</span>
+          <span class="col-auto mb-4  whitespace-nowrap truncate  text-[calc(1.4em+0.5vw)]">
+            به
+            <span class="text-pri-color">
+              ایزی کانکت
+            </span>
+            خوش اومدی
+          </span>
           <span class="col-auto left-0">
             <img src="/assets/img/PageBuilder/Login-SmsForm/fa-to-en.svg" @click.prevent="faToEn"
                  alt="">
           </span>
         </div>
-        <p class="subtitle mb-3 max-w-fit text-truncate" v-if="!showSmsCodeForm">برای ورود به اپلیکیشن، شماره موبایلت را
-          وارد کن.</p>
+        <p class="subtitle mb-3 max-w-fit text-truncate" v-if="!showSmsCodeForm">
+          برای ورود به اپلیکیشن، شماره موبایلت را وارد کن.
+        </p>
         <p class="subtitle mb-3 max-w-fit text-truncate" v-else>کد 5 رقمی ارسال شده به شماره زیر را وارد کن.</p>
       </div>
       <div class="section mt-3 mb-3">

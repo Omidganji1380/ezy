@@ -43,7 +43,26 @@ export default {
       } else {
         useStorage('lang', 'fa')
       }
+    },
+    adjustElementScale() {
+      const element     = document.querySelector('#app');
+      const windowWidth = window.innerWidth;
+
+      // محاسبه مقدار scale بر اساس اندازه صفحه
+      var scaleValue = 0;
+      if (windowWidth > 400) {
+        scaleValue = 0.9
+      } else if (windowWidth > 300) {
+        scaleValue = 0.8
+      }  else {
+        scaleValue = 1
+      }
+      // scaleValue = windowWidth < 400 ? 0.5 : 1; // مثالی از مقدار scale
+
+      // تنظیم scale جدید بر اساس محاسبات
+      element.style.transform = `scale(${scaleValue})`;
     }
+
   },
   beforeMount() {
     setTimeout(() => {
@@ -52,23 +71,16 @@ export default {
     localStorage.setItem("MobilekitDarkMode", "0")
   },
   mounted() {
+    // this.adjustElementScale()
+    // window.addEventListener('resize', this.adjustElementScale);
     this.checkLang()
     document.addEventListener('contextmenu', event => event.preventDefault());
   },
 }
 </script>
 
+
 <style>
-/*#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-}*/
-
-
 
 #app {
   max-width: 430px;
@@ -77,7 +89,7 @@ export default {
   height: 100vh;
 }
 
-a:hover{
+a:hover {
   color: var(--pri-color);
   cursor: pointer;
 }
@@ -90,6 +102,7 @@ body {
   -ms-user-select: none;
   user-select: none;
   overflow-y: hidden;
-  //overscroll-behavior: contain !important;
+  background-color: #1A1A1A;
+//overscroll-behavior: contain !important;
 }
 </style>
