@@ -42,9 +42,9 @@
           </p>
         </div>
         <span class="text-center my-3 row justify-center flex-nowrap cursor-pointer w-fit mx-auto"
-              v-if="showSmsCodeForm" @click="showIntroForm">
+              v-if="!showSmsCodeForm" @click="showIntroForm" dir="rtl">
           <img src="/assets/img/PageBuilder/Login-SmsForm/Edit.svg" class="d-inline-block col-auto pr-0" alt="">
-          <span class="pb-0 underline-offset-4 underline col-auto px-0 d-ltr">{{ dialCode }} {{ data.phone }}</span>
+          <span class="pb-0 underline-offset-4 underline col-auto px-0 d-ltr text-[14px] text-d8">{{ dialCode }} {{ data.phone }}</span>
         </span>
         <div class=" font-shabnam-fd" name="inputs">
           <input type="text" @keydown.prevent="handleInputPhoneNumber($event)" v-model="data.phone" dir="ltr"
@@ -221,7 +221,7 @@ export default {
     intlTelInput() {
       const phoneInputField = document.querySelector("#phoneNumberInput");
       this.phoneInput       = window.intlTelInput(phoneInputField, {
-        showSelectedDialCode : true,
+        showSelectedDialCode : false,
         autoInsertDialCode   : false,
         formatOnDisplay      : true,
         placeholderNumberType: 'MOBILE',
@@ -283,7 +283,7 @@ export default {
       this.fadedLogo = true
     }, 1500)
     this.intlTelInput()
-    this.addArrow()
+    // this.addArrow()
   },
 }
 </script>
