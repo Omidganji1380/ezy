@@ -109,8 +109,8 @@ export default {
   data() {
     return {
       lang            : useStorage('lang').value,
-      fadedLogo       : true,
-      showIntro       : true,
+      fadedLogo       : false,
+      showIntro       : false,
       showSmsCodeForm : false,
       phoneInput      : null,
       data            : {
