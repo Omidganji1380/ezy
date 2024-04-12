@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\v1\Home\Slider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -39,6 +40,9 @@ Route::group(['prefix' => 'v1'], function () {
     });
     Route::group(['prefix' => 'pb'], function () {
         Route::post('edit', '\App\Http\Controllers\api\v1\PageBuilder\Edit@pageBuilderEdit');
+    });
+    Route::group(['prefix' => 'home'], function () {
+        Route::get('getSliders', [Slider::class, 'getSliders']);
     });
 });
 
