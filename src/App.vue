@@ -25,11 +25,11 @@ export default {
     checkToken() {
       const token = localStorage.getItem('token');
       // console.log(token)
-      if (!token && this.$route.name === 'ClientView_PageBuilder') {
+      if (!token && this.$route.name === 'ClientView_Dashboard') {
         this.$router.push({name: 'ClientView_Index'});
       }
       if (token && this.$route.name === 'ClientView_Index') {
-        this.$router.push({name: 'ClientView_PageBuilder'});
+        this.$router.push({name: 'ClientView_Dashboard'});
       }
     },
     checkLang() {
@@ -43,6 +43,7 @@ export default {
       } else {
         useStorage('lang', 'fa')
       }
+      this.$i18n.locale = lang
     },
     adjustElementScale() {
       const element     = document.querySelector('#app');
@@ -54,7 +55,7 @@ export default {
         scaleValue = 0.9
       } else if (windowWidth > 300) {
         scaleValue = 0.8
-      }  else {
+      } else {
         scaleValue = 1
       }
       // scaleValue = windowWidth < 400 ? 0.5 : 1; // مثالی از مقدار scale
@@ -71,6 +72,7 @@ export default {
     localStorage.setItem("MobilekitDarkMode", "0")
   },
   mounted() {
+
     // this.adjustElementScale()
     // window.addEventListener('resize', this.adjustElementScale);
     this.checkLang()

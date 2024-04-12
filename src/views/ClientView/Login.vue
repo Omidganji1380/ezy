@@ -1,7 +1,5 @@
 <template>
-  <!--  <Fa v-if="lang==='fa'"/>-->
-  <!--  <En v-if="lang==='en'"/>-->
-  <div id="appCapsule" class="container p-0 dark-mode">
+  <div id="appCapsule" class="container p-0">
     <img src="/assets/img/logo.svg" :class="{'fade':fadedLogo}" v-if="!fadedLogo"
          class="left-1/2 position-absolute top-1/2 -translate-x-1/2 -translate-y-1/2" alt="">
     <div class="intro fade" :dir="$i18n.locale==='fa'?'ltr':'rtl'" :class="{'show':showIntro}">
@@ -9,7 +7,7 @@
         <div
             class="row px-[10px] mx-auto bg-sec-color rounded-b-[8px] flex-nowrap flex-row-reverse h-[54px]">
           <span :class="{'!mr-0 ml-auto':$i18n.locale==='fa'}"
-              class="col-auto p-0 mr-auto whitespace-nowrap truncate text-[calc(24px+0.01vw)] self-center text-[#d8d8d8]">
+                class="col-auto p-0 mr-auto whitespace-nowrap truncate text-[calc(24px+0.01vw)] self-center text-[#d8d8d8]">
             {{ $t('LoginView.header.header1') }}
             <span class="text-pri-color">
               {{ $t('LoginView.header.header2') }}
@@ -26,7 +24,7 @@
             <img src="/assets/img/PageBuilder/Login-SmsForm/en-to-fa.svg" v-if="$i18n.locale==='en'"
                  @click.prevent="enToFa"
                  alt="">
-            <img src="/assets/img/PageBuilder/Login-SmsForm/en-to-fa.svg" v-if="$i18n.locale==='fa'"
+            <img src="/assets/img/PageBuilder/Login-SmsForm/fa-to-en.svg" v-if="$i18n.locale==='fa'"
                  @click.prevent="faToEn"
                  alt="">
           </span>
@@ -42,19 +40,28 @@
           </p>
         </div>
         <span class="text-center my-3 row justify-center flex-nowrap cursor-pointer w-fit mx-auto"
-              v-if="!showSmsCodeForm" @click="showIntroForm" dir="rtl">
-          <img src="/assets/img/PageBuilder/Login-SmsForm/Edit.svg" class="d-inline-block col-auto pr-0" alt="">
-          <span class="pb-0 underline-offset-4 underline col-auto px-0 d-ltr text-[14px] text-d8">{{ dialCode }} {{ data.phone }}</span>
+              v-if="showSmsCodeForm" @click="showIntroForm" dir="ltr">
+          <span :class="{'font-shabnam-fd':$i18n.locale==='fa'}"
+                class="pb-0 underline-offset-4 underline col-auto px-0 d-ltr text-[14px] text-d8">{{
+              dialCode
+            }} {{ data.phone }}</span>
+            <img src="/assets/img/PageBuilder/Login-SmsForm/Edit.svg" class="d-inline-block col-auto pr-0" alt="">
         </span>
         <div class=" font-shabnam-fd" name="inputs">
-          <input type="text" @keydown.prevent="handleInputPhoneNumber($event)" v-model="data.phone" dir="ltr"
-                 id="phoneNumberInput" v-if="!this.showSmsCodeForm" :class="{'font-shabnam-fd':$i18n.locale==='fa'}"
-                 class="w-100 text-[20px] px-0 !pl-[100px] h-[56px] focus-visible:outline-0 rounded-[8px] bg-sec-color text-d8">
+          <vue-tel-input type="text"
+                         :inputOptions="VueTelInputProps"
+                         @keydown.prevent="handleInputPhoneNumber($event)"
+                         v-model="data.phone" dir="ltr"
+                         v-if="!this.showSmsCodeForm"
+                         :class="{'font-shabnam-fd':$i18n.locale==='fa'}"
+                         class="w-100 text-[20px] px-0 h-[56px] focus-visible:outline-0 rounded-[8px] !bg-sec-color text-d8">
+          </vue-tel-input>
           <div class="" name="smsCodeForm" v-if="this.showSmsCodeForm">
             <otp @InputDigitsFull="activeSubmitButton" @otpCode="loginByOtp" :otpCodeTrue="otpCodeTrue"/>
           </div>
         </div>
-        <p class="subtitle my-3 text-[calc(0.5em+0.8vw)] text-d8" :dir="$i18n.locale!=='fa'?'ltr':'rtl'" v-if="!showSmsCodeForm">
+        <p class="subtitle my-3 text-[calc(0.5em+0.8vw)] text-d8" :dir="$i18n.locale!=='fa'?'ltr':'rtl'"
+           v-if="!showSmsCodeForm">
           {{ $t('LoginView.rules.rule1') }}
           <a href="#" class="text-pri-color hover:text-pri-color">
             {{ $t('LoginView.rules.rule2') }}
@@ -89,52 +96,66 @@
 
 <script>
 import {useStorage} from "@vueuse/core";
-import LoadingSpinner from "@/components/pageBuilder/Loading/LoadingSpinner.vue";
-import loadingSpinner from "@/components/pageBuilder/Loading/LoadingSpinner.vue";
 import otp from "@/components/pageBuilder/otp/otp.vue";
 import axios from "axios";
+import {VueTelInput} from 'vue-tel-input';
+import 'vue-tel-input/vue-tel-input.css';
 
 export default {
   name      : 'Login',
   components: {
-    otp,
-    LoadingSpinner,
+    otp, VueTelInput,
   },
   data() {
     return {
-      lang           : useStorage('lang').value,
-      fadedLogo      : true,
-      showIntro      : true,
-      showSmsCodeForm: false,
-      phoneInput     : null,
-      data           : {
+      lang            : useStorage('lang').value,
+      fadedLogo       : true,
+      showIntro       : true,
+      showSmsCodeForm : false,
+      phoneInput      : null,
+      data            : {
         phone      : '',
         device_name: 'browser',
       },
-      sendAgainTime  : 0,
-      countDownTimer : '',
-      SubmitButton   : false,
-      smsCodeSent    : null,
-      x              : null,
-      otpCodeTrue    : false,
-      dialCode       : null,
+      sendAgainTime   : 0,
+      countDownTimer  : '',
+      SubmitButton    : false,
+      smsCodeSent     : null,
+      x               : null,
+      otpCodeTrue     : false,
+      dialCode        : null,
+      VueTelInputProps: {
+        mode              : "auto",
+        disabledFormatting: false,
+        // placeholder: "+",
+        dynamicPlaceholder: true,
+        required          : true,
+        enabledCountryCode: true,
+        enabledFlags      : true,
+        autocomplete      : "off",
+        name              : "telephone",
+        maxLen            : 25,
+        wrapperClasses    : "",
+        inputClasses      : "",
+        dropdownOptions   : {
+          disabledDialCode: false
+        },
+        inputOptions      : {
+          showDialCode: true
+        }
+      }
     }
   },
   methods: {
     enToFa() {
       localStorage.removeItem('lang')
-      // this.$router.go(this.$router.currentRoute)
       this.$i18n.locale = 'fa';
       useStorage('lang', this.$i18n.locale)
-
     },
     faToEn() {
       localStorage.removeItem('lang')
-      // useStorage('lang', 'fa')
-      // this.$router.go(this.$router.currentRoute)
       this.$i18n.locale = 'en';
       useStorage('lang', this.$i18n.locale)
-
     },
     otpSendAgain() {
       if (!this.countDownTimer) {
@@ -173,9 +194,9 @@ export default {
       this.SubmitButton = bool
     },
     showSmsCodeFormMethod: function () {
-      this.dialCode = document.querySelector('.iti__selected-dial-code').innerHTML
-      var phone     = this.dialCode + this.data.phone;
-      phone         = this.data.phone.replace(/\s/g, '')
+      // this.dialCode = document.querySelector('.vti__input').innerHTML
+      var phone = this.data.phone;
+      phone     = this.data.phone.replace(/\s/g, '')
       axios({
               url    : "v1/auth/p",
               method : 'POST',
@@ -201,7 +222,7 @@ export default {
               this.data.phone = this.data.phone.replace(/\s/g, '')
               if (!this.showSmsCodeForm) {
                 this.showSmsCodeForm = true;
-                this.phoneInput.destroy()
+                // this.phoneInput.destroy()
               }
             } else {
               console.log("Error: " + res.data.message);
@@ -213,10 +234,10 @@ export default {
     },
     showIntroForm() {
       this.showSmsCodeForm = false;
-      setTimeout(() => {
-        this.intlTelInput()
-        this.addArrow()
-      }, 10)
+      // setTimeout(() => {
+      //   // this.intlTelInput()
+      //   this.addArrow()
+      // }, 10)
     },
     intlTelInput() {
       const phoneInputField = document.querySelector("#phoneNumberInput");
@@ -254,7 +275,7 @@ export default {
       if (event.key === 'Enter') {
         this.showSmsCodeFormMethod();
       }
-      if ((new RegExp('^([0-9])$')).test(event.key)) {
+      if ((new RegExp('^([0-9+])$')).test(event.key)) {
         this.data.phone += event.key;
       }
     },
@@ -268,27 +289,42 @@ export default {
       var arrow     = document.querySelector('.iti__selected-flag')
       var dial_code = document.querySelector('.iti__selected-dial-code')
       arrow.lastChild.remove()
-      dial_code.innerHTML=' '
+      dial_code.innerHTML = ' '
       // dial_code.classList.add('font-shabnam-fd')
     }
   },
 
   mounted() {
     // console.log(this.$i18n.locale)
-    this.$i18n.locale = this.lang
+    // this.$i18n.locale = this.lang
     setTimeout(() => {
       setTimeout(() => {
         this.showIntro = true
       }, 100)
       this.fadedLogo = true
     }, 1500)
-    this.intlTelInput()
+    // this.intlTelInput()
     // this.addArrow()
   },
 }
 </script>
 
 <style>
+.vti__input {
+  background-color: var(--sec-color);
+  border-radius: 8px !important;
+}
+
+.vue-tel-input {
+  border: unset !important;
+  border-radius: 8px !important;
+}
+
+.vue-tel-input:focus-within {
+  box-shadow: unset !important;
+  border-color: unset !important;
+}
+
 .iti.iti--allow-dropdown {
   width: 100% !important;
 }
@@ -300,7 +336,7 @@ export default {
 
 .iti--allow-dropdown .iti__flag-container .iti__selected-flag {
   background-color: unset;
-  //border-right: 1px solid #ddd !important;
+//border-right: 1px solid #ddd !important;
 }
 
 .iti--allow-dropdown .iti__flag-container:hover .iti__selected-flag {
@@ -330,11 +366,9 @@ export default {
 .iti__selected-dial-code {
   font-size: 20px !important;
   border-left: 1px solid #ddd !important;
-  //padding-left: 3px;
-  margin: 0 !important;
-  color: #009606;
+//padding-left: 3px; margin: 0 !important; color: #009606;
   height: 44px;
-  //display: none;
+//display: none;
 }
 
 .iti__country.iti__standard {

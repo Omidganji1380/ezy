@@ -17,8 +17,20 @@ const i18n = createI18n({
                                         },
                                         registerButton: 'Register & Login',
                                         submitButton  : 'Submit',
-                                        resentCode  : 'Send again',
-                                        countDown  : ' after ',
+                                        resentCode    : 'Send again',
+                                        countDown     : ' after ',
+                                    },
+                                    HomeView : {
+                                        Header    : 'Home',
+                                        FirstTitle: {
+                                            one: 'Smart products of ',
+                                            two: 'Easy Connect',
+                                        },
+                                        Boxes     : {
+                                            CardVisit : 'Smart business card',
+                                            CafeManu  : 'Cafe & restaurant digital menu',
+                                            ComingSoon: 'Coming Soon',
+                                        }
                                     },
                                 },
                                 fa: {
@@ -37,8 +49,20 @@ const i18n = createI18n({
                                         },
                                         registerButton: 'ثبت نام و ورود',
                                         submitButton  : 'تائید',
-                                        resentCode  : 'ارسال مجدد کد',
-                                        countDown  : ' بعد از ',
+                                        resentCode    : 'ارسال مجدد کد',
+                                        countDown     : ' بعد از ',
+                                    },
+                                    HomeView : {
+                                        Header    : 'خانه',
+                                        FirstTitle: {
+                                            one: 'محصولات هوشمند سازی ',
+                                            two: 'ایزی کانکت',
+                                        },
+                                        Boxes     : {
+                                            CardVisit : 'کارت ویزیت هوشمند',
+                                            CafeManu  : 'منو دیجیتال کافه و رستوران',
+                                            ComingSoon: 'به زودی',
+                                        }
                                     },
                                 },
                             },
