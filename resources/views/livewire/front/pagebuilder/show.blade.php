@@ -171,7 +171,7 @@
             </div>
             {{--                <div id="sortable" style="cursor: grab;margin-bottom: 6rem !important;" wire:ignore.self>--}}
             @foreach($blocks as $key=>$block)
-                <div class="col-12 my-0 px-4">
+                <div class="col-12 my-0 px-4 {{count($block->text)?'z-0':'z-50'}}">
                     {{--                            <div class="row p-2 flex-nowrap">--}}
                     {{--                                <div class="col-11">--}}
 
