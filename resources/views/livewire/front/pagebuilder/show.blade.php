@@ -128,6 +128,14 @@
                 margin-top: 1em;
             }
         </style>
+        <style>
+            .z-50{
+                z-index: 50;
+            }
+            .z-0{
+                z-index: 0;
+            }
+        </style>
     @endpush
 
     <div style="{{$this->getBackgroundImage()}};max-width: 600px" class="container px-0">
