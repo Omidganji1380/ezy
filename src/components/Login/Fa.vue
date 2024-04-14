@@ -15,7 +15,7 @@
             خوش اومدی
           </span>
           <span class="col-auto left-0">
-            <img src="/assets/img/PageBuilder/Login-SmsForm/fa-to-en.svg" @click.prevent="faToEn"
+            <img src="/assets/img/Login-SmsForm/fa-to-en.svg" @click.prevent="faToEn"
                  alt="">
           </span>
         </div>
@@ -27,7 +27,7 @@
       <div class="section mt-3 mb-3">
         <span class="text-center my-3 row justify-center flex-nowrap cursor-pointer w-fit mx-auto"
               v-if="showSmsCodeForm" @click="showIntroForm">
-          <img src="/assets/img/PageBuilder/Login-SmsForm/Edit.svg" class="d-inline-block col-auto pr-0" alt="">
+          <img src="/assets/img/Login-SmsForm/Edit.svg" class="d-inline-block col-auto pr-0" alt="">
           <span class="pb-0 underline-offset-4 underline col-auto px-0 d-ltr">{{ dialCode }} {{ data.phone }}</span>
         </span>
         <div class="" name="inputs">
@@ -56,7 +56,7 @@
           </button>
         </div>
         <div name="sendSmsCodeAgain" class="mx-auto my-4 row flex-nowrap w-fit" v-if="showSmsCodeForm">
-          <img :class="{'d-none':!countDownTimer}" src="/assets/img/PageBuilder/Login-SmsForm/timeCircle.svg"
+          <img :class="{'d-none':!countDownTimer}" src="/assets/img/Login-SmsForm/timeCircle.svg"
                class="d-inline-block col-auto pr-0" alt="">
           <span class="col-auto pr-0 underline-offset-8 underline" @click="otpSendAgain">
             ارسال مجدد کد
@@ -233,7 +233,7 @@ export default {
     addArrow() {
       var el       = document.createElement('div')
       el.className = 'iti__arrow'
-      el.innerHTML = "<img src=\"/assets/img/PageBuilder/Login-SmsForm/arrow-select-national.svg\" alt=\"\">"
+      el.innerHTML = "<img src=\"/assets/img/Login-SmsForm/arrow-select-national.svg\" alt=\"\">"
       var flag     = document.querySelector('.iti__flag')
 
       flag.parentNode.insertBefore(el, flag.nextSibling);

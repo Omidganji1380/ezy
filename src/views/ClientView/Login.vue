@@ -17,14 +17,14 @@
             </span>
           </span>
           <span class="col-auto px-[18px] self-center">
-            <img src="/assets/img/PageBuilder/Login-SmsForm/darkMode.svg"
+            <img src="/assets/img/Login-SmsForm/darkMode.svg"
                  alt="">
           </span>
           <span class="col-auto p-0 self-center">
-            <img src="/assets/img/PageBuilder/Login-SmsForm/en-to-fa.svg" v-if="$i18n.locale==='en'"
+            <img src="/assets/img/Login-SmsForm/en-to-fa.svg" v-if="$i18n.locale==='en'"
                  @click.prevent="enToFa"
                  alt="">
-            <img src="/assets/img/PageBuilder/Login-SmsForm/fa-to-en.svg" v-if="$i18n.locale==='fa'"
+            <img src="/assets/img/Login-SmsForm/fa-to-en.svg" v-if="$i18n.locale==='fa'"
                  @click.prevent="faToEn"
                  alt="">
           </span>
@@ -45,7 +45,7 @@
                 class="pb-0 underline-offset-4 underline col-auto px-0 d-ltr text-[14px] text-d8">{{
               dialCode
             }} {{ data.phone }}</span>
-            <img src="/assets/img/PageBuilder/Login-SmsForm/Edit.svg" class="d-inline-block col-auto pr-0" alt="">
+            <img src="/assets/img/Login-SmsForm/Edit.svg" class="d-inline-block col-auto pr-0" alt="">
         </span>
         <div class=" font-shabnam-fd" name="inputs">
           <vue-tel-input type="text"
@@ -82,7 +82,7 @@
           </button>
         </div>
         <div name="sendSmsCodeAgain" class="mx-auto my-4 row flex-nowrap w-fit" v-if="showSmsCodeForm">
-          <img :class="{'d-none':!countDownTimer}" src="/assets/img/PageBuilder/Login-SmsForm/timeCircle.svg"
+          <img :class="{'d-none':!countDownTimer}" src="/assets/img/Login-SmsForm/timeCircle.svg"
                class="d-inline-block col-auto pr-0" alt="">
           <span class="col-auto pr-0 underline-offset-8 underline" @click="otpSendAgain">
             {{ $t('LoginView.resentCode') }}
@@ -282,7 +282,7 @@ export default {
     addArrow() {
       var el       = document.createElement('div')
       el.className = 'iti__arrow'
-      el.innerHTML = "<img src=\"/assets/img/PageBuilder/Login-SmsForm/arrow-select-national.svg\" alt=\"\">"
+      el.innerHTML = "<img src=\"/assets/img/Login-SmsForm/arrow-select-national.svg\" alt=\"\">"
       var flag     = document.querySelector('.iti__flag')
 
       flag.parentNode.insertBefore(el, flag.nextSibling);

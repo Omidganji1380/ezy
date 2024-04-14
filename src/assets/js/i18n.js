@@ -32,6 +32,13 @@ const i18n = createI18n({
                                             ComingSoon: 'Coming Soon',
                                         }
                                     },
+                                    DigitalMenu:{
+                                        Index:{
+                                            Header:'Digital Menu',
+                                            noContent:"You haven't made menu yet",
+                                            AddMenuButton:'Create Menu',
+                                        },
+                                    },
                                 },
                                 fa: {
                                     LoginView: {
@@ -63,6 +70,13 @@ const i18n = createI18n({
                                             CafeManu  : 'منو دیجیتال کافه و رستوران',
                                             ComingSoon: 'به زودی',
                                         }
+                                    },
+                                    DigitalMenu:{
+                                        Index:{
+                                            Header:'منو دیجیتال',
+                                            noContent:'هنوز منو نساختید',
+                                            AddMenuButton:'ساخت منو',
+                                        },
                                     },
                                 },
                             },

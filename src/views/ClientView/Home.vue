@@ -1,27 +1,27 @@
 <template>
-  <div class="header bg-sec-color h-[54px] content-center" :dir="$i18n.locale==='fa'?'rtl':''">
-    <div class="row mx-auto justify-between flex-nowrap">
+  <div class="header bg-sec-color h-[54px] content-center" dir="rtl">
+    <div class="row relative mx-auto justify-between flex-nowrap">
       <div class="col-auto self-center">
         <div class="row p-0 flex-nowrap">
           <span class="col-auto px-[32px] self-center">
-            <img src="/assets/img/PageBuilder/darkMode/sidebarHambergery.svg" alt="">
-          </span>
-          <span class="col-auto p-0 text-[20px]">
-            {{ $t('HomeView.Header') }}
+            <img src="/assets/img/darkMode/sidebarHambergery.svg" alt="">
           </span>
         </div>
       </div>
+      <span class="col-auto p-0 text-[20px] absolute left-1/2 -top-[3px] translate-middle-x">
+            {{ $t('HomeView.Header') }}
+      </span>
       <div class="col-auto self-center">
         <div class="row p-0 flex-nowrap">
           <span class="col-auto -mx-[18px] mr-auto">
-            <img src="/assets/img/PageBuilder/Login-SmsForm/darkMode.svg"
+            <img src="/assets/img/Login-SmsForm/darkMode.svg"
                  alt="">
           </span>
           <span class="col-auto px-[32px]">
-            <img src="/assets/img/PageBuilder/Login-SmsForm/en-to-fa.svg" v-if="$i18n.locale==='en'"
+            <img src="/assets/img/Login-SmsForm/en-to-fa.svg" v-if="$i18n.locale==='en'"
                  @click.prevent="enToFa"
                  alt="">
-            <img src="/assets/img/PageBuilder/Login-SmsForm/fa-to-en.svg" v-if="$i18n.locale==='fa'"
+            <img src="/assets/img/Login-SmsForm/fa-to-en.svg" v-if="$i18n.locale==='fa'"
                  @click.prevent="faToEn"
                  alt="">
           </span>
@@ -55,11 +55,9 @@
       <router-link :to="{name:'ClientView_PageBuilder'}" class="col-6 rounded-[12px] bg-sec-color h-[94px]">
         {{ $t('HomeView.Boxes.CardVisit') }}
       </router-link>
-      <div class="col-6 rounded-[12px] bg-sec-color h-[94px]">
-        <a href="#">
-          {{ $t('HomeView.Boxes.CafeManu') }}
-        </a>
-      </div>
+      <router-link :to="{name:'ClientView_DigitalMenu'}" class="col-6 rounded-[12px] bg-sec-color h-[94px]">
+        {{ $t('HomeView.Boxes.CafeManu') }}
+      </router-link>
       <div class="col-6 rounded-[12px] bg-sec-color h-[94px]">
         {{ $t('HomeView.Boxes.ComingSoon') }}
       </div>
@@ -72,13 +70,13 @@
       class="foooter overflow-hidden content-center rounded-t-[30px] bg-sec-color fixed-bottom mx-auto max-w-p h-[80px]">
     <div class="row justify-between p-0 m-0 flex-nowrap">
       <div class="col-auto mx-4">
-        <img src="/assets/img/PageBuilder/darkMode/bottonMenu-Wallet.svg" alt="">
+        <img src="/assets/img/darkMode/bottonMenu-Wallet.svg" alt="">
       </div>
       <div class="col-auto">
-        <img src="/assets/img/PageBuilder/darkMode/bottonMenu-Home.svg" alt="">
+        <img src="/assets/img/darkMode/bottonMenu-Home.svg" alt="">
       </div>
       <div class="col-auto mx-4">
-        <img src="/assets/img/PageBuilder/darkMode/bottonMenu-Wallet.svg" alt="">
+        <img src="/assets/img/darkMode/bottonMenu-Wallet.svg" alt="">
       </div>
     </div>
   </div>

@@ -168,7 +168,7 @@ export default {
     addArrow() {
       var el       = document.createElement('div')
       el.className = 'iti__arrow'
-      el.innerHTML = "<img src=\"/assets/img/PageBuilder/Login-SmsForm/arrow-select-national.svg\" alt=\"\">"
+      el.innerHTML = "<img src=\"/assets/img/Login-SmsForm/arrow-select-national.svg\" alt=\"\">"
       var flag     = document.querySelector('.iti__flag')
 
       flag.parentNode.insertBefore(el, flag.nextSibling);
