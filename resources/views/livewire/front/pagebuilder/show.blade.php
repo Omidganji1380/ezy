@@ -113,7 +113,7 @@
             .blockText {
                 margin: 0 0 22px;
                 width: 100%;
-                white-space: pre-wrap;
+                /*white-space: pre-wrap;*/
                 word-break: break-word;
                 unicode-bidi: plaintext;
                 font-family: inherit;
@@ -361,7 +361,7 @@
                         @endif
                         @if(count($block->text))
                             <div class="col-12 text-center p-1 blockText"
-                                 style="margin: -40px 0;{{$block->text()->where('block_id',$block->id)->first()->textSize}}{{$block->text()->where('block_id',$block->id)->first()->textAlign}}color:{{$block->text()->where('block_id',$block->id)->first()->textColor}}">
+                                 style="{{$block->text()->where('block_id',$block->id)->first()->textSize}}{{$block->text()->where('block_id',$block->id)->first()->textAlign}}color:{{$block->text()->where('block_id',$block->id)->first()->textColor}}">
                                 {!! $block->text()->where('block_id',$block->id)->first()->text !!}
                             </div>
                         @endif
