@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\v1\DigitalMenu\DigitalMenuController;
 use App\Http\Controllers\api\v1\Home\Slider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -43,6 +44,9 @@ Route::group(['prefix' => 'v1'], function () {
     });
     Route::group(['prefix' => 'home'], function () {
         Route::get('getSliders', [Slider::class, 'getSliders']);
+    });
+    Route::group(['prefix' => 'digitalMenu'], function () {
+        Route::post('getDigitalMenus', [DigitalMenuController::class, 'getDigitalMenus']);
     });
 });
 

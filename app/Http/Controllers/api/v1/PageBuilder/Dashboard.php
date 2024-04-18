@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\api\v1\PageBuilder;
 
-use App\Http\Controllers\api\v1\traits\pageBuilder;
 use App\Http\Controllers\Controller;
 use App\Models\Profile;
 use App\Models\UrlRedirector;
-use Auth;
+use App\traits\api\v1\PageBuilder\pageBuilder;
 use Illuminate\Http\Request;
 use Route;
 

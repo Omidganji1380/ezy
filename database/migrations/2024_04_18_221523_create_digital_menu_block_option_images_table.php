@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('menu_blocks', function (Blueprint $table) {
+        Schema::create('digital_menu_block_option_images', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('block_id')->constrained('blocks')->cascadeOnDelete();
-            $table->string('title')->nullable();
-            $table->string('price')->nullable();
-            $table->string('description')->nullable();
+            $table->string('img');
+            $table->foreignId('digitalMenuBlockOption_id')->constrained('digital_menu_block_options');
+            $table->softDeletes();
             $table->timestamps();
-            $table->string('img')->nullable();
         });
     }
 
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('menu_blocks');
+        Schema::dropIfExists('digital_menu_block_option_images');
     }
 };

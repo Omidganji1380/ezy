@@ -11,8 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('menu_blocks', function (Blueprint $table) {
-            $table->string('img')->nullable();
+        Schema::create('scrolls', function (Blueprint $table) {
+            $table->id();
+            $table->string('position');
+            $table->timestamps();
         });
     }
 
@@ -21,8 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('menu_blocks', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('scrolls');
     }
 };

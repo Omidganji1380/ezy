@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\api\v1\traits;
+namespace App\traits\api\v1\PageBuilder;
 
 use App\Models\BlockPbOption;
 
