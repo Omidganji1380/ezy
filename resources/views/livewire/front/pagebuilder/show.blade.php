@@ -1,6 +1,9 @@
 <div>
     @push('css')
         <style>
+            body{
+                font-family: system-ui !important;
+            }
             .selected {
                 border-bottom: 2px solid blue;
             }
@@ -380,7 +383,6 @@
         <script>
             $(window).ready(function () {
                 {{--alert('refresh.{{$profile->link}}')--}}
-                $('body').css({'fontFamily':'system-ui !important'})
                 $('div.body').removeClass('py-3')
                 $('i').addClass('fs-5')
                 // $('button').addClass('fs-5')
