@@ -12,6 +12,7 @@
 .dark-mode{
     --pri-color: #4EF09D;
     --sec-color: #333;
+    --back-color: #1A1A1A;
     --d8-color: #d8d8d8;
     /*color: var(--d8-color);*/
 }
