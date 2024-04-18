@@ -5,12 +5,13 @@
 :root {
     --pri-color: #009606;
     --sec-color: #F0FCF3;
-    --d8-color: #d8d8d8;
+    --d8-color: #000;
     --platform-width: 430px;
     --platform-width-1: 429px;
 }
 .dark-mode{
     --pri-color: #4EF09D;
     --sec-color: #333;
-    color: var(--d8-color);
+    --d8-color: #d8d8d8;
+    /*color: var(--d8-color);*/
 }

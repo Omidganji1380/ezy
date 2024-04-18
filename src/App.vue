@@ -107,4 +107,7 @@ body {
   background-color: #1A1A1A;
 //overscroll-behavior: contain !important;
 }
+span,h1,h2,h3,p,a,div{
+  color: var(--d8-color);
+}
 </style>

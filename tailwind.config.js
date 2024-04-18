@@ -28,6 +28,9 @@ module.exports = {
                 "p"  : "var(--platform-width)",
                 "p-1": "var(--platform-width-1)",
             },
+            boxShadow:{
+                "3d":"0px 0px 8px 0 #000",
+            }
         },
     },
     plugins: [],
