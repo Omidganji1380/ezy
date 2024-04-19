@@ -183,7 +183,7 @@ export default {
             .then((res) => {
               localStorage.removeItem('token')
               localStorage.setItem('token', JSON.stringify(res.data.currentUser))
-              this.$router.push('/user/page-builder')
+              this.$router.push({name:'ClientView_Dashboard'})
             })
             .catch((err) => {
               console.log(err)

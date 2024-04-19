@@ -5,6 +5,7 @@ import Preview from "@/views/ClientView/PageBuilder/Preview/Preview.vue";
 import EditPageBuilder from "@/views/ClientView/PageBuilder/Edit/EditPageBuilder.vue";
 import Home from "@/views/ClientView/Home.vue";
 import DigitalMenuIndex from "@/views/ClientView/DigitalMenu/DigitalMenuIndex.vue";
+import EditDigitalMenu from "@/views/ClientView/DigitalMenu/Edit/EditDigitalMenu.vue";
 
 const routes = [
     {
@@ -29,6 +30,12 @@ const routes = [
         path     : '/user/digital-menu',
         name     : 'ClientView_DigitalMenu',
         component: DigitalMenuIndex,
+        props    : true
+    },
+    {
+        path     : '/user/digital-menu/edit/:id',
+        name     : 'ClientView_DigitalMenu_Edit',
+        component: EditDigitalMenu,
         props    : true
     },
     {

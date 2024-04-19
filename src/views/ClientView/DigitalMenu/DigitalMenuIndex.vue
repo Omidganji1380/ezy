@@ -1,27 +1,5 @@
 <template>
-  <div class="header shadow-3d fixed-top max-w-p mx-auto bg-sec-color h-[54px] content-center rounded-b-[8px]"
-       dir="rtl">
-    <div class="row relative mx-auto justify-between flex-nowrap">
-      <div class="col-auto self-center">
-        <div class="row p-0 flex-nowrap">
-          <span class="col-auto px-[32px] self-center">
-            <img src="/assets/img/darkMode/sidebarHambergery.svg" alt="">
-          </span>
-        </div>
-      </div>
-      <span class="col-auto p-0 text-[20px] text-d8 absolute left-1/2 -top-[3px] translate-middle-x">
-            {{ $t('DigitalMenu.Index.Header') }}
-      </span>
-      <div class="col-auto self-center">
-        <div class="row p-0 flex-nowrap">
-          <span class="col-auto mr-auto px-[32px]" @click.prevent="$router.go(-1)">
-            <img src="/assets/img/darkMode/HeaderBack.svg"
-                 alt="">
-          </span>
-        </div>
-      </div>
-    </div>
-  </div>
+  <Header :shadow3d="true" :headerTitle="$t('DigitalMenu.Index.Header')"/>
   <div class="mainContent mt-5 mb-20">
     <div v-if="!DigitalMenus.length" class="noContent -z-10 text-center absolute left-1/2 top-1/2 translate-middle">
       <img src="/assets/img/digitalMenu/no-content-digital-menu.svg" class="mb-[50px] mx-auto" alt="">
@@ -96,7 +74,7 @@
             پیش نمایش
             <img src="/assets/img/digitalMenu/previewDigitalMenu.svg" class="d-inline mx-[10px] max-h-[17.5px]" alt="">
           </a>
-          <router-link :to="{name:'ClientView_PageBuilder_Edit',params:{id:DigitalMenu.id}}"
+          <router-link :to="{name:'ClientView_DigitalMenu_Edit',params:{id:DigitalMenu.id}}"
               class="flex justify-end items-center whitespace-nowrap overflow-hidden col-6 text-right px-0 mb-[8px] py-3 bg-sec-color rounded-[8px] shadow-3d text-d8">
             ویرایش منو
             <img src="/assets/img/digitalMenu/editDigitalMenu.svg" class="d-inline mx-[10px] max-h-[17.5px]" alt="">
@@ -123,10 +101,12 @@
 import axios from "axios";
 import $ from "jquery";
 import newMenu from "@/components/digitalMenu/newMenu/newMenu.vue";
+import {useStore} from "vuex";
+import Header from "@/components/digitalMenu/Includes/Header.vue";
 
 export default {
   name: "DigitalMenuIndex",
-  components: {newMenu},
+  components: {Header, newMenu},
   data() {
     return {
       loading             : true,
@@ -139,6 +119,7 @@ export default {
       ezyLink             : '',
       PreviewLink         : null,
       showPreview         : false,
+      user_id         : useStore().state.user_id,
     }
   },
   methods: {
@@ -168,12 +149,11 @@ export default {
       this.firstMount()
     },
     firstMount() {
-      var userToken = JSON.parse(localStorage.getItem('token'))
       axios({
               url   : 'v1/digitalMenu/getDigitalMenus',
               method: 'POST',
               data  : {
-                userId: userToken.id
+                userId: this.user_id
               }
             })
           .then(res => {

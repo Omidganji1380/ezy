@@ -38,6 +38,9 @@ const i18n = createI18n({
                                             noContent:"You haven't made menu yet",
                                             AddMenuButton:'Create Menu',
                                         },
+                                        Edit:{
+                                            Header:'Menu editing'
+                                        }
                                     },
                                 },
                                 fa: {
@@ -77,6 +80,9 @@ const i18n = createI18n({
                                             noContent:'هنوز منو نساختید',
                                             AddMenuButton:'ساخت منو',
                                         },
+                                        Edit:{
+                                            Header:'ویرایش منو'
+                                        }
                                     },
                                 },
                             },
