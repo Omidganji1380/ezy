@@ -1,14 +1,12 @@
 import {createStore} from 'vuex'
 import i18n from "@/assets/js/i18n";
+import {useStorage} from "@vueuse/core";
 
 export default createStore(
     {
         state    : {
-            // return: {
             user_id: JSON.parse(localStorage.getItem('token')).id,
-            // lang   : i18n.locale,
-            // lang   : this.$i18n.locale,
-            // }
+            langu  : localStorage.getItem('lang'),
         },
         getters  : {},
         mutations: {},

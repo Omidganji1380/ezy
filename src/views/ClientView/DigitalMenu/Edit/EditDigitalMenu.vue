@@ -13,13 +13,31 @@
       </ul>
     </div>
   </div>
+  <div class="header">
+<!--    <div id="profileImg"-->
+<!--         class="-mt-[100%] transition-all duration-1000 fixedHeader fixed-top w-[430px] mx-auto p-05 !bg-white !bg-opacity-40 backdrop-blur-[6px] shadow-[0_10px_10px_-15px] rounded-b-3xl">-->
+<!--      <div class="row justify-between flex-nowrap">-->
+<!--        <div class="col-auto">-->
+<!--          <img onerror="this.style.display='none'"-->
+<!--               :src="profile.profileImg" id="profileImg"-->
+<!--               class="w-[70px] h-[70px] object-cover rounded-full"-->
+<!--               alt="">-->
+<!--        </div>-->
+<!--        <div class="col-auto self-center">-->
+<!--          <h1 class="text-center text-[18px] font-shabnam-medium-fd mb-[8px]">{{ profile.profileTitle }}</h1>-->
+<!--        </div>-->
+<!--        <div class="col-auto self-center d-none">-->
+<!--          <h1 class="btn btn-success text-center text-[18px] font-shabnam-medium-fd mb-[8px]">ذخیره مخاطب</h1>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+  </div>
 </template>
 
 <script>
 
 import axios from "axios";
 import $ from "jquery";
-import {useStorage} from "@vueuse/core";
 import {useStore} from 'vuex'
 import Header from "@/components/digitalMenu/Includes/Header.vue";
 
@@ -30,7 +48,7 @@ export default {
     return {
       menu_id: this.$route.params.id,
       user_id: useStore().state.user_id,
-      lang   : useStore().state.lang??'fa',
+      lang   : useStore().state.langu,
     }
   },
   methods: {},
