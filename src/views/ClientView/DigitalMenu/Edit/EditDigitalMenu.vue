@@ -30,7 +30,7 @@ export default {
     return {
       menu_id: this.$route.params.id,
       user_id: useStore().state.user_id,
-      lang   : useStore().state.lang,
+      lang   : useStore().state.lang??'fa',
     }
   },
   methods: {},
