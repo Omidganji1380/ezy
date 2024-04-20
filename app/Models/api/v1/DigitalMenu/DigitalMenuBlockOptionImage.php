@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class DigitalMenuBlockOptionImage extends Model
 {
     use HasFactory;
+    protected $fillable=[
+        'img',
+        'menuBlockOption_id',
+    ];
 }

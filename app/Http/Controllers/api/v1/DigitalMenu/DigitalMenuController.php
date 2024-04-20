@@ -6,10 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\api\v1\DigitalMenu\StoreDigitalMenuRequest;
 use App\Http\Requests\api\v1\DigitalMenu\UpdateDigitalMenuRequest;
 use App\Models\api\v1\DigitalMenu\DigitalMenu;
+use App\Models\Profile;
+use App\traits\api\v1\getAllReservedLinks;
 use Illuminate\Http\Request;
+use Route;
 
 class DigitalMenuController extends Controller
 {
+    use getAllReservedLinks;
+
     public $req;
 
     public function __construct(Request $request) {
@@ -42,6 +47,24 @@ class DigitalMenuController extends Controller
 
     }
 
+    public function submitNewMenu() {
+        $this->profileUrl = $this->req->link;
+        $this->getAllReservedLinks();
+        $user_id = $this->req->user_id;
+        $query   = DigitalMenu::query()
+                              ->where('link', $this->profileUrl)
+                              ->exists();
+        if (!$query && !$this->reservedLink) {
+            $digitalMenu=DigitalMenu::query()
+                       ->create([
+                                    'link'    => $this->profileUrl,
+                                    'user_id' => $user_id,
+                                ]);
+
+            return response()->json($digitalMenu, 201);
+        }
+    }
+
     public function create() {
         //
     }
@@ -54,8 +77,9 @@ class DigitalMenuController extends Controller
         //
     }
 
-    public function edit(DigitalMenu $digitalMenu) {
-        //
+    public function edit() {
+        $digitalMenu=DigitalMenu::query()->whereUserId($this->req->user_id)->find($this->req->menu_id);
+        return response($digitalMenu);
     }
 
     public function update(UpdateDigitalMenuRequest $request, DigitalMenu $digitalMenu) {

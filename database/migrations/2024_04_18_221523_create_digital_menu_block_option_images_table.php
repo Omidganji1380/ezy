@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('digital_menu_block_option_images', function (Blueprint $table) {
             $table->id();
             $table->string('img');
-            $table->foreignId('digitalMenuBlockOption_id')->constrained('digital_menu_block_options');
+            $table->foreignId('menuBlockOption_id')->constrained('digital_menu_block_options')->cascadeOnUpdate();
             $table->softDeletes();
             $table->timestamps();
         });

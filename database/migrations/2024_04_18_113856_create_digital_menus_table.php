@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('cover')->nullable();
             $table->string('image_border')->default('100')->comment('100% - 30% - 10% - 0%');
             $table->string('cover_border')->default('0')->comment('100');
-            $table->string('title');
+            $table->string('title')->nullable();
             $table->string('subtitle')->nullable();
             $table->string('background')->nullable();
             $table->string('buttons_cover')->nullable();

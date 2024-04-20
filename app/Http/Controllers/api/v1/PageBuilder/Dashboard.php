@@ -5,18 +5,17 @@ namespace App\Http\Controllers\api\v1\PageBuilder;
 use App\Http\Controllers\Controller;
 use App\Models\Profile;
 use App\Models\UrlRedirector;
+use App\traits\api\v1\getAllReservedLinks;
 use App\traits\api\v1\PageBuilder\pageBuilder;
 use Illuminate\Http\Request;
 use Route;
 
 class Dashboard extends Controller
 {
-    use pageBuilder;
+    use pageBuilder,getAllReservedLinks;
 
     public $profile;
     public $blocks;
-    public $reservedLink;
-    public $profileUrl;
 
     public function getProfiles(Request $request)
     {
@@ -89,30 +88,6 @@ class Dashboard extends Controller
             'blockWidth'  => $blockWidth,
         ];
         return response()->json($data);
-    }
-
-    public function getAllReservedLinks()
-    {
-        $routes = Route::getRoutes()->getRoutes();
-        $nr     = [];
-        $nr2    = [];
-        foreach ($routes as $route) {
-            $nr[] = explode('/', $route->uri);
-        }
-        foreach ($nr as $item) {
-            foreach ($item as $i) {
-                $nr2[] = $i;
-            }
-        }
-        $nr2                = array_unique($nr2);
-        $nr2                = array_filter($nr2);
-        $this->reservedLink = array_search($this->profileUrl, $nr2);
-        $reservedProfiles   = Profile::query()->get()->pluck('link');
-        foreach ($reservedProfiles as $reservedProfile) {
-            array_push($nr2, $reservedProfile);
-        }
-        $nr2 = array_values($nr2);
-        return response()->json($nr2);
     }
 
     public function submitNewProfile(Request $request)

@@ -16,9 +16,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::middleware('auth:sanctum')
+     ->get('/user', function (Request $request) {
+         return $request->user();
+     });
 //Route::get('/v1/getUsers', function () {
 //    $users = \App\Models\User::all();
 //    return response()->json($users);
@@ -47,6 +48,9 @@ Route::group(['prefix' => 'v1'], function () {
     });
     Route::group(['prefix' => 'digitalMenu'], function () {
         Route::post('getDigitalMenus', [DigitalMenuController::class, 'getDigitalMenus']);
+        Route::post('/submitNewMenu', [DigitalMenuController::class, 'submitNewMenu']);
+        Route::post('/edit', [DigitalMenuController::class, 'edit']);
+
     });
 });
 
