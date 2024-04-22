@@ -25,7 +25,7 @@
             .blockText {
                 margin: 0 0 22px;
                 width: 100%;
-                white-space: pre-wrap;
+                white-space: pre-line;
                 word-break: break-word;
                 unicode-bidi: plaintext;
                 font-family: inherit;
