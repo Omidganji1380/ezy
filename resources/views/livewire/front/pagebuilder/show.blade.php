@@ -228,9 +228,9 @@
                                             {{--                                                        <div class="carousel-caption">--}}
                                             <div class="carousel-item {{$loop->first?'active':''}}">
                                                 <a dir="rtl"
-                                                   @if($block->banner->count()==1)
+{{--                                                   @if($block->banner->count()==1)--}}
                                                        href="{{$banner->link}}" target="_blank"
-                                                   @endif
+{{--                                                   @endif--}}
                                                    class="btn w-100 overflow-hidden text-truncate px-1"
                                                    style="border-radius: {{$this->getBlockItemsBorder($block)}};
                                                                             background-{{$block->blockOption->blockItemColor==2?'color':'image'}}: {{$this->getBgBlockItemColor($block)}};
