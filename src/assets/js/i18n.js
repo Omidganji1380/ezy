@@ -28,7 +28,7 @@ const i18n = createI18n({
                                         },
                                         Boxes     : {
                                             CardVisit : 'Smart business card',
-                                            CafeManu  : 'Cafe & restaurant digital menu',
+                                            CafeManu  : 'Digital menu',
                                             ComingSoon: 'Coming Soon',
                                         }
                                     },
@@ -70,7 +70,7 @@ const i18n = createI18n({
                                         },
                                         Boxes     : {
                                             CardVisit : 'کارت ویزیت هوشمند',
-                                            CafeManu  : 'منو دیجیتال کافه و رستوران',
+                                            CafeManu  : 'منو دیجیتال',
                                             ComingSoon: 'به زودی',
                                         }
                                     },
