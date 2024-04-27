@@ -5,7 +5,7 @@ import {useStorage} from "@vueuse/core";
 export default createStore(
     {
         state    : {
-            user_id: JSON.parse(localStorage.getItem('token')).id,
+            user_id: localStorage.getItem('token')?JSON.parse(localStorage.getItem('token')).id:0,
             langu  : localStorage.getItem('lang'),
         },
         getters  : {},
