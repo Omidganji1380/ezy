@@ -7,6 +7,7 @@ use App\Http\Controllers\pageBuilder\Menu;
 use App\Http\Controllers\pageBuilder\PageBuilderTrait;
 use App\Http\Controllers\pageBuilder\profileGlobalOptions;
 use App\Http\Controllers\pageBuilder\textBlock;
+use App\Http\Controllers\pageBuilder\Video;
 use App\Models\Block;
 use App\Models\blockBanner;
 use App\Models\BlockPbOption;
@@ -23,6 +24,7 @@ class Pagebuilder extends Component
     use profileGlobalOptions;
     use Menu;
     use Fair;
+    use Video;
 
 //    public $blockItems=[];
     public function submitProfileOptions()

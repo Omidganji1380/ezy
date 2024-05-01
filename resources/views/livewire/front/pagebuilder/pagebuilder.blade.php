@@ -114,6 +114,9 @@
                                  @elseif(count($block->menu))
                                      data-bs-target="#blockMenuOptions"
                                  wire:click="blockMenuOptions({{$block->id}})"
+                                 @elseif(count($block->video))
+                                     data-bs-target="#blockVideoOptions"
+                                 wire:click="blockVideoOptions({{$block->id}})"
                                  @else
                                      data-bs-target="#blockOptions"
                                  wire:click="blockOptions({{$block->id}})"
@@ -273,9 +276,40 @@
                                         @endforeach
                                     @endif
                                     @if(count($block->text))
-                                        <div class="col-12 text-center p-1 blockTex"
+                                        <div class="col-12 text-center p-1 blockText"
                                              style="margin: -40px 0;{{$block->text()->where('block_id',$block->id)->first()->textSize}}{{$block->text()->where('block_id',$block->id)->first()->textAlign}}color:{{$block->text()->where('block_id',$block->id)->first()->textColor}}">
                                             {!! $block->text()->where('block_id',$block->id)->first()->text !!}
+                                        </div>
+                                    @endif
+                                    @if(count($block->video))
+                                        <div class="col-12 text-center p-1"
+                                             style="">
+                                            @if($block->video->first()->link)
+                                                <style>.h_iframe-aparat_embed_frame {
+                                                        position: relative;
+                                                    }
+
+                                                    .h_iframe-aparat_embed_frame .ratio {
+                                                        display: block;
+                                                        width: 100%;
+                                                        height: auto;
+                                                    }
+
+                                                    .h_iframe-aparat_embed_frame iframe {
+                                                        position: absolute;
+                                                        top: 0;
+                                                        left: 0;
+                                                        width: 100%;
+                                                        height: 100%;
+                                                    }</style>
+                                                <div class="h_iframe-aparat_embed_frame"><span
+                                                        style="display: block;padding-top: 57%"></span>
+                                                    <iframe
+                                                        src="{{$block->video->first()->link}}"
+                                                        allowFullScreen="true" webkitallowfullscreen="true"
+                                                        mozallowfullscreen="true"></iframe>
+                                                </div>
+                                            @endif
                                         </div>
                                     @endif
                                 </div>
@@ -432,7 +466,10 @@
                                 </div>
                             </div>
                         </li>
-                        <li class="list-group-item my-1 border-dark px-4">
+                        <li class="list-group-item my-1 border-dark px-4"
+                            data-bs-toggle="modal"
+                            data-bs-target="#blockVideoOptions"
+                            wire:click="getOptionsVideo('video',true)">
                             <div class="row flex-nowrap  justify-content-sm-start">
                                 <div class="col-2 text-center pe-0">
                                     <i class="ez ez-video-library"></i>
@@ -1993,6 +2030,91 @@
             </div>
         </div>
     </div>
+    {{--video Options--}}
+    <div class="modal fade rounded" wire:ignore.self id="blockVideoOptions" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered {{--modal-lg--}}">
+            <div class="modal-content">
+                <div class="modal-header p-0">
+                    <button type="button" style="width: 20px;height: 20px"
+                            class="ms-2 close btn p-0" wire:click="deleteBlock"
+                            wire:confirm="آیا از حذف این بلوک مطمئن هستید؟">
+                        <span class="fa fa-trash text-danger">{{--&times;--}}</span>
+                    </button>
+                    <h5 class="modal-title mx-auto">{{$title}}</h5>
+                    <button type="button" style="width: 20px;height: 20px;"
+                            class="me-1 close btn border-dark border-2 rounded-circle p-0"
+                            data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" class="fa fa-close">{{--&times;--}}</span>
+                    </button>
+                </div>
+
+                <div class="modal-body position-relative" style="background-color: rgb(241, 243, 246);">
+                    {{--<div wire:loading class="position-absolute w-100 h-100 bg-white start-0 top-0" style="z-index: 99">
+                        <img
+                            src="{{asset('pageBuilder/loading.gif')}}"
+                            class="position-absolute h-100 py-2 mx-auto start-0 w-100"
+                            style="right: 0;max-height: 100%;object-fit: none">
+                    </div>--}}
+                    <div class="row">
+                        <div class="col-12">
+                            <ul class="nav nav-pills mb-3 row pills-tab" id="" role="tablist" wire:ignore>
+                                <li class="nav-item btn b1 selected col-6" role="presentation">
+                                    <button class="btn btnNoFocus active w-100" id="profileProperties11222-tab"
+                                            data-bs-toggle="pill"
+                                            data-bs-target="#profileProperties11222" type="button" role="tab"
+                                            aria-controls="profileProperties11222" aria-selected="true">مشخصات
+                                    </button>
+                                </li>
+                                <li class="nav-item btn b2 col-6" role="presentation">
+                                    <button class="btn btnNoFocus w-100 " id="profileMoreOptions11222-tab"
+                                            data-bs-toggle="pill"
+                                            data-bs-target="#profileMoreOptions11222" type="button" role="tab"
+                                            aria-controls="profileMoreOptions11222" aria-selected="false">تنظیمات بیشتر
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-12 my-3 tab-content" id="accordionParentProfile11222">
+                            <div class="tab-pane fade show active" id="profileProperties11222" role="tabpanel"
+                                 aria-labelledby="profileProperties11222-tab" wire:ignore.self>
+                                <div class="row">
+                                    <div class="col-12 my-3">
+                                        <label class="text-black-50 my-1">لینک ویدئو</label>
+                                        <input class="form-control rounded" wire:model="videoLink">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="profileMoreOptions11222" role="tabpanel"
+                                 wire:ignore.self aria-labelledby="profileMoreOptions112-tab">
+                                <div class="row">
+                                    <div class="col-12 my-3">
+                                        <div class="row justify-content-around">
+                                            <div class="col-6">
+                                                نمایش بلوک
+                                            </div>
+                                            <div class="col-6 text-start">
+                                                <input type="checkbox" wire:model="blockVisibility"
+                                                       value="{{$blockVisibility}}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 text-end">
+                            <button class="btn btn-outline-info" data-bs-dismiss="modal" wire:click="clearInputs">
+                                انصراف
+                            </button>
+                            <button class="btn btn-info text-white" data-bs-dismiss="modal"
+                                    wire:click="submitVideo">
+                                ذخیره
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     {{--Menu Options--}}
     <div class="modal fade rounded" wire:ignore.self id="blockMenuOptions" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
@@ -2862,12 +2984,12 @@
             function stopSortable(key) {
                 // window.event.preventDefault()
                 // window.event.returnValue=false
-                document.getElementById('block--' + key).style.pointerEvents='none !important';
+                document.getElementById('block--' + key).style.pointerEvents = 'none !important';
             }
 
             function Sortable(key) {
                 // window.event.returnValue=true
-                document.getElementById('block--' + key).style.pointerEvents='auto !important';
+                document.getElementById('block--' + key).style.pointerEvents = 'auto !important';
             }
             {{--function getBgImgSelect(id){--}}
             {{--    alert($(this).hasClass("bgImgSelected").toString())--}}
@@ -3180,7 +3302,8 @@
                                                 var data = $(this).sortable('serialize');
                                                 // alert(data)
                                                 // setTimeout(function (){
-                                                @this.updateSort(data);
+                                                @this.
+                                                updateSort(data);
                                                 // },1000)
                                             }
                                         });

@@ -55,11 +55,11 @@ class DigitalMenuController extends Controller
                               ->where('link', $this->profileUrl)
                               ->exists();
         if (!$query && !$this->reservedLink) {
-            $digitalMenu=DigitalMenu::query()
-                       ->create([
-                                    'link'    => $this->profileUrl,
-                                    'user_id' => $user_id,
-                                ]);
+            $digitalMenu = DigitalMenu::query()
+                                      ->create([
+                                                   'link'    => $this->profileUrl,
+                                                   'user_id' => $user_id,
+                                               ]);
 
             return response()->json($digitalMenu, 201);
         }
@@ -78,7 +78,9 @@ class DigitalMenuController extends Controller
     }
 
     public function edit() {
-        $digitalMenu=DigitalMenu::query()->whereUserId($this->req->user_id)->find($this->req->menu_id);
+        $digitalMenu = DigitalMenu::query()
+                                  ->whereUserId($this->req->user_id)
+                                  ->find($this->req->menu_id);
         return response($digitalMenu);
     }
 

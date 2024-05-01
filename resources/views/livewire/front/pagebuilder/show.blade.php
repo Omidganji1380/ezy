@@ -1,9 +1,10 @@
 <div>
     @push('css')
         <style>
-            body{
+            body {
                 font-family: system-ui !important;
             }
+
             .selected {
                 border-bottom: 2px solid blue;
             }
@@ -132,10 +133,11 @@
             }
         </style>
         <style>
-            .z-50{
+            .z-50 {
                 z-index: 50;
             }
-            .z-0{
+
+            .z-0 {
                 z-index: 0;
             }
         </style>
@@ -187,7 +189,7 @@
                     {{--                                <div class="col-11">--}}
 
                     <div class="row justify-content-center">
-                        @if(!count($block->text))
+                        @if(!count($block->text) && !count($block->video))
                             @if($block->blockOption->blockTitle)
                                 <div class="col-12 text-center mt-3">
                                     <p class="text-center">{{$block->blockOption->blockTitle}}</p>
@@ -228,9 +230,9 @@
                                             {{--                                                        <div class="carousel-caption">--}}
                                             <div class="carousel-item {{$loop->first?'active':''}}">
                                                 <a dir="rtl"
-{{--                                                   @if($block->banner->count()==1)--}}
-                                                       href="{{$banner->link}}" target="_blank"
-{{--                                                   @endif--}}
+                                                   {{--                                                   @if($block->banner->count()==1)--}}
+                                                   href="{{$banner->link}}" target="_blank"
+                                                   {{--                                                   @endif--}}
                                                    class="btn w-100 overflow-hidden text-truncate px-1"
                                                    style="border-radius: {{$this->getBlockItemsBorder($block)}};
                                                                             background-{{$block->blockOption->blockItemColor==2?'color':'image'}}: {{$this->getBgBlockItemColor($block)}};
@@ -366,6 +368,37 @@
                             <div class="col-12 text-center p-1 blockText"
                                  style="{{$block->text()->where('block_id',$block->id)->first()->textSize}}{{$block->text()->where('block_id',$block->id)->first()->textAlign}}color:{{$block->text()->where('block_id',$block->id)->first()->textColor}}">
                                 {!! $block->text()->where('block_id',$block->id)->first()->text !!}
+                            </div>
+                        @endif
+                        @if(count($block->video))
+                            <div class="col-12 text-center p-1"
+                                 style="">
+                                @if($block->video->first()->link)
+                                    <style>.h_iframe-aparat_embed_frame {
+                                            position: relative;
+                                        }
+
+                                        .h_iframe-aparat_embed_frame .ratio {
+                                            display: block;
+                                            width: 100%;
+                                            height: auto;
+                                        }
+
+                                        .h_iframe-aparat_embed_frame iframe {
+                                            position: absolute;
+                                            top: 0;
+                                            left: 0;
+                                            width: 100%;
+                                            height: 100%;
+                                        }</style>
+                                    <div class="h_iframe-aparat_embed_frame"><span
+                                            style="display: block;padding-top: 57%"></span>
+                                        <iframe
+                                            src="{{$block->video->first()->link}}"
+                                            allowFullScreen="true" webkitallowfullscreen="true"
+                                            mozallowfullscreen="true"></iframe>
+                                    </div>
+                                @endif
                             </div>
                         @endif
                     </div>

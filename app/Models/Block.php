@@ -15,31 +15,32 @@ class Block extends Model
         'sort',
     ];
 
-    public function pbOption(): BelongsToMany
-    {
-        return $this->belongsToMany(pbOption::class, 'block_pb_options', 'block_id', 'pbOption_id')->withPivot('id');
+    public function pbOption(): BelongsToMany {
+        return $this->belongsToMany(pbOption::class, 'block_pb_options', 'block_id', 'pbOption_id')
+                    ->withPivot('id');
     }
 
-    public function blockOption()
-    {
+    public function blockOption() {
         return $this->hasOne(BlockOption::class);
     }
 
-    public function banner()
-    {
+    public function banner() {
         return $this->hasMany(blockBanner::class, 'block_id', 'id');
     }
-    public function fair()
-    {
+
+    public function fair() {
         return $this->hasMany(FairBlock::class, 'block_id', 'id');
     }
-    public function menu()
-    {
+
+    public function menu() {
         return $this->hasMany(MenuBlock::class, 'block_id', 'id');
     }
 
-    public function text()
-    {
+    public function text() {
         return $this->hasMany(BlockText::class, 'block_id', 'id');
+    }
+
+    public function video() {
+        return $this->hasMany(BlockVideo::class, 'block_id', 'id');
     }
 }
