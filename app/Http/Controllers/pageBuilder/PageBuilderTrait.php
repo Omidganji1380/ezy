@@ -152,7 +152,7 @@ trait PageBuilderTrait
     public function getIconPathsTrait()
     {
         for ($ii = 1; $ii <= 50; $ii++) {
-            echo '<span class="path' . $ii . '"></span >';
+            echo '<span class="path' . $ii . '"></span>';
         }
     }
 

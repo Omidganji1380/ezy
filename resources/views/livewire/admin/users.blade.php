@@ -71,6 +71,15 @@
                                                 class="btn btn-outline-secondary">
                                             <i class="icofont-history text-info"></i>
                                         </button>
+                                        @if(\Auth::user()->role == 10)
+                                            <button type="button" wire:click="showProfiles({{$i->id}})"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#profiles"
+                                                    class="btn btn-info">
+                                                {{count($i->profiles)}}
+                                                <i class="icofont-paper text-black"></i>
+                                            </button>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>
@@ -83,56 +92,99 @@
         </div>
     </div> <!-- Row end  -->
 
-     <div class="modal fade" wire:ignore.self id="expadd" tabindex="-1" aria-hidden="true">
-         <div class="modal-dialog modal-dialog-centered modal-xl modal-dialog-scrollable">
-             <div class="modal-content">
-                 <div class="modal-header">
-                     <h5 class="modal-title fw-bold" id="expaddLabel">{{$user?'ویرایش':'افزودن'}}</h5>
-                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="بستن"></button>
-                 </div>
-                 <div class="modal-body">
-                     <div class="deadline-form">
-                         <form>
-                             <div class="row g-3 mb-3 justify-content-center">
-                                 <div class="col-sm-4">
-                                     <label for="" class="form-label">نام </label>
-                                         <input type="text" class="form-control" wire:model="name">
-                                 </div>
-                                 <div class="col-sm-4">
-                                     <label for="" class="form-label">شماره </label>
-                                         <input type="text" class="form-control" wire:model="phone">
-                                 </div>
-                                 <div class="col-sm-4">
-                                     <label for="" class="form-label">رمزعبور </label>
-                                         <input type="text" class="form-control" wire:model="password">
-                                 </div>
-                                 <div class="col-sm-6">
-                                     <label for="" class="form-label">ایمیل </label>
-                                         <input type="text" class="form-control" wire:model="email">
-                                 </div>
-                                 <div class="col-sm-6">
-                                     <label for="" class="form-label">کدپستی </label>
-                                         <input type="text" class="form-control" wire:model="postCode">
-                                 </div>
-                                 <div class="col-sm-12">
-                                     <label for="" class="form-label">آدرس </label>
-                                     <textarea type="text" class="form-control" wire:model="address"></textarea>
-                                 </div>
-                             </div>
-                         </form>
-                     </div>
+    <div class="modal fade" wire:ignore.self id="expadd" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="expaddLabel">{{$user?'ویرایش':'افزودن'}}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="بستن"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="deadline-form">
+                        <form>
+                            <div class="row g-3 mb-3 justify-content-center">
+                                <div class="col-sm-4">
+                                    <label for="" class="form-label">نام </label>
+                                    <input type="text" class="form-control" wire:model="name">
+                                </div>
+                                <div class="col-sm-4">
+                                    <label for="" class="form-label">شماره </label>
+                                    <input type="text" class="form-control" wire:model="phone">
+                                </div>
+                                <div class="col-sm-4">
+                                    <label for="" class="form-label">رمزعبور </label>
+                                    <input type="text" class="form-control" wire:model="password">
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="" class="form-label">ایمیل </label>
+                                    <input type="text" class="form-control" wire:model="email">
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="" class="form-label">کدپستی </label>
+                                    <input type="text" class="form-control" wire:model="postCode">
+                                </div>
+                                <div class="col-sm-12">
+                                    <label for="" class="form-label">آدرس </label>
+                                    <textarea type="text" class="form-control" wire:model="address"></textarea>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
 
-                 </div>
-                 <div class="modal-footer">
-                     <button type="button" wire:click="clearInputs" class="btn btn-secondary" data-bs-dismiss="modal">
-                         انصراف
-                     </button>
-                     <button type="submit" wire:click="submit"
-                             class="btn btn-primary">{{$user?'ویرایش':'افزودن'}}</button>
-                 </div>
-             </div>
-         </div>
-     </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" wire:click="clearInputs" class="btn btn-secondary" data-bs-dismiss="modal">
+                        انصراف
+                    </button>
+                    <button type="submit" wire:click="submit"
+                            class="btn btn-primary">{{$user?'ویرایش':'افزودن'}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" wire:ignore.self id="profiles" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    {{--                    <h5 class="modal-title fw-bold" id="expaddLabel">{{$user?'ویرایش':'افزودن'}}</h5>--}}
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="بستن"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-hover align-middle mb-0" style="width: 100%;">
+                        <thead>
+                        <tr>
+                            <th>شناسه</th>
+                            <th>لینک</th>
+                            <th>عنوان</th>
+                            <th>زیرعنوان</th>
+                            <th>تاریخ ایجاد</th>
+                            <th>عملیات</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($userProfiles as $i)
+                            <tr>
+                                <td>{{$i->id}}</td>
+                                <td>{{$i->link}}</td>
+                                <td>{{$i->title}}</td>
+                                <td>{{$i->subtitle}}</td>
+                                <td>{{jdate($i->created_at)->format('l, Y/m/d | ساعت H:i')}}</td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+
+                </div>
+{{--                <div class="modal-footer">--}}
+{{--                    <button type="button" wire:click="clearInputs" class="btn btn-secondary" data-bs-dismiss="modal">--}}
+{{--                        انصراف--}}
+{{--                    </button>--}}
+{{--                    <button type="submit" wire:click="submit"--}}
+{{--                            class="btn btn-primary">{{$user?'ویرایش':'افزودن'}}</button>--}}
+{{--                </div>--}}
+            </div>
+        </div>
+    </div>
     {{--<div class="modal fade" wire:ignore.self id="history" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl modal-dialog-scrollable">
             <div class="modal-content">

@@ -18,15 +18,17 @@ class Users extends Component
     public $postCode;
     public $address;
     public $password;
+    public $userProfiles=[];
 
-    public function render()
-    {
-        $users = User::query()->whereBetween('role', [0, 3])->orderByDesc('created_at')->paginate(20);
+    public function render() {
+        $users = User::query()
+                     ->whereBetween('role', [0, 3])
+                     ->orderByDesc('created_at')
+                     ->paginate(20);
         return view('livewire.admin.users', ['users' => $users]);
     }
 
-    public function clearInputs()
-    {
+    public function clearInputs() {
         $this->user     = null;
         $this->name     = null;
         $this->phone    = null;
@@ -34,10 +36,10 @@ class Users extends Component
         $this->postCode = null;
         $this->address  = null;
         $this->password = null;
+        $this->userProfiles = null;
     }
 
-    public function edit(User $user)
-    {
+    public function edit(User $user) {
         $this->clearInputs();
         $this->user     = $user;
         $this->name     = $user->name;
@@ -47,34 +49,38 @@ class Users extends Component
         $this->address  = $user->address;
     }
 
-    public function delete(User $user)
-    {
+    public function delete(User $user) {
         $user->delete();
     }
 
-    public function submit()
-    {
+    public function submit() {
         if ($this->user) {
             $this->user->update([
-                'name'     => $this->name,
-                'phone'    => $this->phone,
-                'email'    => $this->email,
-                'postCode' => $this->postCode,
-                'address'  => $this->address,
-                'password' => Hash::make($this->password),
-            ]);
+                                    'name'     => $this->name,
+                                    'phone'    => $this->phone,
+                                    'email'    => $this->email,
+                                    'postCode' => $this->postCode,
+                                    'address'  => $this->address,
+                                    'password' => Hash::make($this->password),
+                                ]);
         }
         else {
             /* $newUser =*/
-            User::query()->create([
-                'name'     => $this->name,
-                'phone'    => $this->phone,
-                'email'    => $this->email,
-                'postCode' => $this->postCode,
-                'address'  => $this->address,
-                'password' => Hash::make($this->password),
-            ]);
+            User::query()
+                ->create([
+                             'name'     => $this->name,
+                             'phone'    => $this->phone,
+                             'email'    => $this->email,
+                             'postCode' => $this->postCode,
+                             'address'  => $this->address,
+                             'password' => Hash::make($this->password),
+                         ]);
         }
         $this->clearInputs();
+    }
+
+    public function showProfiles(User $user) {
+        $this->clearInputs();
+        $this->userProfiles = $user->profiles;
     }
 }

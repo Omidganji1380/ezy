@@ -62,4 +62,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(InfoForm::class);
     }
+    public function profiles()
+    {
+        return $this->hasMany(Profile::class);
+    }
 }
