@@ -36,7 +36,7 @@ class Users extends Component
         $this->postCode = null;
         $this->address  = null;
         $this->password = null;
-        $this->userProfiles = null;
+        $this->userProfiles = [];
     }
 
     public function edit(User $user) {
