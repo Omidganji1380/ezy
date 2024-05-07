@@ -20,6 +20,7 @@ class Profile extends Model
         'img_border',
         'bg_border',
         'updated_at',
+        'textColor',
     ];
 
     public function category()

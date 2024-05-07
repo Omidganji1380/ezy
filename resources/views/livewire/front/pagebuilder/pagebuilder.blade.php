@@ -84,8 +84,8 @@
                                 alt="" style="border-radius: {{$profile->img_border}}%"
                                 class="userImage">
                             <div class="user-info-data">
-                                <p class="MuiTypography-root title">{{$profile->title}}</p>
-                                <p class="MuiTypography-root">{!! $profile->subtitle !!}</p>
+                                <p style="color:{{$profile->textColor}}" class="MuiTypography-root title">{{$profile->title}}</p>
+                                <p style="color:{{$profile->textColor}}" class="MuiTypography-root">{!! $profile->subtitle !!}</p>
                             </div>
                         </div>
                     </div>
@@ -264,7 +264,7 @@
                                         </div>
                                         @foreach($block->menu as $item)
                                             <ul class="w-100">
-                                                <li>
+                                                <li style="color:{{$block->blockOption->textBlockItemColor}}">
                                                     <h5 class="d-flex w-100">
                                                         {{$item->title}}
                                                         <span
@@ -2419,86 +2419,10 @@
                                     </div>
 
                                     <div class="col-12 my-3">
-                                        <label class="text-black-50 mb-2">رنگ بندی آیتم‌ها</label>
-                                        <select class="form-select" wire:model="blockItemColor"
-                                                onchange="blockItemColor33(this.value)"
-                                        >
-                                            <option value="1">استفاده از رنگ‌های شخصی‌سازی شده</option>
-                                            <option value="2">استفاده از رنگ برندها</option>
-                                            <option value="3">انتخاب رنگ دلخواه برای آیتم‌های این بلوک</option>
-                                        </select>
-                                        <div class="@if($blockItemColor!=3) {{--d-none--}} @endif my-2"
-                                             id="blockItemColor33">
-                                            <button class="btn btnNoFocus w-100 py-2 bg-white"
-                                                    style="text-align: right;border: 1px solid lightgrey">
-                                                پس‌زمینه بلوک‌ها
-                                                <div wire:ignore class="my-4 grapick2"></div>
-                                                <div class="row">
-                                                    <div class="col-6">
-                                                        <select class="form-select " id="switch-type2">
-                                                            <option value>- انتخاب کنید -</option>
-                                                            <option value="radial">radial</option>
-                                                            <option value="linear">linear</option>
-                                                            <option value="repeating-radial">repeating-radial
-                                                            </option>
-                                                            <option value="repeating-linear">repeating-linear
-                                                            </option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-6">
-                                                        <select class="form-select " id="switch-angle2">
-                                                            <option value>- انتخاب کنید -</option>
-                                                            <option value="top">Top</option>
-                                                            <option value="right">Right</option>
-                                                            <option value="center">Center</option>
-                                                            <option value="bottom">Bottom</option>
-                                                            <option value="left">Left</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                {{--                                                <span class="float-start" dir="ltr">{{$bgBlockItemColor}}</span>--}}
-                                            </button>
-                                            <button class="btn btnNoFocus w-100 py-2 bg-white my-2"
-                                                    style="text-align: right;border: 1px solid lightgrey">
-                                                عناوین آیتم‌ها
-                                                <div wire:ignore class="my-4 grapick3"></div>
-                                                <div class="row">
-                                                    <div class="col-6">
-                                                        <select class="form-select " id="switch-type3">
-                                                            <option value>- انتخاب کنید -</option>
-                                                            <option value="radial">radial</option>
-                                                            <option value="linear">linear</option>
-                                                            <option value="repeating-radial">repeating-radial
-                                                            </option>
-                                                            <option value="repeating-linear">repeating-linear
-                                                            </option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-6">
-                                                        <select class="form-select " id="switch-angle3">
-                                                            <option value>- انتخاب کنید -</option>
-                                                            <option value="top">Top</option>
-                                                            <option value="right">Right</option>
-                                                            <option value="center">Center</option>
-                                                            <option value="bottom">Bottom</option>
-                                                            <option value="left">Left</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                {{--                                                <input type="color" wire:model.live="textBlockItemColor"--}}
-                                                {{--                                                       class="float-start ms-2"--}}
-                                                {{--                                                       style="width: 40px;height: 20px;">--}}
-                                                {{--                                                <span class="float-start" dir="ltr">{{$textBlockItemColor}}</span>--}}
-                                            </button>
-                                            <button class="btn btnNoFocus w-100 py-2 bg-white"
-                                                    style="text-align: right;border: 1px solid lightgrey">
-                                                حاشیه بلوک‌ها
-                                                <input type="color" wire:model.live="borderBlockItemColor"
-                                                       class="float-start ms-2"
-                                                       style="width: 40px;height: 20px;">
-                                                <span class="float-start" dir="ltr">{{$borderBlockItemColor}}</span>
-                                            </button>
-                                        </div>
+                                        <label class="text-black-50 mb-2">رنگ متن</label>
+                                        <input class="form-select" wire:model="blockItemColor" value="3" type="hidden">
+                                        <input class="form-select" wire:model="textBlockItemColor" type="color">
+
                                     </div>
 
                                     <div class="col-12 my-3">
@@ -2715,6 +2639,12 @@
                                                        wire:model="profileImgBorder" value="100"
                                                        {{$profileImgBorder==100?'checked':''}} name="imgStyle">
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 my-3">
+                                        <label class="text-black-50 my-1">رنگ متن</label>
+                                        <div class="row bg-white my-2">
+                                            <input class="form-select" wire:model="textColor" type="color">
                                         </div>
                                     </div>
                                 </div>
