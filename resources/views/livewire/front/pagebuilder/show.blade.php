@@ -336,12 +336,12 @@
                                                 data-bs-parent="#aMenu{{$key}}">
                                                 @foreach($block->menu as $item)
                                                     <li style="color:{{$block->blockOption->textBlockItemColor}}">
-                                                        <h5 class="d-flex w-100">
+                                                        <h5 class="d-flex w-100" style="color:{{$block->blockOption->textBlockItemColor}}">
                                                             {{$item->title}}
-                                                            <span
+                                                            <span style="color:{{$block->blockOption->textBlockItemColor}}"
                                                                 class="text-start d-flex flex-grow-1 menuTitle">{{$item->price}}</span>
                                                         </h5>
-                                                        <p style="text-align: right">{{$item->description}}</p>
+                                                        <p style="text-align: right;color:{{$block->blockOption->textBlockItemColor}}">{{$item->description}}</p>
                                                     </li>
                                                 @endforeach
                                             </ol>
