@@ -175,8 +175,8 @@
                         alt="" style="border-radius: {{$profile->img_border}}%"
                         class="userImage">
                     <div class="user-info-data">
-                        <p class="MuiTypography-root title">{{$profile->title}}</p>
-                        <p class="MuiTypography-root">{!! $profile->subtitle !!}</p>
+                        <p style="color:{{$profile->textColor}}" class="MuiTypography-root title">{{$profile->title}}</p>
+                        <p style="color:{{$profile->textColor}}" class="MuiTypography-root">{!! $profile->subtitle !!}</p>
                     </div>
                     {{--                            </div>--}}
                     {{--                        </div>--}}
@@ -335,7 +335,7 @@
                                                 id="menu{{$key}}"
                                                 data-bs-parent="#aMenu{{$key}}">
                                                 @foreach($block->menu as $item)
-                                                    <li>
+                                                    <li style="color:{{$block->blockOption->textBlockItemColor}}">
                                                         <h5 class="d-flex w-100">
                                                             {{$item->title}}
                                                             <span
