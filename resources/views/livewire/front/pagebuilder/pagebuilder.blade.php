@@ -3,47 +3,47 @@
         <link rel="stylesheet" href="{{asset('pageBuilder/assets/css/style.css')}}">
         <style>
             .textareaTextBlock {
-                font: inherit;
-                letter-spacing: inherit;
-                color: currentcolor;
-                margin: 0;
-                -webkit-tap-highlight-color: transparent;
-                display: block;
-                min-width: 0;
-                width: 100%;
-                animation-name: mui-auto-fill-cancel;
-                animation-duration: 10ms;
-                resize: none;
-                border: 0;
-                unicode-bidi: plaintext;
+                font                        : inherit;
+                letter-spacing              : inherit;
+                color                       : currentcolor;
+                margin                      : 0;
+                -webkit-tap-highlight-color : transparent;
+                display                     : block;
+                min-width                   : 0;
+                width                       : 100%;
+                animation-name              : mui-auto-fill-cancel;
+                animation-duration          : 10ms;
+                resize                      : none;
+                border                      : 0;
+                unicode-bidi                : plaintext;
             }
 
             .form-control, .form-select {
-                border: 0 !important;
+                border : 0 !important;
             }
 
             .blockText {
-                margin: 0 0 22px;
-                width: 100%;
-                white-space: pre-line;
-                word-break: break-word;
-                unicode-bidi: plaintext;
-                font-family: inherit;
+                margin       : 0 0 22px;
+                width        : 100%;
+                white-space  : pre-line;
+                word-break   : break-word;
+                unicode-bidi : plaintext;
+                font-family  : inherit;
             }
 
             .bgImgSelected {
-                border: 0.13rem solid red;
-                padding: 0.3rem;
-                border-radius: 0.3rem;
+                border        : 0.13rem solid red;
+                padding       : 0.3rem;
+                border-radius : 0.3rem;
             }
 
             .menuTitle::before {
-                content: '';
-                background: repeating-linear-gradient(to right, currentColor, currentColor 1px, transparent 2px, transparent 4px);
-                height: 1px;
-                flex-grow: 1;
-                display: inline-block;
-                margin-top: 1em;
+                content    : '';
+                background : repeating-linear-gradient(to right, currentColor, currentColor 1px, transparent 2px, transparent 4px);
+                height     : 1px;
+                flex-grow  : 1;
+                display    : inline-block;
+                margin-top : 1em;
             }
         </style>
     @endpush
@@ -84,8 +84,10 @@
                                 alt="" style="border-radius: {{$profile->img_border}}%"
                                 class="userImage">
                             <div class="user-info-data">
-                                <p style="color:{{$profile->textColor}}" class="MuiTypography-root title">{{$profile->title}}</p>
-                                <p style="color:{{$profile->textColor}}" class="MuiTypography-root">{!! $profile->subtitle !!}</p>
+                                <p style="color:{{$profile->textColor}}"
+                                   class="MuiTypography-root title">{{$profile->title}}</p>
+                                <p style="color:{{$profile->textColor}}"
+                                   class="MuiTypography-root">{!! $profile->subtitle !!}</p>
                             </div>
                         </div>
                     </div>
@@ -262,7 +264,7 @@
                                                 @endif
                                             </div>
                                         </div>
-                                        @foreach($block->menu as $item)
+                                        @foreach($block->menu->sortBy('sort') as $item)
                                             <ul class="w-100">
                                                 <li style="color:{{$block->blockOption->textBlockItemColor}}">
                                                     <h5 class="d-flex w-100">
@@ -286,21 +288,21 @@
                                              style="">
                                             @if($block->video->first()->link)
                                                 <style>.h_iframe-aparat_embed_frame {
-                                                        position: relative;
+                                                        position : relative;
                                                     }
 
                                                     .h_iframe-aparat_embed_frame .ratio {
-                                                        display: block;
-                                                        width: 100%;
-                                                        height: auto;
+                                                        display : block;
+                                                        width   : 100%;
+                                                        height  : auto;
                                                     }
 
                                                     .h_iframe-aparat_embed_frame iframe {
-                                                        position: absolute;
-                                                        top: 0;
-                                                        left: 0;
-                                                        width: 100%;
-                                                        height: 100%;
+                                                        position : absolute;
+                                                        top      : 0;
+                                                        left     : 0;
+                                                        width    : 100%;
+                                                        height   : 100%;
                                                     }</style>
                                                 <div class="h_iframe-aparat_embed_frame"><span
                                                         style="display: block;padding-top: 57%"></span>
@@ -2207,10 +2209,10 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div style="cursor: grab;" {{--id="sortable3"--}}>
+                                            <div style="cursor: grab;" id="sortableMenu" wire:ignore.self>
 
                                                 @foreach($blockMenuItems as $key=>$item)
-                                                    <div class="my-1 col-12">
+                                                    <div class="my-1 col-12" id="menuSortKey-{{$item->id}}">
                                                         <div
                                                             class="row bg-white border border-3 mx-0 justify-content-between">
                                                             <div class="col-11 position-relative">
@@ -2222,12 +2224,12 @@
                                                                         aria-controls="itemMenu{{$item->id}}">
                                                                     <div class="row" style="width: fit-content">
                                                                         <div class="col-auto" dir="rtl">
-                                                                            آیتم {{$key+1}}
+                                                                            {{$item->title}}
                                                                         </div>
                                                                     </div>
                                                                 </button>
                                                                 <div
-                                                                    class="position-absolute top-50 translate-middle-y">
+                                                                    class="position-absolute top-50 translate-middle-y ui-ssss">
                                                                     <i class="fa fa-arrows-up-down-left-right"></i>
                                                                 </div>
                                                             </div>
@@ -2476,7 +2478,7 @@
                             <button class="btn btn-outline-info" data-bs-dismiss="modal" wire:click="clearInputs">
                                 انصراف
                             </button>
-                            <button class="btn btn-info text-white" data-bs-dismiss="modal"
+                            <button class="btn btn-info text-white" data-bs-dismiss="modal" onclick="submitSortable()"
                                     wire:click="submitMenu">
                                 ذخیره
                             </button>
@@ -2908,7 +2910,6 @@
             </div>
         </div>
     </div>
-
     @push('js')
         <script>
             function stopSortable(key) {
@@ -3130,6 +3131,7 @@
 
 
             var modal = $('div.modal')
+            var data  = ''
 
             function showFirstTab() {
                 // const gp = new Grapick({el: '.grapick'});
@@ -3154,6 +3156,29 @@
                 buttons.find('li:first').addClass('selected')
                 buttons.find('li:first button').addClass('active')
                 tabs.find('div.tab-pane:first').addClass('show active')
+
+                /*var ss= */
+                $("#sortableMenu").sortable({
+                                                axis  : 'y',
+                                                handle: $('.ui-ssss'),
+                                                stop  : function (event, ui) {
+                                                    data = $(this).sortable('serialize');
+
+                                                    // alert(data)
+                                                    // setTimeout(function (){
+                                                    {{--                                                    @this.--}}
+                                                    {{--                                                    updateSortMenu(data);--}}
+                                                    // },1000)
+                                                }
+                                            })
+
+                {{--                @this.set('sort',ss)--}}
+                // menuSortable()
+            }
+
+            function submitSortable() {
+                @this.
+                set('sort', data)
             }
         </script>
         <script>
@@ -3237,8 +3262,26 @@
                                                 // },1000)
                                             }
                                         });
-
             });
+
+            // if($('#blockMenuOptions').hasClass('show')){
+            //     alert('asd')
+            // }
+            function menuSortable() {
+                $("#sortableMenu").sortable({
+                                                axis  : 'y',
+                                                handle: $('.ui-ssss'),
+                                                update: function (event, ui) {
+                                                    var data = $(this).sortable('serialize');
+                                                    // alert(data)
+                                                    // setTimeout(function (){
+                                                    @this.
+                                                    updateSortMenu(data);
+                                                    // },1000)
+                                                }
+                                            });
+
+            }
         </script>
         <script>
             $(document).ready(function () {

@@ -14,20 +14,20 @@ trait Menu
     public $MenuPrice       = [];
     public $MenuDescription = [];
     public $menuImageUpload;
+    public $sort;
 
-    public function removeMenuImg()
-    {
-        Storage::disk('public')->delete('pb/profiles/profile-' . $this->profile->id . '/menus/' . $this->blockMenuItems[0]->img);
+    public function removeMenuImg() {
+        Storage::disk('public')
+               ->delete('pb/profiles/profile-' . $this->profile->id . '/menus/' . $this->blockMenuItems[0]->img);
         foreach ($this->blockMenuItems as $item) {
             $item->update([
-                'img' => null
-            ]);
+                              'img' => null,
+                          ]);
         }
         $this->blockMenuOptions($this->block);
     }
 
-    public function getOptionsMenu($option, $newBlock)
-    {
+    public function getOptionsMenu($option, $newBlock) {
         if ($newBlock) {
             $this->newBlock = true;
         }
@@ -44,44 +44,44 @@ trait Menu
         }
         $this->insertMenu();
 
-        $this->options = MenuBlock::query()->where('block_id', $this->block->id)->get();
+        $this->options = MenuBlock::query()
+                                  ->where('block_id', $this->block->id)
+                                  ->get();
     }
 
-    public function insertMenu()
-    {
+    public function insertMenu() {
         if ($this->newBlock) {
             $lastSort = $this->blocks->last() ? $this->blocks->last()->sort + 1 : 0;
             $block    = Block::create([
-                'profile_id' => $this->profile->id,
-                'sort'       => $lastSort
-            ]);
+                                          'profile_id' => $this->profile->id,
+                                          'sort'       => $lastSort,
+                                      ]);
             BlockOption::create([
-                'block_id'   => $block->id,
-                'blockTitle' => $this->title,
-                'option5'    => $this->title,
-            ]);
+                                    'block_id'   => $block->id,
+                                    'blockTitle' => $this->title,
+                                    'option5'    => $this->title,
+                                ]);
             MenuBlock::create([
-                'block_id' => $block->id,
-            ]);
+                                  'block_id' => $block->id,
+                              ]);
             $this->blockMenuOptions($block);
         }
         else {
             BlockOption::create([
-                'block_id'   => $this->block->id,
-                'blockTitle' => $this->title,
-                'option5'    => $this->title,
-            ]);
+                                    'block_id'   => $this->block->id,
+                                    'blockTitle' => $this->title,
+                                    'option5'    => $this->title,
+                                ]);
             MenuBlock::create([
-                'block_id' => $this->block->id,
-            ]);
+                                  'block_id' => $this->block->id,
+                              ]);
             $this->blockMenuOptions($this->block);
         }
-//        $this->refreshPage();
+        //        $this->refreshPage();
         $this->mount($this->link);
     }
 
-    public function blockMenuOptions(Block $block/*,$newBlock*/)
-    {
+    public function blockMenuOptions(Block $block/*,$newBlock*/) {
         $this->clearInputsTrait();
         $this->blockMenuItems  = [];
         $this->MenuTitle       = [];
@@ -91,7 +91,10 @@ trait Menu
         $this->block = $block;
         $this->title = $block->blockOption->option5;
 
-        $this->blockMenuItems = MenuBlock::query()->where(['block_id' => $this->block->id])->get();
+        $this->blockMenuItems = MenuBlock::query()
+                                         ->where(['block_id' => $this->block->id])
+                                         ->orderBy('sort')
+                                         ->get();
 
         foreach ($this->blockMenuItems as $item) {
 
@@ -105,10 +108,10 @@ trait Menu
 
     }
 
-    public function deleteBlockMenuItem(MenuBlock $MenuBlock)
-    {
+    public function deleteBlockMenuItem(MenuBlock $MenuBlock) {
         if (count($MenuBlock->block->Menu) == 1) {
-            Storage::disk('public')->delete('pb/profiles/profile-' . $this->profile->id . '/menus/' . $this->blockMenuItems[0]->img);
+            Storage::disk('public')
+                   ->delete('pb/profiles/profile-' . $this->profile->id . '/menus/' . $this->blockMenuItems[0]->img);
             $MenuBlock->block->delete();
             $this->mount($this->link);
         }
@@ -129,40 +132,46 @@ trait Menu
             $this->blockFailOptions($this->block);
         }*/
 
-    public function submitMenu()
-    {
+    public function submitMenu() {
         if ($this->menuImageUpload) {
-            Storage::disk('public')->delete('pb/profiles/profile-' . $this->profile->id . '/menus/' . $this->blockMenuItems[0]->img);
+            Storage::disk('public')
+                   ->delete('pb/profiles/profile-' . $this->profile->id . '/menus/' . $this->blockMenuItems[0]->img);
             $filename     = $this->menuImageUpload->getFilename();
             $originalName = time() . '_' . $this->menuImageUpload->getClientOriginalName();
             $this->menuImageUpload->storeAs('pb/profiles/profile-' . $this->profile->id . '/menus/', $originalName, 'public');
-            Storage::disk('local')->delete('livewire-tmp/' . $filename);
+            Storage::disk('local')
+                   ->delete('livewire-tmp/' . $filename);
         }
-        foreach ($this->blockMenuItems as $item) {
+        preg_match_all('!\d+!', $this->sort, $sort);
+        $sort = $sort[0];
+//                dd($this->sort,$sort);
+//dd($this->sort,$sort,array_search('666',$sort));
+        foreach ($this->blockMenuItems as $key=>$item) {
             $item->update([
-                'title'       => $this->MenuTitle[$item->id],
-                'description' => $this->MenuDescription[$item->id],
-                'price'       => $this->MenuPrice[$item->id],
-            ]);
+                              'title'       => $this->MenuTitle[$item->id],
+                              'description' => $this->MenuDescription[$item->id],
+                              'price'       => $this->MenuPrice[$item->id],
+                              'sort'        => in_array($item->id,$sort)?array_search($item->id,$sort):00,
+                          ]);
 
             if ($this->menuImageUpload) {
                 $item->update([
-                    'img' => $originalName
-                ]);
+                                  'img' => $originalName,
+                              ]);
             }
         }
         $this->menuImageUpload = null;
 
         $this->block->blockOption->update([
-            'blockTitle'           => $this->blockTitle,
-            'blockWidth'           => $this->blockItemsWidth,
-            'blockBorder'          => $this->blockItemsBorder,
-            'blockVisibility'      => $this->blockVisibility,
-            'blockItemColor'       => $this->blockItemColor,
-            'bgBlockItemColor'     => $this->bgBlockItemColor,
-            'textBlockItemColor'   => $this->textBlockItemColor,
-            'borderBlockItemColor' => $this->borderBlockItemColor,
-        ]);
+                                              'blockTitle'           => $this->blockTitle,
+                                              'blockWidth'           => $this->blockItemsWidth,
+                                              'blockBorder'          => $this->blockItemsBorder,
+                                              'blockVisibility'      => $this->blockVisibility,
+                                              'blockItemColor'       => $this->blockItemColor,
+                                              'bgBlockItemColor'     => $this->bgBlockItemColor,
+                                              'textBlockItemColor'   => $this->textBlockItemColor,
+                                              'borderBlockItemColor' => $this->borderBlockItemColor,
+                                          ]);
         $this->clearVariables();
         $this->clearInputs();
         $this->blockMenuItems  = [];
@@ -172,8 +181,7 @@ trait Menu
         $this->mount($this->link);
     }
 
-    function menuDotted($string)
-    {
+    function menuDotted($string) {
         //Clean up multiple dashes or whitespaces
         $string = preg_replace("/[\s-]+/", " ", $string);
         //Convert whitespaces and underscore to dash

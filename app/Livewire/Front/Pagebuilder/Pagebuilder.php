@@ -149,6 +149,18 @@ class Pagebuilder extends Component
         }
         $this->redirect(route('pagebuilder.pagebuilder', $this->link));
     }
+    public function updateSortMenu($a)
+    {
+        $str = $a;
+        preg_match_all('!\d+!', $str, $matches);
+        $matches = $matches[0];
+//        dd($this->blockMenuItems,$matches,$str);
+        for ($i = 0; $i < count($this->blockMenuItems); $i++) {
+            $this->blockMenuItems->find($matches[$i])->update([
+                'sort' => $i
+            ]);
+        }
+    }
 
     public function removeBannerImg(blockBanner $blockBanner)
     {

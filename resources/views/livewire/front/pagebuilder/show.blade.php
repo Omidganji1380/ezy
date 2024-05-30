@@ -334,7 +334,7 @@
                                             <ol class="w-100 px-2 list-unstyled collapse accordion-collapse blockItemAccordion"
                                                 id="menu{{$key}}"
                                                 data-bs-parent="#aMenu{{$key}}">
-                                                @foreach($block->menu as $item)
+                                                @foreach($block->menu->sortBy('sort') as $item)
                                                     <li style="color:{{$block->blockOption->textBlockItemColor}}">
                                                         <h5 class="d-flex w-100" style="color:{{$block->blockOption->textBlockItemColor}}">
                                                             {{$item->title}}
@@ -351,7 +351,7 @@
                             </div>
                             @if(!$block->menu->first()->img)
                                 <ol class="w-100 list-unstyled">
-                                    @foreach($block->menu as $item)
+                                    @foreach($block->menu->sortBy('sort') as $item)
                                         <li>
                                             <h5 class="d-flex w-100">
                                                 {{$item->title}}
