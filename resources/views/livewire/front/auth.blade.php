@@ -39,7 +39,7 @@
                                             <span>ورود</span>
                                         </button>
                                     </div>
-                                    <div class="col-auto">
+                                    {{--<div class="col-auto">
                                         <button class="hover btn button" wire:click="showSmsForm" type="button"
                                                 data-text="ارسال کد">
                                             <b></b>
@@ -47,7 +47,7 @@
                                             <span>کد</span>
                                             <span>ارسال</span>
                                         </button>
-                                    </div>
+                                    </div>--}}
                                     <div class="col-auto">
                                         <button class="hover btn button" wire:click="returnToPhone" type="button"
                                                 data-text="بازگشت">
