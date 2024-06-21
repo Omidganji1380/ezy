@@ -60,7 +60,7 @@
                             </div>
                         </div>
                 @endif
-                @if($smsFlag)
+                {{--@if($smsFlag)
                     <div class="row justify-content-evenly flex-md-row-reverse">
                         <div class="col-12 mb-3">
                             <span class="text-success small">کد ارسال شده را وارد کنید</span>
@@ -104,7 +104,7 @@
                             </div>
                         </div>
                     </div>
-                @endif
+                @endif--}}
                 {{--@if($smsFlag)
                         <div class="row justify-content-evenly flex-md-row-reverse">
                             <div class="col-12 col-md-4">

@@ -98,7 +98,7 @@ class Auth extends Component
                               ->first();
             if ($this->user && $this->user->role == 0)
                 return false;
-            if ($this->user && $this->user->password != null) {
+            if ($this->user /*&& $this->user->password != null*/) {
                 $this->phoneFlag = false;
                 $this->loginFlag = true;
             }
