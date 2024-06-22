@@ -70,19 +70,22 @@ class Auth extends Component
     }
 
     public function loginPassword() {
-        $credential = $this->validate([
-                                          'phone' => 'required|alpha_num|digits:11|exists:users,phone',
-                                                                                                                                                                                                                                                                                                                                                                              'password' => 'required|between:8,20',
-                                      ], [
-                                          'phone.required'    => 'شماره خود را صحیح وارد کنید',
-                                          'phone.alpha_num'   => 'شماره خود را صحیح وارد کنید',
-                                          'phone.digits'      => 'شماره خود را صحیح وارد کنید',
-                                          'phone.exists'      => 'چنین شماره ای وجود ندارد',
-                                          'password.required' => 'رمز عبور خود را وارد کنید',
-                                          'password.between'  => 'رمز عبور باید بین 8 تا 20 کاراکتر باشد',
-                                      ]);
-
-        if (\Auth::attempt($credential)) {
+        $credential   = $this->validate([
+                                            'phone' => 'required|alpha_num|digits:11|exists:users,phone',
+                                                                                                                                                                                                                                                                                                                                                                                             'password' => 'required|between:8,20',
+                                        ], [
+                                            'phone.required'    => 'شماره خود را صحیح وارد کنید',
+                                            'phone.alpha_num'   => 'شماره خود را صحیح وارد کنید',
+                                            'phone.digits'      => 'شماره خود را صحیح وارد کنید',
+                                            'phone.exists'      => 'چنین شماره ای وجود ندارد',
+                                            'password.required' => 'رمز عبور خود را وارد کنید',
+                                            'password.between'  => 'رمز عبور باید بین 8 تا 20 کاراکتر باشد',
+                                        ]);
+        $user         = User::query()
+                            ->wherePhone($credential['phone'])
+                            ->first();
+        $isPassHashed = \Hash::isHashed($user->password);
+        if ($isPassHashed && $user->password && \Auth::attempt($credential)) {
             \Auth::login($this->user, true);
             return redirect(route('front.dashboard'));
         }
