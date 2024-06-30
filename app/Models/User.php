@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use Str;
 
 class User extends Authenticatable
 {
@@ -31,6 +32,7 @@ class User extends Authenticatable
         'phone_en',
         'postCode_en',
         'address_en',
+        'uuid',
     ];
 
     /**
@@ -51,19 +53,26 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password'          => 'hashed',
+        'uuid'              => 'string',
     ];
 
-    public function logs()
-    {
+    public function logs() {
         return $this->hasMany(Log::class);
     }
 
-    public function infoForms()
-    {
+    public function infoForms() {
         return $this->hasMany(InfoForm::class);
     }
-    public function profiles()
-    {
+
+    public function profiles() {
         return $this->hasMany(Profile::class);
+    }
+
+    public static function boot() {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->uuid = (string)Str::uuid();
+        });
     }
 }
