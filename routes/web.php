@@ -16,6 +16,7 @@ use App\Livewire\Front\Index;
 use App\Livewire\Front\InfoForm\InfoForm;
 use App\Livewire\Front\Pagebuilder\Pagebuilder;
 use App\Livewire\Front\Pagebuilder\Show;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,6 +30,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/asd', function (){
+    $users = User::all();
+    foreach ($users as $user) {
+        if ($user->uuid == null) {
+            $user->update([
+                              'uuid' => Str::uuid(),
+                          ]);
+        }
+    }
+});
 Route::get('/', Index::class)->name('index');
 Route::get('/f/{phone}', InfoForm::class)->name('infoForm');
 Route::get('/r/{link}', function ($link) {
