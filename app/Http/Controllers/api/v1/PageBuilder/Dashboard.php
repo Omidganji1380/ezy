@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\api\v1\PageBuilder;
 
 use App\Http\Controllers\Controller;
+use App\Models\Block;
+use App\Models\pbOption;
 use App\Models\Profile;
 use App\Models\UrlRedirector;
 use App\Models\User;
@@ -11,8 +13,6 @@ use App\traits\api\JsonResponse;
 use App\traits\api\v1\getAllReservedLinks;
 use App\traits\api\v1\PageBuilder\pageBuilder;
 use Illuminate\Http\Request;
-use Route;
-use function PHPUnit\Framework\throwException;
 
 class Dashboard extends Controller
 {
@@ -45,10 +45,7 @@ class Dashboard extends Controller
     }
 
     public function getView() {
-        $blockTitles = [];
-        $blockLinks  = [];
-        $blockWidth  = [];
-        $link        = $this->request->link;
+        $link = $this->request->link;
 
         $this->profile = Profile::query()
                                 ->where('link', $link)
@@ -64,37 +61,46 @@ class Dashboard extends Controller
         }
         $this->blocks            = $this->profile->block()
                                                  ->orderBy('sort')
-                                                 ->with(['pbOption', 'blockOption'])
+                                                 ->with([
+                                                            'pbOption',
+                                                            'blockOption',
+                                                            'text',
+                                                            'fair',
+                                                            'banner',
+                                                            'menu',
+                                                            'video',
+                                                        ])
                                                  ->get();
-        $this->profile['img']    = asset('/storage/pb/profiles/profile-' . $this->profile->id . '/' . $this->profile->img);
-        $this->profile['bg_img'] = asset('/storage/pb/profiles/profile-' . $this->profile->id . '/' . $this->profile->bg_img);
+        $this->profile['img']    = asset('/storage/pb/profiles/profile-' . $this->profile->id . '/' .
+                                         $this->profile->img);
+        $this->profile['bg_img'] = asset('/storage/pb/profiles/profile-' . $this->profile->id . '/' .
+                                         $this->profile->bg_img);
 
         $data = [
             'profile' => $this->profile,
         ];
 
-        foreach ($this->blocks as $index => $block) {
-            $i             = 0;
-            $pbOptionCount = count($block->pbOption()
-                                         ->get());
-
-            foreach ($block->pbOption()
-                           ->get() as $key => $option) {
-                $blockTitles[$index][$key] = $this->getBlockTitle($option->pivot);
-                $blockLinks[$key]          = $option->link . $this->getBlockLink($option->pivot);
-                $blockWidth[$index][$key]  = [
-                    'lastHalf'      => $this->setBlockWidthHalf($block->blockOption->blockWidth, $i == $pbOptionCount - 1 ?? $i, $key),
-                    'setBlockWidth' => $this->setBlockWidth($block->blockOption->blockWidth),
+        $this->blocks->each(function (Block $block) {
+            $block->pbOption->each(function (pbOption $pbOption, $key) use ($block) {
+                $i             = 0;
+                $pbOptionCount = count($block->pbOption()
+                                             ->get());
+                $a             = [
+//                    $pbOption['title'] = $this->getBlockTitle($pbOption->pivot),
+//                    $pbOption['link'] = $pbOption->link . $this->getBlockLink($pbOption->pivot),
+                    $pbOption['block_width'] = [
+                        'lastHalf'      => $this->setBlockWidthHalf($block->blockOption->blockWidth, $i ==
+                                                                                                     $pbOptionCount - 1
+                                                                                                     ?? $i, $key),
+                        'setBlockWidth' => $this->setBlockWidth($block->blockOption->blockWidth),
+                    ],
                 ];
-                $i++;
-            }
-        }
-        $data['blocks'] = [
-            'blocks'      => $this->blocks,
-            'blockTitles' => $blockTitles,
-            'blockLinks'  => $blockLinks,
-            'blockWidth'  => $blockWidth,
-        ];
+                return $a;
+            });
+
+        });
+        $data['blocks'] = $this->blocks;
+
         return response()->json($data);
     }
 

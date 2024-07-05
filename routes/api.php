@@ -20,14 +20,8 @@ Route::middleware('auth:sanctum')
      ->get('/user', function (Request $request) {
          return $request->user();
      });
-//Route::get('/v1/getUsers', function () {
-//    $users = \App\Models\User::all();
-//    return response()->json($users);
-//});
-//Route::get('/v1/getUsers/{id}', function ($id) {
-//    $users = \App\Models\User::findOrFail($id);
-//    return response()->json($users);
-//});
+
+
 Route::group(['prefix' => 'v1'], function () {
     Route::group(['prefix' => 'auth'], function () {
         Route::post('p', ['\App\Http\Controllers\api\v1\Auth', 'sendSms']);
@@ -42,6 +36,9 @@ Route::group(['prefix' => 'v1'], function () {
     });
     Route::group(['prefix' => 'pb'], function () {
         Route::post('edit', '\App\Http\Controllers\api\v1\PageBuilder\Edit@pageBuilderEdit');
+        Route::post('addPbOption', '\App\Http\Controllers\api\v1\PageBuilder\Edit@addPbOption');
+        Route::post('deleteBlock', '\App\Http\Controllers\api\v1\PageBuilder\Edit@deleteBlock');
+        Route::post('deleteBlockItem', '\App\Http\Controllers\api\v1\PageBuilder\Edit@deleteBlockItem');
     });
     Route::group(['prefix' => 'home'], function () {
         Route::get('getSliders', [Slider::class, 'getSliders']);
@@ -53,10 +50,3 @@ Route::group(['prefix' => 'v1'], function () {
 
     });
 });
-
-//$token = 'FX)zt6(T@Pt`,%-[Pb00j`|L7Cj6+*f';
-//Route::group(['middleware' => 'api'/*,'prefix' => $token*/], function () {
-//
-//});
-//Route::post('/v1/auth/{phone}', ['\App\Http\Controllers\api\v1\Auth', 'sendSms']);
-//Route::resource('/v1/auth/{phone}',\App\Http\Controllers\api\v1\Auth::class);

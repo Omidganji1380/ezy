@@ -15,9 +15,40 @@ class Block extends Model
         'sort',
     ];
 
+    protected static function boot() {
+        parent::boot();
+
+        static::retrieved(function ($model) {
+            $model->loadAllRelations();
+        });
+    }
+
+    public function loadAllRelations() {
+        $relations = $this->getAllRelations();
+        $this->load($relations);
+    }
+
+    public function getAllRelations() {
+        return [
+            'pbOption',
+            'blockOption',
+            'banner',
+            'fair',
+            'menu',
+            'text',
+            'video',
+        ];
+    }
+
     public function pbOption(): BelongsToMany {
         return $this->belongsToMany(pbOption::class, 'block_pb_options', 'block_id', 'pbOption_id')
-                    ->withPivot('id');
+                    ->withPivot([
+                                    'id',
+                                    'sort',
+                                    'title',
+                                    'connectionWay',
+                                    'extraText',
+                                ]);
     }
 
     public function blockOption() {
