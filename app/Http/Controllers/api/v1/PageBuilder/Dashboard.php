@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api\v1\PageBuilder;
 
 use App\Http\Controllers\Controller;
 use App\Models\Block;
+use App\Models\MenuBlock;
 use App\Models\pbOption;
 use App\Models\Profile;
 use App\Models\UrlRedirector;
@@ -82,23 +83,30 @@ class Dashboard extends Controller
 
         $this->blocks->each(function (Block $block) {
             $block->pbOption->each(function (pbOption $pbOption, $key) use ($block) {
-                $i             = 0;
+                //                $i             = 0;
                 $pbOptionCount = count($block->pbOption()
                                              ->get());
                 $a             = [
-//                    $pbOption['title'] = $this->getBlockTitle($pbOption->pivot),
-//                    $pbOption['link'] = $pbOption->link . $this->getBlockLink($pbOption->pivot),
                     $pbOption['block_width'] = [
-                        'lastHalf'      => $this->setBlockWidthHalf($block->blockOption->blockWidth, $i ==
+                        'lastHalf'      => $this->setBlockWidthHalf($block->blockOption->blockWidth, $key ==
                                                                                                      $pbOptionCount - 1
-                                                                                                     ?? $i, $key),
+                                                                                                     ?? $key, $key),
                         'setBlockWidth' => $this->setBlockWidth($block->blockOption->blockWidth),
                     ],
                 ];
                 return $a;
             });
-
+            $block->menu->each(function (MenuBlock $menuBlock, $key) use ($block) {
+                if ($menuBlock['img']) {
+                    $menuBlock['image'] = asset('storage/pb/profiles/profile-' . $this->profile->id . '/menus/' .
+                                                $block->menu->first()->img);
+                }
+                else
+                    $menuBlock['image'] = null;
+                return $menuBlock['image'];
+            });
         });
+        //        $this->blocks->
         $data['blocks'] = $this->blocks;
 
         return response()->json($data);
