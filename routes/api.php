@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\api\v1\DigitalMenu\DigitalMenuController;
 use App\Http\Controllers\api\v1\Home\Slider;
+use App\Http\Controllers\api\v1\PageBuilder\Dashboard;
+use App\Http\Controllers\api\v1\PageBuilder\Edit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,21 +26,23 @@ Route::middleware('auth:sanctum')
 
 Route::group(['prefix' => 'v1'], function () {
     Route::group(['prefix' => 'auth'], function () {
-        Route::post('p', ['\App\Http\Controllers\api\v1\Auth', 'sendSms']);
-        Route::post('login', '\App\Http\Controllers\api\v1\Auth@login');
-        Route::post('logout', '\App\Http\Controllers\api\v1\Auth@logout');
+        Route::post('p', [\App\Http\Controllers\api\v1\Auth::class, 'sendSms']);
+        Route::post('login', [\App\Http\Controllers\api\v1\Auth::class, 'login']);
+        Route::post('logout', [\App\Http\Controllers\api\v1\Auth::class, 'logout']);
     });
     Route::group(['prefix' => 'dashboard'], function () {
-        Route::post('/', '\App\Http\Controllers\api\v1\PageBuilder\Dashboard@getProfiles');
-        Route::post('/getView', '\App\Http\Controllers\api\v1\PageBuilder\Dashboard@getView');
-        Route::post('/getAllReservedLinks', '\App\Http\Controllers\api\v1\PageBuilder\Dashboard@getAllReservedLinks');
-        Route::post('/submitNewProfile', '\App\Http\Controllers\api\v1\PageBuilder\Dashboard@submitNewProfile');
+        Route::post('/', [Dashboard::class, 'getProfiles']);
+        Route::post('/getView', [Dashboard::class, 'getView']);
+        Route::post('/getAllReservedLinks', [Dashboard::class, 'getAllReservedLinks']);
+        Route::post('/submitNewProfile', [Dashboard::class, 'submitNewProfile']);
     });
     Route::group(['prefix' => 'pb'], function () {
-        Route::post('edit', '\App\Http\Controllers\api\v1\PageBuilder\Edit@pageBuilderEdit');
-        Route::post('addPbOption', '\App\Http\Controllers\api\v1\PageBuilder\Edit@addPbOption');
-        Route::post('deleteBlock', '\App\Http\Controllers\api\v1\PageBuilder\Edit@deleteBlock');
-        Route::post('deleteBlockItem', '\App\Http\Controllers\api\v1\PageBuilder\Edit@deleteBlockItem');
+        Route::post('edit', [Edit::class, 'pageBuilderEdit']);
+        Route::post('addPbOption', [Edit::class, 'addPbOption']);
+        Route::post('sorting', [Edit::class, 'sorting']);
+        Route::post('deleteBlock', [Edit::class, 'deleteBlock']);
+        Route::post('deleteBlockItem', [Edit::class, 'deleteBlockItem']);
+        Route::post('updateHeaderProfile', [Edit::class, 'updateHeaderProfile']);
     });
     Route::group(['prefix' => 'home'], function () {
         Route::get('getSliders', [Slider::class, 'getSliders']);

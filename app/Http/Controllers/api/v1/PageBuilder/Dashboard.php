@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api\v1\PageBuilder;
 
 use App\Http\Controllers\Controller;
 use App\Models\Block;
+use App\Models\blockBanner;
 use App\Models\MenuBlock;
 use App\Models\pbOption;
 use App\Models\Profile;
@@ -105,6 +106,14 @@ class Dashboard extends Controller
                     $menuBlock['image'] = null;
                 return $menuBlock['image'];
             });
+            $block->banner->each(function (blockBanner $blockBanner) use ($block) {
+                if ($blockBanner['image']) {
+                    $blockBanner['img'] = asset('storage/pb/profiles/profile-'.$this->profile->id.'/banners/banner-'.$blockBanner->id.'/'.$blockBanner->image);
+                }
+                else
+                    $blockBanner['img'] = null;
+                return $blockBanner['img'];
+            });
         });
         //        $this->blocks->
         $data['blocks'] = $this->blocks;
@@ -116,7 +125,7 @@ class Dashboard extends Controller
         if (!$this->user) {
             return $this->throwError(Errors::$_USER_NOT_FOUND);
         }
-        $this->profileUrl = $this->request->usernameInput;
+        $this->profileUrl = $this->request->link;
         $this->getAllReservedLinks();
         $coverImage   = $this->request->file('coverImage');
         $profileImage = $this->request->file('profileImage');
@@ -132,8 +141,7 @@ class Dashboard extends Controller
             $profile = Profile::query()
                               ->create([
                                            'link'     => $this->profileUrl,
-                                           'title'    => $title,
-                                           'subtitle' => $subtitle,
+                                           'title'    => $this->profileUrl,
                                            'user_id'  => $user_id,
                                        ]);
             if ($coverImage) {
