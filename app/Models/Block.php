@@ -48,7 +48,8 @@ class Block extends Model
                                     'title',
                                     'connectionWay',
                                     'extraText',
-                                ]);
+                                ])
+                    ->orderBy('block_pb_options.sort');
     }
 
     public function blockOption() {

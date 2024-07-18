@@ -84,7 +84,6 @@ class Dashboard extends Controller
 
         $this->blocks->each(function (Block $block) {
             $block->pbOption->each(function (pbOption $pbOption, $key) use ($block) {
-                //                $i             = 0;
                 $pbOptionCount = count($block->pbOption()
                                              ->get());
                 $a             = [

@@ -30,15 +30,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/asd', function (){
-    $users = User::all();
-    foreach ($users as $user) {
-        if ($user->uuid == null) {
-            $user->update([
-                              'uuid' => Str::uuid(),
-                          ]);
-        }
-    }
+Route::get('aa/test', function (){
+    return view('test');
 });
 Route::get('/', Index::class)->name('index');
 Route::get('/f/{phone}', InfoForm::class)->name('infoForm');

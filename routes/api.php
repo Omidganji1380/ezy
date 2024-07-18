@@ -43,6 +43,10 @@ Route::group(['prefix' => 'v1'], function () {
         Route::post('deleteBlock', [Edit::class, 'deleteBlock']);
         Route::post('deleteBlockItem', [Edit::class, 'deleteBlockItem']);
         Route::post('updateHeaderProfile', [Edit::class, 'updateHeaderProfile']);
+        Route::group([], function () {
+            Route::post('getPbOptions', [Edit::class, 'getPbOptions']);
+            Route::post('addPbBlock', [Edit::class, 'addPbBlock']);
+        });
     });
     Route::group(['prefix' => 'home'], function () {
         Route::get('getSliders', [Slider::class, 'getSliders']);

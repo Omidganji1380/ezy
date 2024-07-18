@@ -20,21 +20,38 @@ class Edit extends Controller
     public Request $request;
     public         $profile;
     public         $blocks;
+    public Block   $block;
     public         $pbOptions;
+
+    public function addPbBlock() {
+        $request = $this->request->all();
+        foreach ($request['items'] as $item) {
+            $pbOption = pbOption::query()
+                                ->find($item['id']);
+            dd($item, $pbOption);
+        }
+        dd($this->request->all());
+        $pbOption = pbOption::query()
+                            ->where(['for' => $this->request['for']]);
+    }
+
+    public function getPbOptions() {
+        $pbOptions = pbOption::query()
+                             ->get()
+                             ->groupBy('for');
+        return $pbOptions;
+    }
 
     public function __construct(Request $request) {
         $this->request = $request;
     }
 
     public function updateHeaderProfile() {
-//        return $this->request->all();
         $profile = Profile::query()
                           ->where('user_id', $this->request->user_id)
                           ->find($this->request->profile_id);
-        //        return $profile;
-        //        return $this->request->file('img');
-        $img    = $this->request->file('img');
-        $bg_img = $this->request->file('bg_img');
+        $img     = $this->request->file('img');
+        $bg_img  = $this->request->file('bg_img');
         if ($img) {
             Storage::disk('public')
                    ->delete('pb/profiles/profile-' . $profile->id . '/' . $profile->img);
@@ -53,32 +70,6 @@ class Edit extends Controller
                                  'bg_img' => $imgName,
                              ]);
         }
-        //        if ($this->request->img) {
-        //            Storage::disk('public')
-        //                   ->delete('pb/profiles/profile-' . $this->profile->id . '/' . $this->profile->img);
-        //            $filename     = time() . '_' . $this->request->img->getFilename();
-        //            $originalName = time() . '_' . $this->request->img->getClientOriginalName();
-        //            $this->request->img->storeAs('pb/profiles/profile-' . $this->profile->id, $originalName, 'public');
-        //            Storage::disk('local')
-        //                   ->delete('livewire-tmp/' . $filename);
-        //            $this->request->img = null;
-        //            $this->profile->update([
-        //                                       'img' => $originalName,
-        //                                   ]);
-        //        }
-        //        if ($this->request->bg_img) {
-        //            Storage::disk('public')
-        //                   ->delete('pb/profiles/profile-' . $this->profile->id . '/' . $this->profile->bg_img);
-        //            $filename     = time() . '_' . $this->request->bg_img->getFilename();
-        //            $originalName = time() . '_' . $this->request->bg_img->getClientOriginalName();
-        //            $this->request->bg_img->storeAs('pb/profiles/profile-' . $this->profile->id, $originalName, 'public');
-        //            Storage::disk('local')
-        //                   ->delete('livewire-tmp/' . $filename);
-        //            $this->request->bg_img = null;
-        //            $this->profile->update([
-        //                                       'bg_img' => $originalName,
-        //                                   ]);
-        //        }
         $profile->update([
                              'title'      => $this->request->title,
                              'subtitle'   => $this->request->subtitle,
@@ -104,10 +95,14 @@ class Edit extends Controller
         return $blocks;
     }
 
-    private function getProfileBlock() {
+    public function __destruct() {
+        $this->blocks = $this->blocks->fresh();
+    }
+
+    public function getProfileBlock() {
         $this->profile = Profile::query()
                                 ->where('user_id', $this->request->user_id)
-                                ->findOrFail($this->request->profile_id);
+                                ->find($this->request->profile_id);
         $this->profile->update([
                                    'updated_at' => now(),
                                ]);
@@ -167,17 +162,17 @@ class Edit extends Controller
         return response()->json($data);
     }
 
-    private function insertBlock() {
+    public function insertBlock() {
         $this->getProfileBlock();
         if ($this->request['new_block']) {
-            $this->blocks = Block::query()
-                                 ->create([
-                                              'sort'       => $this->blocks->count() + 1,
-                                              'profile_id' => $this->profile->id,
-                                          ]);
+            $this->block = Block::query()
+                                ->create([
+                                             'sort'       => $this->blocks->count() + 1,
+                                             'profile_id' => $this->profile->id,
+                                         ]);
             BlockOption::query()
                        ->create([
-                                    'block_id'             => $this->blocks->id,
+                                    'block_id'             => $this->block->id,
                                     'blockVisibility'      => $this->request->blockVisibility,
                                     'blockTitle'           => $this->request->blockTitle,
                                     'blockWidth'           => $this->request->blockWidth,
@@ -193,27 +188,54 @@ class Edit extends Controller
                                     'option5'              => $this->request->option5,
                                 ]);
         }
-        else
-            $this->blocks = Block::query()
-                                 ->find($this->request['block_id']);
+        else {
+            $this->block = Block::query()
+                                ->find($this->request['block_id']);
+            $this->block->blockOption()
+                        ->update([
+                                     "blockVisibility"      => $this->request["blockVisibility"],
+                                     "blockTitle"           => $this->request["blockTitle"],
+                                     "blockWidth"           => $this->request["blockWidth"],
+                                     "blockBorder"          => $this->request["blockBorder"],
+                                     "blockItemColor"       => $this->request["blockItemColor"],
+                                     "bgBlockItemColor"     => $this->request["bgBlockItemColor"],
+                                     "borderBlockItemColor" => $this->request["borderBlockItemColor"],
+                                     "textBlockItemColor"   => $this->request["textBlockItemColor"],
+                                     "option1"              => $this->request["option1"],
+                                     "option2"              => $this->request["option2"],
+                                     "option3"              => $this->request["option3"],
+                                     "option4"              => $this->request["option4"],
+                                     "option5"              => $this->request["option5"],
+                                 ]);
+        }
     }
 
     public function addPbOption() {
         $this->insertBlock();
         for ($i = 0; $i < count($this->request->pbOption); $i++) {
-            $this->blocks = $this->blocks->fresh();
-            $sort         = $this->blocks->pbOption()
-                                         ->get()
-                                         ->count();
-            BlockPbOption::query()
-                         ->create([
-                                      'block_id'      => $this->blocks->id,
-                                      'pbOption_id'   => $this->request->pbOption[$i]['pbOption_id'],
-                                      'sort'          => $sort + 1,
-                                      'title'         => $this->request->pbOption[$i]['title'],
-                                      'connectionWay' => $this->request->pbOption[$i]['connectionWay'],
-                                      'extraText'     => $this->request->pbOption[$i]['extraText'],
-                                  ]);
+            $block = $this->block->fresh();
+            $sort = $block->pbOption()
+                          ->get()
+                          ->count();
+            if (isset($this->request->pbOption[$i]['id']))
+                BlockPbOption::query()
+                             ->find($this->request->pbOption[$i]['id'])
+                             ->update([
+                                          'sort'          => $i,
+                                          'title'         => $this->request->pbOption[$i]['title'],
+                                          'connectionWay' => $this->request->pbOption[$i]['connectionWay'],
+                                          'extraText'     => $this->request->pbOption[$i]['extraText'],
+                                      ]);
+            else
+                BlockPbOption::query()
+                             ->create([
+                                          'block_id'      => $block->id,
+                                          'pbOption_id'   => $this->request->pbOption[$i]['pbOption_id'],
+                                          'sort'          => $i,
+                                          'title'         => $this->request->pbOption[$i]['title'],
+                                          'connectionWay' => $this->request->pbOption[$i]['connectionWay'],
+                                          'extraText'     => $this->request->pbOption[$i]['extraText'],
+                                      ]);
         }
         return $this->blocks->fresh();
     }
@@ -239,8 +261,10 @@ class Edit extends Controller
         $blockItem = BlockPbOption::query()
                                   ->where([
                                               'block_id'   => $this->request['block_id'],
-                                              'profile_id' => $this->request['profile_id'],
+//                                              'profile_id' => $this->request['profile_id'],
                                           ])
                                   ->find($this->request['item_id']);
+//        dd($blockItem);
+        return $blockItem->delete();
     }
 }
