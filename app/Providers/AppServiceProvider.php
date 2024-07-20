@@ -23,11 +23,5 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void {
         Schema::defaultStringLength(191);
-
-        RateLimiter::for('user-requests', function (Request $request) {
-            return Limit::perMinute(200000)->by($request->user()?->id ?: $request->ip())->response(function () {
-                return response('You have reached the request limit.', Response::HTTP_TOO_MANY_REQUESTS);
-            });
-        });
     }
 }

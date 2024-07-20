@@ -21,24 +21,28 @@ class ProfileOption extends Model
         'block_border_color',
         'block_rounded',
     ];
+    protected $appends  = ['background_image_url'];
 
-    public function profile()
-    {
-        return $this->hasOne(Profile::class, 'id', 'profile_id');
+    public function getBackgroundImageUrlAttribute() {
+        if ($this->background_image_id) {
+            return asset("storage/pb/bgImages/bgImage-{$this->background_image_id}/{$this->backgroundImage->img}");
+        }
+        return null;
     }
 
-    public function font()
-    {
+    public function profile() {
+        return $this->belongsTo(Profile::class, 'id', 'profile_id');
+    }
+
+    public function font() {
         return $this->hasOne(ProfileFont::class, 'id', 'font_id');
     }
 
-    public function backgroundImage()
-    {
+    public function backgroundImage() {
         return $this->hasOne(ProfileBackgroundImage::class, 'id', 'background_image_id');
     }
 
-    public function theme()
-    {
+    public function theme() {
         return $this->hasOne(ProfileTheme::class, 'id', 'theme_id');
     }
 }

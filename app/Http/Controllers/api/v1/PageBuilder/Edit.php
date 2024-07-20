@@ -23,18 +23,6 @@ class Edit extends Controller
     public Block   $block;
     public         $pbOptions;
 
-    public function addPbBlock() {
-        $request = $this->request->all();
-        foreach ($request['items'] as $item) {
-            $pbOption = pbOption::query()
-                                ->find($item['id']);
-            dd($item, $pbOption);
-        }
-        dd($this->request->all());
-        $pbOption = pbOption::query()
-                            ->where(['for' => $this->request['for']]);
-    }
-
     public function getPbOptions() {
         $pbOptions = pbOption::query()
                              ->get()
@@ -214,9 +202,6 @@ class Edit extends Controller
         $this->insertBlock();
         for ($i = 0; $i < count($this->request->pbOption); $i++) {
             $block = $this->block->fresh();
-            $sort = $block->pbOption()
-                          ->get()
-                          ->count();
             if (isset($this->request->pbOption[$i]['id']))
                 BlockPbOption::query()
                              ->find($this->request->pbOption[$i]['id'])
@@ -245,10 +230,6 @@ class Edit extends Controller
                       ->where(['profile_id' => $this->request['profile_id']])
                       ->find($this->request['block_id']);
         if ($block) {
-            if ($block->blockOption)
-                $block->blockOption()
-                      ->first()
-                      ->delete();
             $block->delete();
             return response()->json('Block deleted');
         }
@@ -261,10 +242,8 @@ class Edit extends Controller
         $blockItem = BlockPbOption::query()
                                   ->where([
                                               'block_id'   => $this->request['block_id'],
-//                                              'profile_id' => $this->request['profile_id'],
                                           ])
                                   ->find($this->request['item_id']);
-//        dd($blockItem);
         return $blockItem->delete();
     }
 }
